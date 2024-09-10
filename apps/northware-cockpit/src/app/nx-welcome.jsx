@@ -5,7 +5,7 @@
  Delete this file and get started with your project!
  * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
-export function NxWelcome({ title }: { title: string }) {
+export function NxWelcome({ title }) {
   return (
     <>
       <style
@@ -335,16 +335,16 @@ export function NxWelcome({ title }: { title: string }) {
       margin-top: 1rem;
     }
     #nx-cloud a {
-      border-radius: 0.75rem;
-      color: white;
-      background-color: hsla(214, 62%, 21%, 1);
-      display: inline-block;
+      color: rgba(107, 114, 128, 1);
+      display: block;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
       margin-top: 1.5rem;
-      padding: 0.5rem 1rem;
-      text-align:left;
-      text-decoration: inherit;
+      text-align: right;
     }
-
+    #nx-cloud a:hover {
+      text-decoration: underline;
+    }
     #commands {
       padding: 2.5rem 2rem;
       margin-top: 3.5rem;
@@ -718,14 +718,18 @@ export function NxWelcome({ title }: { title: string }) {
                     <span>Enable faster CI & better DX</span>
                   </h2>
                 </div>
-                <p>Your Nx Cloud remote cache setup is almost complete.</p>
-
+                <p>
+                  You can activate distributed tasks executions and caching by
+                  running:
+                </p>
+                <pre>nx connect</pre>
                 <a
-                  href="https://cloud.nx.app/connect/oZW31VEJFQ"
+                  href="https://nx.dev/nx-cloud?utm_source=nx-project"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Click here to finish
+                  {' '}
+                  What is Nx Cloud?{' '}
                 </a>
               </div>
             </div>
@@ -848,5 +852,4 @@ export function NxWelcome({ title }: { title: string }) {
     </>
   );
 }
-
 export default NxWelcome;
