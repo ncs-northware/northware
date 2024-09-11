@@ -1,0 +1,9 @@
+{
+  "name": "northware-cockpit-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/northware-cockpit-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["northware-cockpit"],
+  "// targets": "to see all targets run: nx show project northware-cockpit-e2e --web",
+  "targets": {}
+}

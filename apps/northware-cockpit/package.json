@@ -1,0 +1,24 @@
+{
+  "name": "northware-cockpit",
+  "version": "2.0.0",
+  "private": "true",
+  "scripts": {
+    "dev": "next dev -p 40110"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ncs-northware/northware.git"
+  },
+  "author": "NCS Northware (https://github.com/ncs-northware)",
+  "contributors": [
+    {
+      "name": "onissen",
+      "url": "https://github.com/onissen"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ncs-northware/northware/issues"
+  },
+  "homepage": "https://github.com/ncs-northware/northware"
+}
