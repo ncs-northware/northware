@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/ncs-northware/northware",
   "dependencies": {
+    "@neondatabase/serverless": "^0.9.5",
     "autoprefixer": "^10.4.20",
     "bcryptjs": "^2.4.3",
     "drizzle-orm": "^0.33.0",
-    "geist": "^1.3.1",
     "next": "14.2.3",
     "next-auth": "^5.0.0-beta.20",
     "postcss": "^8.4.45",
