@@ -4,7 +4,7 @@
   "private": "true",
   "scripts": {
     "dev": "next dev -p 40110 --turbo",
-    "build": "next buid",
+    "build": "next build",
     "start": "next start -p 40110",
     "lint": "next lint"
   },
