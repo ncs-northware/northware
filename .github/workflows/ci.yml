@@ -40,4 +40,8 @@ jobs:
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: npx nx-cloud record -- echo Hello World
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
+
+      - run: |
+          touch apps/northware-cockpit/.env
+          echo POSTGRES_URL=${{ secrets.POSTGRES_URL }} >> apps/northware-cockpit/.env
       - run: npx nx affected -t lint test build e2e-ci
