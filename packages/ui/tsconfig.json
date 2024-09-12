@@ -1,5 +1,5 @@
 {
-  "extends": "@northware/typescript-config/react-library.json",
+  "extends": "@northware/config-typescript/react-library.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
 }
