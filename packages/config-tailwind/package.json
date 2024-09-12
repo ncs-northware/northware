@@ -1,0 +1,12 @@
+{
+  "name": "@northware/config-tailwind",
+  "version": "2.0.0",
+  "private": true,
+  "exports": {
+    ".": "./tailwind.config.ts"
+  },
+  "dependencies": {
+    "@northware/config-typescript": "workspace:*",
+    "tailwindcss": "^3.4.1"
+  }
+}
