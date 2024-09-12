@@ -1,5 +1,5 @@
 {
-  "name": "@northware/eslint-config",
+  "name": "@northware/config-eslint",
   "version": "2.0.0",
   "private": true,
   "files": [

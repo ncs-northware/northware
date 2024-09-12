@@ -17,9 +17,9 @@
     "react": "^18"
   },
   "devDependencies": {
-    "@northware/eslint-config": "workspace:*",
-    "@northware/tailwind-config": "workspace:*",
-    "@northware/typescript-config": "workspace:*",
+    "@northware/config-eslint": "workspace:*",
+    "@northware/config-tailwind": "workspace:*",
+    "@northware/config-typescript": "workspace:*",
     "@types/react": "^18",
     "autoprefixer": "^10.4.20",
     "postcss": "^8",
