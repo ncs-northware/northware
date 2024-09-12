@@ -1,17 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
-    },
-  },
-  plugins: [],
+// tailwind.config.js
+
+const sharedConfig = require("@northware/config-tailwind");
+
+const config = {
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  presets: [sharedConfig],
 };
+
+module.exports = config;

@@ -1,8 +1,12 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 // We want each package to be responsible for its own content.
 const config: Omit<Config, "content"> = {
   theme: {
+    colors: {
+      primary: colors.sky,
+    },
     extend: {
       backgroundImage: {
         "glow-conic":
