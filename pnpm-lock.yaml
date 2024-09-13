@@ -30,6 +30,9 @@ importers:
         specifier: ^1.78.0
         version: 1.78.0
     devDependencies:
+      '@northware/tailwind-config':
+        specifier: workspace:*
+        version: link:../../packages/tailwind-config
       eslint:
         specifier: ^8
         version: 8.57.0
@@ -39,6 +42,12 @@ importers:
       postcss:
         specifier: ^8
         version: 8.4.45
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.11
+
+  packages/tailwind-config:
+    devDependencies:
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.11

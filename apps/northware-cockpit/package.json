@@ -15,6 +15,7 @@
     "sass": "^1.78.0"
   },
   "devDependencies": {
+    "@northware/tailwind-config": "workspace:*",
     "eslint": "^8",
     "eslint-config-next": "14.2.11",
     "postcss": "^8",
