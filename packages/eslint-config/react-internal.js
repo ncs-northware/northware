@@ -1,7 +1,6 @@
-const { resolve } = require("node:path");
-
-const project = resolve(process.cwd(), "tsconfig.json");
-
+/*
+ * Use this Config with Internal Packages (Libraries) that utilize React
+ */
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   extends: ["eslint:recommended", "prettier", "turbo"],
@@ -11,14 +10,7 @@ module.exports = {
     JSX: true,
   },
   env: {
-    node: true,
-  },
-  settings: {
-    "import/resolver": {
-      typescript: {
-        project,
-      },
-    },
+    browser: true,
   },
   ignorePatterns: [
     // Ignore dotfiles
@@ -27,8 +19,7 @@ module.exports = {
     "dist/",
   ],
   overrides: [
-    {
-      files: ["*.js?(x)", "*.ts?(x)"],
-    },
+    // Force ESLint to detect .tsx files
+    { files: ["*.js?(x)"] },
   ],
 };

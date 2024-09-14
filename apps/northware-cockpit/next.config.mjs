@@ -1,7 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  transpilePackages: ["@northware/ui"],
-};
+const nextConfig = {};
 
 export default nextConfig;
