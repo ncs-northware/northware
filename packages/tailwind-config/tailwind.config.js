@@ -7,11 +7,6 @@ module.exports = {
         sans: ["var(--font-sourcesans)"],
       },
       colors: {
-        primary: colors.sky,
-        onPrimary: colors.white,
-        // ATTENTION: primary and onPrimary are ment to be different in different apps.
-        // Please overwrite it in the tailwind.config.js of the certain app.
-        // Otherwise it falls back to the cockpit primaries.
         cockpit: colors.sky,
         finance: colors.red,
         trader: colors.orange,
