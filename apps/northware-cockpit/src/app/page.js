@@ -1,3 +1,5 @@
+import { Button, HelloWorld } from "@northware/ui";
+
 export default function Home() {
   return (
     <div>
@@ -8,6 +10,8 @@ export default function Home() {
       <h1 className="text-cockpit-500 text-xl font-bold">Northware Cockpit</h1>
       <h1 className="text-finance-500 text-xl font-bold">Northware Finance</h1>
       <h1 className="text-trader-500 text-xl font-bold">Northware Trader</h1>
+      <Button />
+      <HelloWorld uiClasses="text-primary" />
     </div>
   );
 }

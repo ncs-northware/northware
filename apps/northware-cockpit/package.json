@@ -12,7 +12,8 @@
     "next": "14.2.11",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.78.0"
+    "sass": "^1.78.0",
+    "@northware/ui": "workspace:*"
   },
   "devDependencies": {
     "@northware/tailwind-config": "workspace:*",
