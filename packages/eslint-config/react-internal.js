@@ -5,7 +5,6 @@
 module.exports = {
   extends: ["eslint:recommended", "prettier", "turbo"],
   plugins: ["only-warn"],
-  parser: "babelParser",
   globals: {
     React: true,
     JSX: true,
