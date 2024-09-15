@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@northware/auth": "workspace:*",
     "@northware/ui": "workspace:*",
+    "drizzle-orm": "^0.33.0",
     "next": "14.2.11",
+    "next-auth": "5.0.0-beta.20",
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.78.0"

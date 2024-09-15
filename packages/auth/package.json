@@ -1,0 +1,16 @@
+{
+  "name": "@northware/auth",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@northware/database": "workspace:*",
+    "bcryptjs": "^2.4.3",
+    "next-auth": "5.0.0-beta.20"
+  },
+  "exports": {
+    "./auth": "./lib/auth.js",
+    "./user": "./lib/user-connect.js",
+    "./authConfig": "./lib/auth.config.js",
+    "./components": "./components"
+  }
+}
