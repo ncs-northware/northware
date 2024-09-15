@@ -6,6 +6,10 @@
     "@northware/tailwind-config": "workspace:*"
   },
   "exports": {
-    "./global.sass": "./styling/global.sass"
+    "./global.sass": "./styling/global.sass",
+    "./fonts": "./config/fonts.js"
+  },
+  "dependencies": {
+    "next": "14.2.11"
   }
 }
