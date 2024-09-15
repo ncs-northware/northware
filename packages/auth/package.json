@@ -8,8 +8,9 @@
     "next-auth": "5.0.0-beta.20"
   },
   "exports": {
-    "./auth": "./src/auth.js",
-    "./user": "./src/user-connect.js",
-    "./authConfig": "./src/auth.config.js"
+    "./auth": "./lib/auth.js",
+    "./user": "./lib/user-connect.js",
+    "./authConfig": "./lib/auth.config.js",
+    "./components": "./components"
   }
 }
