@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Form } from "../form";
+import { Form } from "@northware/auth/components";
 import { signIn } from "@northware/auth/auth";
-import { SubmitButton } from "../submit-button";
+import { SubmitButton } from "@northware/auth/components";
 
 export default function Login() {
   return (
