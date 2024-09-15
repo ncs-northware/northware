@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalEnv": ["DATABASE_URL", "AUTH_SECRET"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -10,8 +11,7 @@
     "dev": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "cache": false,
-      "persistent": true,
-      "env": ["DATABASE_URL", "AUTH_SECRET"]
+      "persistent": true
     },
     "lint": {
       "dependsOn": ["^lint"]
