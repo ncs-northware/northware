@@ -1,1 +1,1 @@
-export { GET, POST } from "src/app/auth";
+export { GET, POST } from "@northware/auth/auth";
