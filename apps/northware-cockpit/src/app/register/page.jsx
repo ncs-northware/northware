@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { SubmitButton } from "src/app/submit-button";
 import { Form } from "../form";
-import { createUser, getUser } from "@/user-connect";
+import { createUser, getUser } from "@northware/auth/user";
+import { SubmitButton } from "../submit-button";
 
 export default function Login() {
   async function register(formData) {

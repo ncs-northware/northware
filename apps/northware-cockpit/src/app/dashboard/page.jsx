@@ -1,4 +1,4 @@
-import { auth, signOut } from "../auth";
+import { auth, signOut } from "@northware/auth/auth";
 
 export default async function DashboardPage() {
   let session = await auth();

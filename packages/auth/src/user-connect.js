@@ -1,6 +1,6 @@
 import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
 import { eq } from "drizzle-orm";
-import { client, db } from "./db-connect";
+import { client, db } from "@northware/database/connection";
 const bcrypt = require("bcryptjs");
 
 export async function getUser(email) {
