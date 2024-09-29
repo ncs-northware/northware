@@ -1,0 +1,49 @@
+# Typografie
+
+Die App nutzt als Font [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) (ehemals Source Sans Pro. Diese wird über das Package `next/font/google` von Google Fonts eingebunden.
+
+Das Ganze funktioniert leider nicht über das `northware-theme` sondern muss in jeder `pages/_app.js` einzeln hinterlegt werden.
+
+```jsx
+// pages/_app.js
+
+...
+
+const source_sans = Source_Sans_3({
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-sourcesans'
+})
+
+export default function App({ Component, pageProps }) {
+    return (
+            ...
+                <main className={`${source_sans.variable} font-sans`}>
+                    ...
+                </main>
+            ...
+    )
+}
+
+```
+
+In der **`tailwind.config.js`** jeder ermöglichen die folgenden Anpassungen, das Tailwind die Font nutzen kann.
+
+```js
+// Frontend Root/tailwind.config.js
+module.exports = {
+  ...
+  theme: {
+    ...
+    extend: {
+    ...
+      fontFamily:  {
+        sans: ['var(--font-sourcesans)']
+      }
+    },
+ 
+    ...
+}
+```
+
+[Next.js Dokumentation zur Implementierung von next/font mit Tailwind CSS](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts#with-tailwind-css)
