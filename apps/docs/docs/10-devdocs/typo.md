@@ -41,7 +41,7 @@ module.exports = {
         sans: ['var(--font-sourcesans)']
       }
     },
- 
+
     ...
 }
 ```
