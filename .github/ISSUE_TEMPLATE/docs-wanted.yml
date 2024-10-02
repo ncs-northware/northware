@@ -5,8 +5,9 @@ labels: docs-wanted
 
 body:
   - type: textarea
-    label: Beschreibung
-    description: Was soll dokumentiert werden?
+    attributes:
+      label: Beschreibung
+      description: Was soll dokumentiert werden?
     validations:
       required: true
 
