@@ -1,0 +1,18 @@
+name: Problem melden
+description: Melde eine Problem mit dem Label invalid
+title: "[Invalid]: "
+labels: ["invalid"]
+
+body:
+  - type: textarea
+    attributes:
+      label: Beschreibe das Problem
+      description: Was ist das Problem?
+      placeholder: Beschreibe das Problem
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Weitere Beschreibungen
+      placeholder: Gibt es noch etwas zu sagen?
