@@ -1,0 +1,17 @@
+name: Neues Feature
+description: Schlage ein neues Feature vor
+labels: ["enhancement"]
+title: "[Add]: "
+
+body:
+  - type: textarea
+    attributes:
+      label: Was ist der Plan?
+      placeholder: Beschreibe das gewünschte neue Feature
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Weitere Beschreibungen
+      placeholder: Gibt es noch etwas zu sagen?

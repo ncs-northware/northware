@@ -1,0 +1,15 @@
+name: Erweiterung der Dokumentation
+description: Gibt es ein fertiges Feature, dass in die Dokumentation aufgenommen werden sollte?
+title: "[Docs]: "
+labels: docs-wanted
+
+body:
+  - type: textarea
+    label: Beschreibung
+    description: Was soll dokumentiert werden?
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: "**Wenn es zu diesem Feature bereits einen Issue gibt oder gegeben hat, reicht es diesen Issue mit dem Label `docs-wanted` zu versehen und dort ggf. Informationen für die Docs zu hinterlassen.**"
