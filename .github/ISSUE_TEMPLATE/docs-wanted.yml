@@ -11,6 +11,7 @@ body:
     validations:
       required: true
 
+
   - type: markdown
     attributes:
       value: "**Wenn es zu diesem Feature bereits einen Issue gibt oder gegeben hat, reicht es diesen Issue mit dem Label `docs-wanted` zu versehen und dort ggf. Informationen für die Docs zu hinterlassen.**"
