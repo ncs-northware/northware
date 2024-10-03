@@ -1,5 +1,7 @@
 name: Turbo CI Testing
 
+# This Action is building, testing and linting on all changes coming from an PR to test if the code is going to work.
+
 on:
   push:
     branches: ["main"]
