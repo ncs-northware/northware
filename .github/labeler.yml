@@ -1,5 +1,4 @@
 # This file serves as configuration file for the labeler Workflow (.github/workflows/pr_labeler.yml)
-
 # Labels for Repo-Root (Turborepo Administration)
 
 turborepo:
