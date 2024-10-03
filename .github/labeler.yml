@@ -1,12 +1,49 @@
 # This file serves as configuration file for the labeler Workflow (.github/workflows/pr_labeler.yml)
 
-# Add 'root' label to any root file changes
-# Quotation marks are required for the leading asterisk
-# root:
-# - changed-files:
-#   - any-glob-to-any-file: '*'
+# Labels for Repo-Root (Turborepo Administration)
 
-# Add 'Documentation' label to any changes within 'docs' folder or any subfolders
+turborepo:
+  - changed-files:
+      - any-glob-to-any-file: "*"
+
+# Labels for Github Health Files
+
+github-management:
+  - changed-files:
+      - any-glob-to-any-file: ".guthub/**"
+
+# Labels for apps/* changes
+
 apps/docs:
   - changed-files:
       - any-glob-to-any-file: apps/docs/**
+
+apps/northware-cockpit:
+  - changed-files:
+      - any-glob-to-any-file: apps/northware-cockpit/**
+
+# Labels for pakages/* changes
+
+packages/auth:
+  - changed-files:
+      - any-glob-to-any-file: packages/auth/**
+
+packages/database:
+  - changed-files:
+      - any-glob-to-any-file: packages/database/**
+
+packages/eslint-config:
+  - changed-files:
+      - any-glob-to-any-file: packages/eslint-config/**
+
+packages/tailwind-config:
+  - changed-files:
+      - any-glob-to-any-file: packages/tailwind-config/**
+
+packages/theme:
+  - changed-files:
+      - any-glob-to-any-file: packages/theme/**
+
+packages/ui:
+  - changed-files:
+      - any-glob-to-any-file: packages/ui/**
