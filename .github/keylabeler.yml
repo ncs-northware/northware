@@ -1,4 +1,0 @@
-# This file serves as configuration file for the KeyLabeler Bot which is performing auto-labeling issues depending on provideved title or body text
-
-labelMappings:
-  "apps/docs": apps/docs
