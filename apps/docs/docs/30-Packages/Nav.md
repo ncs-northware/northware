@@ -1,3 +1,7 @@
+---
+sidebar-position: 22
+---
+
 # Nav Komponente Navigation
 
 Datei-Pfad: `theme/components/Nav.js`
@@ -5,11 +9,11 @@ Datei-Pfad: `theme/components/Nav.js`
 Die Nav-Komponente ist für die Haupt-Navigation zuständig. Sie ist auf eine mobile Ansicht (SM-Breakpoint) angepasst.
 Die Komponente ist sehr umfangreich. Vielleicht ist also nicht an jeder Stelle alles ganz verständlich. Als Grundlage für die Komponente habe ich eine [Navbar von Tailwind UI](https://tailwindui.com/components/application-ui/navigation/navbars)(die kostenlose Variante "Simple dark with menu button on left" mit dem React-Code). Diese Komponente nutzt schon von Haus einige Komponenten von [Headless UI](https://headlessui.com/) und Icons von [heroicons](https://heroicons.com/). Ich habe den Beispiel-Code dann an einigen Stellen verändert und erweitert.
 
-![Navigation in der Desktop-Ansicht](./img/mainnav-desktop.png)
+![Navigation in der Desktop-Ansicht](../img/mainnav-desktop.png)
 
 _Navigation in der Desktop-Ansicht_
 
-![Navigation in der Mobile Ansicht](./img/mainnav-mobile.png)
+![Navigation in der Mobile Ansicht](../img/mainnav-mobile.png)
 
 _Navigation in der Mobile Ansicht_
 
