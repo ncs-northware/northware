@@ -9,7 +9,7 @@ turborepo:
 
 github-management:
   - changed-files:
-      - any-glob-to-any-file: ".guthub/**"
+      - any-glob-to-any-file: ".github/**"
 
 # Labels for apps/* changes
 
