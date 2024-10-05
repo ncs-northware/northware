@@ -1,0 +1,162 @@
+# Projektmanagement
+
+## Issues
+
+[GitHub Issues](https://docs.github.com/de/issues) sind dazu gedacht, die Arbeit zu planen und Ideen, Feedback, Aufgaben oder Bugs zu verfolgen. Hat man also eine Idee für ein neues Feature oder stellt fest, das etwas in der überhaupt nicht oder zumindest nicht wie erwartet funktioniert, sollte ein Issue erstellt werden.
+
+Im Northware Repository gibt es vordefinierte **Issue-Templates**, um den übersichtlichen Entwicklungsprozess zu unterstützen.
+
+- **Bug melden:** Während der Entwicklung oder der Nutzung der App ist ein (schwerwiegender) Bug aufgefallen. Etwas funktioniert nicht und führt so zu einem Fehler. Der Issue wird automatisch mit <GithubBadge background="#d73a4a" color="white">bug</GithubBadge> gelabeled.
+- **Problem melden**: Während der Entwicklung oder Nutzung der App ist aufgefallen, das etwas nicht wie vorgesehen funktioniert. Der Issue wird automatisch mit <GithubBadge background="#FBCA04" color="black">invalid</GithubBadge> gelabeled.
+- **Neues Feature:** Ein Vorschlag für ein neues Feature, das es bisher so noch nicht in der App gibt oder das ein bestehendes Feature erweitert. Der Issue wird automatisch mit <GithubBadge background="#a2eeef" color="black">enhancement</GithubBadge> gelabeled.
+- **Erweiterung der Dokumentation:** Ein fertiges Feature soll in dieser Dokumentation erklärt werden. Der Issue wird automatisch mit <GithubBadge background="#25C19F" color="black">docs-wanted</GithubBadge> gelabeled.
+- **Security Vulnerability Tracking**: [Dependabot](./workflows#dependabot) hat eine Security Vulnerability gefunden. In diesem Issue wird getracked, was getan werden kann, um die Vulnerabilty zu beseitigen. Der Issue wird automatisch mit <GithubBadge background="#FBCA04" color="black">security</GithubBadge> gelabeled.
+
+:::tip
+
+Die Issues sollten neben den voreingestellten Labels auch die Labels von Apps oder Packages erhalten, die sie beeinflussen würden.
+
+:::
+
+Jeder Issue wird automatisch dem Projekt **Northware New** mit dem Status <GithubBadge statusTheme="blue">Triage</GithubBadge> zugeordnet. Der Nutzer muss dann entscheiden, welchen Status der Issue bekommen soll. [Mehr zum Projekt](#projekt).
+
+Wenn die Arbeit an dem Issue beginnt sollte der Branch auf dem die Änderungen durchgeführt werden unter `Development` verlinkt werden. Wenn die Arbeit später mit einem Pull Request verbunden wird, wird dieser mit dem Issue verlinkt und das mergen des PR schließt den Issue.
+
+### Milestones
+
+## Pull Requests
+
+Wenn Änderungen von Branches auf den `main` Branch gemerged werden sollen, muss dafür ein [Pull Request](https://docs.github.com/de/pull-requests) angelegt werden. Auch für die Pull Reuests gibt es ein Template, das vorsieht, dass im oberen Teil die Änderungen beschrieben werden, außerdem sollen hier Issues verlinkt werden, die mit diesem PR geschlossen werden sollen oder damit in Zusammenhang stehen. So kann ein konsequentes referenzieren und der automatische Isue-Close Vorgang sichergestellt werden.
+
+:::warning
+
+Wenn Issues nur wegen der Referenzierung oder automatisch verlinkt werden, obwohl der PR den Issue nicht oder nicht vollständig löst, muss der Issue manuell wieder geöffnet werden.
+
+:::
+
+Der Wokflow [Labeler](./workflows#labeler) labeled den Pull Request basierend auf den geänderten Dateien mit den richtigen <GithubBadge borderColor="black">apps/</GithubBadge> oder <GithubBadge background="#F0B9F8" color="black">packages/</GithubBadge> Labels.
+
+Jeder Pull Request wird automatisch dem Projekt **Northware New** mit dem Status <GithubBadge statusTheme="blue">Triage</GithubBadge> hinzugefügt und muss vom Nutzer ggf. angepasst werden. Pull Requests an denen noch gearbeitet wird sollen den Status <GithubBadge statusTheme="yellow">In Progress</GithubBadge> erhalten. Wenn die Änderungen des PR noch auf ein Review warten, erhalten sie den Status <GithubBadge statusTheme="pink">For Review</GithubBadge>. Wenn der PR gemerged wurde, wird er automatisch dem Status <GithubBadge statusTheme="purple">Done</GithubBadge> zugeordnet.
+
+## Labels
+
+Mit Labels lassen sich Issues und Pull Requests kategorisieren. Labels sind bei der Entwickung von Northware sehr wichtig, 
+denn auf Basis dieser Kennzeichnungen werden teilweise Workflows abgearbeitet und Filter gesetzt.
+
+Es gibt bei der Entwicklung von Northware Labels, die den Typ eines Issues oder Pull Requests kennzeichnen (z.B. <GithubBadge background="#A2EEEF" color="black">enhancement</GithubBadge>),
+Labels die betroffene Codeteile (<GithubBadge borderColor="black" color="black">apps/</GithubBadge> und <GithubBadge background="#F0B9F8" color="black">packages/</GithubBadge> Labels) und
+Labels die von Bots und Workflows verwendet werden (z.B. <GithubBadge background="#0366D6" color="white">dependencies</GithubBadge> und <GithubBadge background="black" color="white">github-actions</GithubBadge>).
+
+### Type Labels
+
+| Label                                                                     | Beschreibung                                    |
+| ------------------------------------------------------------------------- | ----------------------------------------------- |
+| <GithubBadge background="#d73a4a" color="white">bug</GithubBadge>         | Es geht um einen (schwerwiegenden) Bug, der einen Fehler verursacht und der möglichst bald behoben werden sollte. |
+| <GithubBadge background="#FBCA04" color="black">invalid</GithubBadge>     | Etwas in der App funktioniert nicht so, wie es soll. Dieses Problem sollte behoben werden. Da durch dieses Problem kein (schwerwiegender) Fehler entsteht ist die Bearbeitung weniger dringend als bei den <GithubBadge color="white" background="#d73a4a">bugs</GithubBadge>.  |
+| <GithubBadge background="#A2EEEF" color="black">enhancement</GithubBadge> | Neues Feature oder neue Idee |
+| <GithubBadge background="#25C19F" color="black">docs-wanted</GithubBadge> | Das, was in diesem Issue beschrieben ist, sollte in die Dokumentation aufgenommen werden. Wenn die Dokumentation zu diesem Thema erweitert wurde, sollte dieses Label entfernt werden.  Die Dokumentation kann zusammen mit den Änderungen im Code verfolständigt werden, wenn für die Änderung der Dokumentation ein extra Issue erstellt werden, sollte dieser nach Vervollstädigung der Dokumentation mit <GithubBadge color="black" background="#25C19F">apps/docs</GithubBadge> versehen werden. |
+| <GithubBadge background="#FBCA04" color="black">security</GithubBadge>    | [Dependabot](./workflows#dependabot) hat eine Security Vulnerabilty festgestellt, die mit diesem Issue nachverfolgt wird. |
+| <GithubBadge background="#cfd3d7" color="black">duplicate</GithubBadge>   | Ein Issue oder Pull Request zu diesem Thema existiert bereits. |
+| <GithubBadge background="#fff" color="black" borderColor="#d1d9e0">wontfix</GithubBadge> | An diesem Issue/PR wird nicht mehr gearbeitet. |
+
+### Labels für Apps
+
+Um eine konsequente Zuordnung des Issues/PRs zu betroffenen Codeteilen zu erzielen, 
+erhält jede App in dem Projekt (Dateipfad `apps/*`) ein eigenes Label. Nach dieser Kennzeichnung wird im Projekt gefiltert.
+
+:::info
+
+Für die Pull Requests gibt es einen Labeler Workflow, der basierend auf den geänderten Dateien Labels der Apps/Packages und anderer Dateipfade zuweist. Bei Issues muss diese Kennzeichnung manuell erfolgen.
+Wenn ein neues Label für eine App, ein Package oder einen anderen Ordner angelegt wird, muss die labeler.yml (Konfigurationdatei) bearbeitet werden. [Mehr Infos zu Labeler](./workflows#labeler)
+
+:::
+
+| Label                                                                                | Beschreibung                                                                  |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| <GithubBadge background="#0ea5e9" color="black">apps/northware-cockpit</GithubBadge> | Dieser Issue/PR ändert etwas an der App Northware Cockpit |
+| <GithubBadge background="#ef4444" color="white">apps/northware-finance</GithubBadge> | Dieser Issue/PR ändert etwas an der App Northware Finance |
+| <GithubBadge background="#f97316" color="black">apps/northware-trader</GithubBadge> | Dieser Issue/PR ändert etwas an der App Northware Trader |
+| <GithubBadge background="#25C19F" color="black">apps/docs</GithubBadge> | Dieser Issue/PR ändert etwas an der Documentation. Dieses Label soll verwendet werden, wenn es tatsächlich um die Änderung von Code in der Dokumentation geht. Wenn es nur darum geht, die Änderung der Docs zu verlangen, soll das Label <GithubBadge color="black" background="#25C19F">docs-wanted</GithubBadge> verwendet werden. |
+
+### Labels für Packages und die API
+
+Auch die einzelnen Packages (Dateipfad `packages/*`) sollen aus den gleichen Gründenn wie die Apps jeweils eigene Labels erhalten. 
+Sie alle erhalten die gleiche Farbgestaltung mit der Textfarbe <span style={{color:'white', background:'black'}}>black</span> und 
+der Hintergrundfarbe <span style={{color: 'black', background: '#F0B9F8'}}>#F0B9F8</span>.
+
+| Label                                                                                | Beschreibung                                                                  |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| <GithubBadge background="#63F655" color="black">api</GithubBadge> | Dieser Issue hat Auswirkungen auf die API (Neon DB und/oder Drizzle). Der Code der API ist nicht (vollständig) im Github Repository zu finden. Möglicherweise hat ein Eintrag mit diesem Label auch Auswirkungen auf das <GithubBadge background="#F0B9F8" color="black">packages/database</GithubBadge> |
+| <GithubBadge background="#F0B9F8" color="black">packages/theme</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/theme` Package |
+| <GithubBadge background="#F0B9F8" color="black">packages/ui</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/ui` Package |
+| <GithubBadge background="#F0B9F8" color="black">packages/auth</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/auth` Package |
+| <GithubBadge background="#F0B9F8" color="black">packages/database</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/database` Package |
+| <GithubBadge background="#F0B9F8" color="black">packages/tailwind-config</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/tailwind-config` Package |
+| <GithubBadge background="#F0B9F8" color="black">packages/eslint-config</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/eslint-config` Package |
+
+### Labels für andere Dateipfade
+
+| Label                                                                                | Beschreibung                                                                  |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| <GithubBadge background="#765EB0" color="white">turborepo</GithubBadge> | Dieser Issue/PR ändert etwas der Turborepo-Konfiguration bzw. an den Dateien im Root-Verzeichnis |
+| <GithubBadge background="black" color="white">github-management</GithubBadge> | Dieser Issue/PR ändert etwas an der Konfiguration für GitHub. Das kann Dateien im `.github/` Ordner, das Northware New Projekt und Einstellungen des Repositories betreffen.  |
+
+### Labels für Bots und Workflows
+
+| Label                                                                                | Beschreibung                                                                  |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| <GithubBadge background="#0366d6" color="white">dependencies</GithubBadge> | Mit diesem Pull Request wird etwas in Bezug auf Dependencies geändert, das kann die automatischen Updates von Dependabot oder manuelle Veränderungen betreffen. |
+| <GithubBadge background="black" color="white">github-actions</GithubBadge> | Dieser Issue/PR wurde von einem GitHub Actions Workflow ausgelöst.  |
+
+## Das Northware New Projekt {#projekt}
+
+Das Projekt **Northware New** wird genutzt um einen besseren Überblick über die Arbeit an am Northware Projekt zu geben. 
+Es besteht aus mehereren Ansichten, die offene und geschlossene Issues und Pull Requests so Filtern, das Entwickler den Überblick behalten und einfacher an dem Repository arbeiten können.
+
+### Status
+
+Neue Issues und Pull Requests werden automatisch dem Northware New Projekt mit dem Status Triage. Der Nutzer ist dafür verantwortlich, das die Einträge dem richtigen Status zugeordnet werden.
+Die [Projekt Workflows](./workflows#projekt) unterstützen dabei.
+
+| Status                                               | Beschreibung                                                                                                      |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| <GithubBadge statusTheme="blue">Triage</GithubBadge> | Alle Einträge, die neu zu dem Projekt hinzugefügt wurden. Diese Einträge müssen noch hinsichtlich Labeling und Status-Zuordnung eingeordnet werden. |
+| <GithubBadge statusTheme="grey">Backlog</GithubBadge> | Ideen, an denen später einmal gearbeitet werden kann. Die Arbeit an diesen Einträgen ist nicht so wichtig wie die Arbeit an den <GithubBadge statusTheme="green">Todo</GithubBadge> Einträgen. (Nur für Issues) |
+| <GithubBadge statusTheme="green">Todo</GithubBadge> | Einträge an denen als nächstes mal gearbeitet werden sollte. (Nur für Issues) |
+| <GithubBadge statusTheme="yellow">In Progress</GithubBadge> | An diesen Einträgen wird gerade gearbeitet. (Für Issues und für Pull Requests, die noch nicht abgeschlossen werden konnten) |
+| <GithubBadge statusTheme="pink">For Review</GithubBadge> | Einträge, die noch einmal betrachtet werden sollen. Meistens Pull Requests, die von Bots oder Workflows erstellt wurden und zum mergen bereitstehen. |
+| <GithubBadge statusTheme="purple">Done</GithubBadge> | Einträge die abgeschlossen sind (gemergete oder ohne merge abgeschlossene Pull Requests und abgeschlossene Issues). |
+
+
+### Ansichten
+
+#### Triage
+
+Wie oben beschrieben, werden neue Issues und Pull Requests automatisch mit dem Status <GithubBadge statusTheme="blue">Triage</GithubBadge> zu dem Projekt hinzugefügt.
+In diesem Status sollen die Einträge aber nicht bleiben sondern einem anderen Status zugeordnet werden.
+Die Triage-Ansicht zeigt alle Einträge an, die noch den Status Triage haben und daher noch hinsichtlich Labeling und Status-Zuordnung eingeordnet werden müssen.
+
+#### All Items
+
+Diese Ansich ebthält alle Einträge, die das Northware New Projekt enthält
+
+#### Apps
+
+In dieser Ansicht werden alle Einträge angezeigt, die ein <GithubBadge color="black" borderColor="black">apps/</GithubBadge> Label haben und daher eine Änderung einer oder mehrerer Apps bewirken.
+
+#### Packages
+
+In dieser Ansicht werden alle Einträge angezeigt, die ein <GithubBadge color="black" background="#F0B9F8">packages/</GithubBadge> Label haben und daher eine Änderung einer oder mehrerer Packages bewirken.
+
+#### API
+
+In dieser Ansicht werden alle Einträge angezeigt, die das <GithubBadge color="black" background="#63F655">api</GithubBadge> Label haben und daher eine Änderung der API bedeuten. 
+Das kann mit Änderungen an der Neon Database oder am Drizzle ORM oder anderen API-bezogenen Microservices zu tun haben.
+
+#### No App/No Package
+
+In dieser Ansicht werden alle EInträge angezeigt, die nicht mit einer Änderung einer App, eines Packages oder der API zutun haben oder bei denen diese Kennzeichnung vergessen wurde.
+
+#### Done
+
+In dieser Anzeige werden alle Einträge angezeigt, die bereits erledigt sind. Es handelt sich also um geschlossene oder gemergete Issues und Pull Requests.

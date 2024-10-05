@@ -5,6 +5,7 @@
   font-weight: 600;
   border: 1px solid transparent;
   border-radius: 999px;
+  white-space: nowrap;
 }
 
 .statusThemeGrey {

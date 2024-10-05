@@ -1,0 +1,81 @@
+# Workflows
+
+## GitHub Management
+
+### Pull Request Labeler {#labeler}
+
+Der Workflow "Pull Request Labeler" (`.github/workflows/pr_labeler.yml`) nutzt die GitHub Action [Labeler](https://github.com/marketplace/actions/labeler).
+Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit <GithubBadge color="black" borderColor="black">apps/</GithubBadge> und <GithubBadge color="black" background="#F0B9F8">packages/</GithubBadge> Labels.
+Damit dieses Labeling korrekt funktioniert müssen die einzelnen Labels in der Konfigurationsdatei `.github/labeler.yml` zu den zugehörigen Dateipfaden zugeordnet werden.
+
+```yaml title=".github/workflows/pr_labeler.yml"
+
+# This file is enabling the Labeler Action to run. Labeler is configured in .github/labeler.yml
+
+name: "Pull Request Labeler"
+on:
+  - pull_request_target
+
+jobs:
+  labeler:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v5
+
+```
+
+```yaml title=".github/labeler.yml"
+
+# This file serves as configuration file for the labeler Workflow (.github/workflows/pr_labeler.yml)
+# Labels for Repo-Root (Turborepo Administration)
+
+turborepo:
+  - changed-files:
+      - any-glob-to-any-file: "*"
+
+# Labels for Github Health Files
+
+github-management:
+  - changed-files:
+      - any-glob-to-any-file: ".github/**"
+
+# Labels for apps/* changes
+
+apps/docs:
+  - changed-files:
+      - any-glob-to-any-file: apps/docs/**
+
+apps/northware-cockpit:
+  - changed-files:
+      - any-glob-to-any-file: apps/northware-cockpit/**
+
+...
+
+# Labels for pakages/* changes
+
+packages/auth:
+  - changed-files:
+      - any-glob-to-any-file: packages/auth/**
+
+packages/database:
+  - changed-files:
+      - any-glob-to-any-file: packages/database/**
+
+...
+
+```
+
+### Delete Merged PRs
+
+### Workflows des Northware New Projekts {#projekt}
+
+## CI/CD
+
+### Turborepo CI
+
+### autofix.ci
+
+## Dependabot
