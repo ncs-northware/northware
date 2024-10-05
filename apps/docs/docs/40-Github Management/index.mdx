@@ -1,0 +1,50 @@
+---
+pagination_prev: null
+---
+
+# GitHub Managment
+
+Um den Entwicklungsprozess auf GitHub möglichst übersichtlich zu gestalten, gibt es einige Regeln und Einstellungen, die beim contributing beachtet werden sollten.
+Es gibt Regeln an die sich die Entwickler möglichst halten sollten, Automationen und Bots die den Entwicklungsprozess unterstützen und die sogenannten Community-Health-Files, die dem Prozess innerhalb des Repositories Eckpfeiler geben.
+
+## Coding Branches
+
+Jede Änderung am Repository sollte auf einem eigenen Branch vorgenommen werden. Die Änderungen werden dann, wenn sie fertig sind und möglichst alle [CI/CD](./Workflows#cicd) erfolgreich abgeschlossen wurden mit einem Pull Request auf den `main` Branch gemerged.
+
+Der `main` Branch ist geschützt, um direkte Commits auf diesen Branch zu vermeiden.
+
+## Issues
+
+[GitHub Issues](https://docs.github.com/de/issues) sind dazu gedacht, die Arbeit zu planen und Ideen, Feedback, Aufgaben oder Bugs zu verfolgen. Hat man also eine Idee für ein neues Feature oder stellt fest, das etwas in der überhaupt nicht oder zumindest nicht wie erwartet funktioniert, sollte ein Issue erstellt werden.
+
+Im Northware Repository gibt es vordefinierte **Issue-Templates**, um den übersichtlichen Entwicklungsprozess zu unterstützen.
+
+- **Bug melden:** Während der Entwicklung oder der Nutzung der App ist ein (schwerwiegender) Bug aufgefallen. Etwas funktioniert nicht und führt so zu einem Fehler. Der Issue wird automatisch mit <GithubBadge background="#d73a4a" color="white">bug</GithubBadge> gelabeled.
+- **Problem melden**: Während der Entwicklung oder Nutzung der App ist aufgefallen, das etwas nicht wie vorgesehen funktioniert. Der Issue wird automatisch mit <GithubBadge background="#FBCA04" color="black">invalid</GithubBadge> gelabeled.
+- **Neues Feature:** Ein Vorschlag für ein neues Feature, das es bisher so noch nicht in der App gibt oder das ein bestehendes Feature erweitert. Der Issue wird automatisch mit <GithubBadge background="#a2eeef" color="black">enhancement</GithubBadge> gelabeled.
+- **Erweiterung der Dokumentation:** Ein fertiges Feature soll in dieser Dokumentation erklärt werden. Der Issue wird automatisch mit <GithubBadge background="#25C19F" color="black">docs-wanted</GithubBadge> gelabeled.
+- **Security Vulnerability Tracking**: [Dependabot](./Dependabot) hat eine Security Vulnerability gefunden. In diesem Issue wird getracked, was getan werden kann, um die Vulnerabilty zu beseitigen. Der Issue wird automatisch mit <GithubBadge background="#FBCA04" color="black">security</GithubBadge> gelabeled.
+
+:::tip
+
+Die Issues sollten neben den voreingestellten Labels auch die Labels von Apps oder Packages erhalten, die sie beeinflussen würden.
+
+:::
+
+Jeder Issue wird automatisch dem Projekt **Northware New** mit dem Status <GithubBadge color="#0969da" background="#ddf4ff" borderColor="#54aeff66">Triage</GithubBadge> zugeordnet. Der Nutzer muss dann entscheiden, welchen Status der Issue bekommen soll. [Mehr zum Projekt](#projekt).
+
+Wenn die Arbeit an dem Issue beginnt sollte der Branch auf dem die Änderungen durchgeführt werden unter `Development` verlinkt werden. Wenn die Arbeit später mit einem Pull Request verbunden wird, wird dieser mit dem Issue verlinkt und das mergen des PR schließt den Issue.
+
+## Pull Requests
+
+Wenn Änderungen von Branches auf den `main` Branch gemerged werden sollen, muss dafür ein [Pull Request](https://docs.github.com/de/pull-requests) angelegt werden. Auch für die Pull Reuests gibt es ein Template, das vorsieht, dass im oberen Teil die Änderungen beschrieben werden, außerdem sollen hier Issues verlinkt werden, die mit diesem PR geschlossen werden sollen oder damit in Zusammenhang stehen. So kann ein konsequentes referenzieren und der automatische Isue-Close Vorgang sichergestellt werden.
+
+:::warning
+
+Wenn Issues nur wegen der Referenzierung oder automatisch verlinkt werden, obwohl der PR den Issue nicht oder nicht vollständig löst, muss der Issue manuell wieder geöffnet werden.
+
+:::
+
+Der Wokflow [Labeler](./Workflows#Labeler) labeled den Pull Request basierend auf den geänderten Dateien mit den richtigen <GithubBadge borderColor="black">apps/</GithubBadge> oder <GithubBadge background="#F0B9F8" color="black">packages/</GithubBadge> Labels.
+
+Jeder Pull Request wird automatisch dem Projekt **Northware New** mit dem Status <GithubBadge statusTheme="blue">Triage</GithubBadge> hinzugefügt und muss vom Nutzer ggf. angepasst werden. Pull Requests an denen noch gearbeitet wird sollen den Status <GithubBadge statusTheme="yellow">In Progress</GithubBadge> erhalten. Wenn die Änderungen des PR noch auf ein Review warten, erhalten sie den Status <GithubBadge statusTheme="pink">For Review</GithubBadge>. Wenn der PR gemerged wurde, wird er automatisch dem Status <GithubBadge statusTheme="purple">Done</GithubBadge> zugeordnet.
