@@ -25,3 +25,5 @@ pnpm-lock.yaml
 *.svg
 *.mdx
 
+# The autofix.ci workflow has no permission to change files in .guthub
+**/.github/
