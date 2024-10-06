@@ -68,14 +68,42 @@ packages/database:
 
 ```
 
-### Delete Merged PRs
 
 ### Workflows des Northware New Projekts {#projekt}
+
+Das Northware New Projekt nutzt einige Workflows, die die Arbeit mit dem Projket teilweise automatisieren und unterstützen. 
+Die Workflows sind nicht mit klassischen GitHub Actions sondern über das [integrierte Workflow-Modul](https://docs.github.com/de/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations) definiert.
+
+[Mehr zu Projekt-Workflows](https://docs.github.com/de/issues/planning-and-tracking-with-projects/automating-your-project)
+
+#### Verwendete Projekt-Workflows
+
+- **Auto-add to project:** Issues und Pull Requests aus dem `ncs-northware/northware` Repository werden automatisch zu dem Northare New Projekt hinzugefügt.
+- **Item added to project:** Wenn ein Issue oder Pull Request zu dem Projekt hinzugefügt wird, wird dem Eintrag der Status <GithubBadge statusTheme="blue">Triage</GithubBadge> zugeordnet.
+- **Item reopened:** Wenn ein Issue oder Pull Request wieder geöffnet wird, wird dem Eintrag der Status <GithubBadge statusTheme="yellow">In Progress</GithubBadge> zugeordnet.
+- **Pull Request merged:** Wenn ein Pull Request gemerged wurde, wird ihm der Status <GithubBadge statusTheme="purple">Done</GithubBadge> zugeordnet.
+- **Item closed:** Wenn ein Issue oder Pull Request geschlossen wird, wird dem Eintrag der Status <GithubBadge statusTheme="purple">Done</GithubBadge> zugeordnet.
 
 ## CI/CD
 
 ### Turborepo CI
 
+Der Workflow **Turborepo CI** (`.github/workflows/turborepo-ci.yml`) wird immer dann ausgelöst, wenn Code auf den `main` Branch gepusht wird oder ein neuer Pull Request eröffnet oder aktualisiert wird.
+
+Der Workflow nutzt den vorliegenden Code und installiert das Projekt in einer Node.js Umgebung mit `pnpm`.
+Mit `pnpm build --affected` werden die von der Änderung betroffenen Code-Teile gebaut. 
+Mit `pnpm lint --affected` werden **Lint-Tests** des betroffenen Codes ausgeführt.
+Schließlich wird der Code noch einmal mit `pnpm test --affected` getestet.
+
+Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgebrochen.
+
 ### autofix.ci
+
+Der Workflow **autofix.ci** (.github/workflows/autofix.yml) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.
+
+Innerhalb des Workflows wird das Projekt vollständig gebaut, der vorhandene Code wird formatiert.
+Wenn durch den Durchlauf des Workflows Änderungen am Code vorgenommen wurden, werden diese Code Fixes auf den vorhandenen Pull Request commitet.
+
+**Dieser Commit unterbricht nun alle laufenden Workflows.** Diese Workflows scheitern. Anschließend starten alle vorgesehenen Workflows wieder von neuem.
 
 ## Dependabot
