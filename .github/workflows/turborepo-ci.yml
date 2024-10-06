@@ -1,4 +1,4 @@
-name: Turbo CI Testing
+name: Turborepo CI
 
 # This Action is building, testing and linting on all changes coming from an PR to test if the code is going to work.
 
@@ -40,10 +40,10 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm build
+        run: pnpm turbo run build --affected
 
       - name: Lint
-        run: pnpm lint
+        run: pnpm turbo run lint --affected
 
       - name: Test
-        run: pnpm test
+        run: pnpm turbo run test --affected
