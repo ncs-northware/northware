@@ -5,11 +5,11 @@ const Configuration = {
       1,
       "always",
       [
-        "feature",
+        "feat",
         "fix",
         "refactor",
         "docs",
-        "code-style",
+        "code_style",
         "ci",
         "perf",
         "build",
