@@ -4,18 +4,7 @@ const Configuration = {
     "type-enum": [
       1,
       "always",
-      [
-        "feat",
-        "fix",
-        "refactor",
-        "docs",
-        "code_style",
-        "ci",
-        "perf",
-        "build",
-        "test",
-        "revert",
-      ],
+      ["chore", "ci", "docs", "feat", "fix", "revert", "test"],
     ],
   },
   ignores: [
