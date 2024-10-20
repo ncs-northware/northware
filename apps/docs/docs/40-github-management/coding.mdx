@@ -36,6 +36,8 @@ Grundsätzlich folgen Commits, die mit pnpm commit erstellt werden diesem Schema
 Dieses Schema folgt den anerkannten [Best-Practices für Conventional Commits](https://www.conventionalcommits.org/de) und den vorgegebenen Input-Möglichkeiten von commitlint.
 Mit entsprechenden Konfigurationen und im folgenden beschriebenen Vorstellungen werden diese Regeln an das Arbeiten an ncs-northware/northware angepasst.
 
+Die beschrieben Regeln sind ebenfalls inspiriert von den Conventions von [Strapi](https://contributor.strapi.io/guides/contributing#git-conventions) und [Angular](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#-commit-message-format).
+
 Wenn ein Commit all den unten beschriebenen Regeln folgt, sieht er z.B. so aus:
 
 ```
@@ -45,6 +47,9 @@ Add some documentation for my new feature called Test within my demo app.
     
 close #100
 ```
+
+Automatische Commits, die von GitHub oder von Bots und Workflows ausgelöst werden, sollten möglichst so konfiguriert werden, dass sie dem Commit-Schema folgen. 
+Sie folgen aber teilweise eigenen Regeln und verfolgen teilweise ein komplett anderes Schema.
 
 #### Type - Um welche Art von Änderung handelt es sich?
 
