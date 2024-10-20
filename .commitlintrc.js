@@ -1,11 +1,7 @@
 const Configuration = {
   extends: ["@commitlint/config-conventional"],
   rules: {
-    "type-enum": [
-      1,
-      "always",
-      ["chore", "ci", "docs", "feat", "fix", "revert", "test"],
-    ],
+    "type-enum": [1, "always", ["chore", "docs", "feat", "fix", "revert"]],
   },
   ignores: [
     (commitMessage) => {
