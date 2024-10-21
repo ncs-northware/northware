@@ -2,9 +2,55 @@
 
 ## Coding Branches
 
-Jede Änderung am Repository sollte auf einem eigenen Branch vorgenommen werden. Die Änderungen werden dann, wenn sie fertig sind und möglichst alle [CI/CD Workflows](./workflows#cicd) erfolgreich abgeschlossen wurden mit einem Pull Request auf den `main` Branch gemerged.
+Jede Änderung am Repository sollte auf einem eigenen Branch vorgenommen werden. 
+Die Änderungen werden dann, wenn sie fertig sind und möglichst alle [CI/CD Workflows](./workflows#cicd) erfolgreich abgeschlossen wurden, 
+mit einem Pull Request auf den `main` Branch gemerged.
 
 Der `main` Branch ist geschützt, um direkte Commits auf diesen Branch zu vermeiden.
+
+Der `main` Branch enthält immer den aktuellen (möglichst stabilen) Enwicklungsstand (Nightly-Version), der noch nicht als (Beta) Version veröffentlicht ist. 
+Der Code auf dem `main` Branch kann aber in Teilen instabil sein. Als Tags veröffentlichte (Nicht-Beta) Versionen sollten stabil sein und ausschließlich fertige Features enthalten.
+
+### Empfehlung zur Benennung von Branches
+
+Es gibt keine festen Regeln, wie Branches benannt werden müssen. Jeder Name ist zulässig. 
+Es gibt aber Empfehlungen, wie eine übersichtliche kontinuierliche und präzise Benennung von Branches erreicht werden kann.
+
+Ich folge hier Empfehlungen aus [diesem Medium-Artikel](https://medium.com/@abhay.pixolo/naming-conventions-for-git-branches-a-cheatsheet-8549feca2534) und meinen eigenen Vorstellungen.
+
+#### Issue-bezogene Branches
+
+Branches, die einen einzelnen Issue lösen und danach gelöscht werden können direkt in GitHub erstellt und verlint werden. 
+Diese Branches werden nach dem Schema `id-issue-title` benannt (z.B. `46-add-northware-docs-on-github-pages`). Diese Bezeichnung ist für diese Art Branches zu übernehmen.
+Wenn zu diesem Issue weitere Branches erstellt werden, können diese durch `/bla` Benennungen ergänzt werden. Hier ist aber darauf zu achten, dass die `/` Branches nicht mit dem ursprünglichen Branch co-existieren können (siehe unten).
+
+#### Freie Branch-Titel
+
+Branches die in ihrem Namen keinen Bezug zu Issues haben (sollen), können frei benannt werden. 
+Es gehört zu den Best Practices, das die Branches in Kleinbuchstaben zu benennen und Leerzeichen durch Bindestriche zu ersetzen (z.B. `bugfix-dummy` statt `Bugfix Dummy`).
+Der Name des Branches soll beschreibend, kurz und prägnant sein und am Besten reflektieren welche Arbeit auf dem Branch gemacht wurde.
+
+Außerdem können Präfix verwendet werden um zu definieren, welcher Codeteil auf dem Branch bearbeitet wird (z.B. `cockpit/hrmanagement` oder `auth/errors`) oder 
+welchen Zweck die Änderungen haben (z.B. `docs/gh-management` oder `fix/menu-style`). Eine Kombination aus beidem ist auch möglich (z.B. `theme/fix/menu-style`).
+
+Auch wenn es all diese Möglichkeiten gibt, ist der einzelne Prefix des Codeteils gegenüber dem Zweck-Prefix und auch gegenüber der Kobination vorzuziehen.
+
+:::warning Co-Existenz von prefix/* und nicht-prefix Branches
+
+Es ist nicht möglich, Branches ohne Prefix zu verwenden und zur gleichen Zeit einen Branch mit Prefix zu verwenden der gleich lautet, wie der Branchname ohne Prefix.
+Es kann also z.B. nicht der Branch `cockpit` neben dem Branch `cockpit/hrmanagement` existieren. 
+Wird nur der Branch `cockpit` oder nur der Branch `cockpit/hrmanagement` zu einem Zeitpunkt verwendet, funktioniert es.
+Für Codeteil bezeichnungen ist dennoch der Prefix-Ansatz zu wählen und die Einzelbennennug. 
+Wird also damit begonnen an der App `admin` zu arbeiten, sollte der Branch nicht einfach `admin` sondern lieber `admin/init` heißen, damit die Möglichkeit besteht
+gleichzeitig einen Branch mit dem selben Prefix zu verwenden.
+
+Sollte es einmal dazu kommen, das ein Branch-Name (z.B. `github-management`) schon einmal verwendet wurde, und nun wird, 
+nachdem dieser Remote-Branch gelöscht wurde ein neuer Branch `github-management/dependabot` eingeführt, so kann es passieren lokal noch gespeichert ist, 
+dass es den Remote-Branch `github-management` noch gibt, und dies zu Konflikten führt.
+
+In diesem Fall kann der Command `git remote prune origin` verwendet werden, um Verlinkungen zu nicht mehr vorhandenen Remote-Branches zu entfernen.
+
+:::
 
 ## Commits
 
