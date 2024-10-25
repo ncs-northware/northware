@@ -107,3 +107,13 @@ Wenn durch den Durchlauf des Workflows Änderungen am Code vorgenommen wurden, w
 **Dieser Commit unterbricht nun alle laufenden Workflows.** Diese Workflows scheitern. Anschließend starten alle vorgesehenen Workflows wieder von neuem.
 
 ## Dependabot
+
+[Dependabot](https://docs.github.com/en/code-security/dependabot) wird verwendet, um die im gesamten Repository verwendeten Dependencies aktuell zu halten.
+Wenn Dependabot Dependencies findet, bei denen es eine neue Version gibt, wird das Update umgesetzt und als Pull Request bereitgestellt.
+
+In diesem Repository ist Dependabot so konfiguriert, das wöchentlich freitags um 14:00 Uhr der Durchlauf startet. onissen wird dann als Reviewer hinzugefügt, damit ich auf den PR aufmerksam werde.
+
+Mit `open-pull-request-limit: 0` und `versioning-strategy: increase` wird gewährleistet, das Dependabot im Monorepo-Umfeld funktioniert.
+
+Auch für **GitHub Actions** ist Dependabot konfiguriert, es wird also auch die Workflows auf neue Versionen prüfen.
+
