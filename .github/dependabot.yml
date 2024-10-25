@@ -15,7 +15,8 @@ updates:
       - "onissen"
     commit-message: 
       prefix: "chore(dependabot)"
-    labels: "dependencies"
+    labels: 
+      - "dependencies"
     open-pull-requests-limit: 0
     versioning-strategy: increase
 
