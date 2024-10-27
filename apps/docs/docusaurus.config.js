@@ -12,10 +12,10 @@ const config = {
   favicon: "img/icon-docs-inverse.svg",
 
   // Set the production url of your site here
-  url: "https://localhost",
+  url: "https://ncs-northware.github.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/",
+  baseUrl: "/northware",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
