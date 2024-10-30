@@ -1,0 +1,15 @@
+{
+  "name": "@northware/theme",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "@northware/tailwind-config": "workspace:*"
+  },
+  "exports": {
+    "./global.sass": "./styling/global.sass",
+    "./fonts": "./config/fonts.js"
+  },
+  "dependencies": {
+    "next": "14.2.11"
+  }
+}
