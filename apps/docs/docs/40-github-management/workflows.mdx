@@ -93,9 +93,15 @@ Der Workflow **Turborepo CI** (`.github/workflows/turborepo-ci.yml`) wird immer 
 Der Workflow nutzt den vorliegenden Code und installiert das Projekt in einer Node.js Umgebung mit `pnpm`.
 Mit `pnpm build --affected` werden die von der Änderung betroffenen Code-Teile gebaut. 
 Mit `pnpm lint --affected` werden **Lint-Tests** des betroffenen Codes ausgeführt.
-Schließlich wird der Code noch einmal mit `pnpm test --affected` getestet.
 
 Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgebrochen.
+
+:::info Local CI
+
+Der Turborepo CI-Workflow durchläuft bei jedem Pull Request und bei jedem Merge die Schritte `pnpm turbo build --affected` und `pnpm turbo run lint --affected`. 
+Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist lässt sich dieser Ablauf mit `pnpm localci` auch lokal abbilden, damit Fehler schon vor dem CI-Durchlauf auffallen.
+
+:::
 
 ### autofix.ci
 

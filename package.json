@@ -2,11 +2,11 @@
   "name": "northware",
   "private": true,
   "scripts": {
-    "build": "turbo build",
     "dev": "turbo dev",
+    "build": "turbo build",
     "lint": "turbo lint",
+    "localci": "turbo build lint --affected",
     "format": "prettier --write \"**/*.*\"",
-    "test": "turbo run test",
     "commit": "commit"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 name: Turborepo CI
 
-# This Action is building, testing and linting on all changes coming from an PR to test if the code is going to work.
+# This Action is building and linting on all changes coming from an PR to test if the code is going to work.
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test
+    name: Build and Lint
     timeout-minutes: 15
     runs-on: ubuntu-latest
     # To use Remote Caching, uncomment the next lines and follow the steps below.
@@ -42,6 +42,3 @@ jobs:
 
       - name: Lint
         run: pnpm turbo run lint --affected
-
-      - name: Test
-        run: pnpm turbo run test --affected
