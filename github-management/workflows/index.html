@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.5.2">
 <title data-rh="true">Workflows | Northware Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://ncs-northware.github.io/northware/github-management/workflows"><meta data-rh="true" property="og:locale" content="de"><meta data-rh="true" name="docusaurus_locale" content="de"><meta data-rh="true" name="docsearch:language" content="de"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Workflows | Northware Docs"><meta data-rh="true" name="description" content="GitHub Management"><meta data-rh="true" property="og:description" content="GitHub Management"><link data-rh="true" rel="icon" href="/northware/img/icon-docs-inverse.svg"><link data-rh="true" rel="canonical" href="https://ncs-northware.github.io/northware/github-management/workflows"><link data-rh="true" rel="alternate" href="https://ncs-northware.github.io/northware/github-management/workflows" hreflang="de"><link data-rh="true" rel="alternate" href="https://ncs-northware.github.io/northware/github-management/workflows" hreflang="x-default"><link rel="stylesheet" href="/northware/assets/css/styles.3ce0ab40.css">
-<script src="/northware/assets/js/runtime~main.a1feef99.js" defer="defer"></script>
+<script src="/northware/assets/js/runtime~main.211065e0.js" defer="defer"></script>
 <script src="/northware/assets/js/main.351b2937.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -33,9 +33,10 @@ Die Workflows sind nicht mit klassischen GitHub Actions sondern über das <a hre
 <p>Der Workflow <strong>Turborepo CI</strong> (<code>.github/workflows/turborepo-ci.yml</code>) wird immer dann ausgelöst, wenn Code auf den <code>main</code> Branch gepusht wird oder ein neuer Pull Request eröffnet oder aktualisiert wird.</p>
 <p>Der Workflow nutzt den vorliegenden Code und installiert das Projekt in einer Node.js Umgebung mit <code>pnpm</code>.
 Mit <code>pnpm build --affected</code> werden die von der Änderung betroffenen Code-Teile gebaut.
-Mit <code>pnpm lint --affected</code> werden <strong>Lint-Tests</strong> des betroffenen Codes ausgeführt.
-Schließlich wird der Code noch einmal mit <code>pnpm test --affected</code> getestet.</p>
+Mit <code>pnpm lint --affected</code> werden <strong>Lint-Tests</strong> des betroffenen Codes ausgeführt.</p>
 <p>Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgebrochen.</p>
+<div class="theme-admonition theme-admonition-info admonition_HhHC alert alert--info"><div class="admonitionHeading_vDEb"><span class="admonitionIcon_BFeN"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>Local CI</div><div class="admonitionContent_vxLV"><p>Der Turborepo CI-Workflow durchläuft bei jedem Pull Request und bei jedem Merge die Schritte <code>pnpm turbo build --affected</code> und <code>pnpm turbo run lint --affected</code>.
+Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist lässt sich dieser Ablauf mit <code>pnpm localci</code> auch lokal abbilden, damit Fehler schon vor dem CI-Durchlauf auffallen.</p></div></div>
 <h3 class="anchor anchorWithStickyNavbar_H8NR" id="autofixci">autofix.ci<a href="#autofixci" class="hash-link" aria-label="Direkter Link zur autofix.ci" title="Direkter Link zur autofix.ci">​</a></h3>
 <p>Der Workflow <strong>autofix.ci</strong> (.github/workflows/autofix.yml) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.</p>
 <p>Innerhalb des Workflows wird das Projekt vollständig gebaut, der vorhandene Code wird formatiert.
