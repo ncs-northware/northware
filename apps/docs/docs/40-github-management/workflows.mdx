@@ -96,6 +96,13 @@ Mit `pnpm lint --affected` werden **Lint-Tests** des betroffenen Codes ausgefüh
 
 Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgebrochen.
 
+:::info Local CI
+
+Der Turborepo CI-Workflow durchläuft bei jedem Pull Request und bei jedem Merge die Schritte `pnpm turbo build --affected` und `pnpm turbo run lint --affected`. 
+Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist lässt sich dieser Ablauf mit `pnpm localci` auch lokal abbilden, damit Fehler schon vor dem CI-Durchlauf auffallen.
+
+:::
+
 ### autofix.ci
 
 Der Workflow **autofix.ci** (.github/workflows/autofix.yml) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.
