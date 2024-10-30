@@ -1,0 +1,76 @@
+.mainnav, .metanav
+    @apply flex flex-col justify-center items-center
+    @apply sticky top-0 left-0 right-0 z-50
+
+.mainnav
+    @apply shadow-lg bg-white
+    @apply py-5
+
+.metanav
+    @apply py-px bg-neutral-100
+
+.nav-container
+    @apply relative z-20 max-w-7xl
+    @apply flex flex-row items-center justify-between
+    width: 95%
+    perspective: 1300px
+
+    .navmenu-desktop
+        @apply flex-1 justify-between items-center static float-right
+
+        .navmenu-left
+            @apply flex space-x-8
+            
+            .dropdown-container-desktop
+                @apply absolute left-0 z-10 origin-top-right
+                @apply mt-2
+                @apply rounded-md w-40 bg-white shadow-lg overflow-hidden
+
+    .navmenu-meta
+        .appswitch-menu
+            @apply space-x-4
+
+            .appswitch-item
+                .appswitch-link
+                    @apply text-secondary hover:underline underline-offset-2 decoration-2 font-medium
+
+.mobilenav
+    width: 95%
+
+    .mobile-dropdown-wrapper
+        @apply rounded-md overflow-hidden
+
+.menuitem-desktop
+    @apply inline-flex justify-center
+    @apply rounded-md px-3 py-2 text-sm font-medium
+
+.menuitem-mobile
+    @apply flex items-center
+    @apply px-3 py-2
+    @apply text-base font-medium
+
+    &.menuitem-mobile-parent
+        @apply font-medium
+        @apply uppercase
+        @apply text-primary-500 hover:bg-primary-100
+
+.menuitem, .dropdown-menuitem
+    @apply text-secondary hover:bg-primary-100
+    
+.menuitem-active, .dropdown-menuitem-active
+    @apply bg-primary-500 text-white
+    @apply hover:bg-primary-400
+
+.dropdown-menuitem
+    @apply block px-4 py-2 text-sm
+
+    &.dropdown-menuitem-parent
+        @apply font-medium
+        @apply uppercase
+        @apply bg-primary-50 text-primary-500 hover:bg-primary-100
+
+.metanav-right
+    @apply space-x-5 flex
+    .menuitem-meta, .menuitem-meta *
+        @apply hover:underline underline-offset-2 decoration-2
+        @apply flex items-center

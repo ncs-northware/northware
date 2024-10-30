@@ -1,9 +1,20 @@
-import "./globals.css";
+import "@northware/theme/global.sass";
+
+import { source_sans } from "@northware/theme/fonts";
+
+export const metadata = {
+  title: {
+    template: "%s | Northware Cockpit",
+    default: "Northware Cockpit",
+  },
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="de">
-      <body className="">{children}</body>
+      <body>
+        <main className={`${source_sans.variable} font-sans`}>{children}</main>
+      </body>
     </html>
   );
 }

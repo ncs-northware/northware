@@ -1,0 +1,30 @@
+// Simple Content
+.content
+    @apply max-w-7xl mx-auto my-10
+    width: 95%
+
+// Sidebar Layout
+.sidebarLayout
+    @apply flex flex-col md:flex-row md:overflow-hidden my-10
+
+    .sidebarContent
+        @apply grow md:overflow-y-auto px-6 md:px-12
+    
+    .sidebarWrapper
+        @apply w-full md:w-64 h-full
+        @apply flex flex-col 
+        @apply px-3 md:px-2
+        
+        .sidebarInnerWrapper
+            @apply flex grow flex-row justify-between md:flex-col
+            @apply space-x-2 md:space-x-0 md:space-y-2
+
+.sidebarLink
+    @apply flex md:flex-none grow items-center justify-center md:justify-start
+    @apply h-[48px] rounded-md
+    @apply gap-2 p-3 md:p-2 md:px-3
+    @apply text-sm font-medium
+    @apply hover:bg-primary-100 hover:text-primary-600
+
+    &.active
+        @apply bg-primary-100 text-primary-600
