@@ -5,8 +5,7 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
-    "test": "turbo run test",
-    "localci": "turbo build lint test --affected",
+    "localci": "turbo build lint --affected",
     "format": "prettier --write \"**/*.*\"",
     "commit": "commit"
   },

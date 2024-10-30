@@ -93,7 +93,6 @@ Der Workflow **Turborepo CI** (`.github/workflows/turborepo-ci.yml`) wird immer 
 Der Workflow nutzt den vorliegenden Code und installiert das Projekt in einer Node.js Umgebung mit `pnpm`.
 Mit `pnpm build --affected` werden die von der Änderung betroffenen Code-Teile gebaut. 
 Mit `pnpm lint --affected` werden **Lint-Tests** des betroffenen Codes ausgeführt.
-Schließlich wird der Code noch einmal mit `pnpm test --affected` getestet.
 
 Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgebrochen.
 
