@@ -4,6 +4,7 @@
 turborepo:
   - changed-files:
       - any-glob-to-any-file: "*"
+      - all-globs-to-all-files: "!.changeset/*"
 
 # Labels for Github Health Files
 
