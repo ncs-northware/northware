@@ -35,6 +35,8 @@ jobs:
 turborepo:
   - changed-files:
       - any-glob-to-any-file: "*"
+      - all-globs-to-all-filles: "!.changesets/*"
+      # Pull Requests die Changesets enthalten sollen nicht mit `turborepo` gelabeled werden.
 
 # Labels for Github Health Files
 
