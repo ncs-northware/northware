@@ -8,6 +8,7 @@ turborepo:
       - all-globs-to-all-files: "!.github/**"
       - all-globs-to-all-files: "!apps/**"
       - all-globs-to-all-files: "!packages/**"
+      - all-globs-to-all-files: "!pnpm-lock.yaml"
 
 # Labels for Github Health Files
 
