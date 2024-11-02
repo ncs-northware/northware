@@ -6,7 +6,7 @@
     "./connection": "./db-connect.js"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^0.9.5",
+    "@neondatabase/serverless": "^0.10.1",
     "drizzle-orm": "^0.36.0"
   }
 }
