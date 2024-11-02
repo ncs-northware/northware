@@ -1,5 +1,3 @@
-# Adapted from create-t3-app.
-
 name: Auto Release
 
 on:
@@ -7,35 +5,35 @@ on:
     branches:
       - main
 
-permissions: write-all
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  pull-requests: write
 
 jobs:
   release:
-    name: Create a PR for release workflow
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup node
+      - name: Setup Node.js 20
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: "pnpm"
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
 
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Create Version PR
-        id: changesets
+      - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          commit: "chore(release): version packages"
-          title: "chore(release): version packages"
+          commit: "chore(release): New Package Versions"
+          title: "chore(release): New Package Versions"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
