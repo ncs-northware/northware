@@ -3,7 +3,7 @@
 
 turborepo:
   - changed-files:
-      - any-glob-to-any-file: "*"
+      - all-globs-to-all-files: "*"
       - all-globs-to-all-files: "!.changeset/**"
       - all-globs-to-all-files: "!.github/**"
       - all-globs-to-all-files: "!apps/**"
