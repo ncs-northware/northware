@@ -14,7 +14,7 @@ updates:
     reviewers:
       - "onissen"
     commit-message: 
-      prefix: "chore(dependabot)"
+      prefix: "chore(update-pnpm)"
     labels: 
       - "dependencies"
     versioning-strategy: increase
@@ -22,10 +22,12 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     commit-message:
-      prefix: 'chore(actions)'
+      prefix: 'chore(update-actions)'
     schedule:
       interval: weekly
       day: friday
       time: '14:00'
     labels:
       - 'github-actions'
+    reviewers:
+      - "onissen"
