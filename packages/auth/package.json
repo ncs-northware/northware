@@ -5,6 +5,7 @@
   "dependencies": {
     "@northware/database": "workspace:*",
     "bcryptjs": "^2.4.3",
+    "drizzle-orm": "^0.36.0",
     "next-auth": "5.0.0-beta.20"
   },
   "exports": {
