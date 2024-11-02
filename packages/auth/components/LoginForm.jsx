@@ -1,56 +1,47 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
+import { useActionState } from "react-dom";
 
-export function LoginForm({ action, children }) {
+export function LoginForm({ action }) {
   const { pending } = useFormStatus();
-
   return (
-    <form
-      action={action}
-      className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
-    >
-      <div>
-        <label
-          htmlFor="email"
-          className="block text-xs text-gray-600 uppercase"
-        >
-          Email Address
+    <form action={action}>
+      <div className="mb-6">
+        <label htmlFor="email" className="label">
+          E-Mail-Adresse
         </label>
         <input
           id="email"
+          className="input"
           name="email"
           type="email"
-          placeholder="user@acme.com"
+          placeholder="kunde@northware.de"
           autoComplete="email"
           required
-          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />
       </div>
-      <div>
-        <label
-          htmlFor="password"
-          className="block text-xs text-gray-600 uppercase"
-        >
-          Password
+      <div className="mb-6">
+        <label htmlFor="password" className="label">
+          Passwort
         </label>
         <input
           id="password"
           name="password"
           type="password"
           required
-          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
+          className="input"
+          placeholder="Passwort"
         />
       </div>
       <button
         type={pending ? "button" : "submit"}
         aria-disabled={pending}
-        className="flex h-10 w-full items-center justify-center rounded-md border text-sm transition-all focus:outline-none"
+        className="btn btn-primary w-full"
       >
-        {children}
         {pending && (
           <svg
-            className="animate-spin ml-2 h-4 w-4 text-black"
+            className="animate-spin ml-2 h-4 w-4 text-onPrimary"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -71,7 +62,7 @@ export function LoginForm({ action, children }) {
           </svg>
         )}
         <span aria-live="polite" className="sr-only" role="status">
-          {pending ? "Loading" : "Submit form"}
+          {pending ? "Loading" : "Login"}
         </span>
       </button>
     </form>
