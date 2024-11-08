@@ -75,7 +75,7 @@ const config = {
       footer: {
         style: "light",
         links: [],
-        copyright: `Copyright © ${new Date().getFullYear()} NCS Northware`,
+        copyright: `Copyright © ${new Date().getFullYear()} NCS Northware & onissen`,
       },
       prism: {
         theme: prismThemes.github,
