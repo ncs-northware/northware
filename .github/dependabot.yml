@@ -11,6 +11,10 @@ updates:
       interval: "weekly"
       day: "friday"
       time: "14:00"
+    groups:
+      docusaurus:
+        patterns:
+          - "@docusaurus/*"
     reviewers:
       - "onissen"
     commit-message: 
@@ -20,7 +24,7 @@ updates:
     versioning-strategy: increase
 
   - package-ecosystem: github-actions
-    directory: /
+    directory: "/"
     commit-message:
       prefix: 'chore(update-actions)'
     schedule:
