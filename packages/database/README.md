@@ -1,9 +1,5 @@
 # `@northware/database`
 
-## Connect to the Neon Database
+`@northware/database` is used to connect any app inside this project to the Neon Databse and defines the Database Schema with Drizzle.
 
-When fetching Data from the Neon Database you will have to use `db`.
-
-```jsx
-import db from "@northware/db";
-```
+**[@northware/database on Northware Docs](https://ncs-northware.github.io/northware/Packages/database)**
