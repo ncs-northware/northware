@@ -1,5 +1,4 @@
-import "@northware/theme/global.sass";
-
+import "./globals.css";
 import { source_sans } from "@northware/theme/fonts";
 
 export const metadata = {

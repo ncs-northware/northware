@@ -1,14 +1,16 @@
 import { auth, signOut } from "@northware/auth/auth";
+import { HelloWorld } from "@northware/ui";
 
 export default async function DashboardPage() {
   let session = await auth();
   console.log(session);
   return (
-    <div className="flex h-screen bg-black">
-      <div className="w-screen h-screen flex flex-col space-y-5 justify-center items-center text-white">
+    <div className="">
+      <div className="">
         You are logged in as {session?.user?.email}
         <SignOut />
       </div>
+      <HelloWorld />
     </div>
   );
 }
