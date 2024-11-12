@@ -1,17 +1,34 @@
 import { auth, signOut } from "@northware/auth/auth";
-import { HelloWorld } from "@northware/ui/components";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@northware/ui/components";
 
 export default async function DashboardPage() {
   let session = await auth();
   console.log(session);
   return (
-    <div className="">
-      <div className="bg-slate-300 text-primary-200">
-        You are logged in as {session?.user?.email}
-        <SignOut />
-      </div>
-      <HelloWorld className="bg-green-400 text-trader-400" />
-    </div>
+    <>
+      You are logged in as {session?.user?.email}
+      <SignOut />
+      <Card className="bg-green-300">
+        <CardHeader>
+          <CardTitle>Card Title</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
+      <div className="size-24 rounded-md bg-cockpit-400">Test</div>
+    </>
   );
 }
 
