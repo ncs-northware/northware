@@ -6,11 +6,11 @@ export default async function DashboardPage() {
   console.log(session);
   return (
     <div className="">
-      <div className="">
+      <div className="bg-slate-300 text-primary-200">
         You are logged in as {session?.user?.email}
         <SignOut />
       </div>
-      <HelloWorld />
+      <HelloWorld className="bg-green-400 text-trader-400" />
     </div>
   );
 }
