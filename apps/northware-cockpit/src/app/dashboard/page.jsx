@@ -1,5 +1,5 @@
 import { auth, signOut } from "@northware/auth/auth";
-import { HelloWorld } from "@northware/ui";
+import { HelloWorld } from "@northware/ui/components";
 
 export default async function DashboardPage() {
   let session = await auth();

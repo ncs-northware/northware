@@ -7,9 +7,9 @@
     "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css"
   },
   "exports": {
-    ".": "./src",
+    "./components": "./src/components",
     "./styles.css": "./dist/index.css",
-    "./templates/login": "./src/templates/Login.module.sass"
+    "./fonts": "./src/fonts.js"
   },
   "devDependencies": {
     "@northware/tailwind-config": "workspace:*",

@@ -1,11 +1,10 @@
 import { LoginForm } from "@northware/auth/components";
 import { signIn } from "@northware/auth/auth";
-import template from "@northware/ui/templates/login";
 import Image from "next/image";
 export default function LoginPage() {
   return (
-    <main className={`${template.login} ${template.cockpit}`}>
-      <section className={template.loginBox}>
+    <main className={`${""} ${""}`}>
+      <section className={""}>
         <div id="loginForm">
           <Image
             src="/img/logo.svg"
