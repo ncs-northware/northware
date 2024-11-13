@@ -67,6 +67,9 @@ importers:
       '@northware/theme':
         specifier: workspace:*
         version: link:../../packages/theme
+      '@northware/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
       '@northware/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -178,6 +181,8 @@ importers:
       '@northware/tailwind-config':
         specifier: workspace:*
         version: link:../tailwind-config
+
+  packages/tsconfig: {}
 
   packages/ui:
     dependencies:
