@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
-    "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css"
+    "dev": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
+    "build": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css"
   },
   "exports": {
     "./components": "./src/components",
-    "./styles.css": "./dist/index.css",
+    "./css": "./src/css/output.css",
     "./fonts": "./src/fonts.js"
   },
   "devDependencies": {
