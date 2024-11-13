@@ -32,12 +32,6 @@ jobs:
 # This file serves as configuration file for the labeler Workflow (.github/workflows/pr_labeler.yml)
 # Labels for Repo-Root (Turborepo Administration)
 
-turborepo:
-  - changed-files:
-      - any-glob-to-any-file: "*"
-      - all-globs-to-all-filles: "!.changesets/*"
-      # Pull Requests die Changesets enthalten sollen nicht mit `turborepo` gelabeled werden.
-
 # Labels for Github Health Files
 
 github-management:
