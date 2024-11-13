@@ -8,7 +8,7 @@
     "type-check": "tsc --noEmit"
   },
   "exports": {
-    "./components": "./src/components",
+    "./components": "./src/components/index.ts",
     "./css": "./src/css/output.css",
     "./fonts": "./src/fonts.ts"
   },
