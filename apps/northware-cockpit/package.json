@@ -13,7 +13,6 @@
     "@northware/auth": "workspace:*",
     "@northware/theme": "workspace:*",
     "@northware/ui": "workspace:*",
-    "@northware/tsconfig": "workspace:*",
     "drizzle-orm": "^0.36.1",
     "next": "15.0.3",
     "next-auth": "5.0.0-beta.25",
@@ -22,6 +21,7 @@
     "sass": "^1.80.6"
   },
   "devDependencies": {
+    "@northware/tsconfig": "workspace:*",
     "@northware/eslint-config": "workspace:*",
     "@northware/tailwind-config": "workspace:*",
     "autoprefixer": "^10.4.20",
