@@ -16,7 +16,7 @@ Um das Stylesheet von `@northware/ui` zu verwenden, muss es in der `layout.jsx` 
 import "./globals.css";
 
 // Stylesheet aus @northware/ui
-import "@northware/ui/styles.css";
+import "@northware/ui/css";
 ```
 
 ## Features
@@ -31,7 +31,7 @@ Die **`tailwind.config.js`** innerhalb des Packages ermöglich die Nutzung inner
 - Das UI-Package verwendet den Prefix `ui-`. Das bedeutet, das jede Tailwind-Klasse innerhalb des UI-Package mit diesem Prefix angegeben werden muss. Damit ist gewährleistet, das Tailwind-Klassen innerhalb des UI-Packages nicht mit Tailwind-Klassen außerhalb des Packages (z.B. in den Apps) in Konflikt kommen.
 - Darüber hinaus verwendet das UI-Package die Basis-Konfigurationen aus [@northware/tailwind-config](../tailwind-config) als Preset. Alle Regelungen, die in diesem Package bereits getroffen wurden, müssen in der Konfigurationsdatei der UI nicht erneut definiert werden.
 
-Das UI-Package verwendet die Tailwind CLI, um die Stylings aus den Komponenten der UI anzuwenden. Die `./src/styles.css` importiert dazu die Tailwind-Directives. Wird nun innerhalb des Packages bzw. in innerhalb der Turborepo das Script `dev` oder `build` aufgerufen, compiled die Tailwind CLI die innerhalb de UI-Packages verwendeten Stylings in die `./dist/index.sass`. Diese Datei wird wiederum vom `@northware/ui`-Package exportiert und muss dann in die `layout.jsx` der Northware Apps importiert werden, um die UI-Komponenten richtig darstellen zu können.
+Das UI-Package verwendet die Tailwind CLI, um die Stylings aus den Komponenten der UI anzuwenden. Die `src/css/input.css` importiert dazu die Tailwind-Directives. Wird nun innerhalb des Packages bzw. in innerhalb der Turborepo das Script `dev` oder `build` aufgerufen, compiled die Tailwind CLI die innerhalb de UI-Packages verwendeten Stylings in die `src/css/output.css`. Diese Datei wird wiederum vom `@northware/ui`-Package exportiert und muss dann in die `layout.jsx` der Northware Apps importiert werden, um die UI-Komponenten richtig darstellen zu können.
 
 ### shadcn/ui
 

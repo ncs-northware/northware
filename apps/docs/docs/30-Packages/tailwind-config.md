@@ -68,7 +68,7 @@ Die `globals.css` muss nun so konfiguriert werden, dass die Tailwind-Stylings in
 import "./globals.css";
 
 // Styling aus dem UI-Package (nur nötig wenn die App @northware/ui verwendet)
-import "@northware/ui/styles.css";
+import "@northware/ui/css";
 ```
 
 Quelle: [Framework Guide "Install Tailwind CSS with Next.js"](https://tailwindcss.com/docs/guides/nextjs)
@@ -124,7 +124,7 @@ module.exports = {
 
 Innerhalb des Packages muss es eine CSS-Datei geben, in der Tailwind eingebunden wird (z.B. `./src/input.css`)
 
-```css title="./src/input.css"
+```css title="./src/css/input.css"
 
 @tailwind base;
 @tailwind components;
@@ -140,7 +140,7 @@ Die Tailwind CLI muss nun die verwendeten Tailwind-Styles compilen. Dazu muss de
 
 ```cmd
 
-pnpm tailwindcss -i ./src/input.css -o ./src/output.css --watch
+pnpm tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch
 
 ```
 
@@ -152,7 +152,7 @@ Durch das `--watch` Flag wartet der Command auf Änderungen innerhalb des Packag
 Die `output.css` enthält nun nur die wirklich benötigten Stylings und kann innerhalb des Packages oder in anderen Packages und Apps überall dort verwendet werden, wo auf Teile des Packages zugegriffen wird.
 
 ```jsx title="./layout.jsx"
-import "@northware/ui/styles.css";
+import "@northware/ui/css";
 ```
 
 **Achtung:** Werden Stylesheets aus einem Package in einem anderen Package oder App verwendet, muss das bereitstellende Package diese CSS-Datei exportieren.
@@ -162,7 +162,7 @@ import "@northware/ui/styles.css";
 {
   ...
   "exports": {
-    "./styles.css": "./src/output.css",
+    "./css": "./src/css/output.css",
     ...
   },
   ...
