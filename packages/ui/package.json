@@ -9,18 +9,21 @@
   "exports": {
     "./components": "./src/components",
     "./css": "./src/css/output.css",
-    "./fonts": "./src/fonts.js"
+    "./fonts": "./src/fonts.ts"
   },
   "devDependencies": {
     "@northware/tailwind-config": "workspace:*",
+    "@northware/tsconfig": "workspace:*",
     "autoprefixer": "^10.4.20",
     "postcss": "^8",
     "tailwindcss": "^3.4.14"
   },
   "dependencies": {
+    "@types/react": "^18.3.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.456.0",
+    "next": "15.0.3",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
   }
