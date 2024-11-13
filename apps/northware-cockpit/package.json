@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@northware/auth": "workspace:*",
-    "@northware/ui": "workspace:*",
     "@northware/theme": "workspace:*",
+    "@northware/ui": "workspace:*",
     "drizzle-orm": "^0.36.1",
     "next": "15.0.3",
     "next-auth": "5.0.0-beta.25",
@@ -22,6 +22,7 @@
   "devDependencies": {
     "@northware/eslint-config": "workspace:*",
     "@northware/tailwind-config": "workspace:*",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.14.0",
     "eslint-config-next": "^15.0.3",
     "postcss": "^8",

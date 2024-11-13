@@ -1,5 +1,7 @@
-const colors = require("tailwindcss/colors");
 /** @type {import('tailwindcss').Config} */
+
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   presets: [require("@northware/tailwind-config")],
@@ -7,8 +9,8 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.sky,
-        onPrimary: colors.white,
       },
     },
   },
+  plugins: [],
 };

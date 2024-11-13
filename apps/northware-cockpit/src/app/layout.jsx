@@ -1,6 +1,6 @@
-import "@northware/theme/global.sass";
-
-import { source_sans } from "@northware/theme/fonts";
+import "./globals.css";
+import "@northware/ui/css";
+import { source_sans } from "@northware/ui/fonts";
 
 export const metadata = {
   title: {
@@ -13,7 +13,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="de">
       <body>
-        <main className={`${source_sans.variable} font-sans`}>{children}</main>
+        <main className={`${source_sans.variable} font-sans container`}>
+          {children}
+        </main>
       </body>
     </html>
   );
