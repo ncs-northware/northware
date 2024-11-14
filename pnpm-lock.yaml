@@ -139,6 +139,10 @@ importers:
       next-auth:
         specifier: 5.0.0-beta.25
         version: 5.0.0-beta.25(next@15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6))(react@18.3.1)
+    devDependencies:
+      '@northware/tsconfig':
+        specifier: 'workspace:'
+        version: link:../tsconfig
 
   packages/database:
     dependencies:
