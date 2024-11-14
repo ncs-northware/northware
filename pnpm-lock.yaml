@@ -83,7 +83,7 @@ importers:
         version: link:../../packages/ui
       drizzle-orm:
         specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.4)(react@18.3.1)
+        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
       next:
         specifier: 15.0.3
         version: 15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6)
@@ -130,12 +130,12 @@ importers:
       '@northware/database':
         specifier: workspace:*
         version: link:../database
-      bcryptjs:
-        specifier: ^2.4.3
-        version: 2.4.3
+      bcrypt-ts:
+        specifier: ^5.0.3
+        version: 5.0.3
       drizzle-orm:
         specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.4)(react@18.3.1)
+        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
       next-auth:
         specifier: 5.0.0-beta.25
         version: 5.0.0-beta.25(next@15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6))(react@18.3.1)
@@ -153,7 +153,7 @@ importers:
         version: 0.27.1
       drizzle-orm:
         specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.4)(react@18.3.1)
+        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
 
   packages/eslint-config:
     devDependencies:
@@ -3201,8 +3201,9 @@ packages:
   batch@0.6.1:
     resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
 
-  bcryptjs@2.4.3:
-    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
+  bcrypt-ts@5.0.3:
+    resolution: {integrity: sha512-2FcgD12xPbwCoe5i9/HK0jJ1xA1m+QfC1e6htG9Bl/hNOnLyaFmQSlqLKcfe3QdnoMPKpKEGFCbESBTg+SJNOw==}
+    engines: {node: '>=18'}
 
   better-path-resolve@1.0.0:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
@@ -6508,8 +6509,8 @@ packages:
   postgres-range@1.1.4:
     resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
 
-  postgres@3.4.4:
-    resolution: {integrity: sha512-IbyN+9KslkqcXa8AO9fxpk97PA4pzewvpi2B3Dwy9u4zpV32QicaEdgmF3eSQUzdRk7ttDHQejNgAEr4XoeH4A==}
+  postgres@3.4.5:
+    resolution: {integrity: sha512-cDWgoah1Gez9rN3H4165peY9qfpEo+SA61oQv65O3cRUE1pOEoJWwddwcqKE8XZYjbblOJlYDlLV4h67HrEVDg==}
     engines: {node: '>=12'}
 
   preact-render-to-string@5.2.3:
@@ -12055,7 +12056,7 @@ snapshots:
 
   batch@0.6.1: {}
 
-  bcryptjs@2.4.3: {}
+  bcrypt-ts@5.0.3: {}
 
   better-path-resolve@1.0.0:
     dependencies:
@@ -12859,13 +12860,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.4)(react@18.3.1):
+  drizzle-orm@0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1):
     optionalDependencies:
       '@libsql/client-wasm': 0.14.0
       '@neondatabase/serverless': 0.10.3
       '@types/pg': 8.11.6
       '@types/react': 18.3.12
-      postgres: 3.4.4
+      postgres: 3.4.5
       react: 18.3.1
 
   duplexer@0.1.2: {}
@@ -15870,7 +15871,7 @@ snapshots:
 
   postgres-range@1.1.4: {}
 
-  postgres@3.4.4:
+  postgres@3.4.5:
     optional: true
 
   preact-render-to-string@5.2.3(preact@10.11.3):
