@@ -7,11 +7,10 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@changesets/cli':
         specifier: ^2.27.9
         version: 2.27.9
-    devDependencies:
       '@commitlint/cli':
         specifier: ^19.5.0
         version: 19.5.0(@types/node@22.5.5)(typescript@5.6.3)
@@ -21,6 +20,12 @@ importers:
       '@commitlint/prompt-cli':
         specifier: ^19.5.0
         version: 19.5.0(@types/node@22.5.5)(typescript@5.6.3)
+      '@commitlint/types':
+        specifier: ^19.5.0
+        version: 19.5.0
+      '@northware/tsconfig':
+        specifier: 'workspace:'
+        version: link:packages/tsconfig
       prettier:
         specifier: ^3.2.5
         version: 3.3.3
