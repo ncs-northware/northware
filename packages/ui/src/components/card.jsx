@@ -6,7 +6,7 @@ const Card = ({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "rounded-md border bg-card text-card-foreground shadow-sm",
+      "bg-card text-card-foreground rounded-md border shadow-sm",
       className,
     )}
     {...props}
@@ -38,7 +38,7 @@ CardTitle.displayName = "CardTitle";
 const CardDescription = ({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-muted-foreground text-sm", className)}
     {...props}
   />
 );

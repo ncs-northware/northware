@@ -71,11 +71,11 @@ Auf der rechten Seite der Meta-Navigation wird der aktuell angemeldete User ange
 ```jsx
 <Menu as="div" className="metanav-right">
   <p className="flex items-center">
-    <UserIcon className="h-4 mr-2" />
+    <UserIcon className="mr-2 h-4" />
     {user?.username || "Nicht angemeldet"}
   </p>
   <Menu.Button className="menuitem-meta" onClick={handleLogout}>
-    <LockClosedIcon className="h-4 mr-2" />
+    <LockClosedIcon className="mr-2 h-4" />
     Abmelden
   </Menu.Button>
 </Menu>
