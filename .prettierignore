@@ -15,6 +15,9 @@ pnpm-lock.yaml
 # Generated files
 .nojekyll
 
+# TypeScript generated
+tsconfig.tsbuildinfo
+
 # Please ignore ingnore files lol
 .gitignore
 .prettierignore
@@ -26,7 +29,6 @@ pnpm-lock.yaml
 *.svg
 *.mdx
 *.sass
-tsconfig.json
 
 # The autofix.ci workflow has no permission to change files in .guthub
 **/.github/
