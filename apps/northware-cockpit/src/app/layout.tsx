@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body>
-        <main className={`${source_sans.variable} font-sans container`}>
+        <main className={`${source_sans.variable} container font-sans`}>
           {children}
         </main>
       </body>

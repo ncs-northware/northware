@@ -14,8 +14,7 @@ export const GithubBadge = ({
         color: color,
         borderColor: borderColor,
       }}
-      className={`${layout.githubBadge} 
-      ${
+      className={`${layout.githubBadge} ${
         statusTheme === "grey"
           ? layout.statusThemeGrey
           : statusTheme === "blue"
