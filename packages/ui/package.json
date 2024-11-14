@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
     "build": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css",
-    "type-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit"
   },
   "exports": {
     "./components": "./src/components/index.ts",

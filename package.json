@@ -7,7 +7,9 @@
     "lint": "turbo lint",
     "localci": "turbo build lint --affected",
     "format": "prettier --write \"**/*.*\"",
-    "commit": "commit"
+    "commit": "commit",
+    "tsc-check": "turbo tsc-check",
+    "tsc-check:root": "tsc --noEmit"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",

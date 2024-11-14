@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "type-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit"
   },
   "exports": {
     ".": "./tailwind.config.ts"

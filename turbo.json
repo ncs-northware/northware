@@ -15,6 +15,9 @@
     },
     "lint": {
       "dependsOn": ["^lint"]
+    },
+    "tsc-check": {
+      "dependsOn": ["^tsc-check"]
     }
   }
 }

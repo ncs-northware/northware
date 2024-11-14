@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit"
   },
   "dependencies": {
     "@northware/auth": "workspace:*",
