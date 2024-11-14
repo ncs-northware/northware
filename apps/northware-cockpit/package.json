@@ -6,7 +6,8 @@
     "dev": "next dev --turbo --port 40110",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "tsc-check": "tsc --noEmit"
   },
   "dependencies": {
     "@northware/auth": "workspace:*",
@@ -20,6 +21,7 @@
     "sass": "^1.80.6"
   },
   "devDependencies": {
+    "@northware/tsconfig": "workspace:*",
     "@northware/eslint-config": "workspace:*",
     "@northware/tailwind-config": "workspace:*",
     "autoprefixer": "^10.4.20",

@@ -2,7 +2,10 @@ import * as React from "react";
 
 import { cn } from "../utils/cn";
 
-const Card = ({ className, ...props }, ref) => (
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -11,19 +14,25 @@ const Card = ({ className, ...props }, ref) => (
     )}
     {...props}
   />
-);
+));
 Card.displayName = "Card";
 
-const CardHeader = ({ className, ...props }, ref) => (
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn("flex flex-col space-y-1.5 p-6", className)}
     {...props}
   />
-);
+));
 CardHeader.displayName = "CardHeader";
 
-const CardTitle = ({ className, ...props }, ref) => (
+const CardTitle = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -32,30 +41,39 @@ const CardTitle = ({ className, ...props }, ref) => (
     )}
     {...props}
   />
-);
+));
 CardTitle.displayName = "CardTitle";
 
-const CardDescription = ({ className, ...props }, ref) => (
+const CardDescription = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn("text-muted-foreground text-sm", className)}
     {...props}
   />
-);
+));
 CardDescription.displayName = "CardDescription";
 
-const CardContent = ({ className, ...props }, ref) => (
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-);
+));
 CardContent.displayName = "CardContent";
 
-const CardFooter = ({ className, ...props }, ref) => (
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn("flex items-center p-6 pt-0", className)}
     {...props}
   />
-);
+));
 CardFooter.displayName = "CardFooter";
 
 export {

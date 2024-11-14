@@ -7,21 +7,25 @@
     "lint": "turbo lint",
     "localci": "turbo build lint --affected",
     "format": "prettier --write \"**/*.*\"",
-    "commit": "commit"
+    "commit": "commit",
+    "tsc-check": "turbo tsc-check",
+    "tsc-check:root": "tsc --noEmit"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@commitlint/prompt-cli": "^19.5.0",
+    "@commitlint/types": "^19.5.0",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.6.8",
-    "turbo": "^2.2.3"
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "turbo": "^2.2.3",
+    "typescript": "^5.6.3",
+    "@northware/tsconfig": "workspace:",
+    "@changesets/cli": "^2.27.9"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "@changesets/cli": "^2.27.9"
   }
 }

@@ -1,6 +1,8 @@
-const colors = require("tailwindcss/colors");
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
+import animate from "tailwindcss-animate";
+
+const config: Omit<Config, "content"> = {
   theme: {
     container: {
       center: true,
@@ -48,5 +50,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animate],
 };
+
+export default config;

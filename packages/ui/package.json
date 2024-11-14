@@ -4,24 +4,28 @@
   "private": true,
   "scripts": {
     "dev": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
-    "build": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css"
+    "build": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css",
+    "tsc-check": "tsc --noEmit"
   },
   "exports": {
-    "./components": "./src/components",
+    "./components": "./src/components/index.ts",
     "./css": "./src/css/output.css",
-    "./fonts": "./src/fonts.js"
-  },
-  "devDependencies": {
-    "@northware/tailwind-config": "workspace:*",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.14"
+    "./fonts": "./src/fonts.ts"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.456.0",
+    "next": "15.0.3",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@northware/tailwind-config": "workspace:*",
+    "@northware/tsconfig": "workspace:*",
+    "@types/react": "^18.3.12",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.14"
   }
 }

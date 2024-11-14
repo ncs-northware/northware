@@ -30,6 +30,10 @@ packages/eslint-config:
   - changed-files:
       - any-glob-to-any-file: packages/eslint-config/**
 
+packages/tsconfig:
+  - changed-files:
+      - any-glob-to-any-file: packages/tsconfig/**
+
 packages/tailwind-config:
   - changed-files:
       - any-glob-to-any-file: packages/tailwind-config/**

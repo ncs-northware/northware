@@ -6,6 +6,9 @@
 
 ## Features
 
-- Extends the Tailwind Theme to work with the Custom Google Font `Source Sans 3`.
-- Defines a custom `secondary` color-set
 - Aliases Default Color Sets with Custom Brand Names
+- Defines a custom `secondary` color-set
+- Extends the Tailwind Theme to work with the Custom Google Font `Source Sans 3`.
+- Defines Custom Configurations for the `.container` Class
+- Defines Custom Keyframes and Animations to be used with some shadcn/ui Components
+- Full TypeScript Support
