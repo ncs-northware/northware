@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./connection": "./db-connect.js"
+    "./connection": "./db-connect.ts",
+    "./user": "./schema/user.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.3",
