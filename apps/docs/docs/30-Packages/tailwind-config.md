@@ -1,6 +1,6 @@
 # @northware/tailwind-config
 
-Das Package `@northware/tailwind-config` exportiert eine `tailwind.config.js` Datei. Diese Konfigurationsdatei kann in Apss und Packages, die Tailwind verwenden als Preset in die Konfigurationdatei der App / des Pacakges importiert werden. Innerhalb der Konfigurationsdateien müssen dann nur noch Anpassungen vorgenommen werden, die nur für die einzelne App gelten.
+Das Package `@northware/tailwind-config` exportiert eine `tailwind.config.ts` Datei. Diese Konfigurationsdatei kann in Apss und Packages, die Tailwind verwenden als Preset in die Konfigurationsdatei der App / des Pacakges importiert werden. Innerhalb der Konfigurationsdateien müssen dann nur noch Anpassungen vorgenommen werden, die nur für die einzelne App gelten.
 
 ## Tailwind in einer Next.js App nutzen
 
@@ -26,25 +26,25 @@ pnpm dlx tailwindcss init -p
 - `presets`: Implementierung des Config-Presets aus `@northware/tailwind-config`
 - `theme.extend.colors` (Optional): Über die Color Konfiguration aus `@northware/tailwind-config` hinaus kann eine Konfiguration innerhalb der App definiert werden. Hier sollte z.B. definiert werden, welche Farbe hinter `primary` steht. `primary` wird in UI und Apps als die hauptsächliche Brand-Color genutzt.
 
-```js title="./tailwind.config.js"
-/** @type {import('tailwindcss').Config} */
+```ts title="./tailwind.config.ts"
+import type { Config } from "tailwindcss";
+import sharedConfig from "@northware/tailwind-config";
+import colors from "tailwindcss/colors";
 
-// colors wird genutzt, wenn die Standard-Farben von Tailwind mit einem anderen Namen genutzt werden sollen
-const colors = require("tailwindcss/colors");
-
-module.exports = {
-  //
+const config: Pick<Config, "content" | "presets" | "theme"> = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  presets: [require("@northware/tailwind-config")],
+  presets: [sharedConfig],
   theme: {
     extend: {
       colors: {
+        // optional
         primary: colors.sky,
       },
     },
   },
-  plugins: [],
 };
+
+export default config;
 ```
 
 **4. Implementierung von Tailwind in die `globals.css`**
@@ -99,25 +99,16 @@ pnpm dlx tailwindcss init
 - `presets`: Implementierung des Config-Presets aus `@northware/tailwind-config`
 - `theme.extend.colors` (Optional): Über die Color Konfiguration aus `@northware/tailwind-config` hinaus kann eine Konfiguration innerhalb der App definiert werden. Hier sollte z.B. definiert werden, welche Farbe hinter `primary` steht. `primary` wird in UI und Apps als die hauptsächliche Brand-Color genutzt.
 
-```js title="./tailwind.config.js"
-/** @type {import('tailwindcss').Config} */
+```ts title="./tailwind.config.ts"
+import type { Config } from "tailwindcss";
+import sharedConfig from "@northware/tailwind-config";
 
-// colors wird genutzt, wenn die Standard-Farben von Tailwind mit einem anderen Namen genutzt werden sollen
-const colors = require("tailwindcss/colors");
-
-module.exports = {
-  //
+const config: Pick<Config, "content" | "presets"> = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  presets: [require("@northware/tailwind-config")],
-  theme: {
-    extend: {
-      colors: {
-        primary: colors.sky,
-      },
-    },
-  },
-  plugins: [],
+  presets: [sharedConfig],
 };
+
+export default config;
 ```
 
 **4. Implementierung von Tailwind in eine CSS-Datei**
