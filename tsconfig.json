@@ -1,3 +1,4 @@
 {
-  "extends": "@northware/tsconfig/base.json"
+  "extends": "@northware/tsconfig/base.json",
+  "exclude": ["apps/*", "packages/*"]
 }
