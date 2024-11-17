@@ -96,9 +96,6 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
-      sass:
-        specifier: ^1.80.6
-        version: 1.80.6
     devDependencies:
       '@northware/eslint-config':
         specifier: workspace:*
@@ -12266,6 +12263,7 @@ snapshots:
   chokidar@4.0.1:
     dependencies:
       readdirp: 4.0.2
+    optional: true
 
   chrome-trace-event@1.0.4: {}
 
@@ -14182,7 +14180,8 @@ snapshots:
 
   immer@9.0.21: {}
 
-  immutable@4.3.7: {}
+  immutable@4.3.7:
+    optional: true
 
   import-fresh@3.3.0:
     dependencies:
@@ -16129,7 +16128,8 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
-  readdirp@4.0.2: {}
+  readdirp@4.0.2:
+    optional: true
 
   reading-time@1.5.0: {}
 
@@ -16394,6 +16394,7 @@ snapshots:
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.4.1
+    optional: true
 
   sax@1.4.1: {}
 
