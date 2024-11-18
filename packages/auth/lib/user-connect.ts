@@ -1,0 +1,9 @@
+import { db } from "@northware/database/connection";
+import { SelectUser, userTable } from "@northware/database/user";
+import { eq } from "drizzle-orm";
+
+export async function getUser(
+  email: SelectUser["email"],
+): Promise<Array<{ id: number; name: string; email: string }>> {
+  return await db.select().from(userTable).where(eq(userTable.email, email));
+}
