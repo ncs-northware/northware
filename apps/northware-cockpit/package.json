@@ -17,13 +17,12 @@
     "next": "15.0.3",
     "next-auth": "5.0.0-beta.25",
     "react": "^18",
-    "react-dom": "^18",
-    "sass": "^1.80.6"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "@northware/tsconfig": "workspace:*",
     "@northware/eslint-config": "workspace:*",
     "@northware/tailwind-config": "workspace:*",
+    "@northware/tsconfig": "workspace:*",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.14.0",
     "eslint-config-next": "^15.0.3",
