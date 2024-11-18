@@ -19,9 +19,9 @@ Das Schma soll folgendermaßen aufgeteilt werden:
 
 Das Drizzle Kit wird verwendet, um das Datenbank-Schema der [Neon Database](https://neon.tech/docs/) mit den Schema-Definitionen in der Codebase abzustimmen.
 
-Der Workflow mit Drizzle Kit und die Verbindung zur Datenbank in diesem Workflow wird in der `drizzle.config.js` konfiguriert. Hier ist definiert, dass alle Schema-Dateien im `./schema` Ordner abgelegt sind. Außerdem ist hier definiert, dass die von Drizzle generierten Migrations-Dateien im Ordner `./drizzle-migrations` abgelegt werden sollen. Da diese Dateien nur temporär benötigt werden, wird der Ordner `drizzle-migrations` von Git ignoriert.
+Der Workflow mit Drizzle Kit und die Verbindung zur Datenbank in diesem Workflow wird in der `drizzle.config.ts` konfiguriert. Hier ist definiert, dass alle Schema-Dateien im `./schema` Ordner abgelegt sind. Außerdem ist hier definiert, dass die von Drizzle generierten Migrations-Dateien im Ordner `./drizzle-migrations` abgelegt werden sollen. Da diese Dateien nur temporär benötigt werden, wird der Ordner `drizzle-migrations` von Git ignoriert.
 
-Die `drizzle.config.js` greift auf die Environment-Variable `NW_API` zu. Diese Variable muss innerhalb einer `./.env.local` im `@northware/database` Package definiert werden und die Verbindungs-URL zur Datenbank enthalten.
+Die `drizzle.config.ts` greift auf die Environment-Variable `NW_API` zu. Diese Variable muss innerhalb einer `./.env.local` im `@northware/database` Package definiert werden und die Verbindungs-URL zur Datenbank enthalten.
 
 ### Drizzle Kit
 
