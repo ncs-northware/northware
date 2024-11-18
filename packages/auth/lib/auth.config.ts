@@ -1,3 +1,5 @@
+import { NextAuthConfig } from "next-auth";
+
 export const authConfig = {
   pages: {
     signIn: "/login",
@@ -21,4 +23,4 @@ export const authConfig = {
       return true;
     },
   },
-};
+} satisfies NextAuthConfig;
