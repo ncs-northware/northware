@@ -1,7 +1,17 @@
-import { LoginForm } from "@northware/auth/components";
+import { LoginForm } from "@northware/ui/components";
 import { signIn } from "@northware/auth/auth";
 import Image from "next/image";
+
 export default function LoginPage() {
+  async function handleSubmit(values: any) {
+    "use server";
+    await signIn("credentials", {
+      redirectTo: "/dashboard",
+      email: values.email,
+      password: values.password,
+    });
+  }
+
   return (
     <main className={`${""} ${""}`}>
       <section className={""}>
@@ -14,16 +24,7 @@ export default function LoginPage() {
             alt="Northware Cockpit Logo"
           />
           <h1 className="mb-4 text-center">Login</h1>
-          <LoginForm
-            action={async (formData) => {
-              "use server";
-              await signIn("credentials", {
-                redirectTo: "/dashboard",
-                email: formData.get("email"),
-                password: formData.get("password"),
-              });
-            }}
-          />
+          <LoginForm onSubmit={handleSubmit} />
         </div>
       </section>
     </main>
