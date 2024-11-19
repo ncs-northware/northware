@@ -1,6 +1,7 @@
 import "./globals.css";
 import "@northware/ui/css";
 import { source_sans } from "@northware/ui/fonts";
+import { ThemeProvider } from "@northware/ui/components";
 
 export const metadata = {
   title: {
@@ -15,11 +16,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="de">
+    <html lang="de" suppressHydrationWarning>
       <body>
-        <main className={`${source_sans.variable} container font-sans`}>
-          {children}
-        </main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main className={`${source_sans.variable} container font-sans`}>
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
