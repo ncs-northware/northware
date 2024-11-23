@@ -1,16 +1,33 @@
 import * as React from "react";
 
 import { cn } from "../utils/cn";
+import { cva, VariantProps } from "class-variance-authority";
+import { ButtonProps } from "./Button";
 
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
+const inputVariants = cva(
+  "flex h-10 w-full rounded-md border border-input bg-background text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      dimension: {
+        default: "px-4 py-3",
+        lg: "sm:p-5 text-lg",
+        sm: "py-2 px-3 text-sm",
+      },
+    },
+    defaultVariants: { dimension: "default" },
+  },
+);
+
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    VariantProps<typeof inputVariants> {}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, dimension, ...props }, ref) => {
     return (
       <input
         type={type}
-        className={cn(
-          "border-input bg-background ring-offset-background file:text-foreground placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          className,
-        )}
+        className={cn(inputVariants({ dimension, className }))}
         ref={ref}
         {...props}
       />
