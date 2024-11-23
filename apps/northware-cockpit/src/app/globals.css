@@ -15,25 +15,25 @@
     --ring: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --secondary: 240, 0%, 12%;
-    --secondary-foreground: 240, 6%, 98%;
+    --secondary: 240 0% 12%;
+    --secondary-foreground: 240 6% 98%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
-    --info: 217, 91%, 60%;
+    --info: 217 91% 60%;
     --info-foreground: 217 0% 98%;
-    --success: 142, 71%, 45%;
+    --success: 142 71% 45%;
     --success-foreground: 142 0% 98%;
-    --warning: 45, 93%, 47%;
+    --warning: 45 93% 47%;
     --warning-foreground: 45 10% 3.9%;
-    --destructive: 0, 84%, 60%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --danger: 0, 84%, 60%;
+    --danger: 0 84% 60%;
     --danger-foreground: 0 0% 98%;
-    --cockpit: 199, 89%, 48%;
+    --cockpit: 199 89% 48%;
     --cockpit-foreground: 0 0% 98%;
-    --finance: 0, 84%, 60%;
+    --finance: 0 84% 60%;
     --finance-foreground: 0 0% 98%;
-    --trader: 25, 95%, 53%;
+    --trader: 25 95% 53%;
     --trader-foreground: 240 10% 3.9%;
 
     --radius: 0.5rem;
@@ -55,11 +55,11 @@
     --secondary-foreground: 0 0% 98%;
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
-    --info: 224, 64%, 33%;
+    --info: 224 64% 33%;
     --info-foreground: 224 0% 98%;
-    --success: 144, 61%, 20%;
+    --success: 144 61% 20%;
     --success-foreground: 144 0% 98%;
-    --warning: 35, 92%, 33%;
+    --warning: 35 92% 33%;
     --warning-foreground: 144 0% 98%;
     --danger: 0 62.8% 30.6%;
     --danger-foreground: 0 0% 98%;
@@ -68,17 +68,17 @@
   }
 
   .theme-cockpit {
-    --primary: 199, 89%, 48%;
+    --primary: 199 89% 48%;
     --primary-foreground: 0 0% 98%;
   }
 
   .theme-finance {
-    --primary: 0, 84%, 60%;
+    --primary: 0 84% 60%;
     --primary-foreground: 0 0% 98%;
   }
 
   .theme-trader {
-    --primary: 25, 95%, 53%;
+    --primary: 25 95% 53%;
     --primary-foreground: 240 10% 3.9%;
   }
 }
