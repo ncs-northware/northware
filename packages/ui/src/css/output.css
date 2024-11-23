@@ -617,6 +617,10 @@ video {
   --destructive-foreground: 0 0% 98%;
 }
 
+* {
+  border-color: hsl(var(--border) / 100%);
+}
+
 body {
   background-color: hsl(var(--background) / 100%);
   font-family: var(--font-sourcesans);
@@ -658,9 +662,18 @@ body {
   margin-right: -0.25rem;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .my-1 {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
 .ml-auto {
@@ -707,6 +720,10 @@ body {
   height: 1px;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .w-10 {
   width: 2.5rem;
 }
@@ -733,6 +750,10 @@ body {
 
 .min-w-\[8rem\] {
   min-width: 8rem;
+}
+
+.max-w-sm {
+  max-width: 24rem;
 }
 
 .rotate-0 {
@@ -769,6 +790,10 @@ body {
 
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-col {
