@@ -18,12 +18,7 @@ export default function RootLayout({
   return (
     <html className="theme-cockpit" lang="de" suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider>
           <main className={`${source_sans.variable} container font-sans`}>
             {children}
           </main>
