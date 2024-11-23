@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="de" suppressHydrationWarning>
+    <html className="theme-cockpit" lang="de" suppressHydrationWarning>
       <body>
         <ThemeProvider
           attribute="class"
