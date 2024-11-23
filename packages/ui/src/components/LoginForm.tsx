@@ -14,7 +14,7 @@ import { Input } from "./Input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "./card";
+import { Card, CardContent, CardHeader, CardTitle } from "./Card";
 import { useTheme } from "next-themes";
 
 const formSchema = z.object({
