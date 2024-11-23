@@ -17,7 +17,6 @@
   "exports": {
     "./auth": "./lib/auth.ts",
     "./user": "./lib/user-connect.ts",
-    "./authConfig": "./lib/auth.config.ts",
-    "./components": "./components"
+    "./authConfig": "./lib/auth.config.ts"
   }
 }
