@@ -1,9 +1,10 @@
 import { auth, signOut } from "@northware/auth/auth";
-import { DarkModeToggle, Headline } from "@northware/ui/components";
+import { Container, DarkModeToggle, Headline } from "@northware/ui/components";
+
 export default async function DashboardPage() {
   let session = await auth();
   return (
-    <>
+    <Container>
       <DarkModeToggle />
       <Headline
         level="h1"
@@ -13,7 +14,7 @@ export default async function DashboardPage() {
       </Headline>
       You are logged in as {session?.user?.email}
       <SignOut />
-    </>
+    </Container>
   );
 }
 
