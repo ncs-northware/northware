@@ -2,6 +2,7 @@ export * from "./Button";
 export * from "./Card";
 export * from "./Container";
 export * from "./DarkModeToggle";
+export * from "./DropdownMenu";
 export * from "./Form";
 export * from "./Input";
 export * from "./Label";
