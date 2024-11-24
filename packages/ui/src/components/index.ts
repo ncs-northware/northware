@@ -7,3 +7,4 @@ export * from "./Label";
 export * from "./LoginForm";
 export * from "./Select";
 export * from "./ThemeProvider";
+export * from "./Headline";
