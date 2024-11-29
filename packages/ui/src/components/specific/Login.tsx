@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { Button } from "./Button";
 import {
   Form,
   FormField,
@@ -9,13 +8,14 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "./Form";
-import { Input } from "./Input";
+} from "../form-parts/Form";
+import { Input } from "../form-parts/Input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "./Card";
+import { Card, CardContent, CardHeader, CardTitle } from "../panels/Card";
 import { useTheme } from "next-themes";
+import { Button } from "../base/Button";
 
 const formSchema = z.object({
   email: z.string(),

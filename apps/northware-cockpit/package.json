@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@northware/auth": "workspace:*",
-    "@northware/theme": "workspace:*",
     "@northware/ui": "workspace:*",
     "drizzle-orm": "^0.36.1",
     "next": "15.0.3",
