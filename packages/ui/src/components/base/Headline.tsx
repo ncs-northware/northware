@@ -1,5 +1,5 @@
 import { ReactNode, HTMLAttributes } from "react";
-import { cn } from "../utils/cn";
+import { cn } from "../../utils";
 
 interface HeadlineProps extends HTMLAttributes<HTMLHeadingElement> {
   children: ReactNode;
