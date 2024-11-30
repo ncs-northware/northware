@@ -32,10 +32,11 @@ export function LoginForm({ onSubmit }: { onSubmit: (values: any) => void }) {
   return (
     <>
       <Image
+        suppressHydrationWarning
         src={
           theme.resolvedTheme === "dark"
-            ? "/img/logo-dark.svg"
-            : "/img/logo-light.svg"
+            ? "/img/logo-light.svg"
+            : "/img/logo-dark.svg"
         }
         height={150}
         width={380}
