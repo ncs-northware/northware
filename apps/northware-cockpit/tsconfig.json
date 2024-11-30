@@ -4,6 +4,7 @@
     "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@northware/ui/*": ["../../packages/ui/src/*"]
     }
   },
