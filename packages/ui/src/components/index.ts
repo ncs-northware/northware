@@ -1,6 +1,6 @@
 // Base Components (Basics to use instead of HTML Elements or Components that are used often)
-export * from "./base/Button";
-export * from "./base/Headline";
+export * from "@northware/ui/components/base/Button";
+export * from "@northware/ui/components/base/Headline";
 
 // Form Parts (Components that are typically part of a Form)
 export * from "./form-parts/Form";
