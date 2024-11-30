@@ -9,7 +9,7 @@ export * from "@northware/ui/components/form-parts/Label";
 export * from "@northware/ui/components/form-parts/Select";
 
 // Layouts (Components to define Page Layouts)
-export * from "./layouts/Container";
+export * from "@northware/ui/components/layouts/Container";
 
 // Menu (Components that define Menus or Parts of it or Components that are used for Navigation)
 export * from "./menu/DropdownMenu";
