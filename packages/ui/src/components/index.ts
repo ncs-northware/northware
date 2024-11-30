@@ -22,4 +22,4 @@ export * from "@northware/ui/components/next-themes/ThemeProvider";
 export * from "@northware/ui/components/panels/Card";
 
 // Specific (Components that are used for a specific feature)
-export * from "./specific/Login";
+export * from "@northware/ui/components/specific/Login";
