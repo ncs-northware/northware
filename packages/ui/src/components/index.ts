@@ -3,10 +3,10 @@ export * from "@northware/ui/components/base/Button";
 export * from "@northware/ui/components/base/Headline";
 
 // Form Parts (Components that are typically part of a Form)
-export * from "./form-parts/Form";
-export * from "./form-parts/Input";
-export * from "./form-parts/Label";
-export * from "./form-parts/Select";
+export * from "@northware/ui/components/form-parts/Form";
+export * from "@northware/ui/components/form-parts/Input";
+export * from "@northware/ui/components/form-parts/Label";
+export * from "@northware/ui/components/form-parts/Select";
 
 // Layouts (Components to define Page Layouts)
 export * from "./layouts/Container";
