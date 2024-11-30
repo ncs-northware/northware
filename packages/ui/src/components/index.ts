@@ -19,7 +19,7 @@ export * from "@northware/ui/components/next-themes/DarkModeToggle";
 export * from "@northware/ui/components/next-themes/ThemeProvider";
 
 // Panels (Components to Display Content in a special way)
-export * from "./panels/Card";
+export * from "@northware/ui/components/panels/Card";
 
 // Specific (Components that are used for a specific feature)
 export * from "./specific/Login";
