@@ -10,7 +10,8 @@
   "exports": {
     "./components": "./src/components/index.ts",
     "./css": "./src/css/output.css",
-    "./fonts": "./src/fonts.ts"
+    "./fonts": "./src/fonts.ts",
+    "./utils": "./src/utils.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
