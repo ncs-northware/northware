@@ -1,5 +1,5 @@
 import { ReactNode, HTMLAttributes } from "react";
-import { cn } from "../../utils";
+import { cn } from "@northware/ui/utils";
 
 interface HeadlineProps extends HTMLAttributes<HTMLHeadingElement> {
   children: ReactNode;

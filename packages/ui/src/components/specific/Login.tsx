@@ -8,14 +8,19 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "../form-parts/Form";
-import { Input } from "../form-parts/Input";
+} from "@northware/ui/components/form-parts/Form";
+import { Input } from "@northware/ui/components/form-parts/Input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "../panels/Card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@northware/ui/components/panels/Card";
 import { useTheme } from "next-themes";
-import { Button } from "../base/Button";
+import { Button } from "@northware/ui/components/base/Button";
 
 const formSchema = z.object({
   email: z.string(),
@@ -32,10 +37,11 @@ export function LoginForm({ onSubmit }: { onSubmit: (values: any) => void }) {
   return (
     <>
       <Image
+        suppressHydrationWarning
         src={
           theme.resolvedTheme === "dark"
-            ? "/img/logo-dark.svg"
-            : "/img/logo-light.svg"
+            ? "/img/logo-light.svg"
+            : "/img/logo-dark.svg"
         }
         height={150}
         width={380}

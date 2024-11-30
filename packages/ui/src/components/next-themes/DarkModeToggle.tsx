@@ -1,15 +1,13 @@
 "use client";
-
-import { Button } from "../base/Button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../menu/DropdownMenu";
+} from "@northware/ui/components/menu/DropdownMenu";
+import { Button } from "@northware/ui/components/base/Button";
 
 export function DarkModeToggle() {
   const { setTheme } = useTheme();
