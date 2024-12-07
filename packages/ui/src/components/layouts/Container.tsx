@@ -1,5 +1,6 @@
 import { cn } from "@northware/ui/utils";
 import { ReactNode } from "react";
+import { SiteHeader } from "@northware/ui/components/menu/Navbar";
 
 export function Container({
   children,
@@ -8,5 +9,10 @@ export function Container({
   children: ReactNode;
   className?: string;
 }) {
-  return <main className={cn("container", className)}>{children}</main>;
+  return (
+    <>
+      <SiteHeader />
+      <main className={cn("container", className)}>{children}</main>
+    </>
+  );
 }

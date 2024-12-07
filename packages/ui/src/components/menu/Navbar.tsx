@@ -25,7 +25,18 @@ import * as React from "react";
 import { ThemeSwitch } from "@northware/ui/components/next-themes/ThemeSwitch";
 import { auth, signOut } from "@northware/auth/auth";
 
-export function Navbar() {
+export function SiteHeader() {
+  // Rendert den Zusammengesetzen SiteHeader mit MetaNav, MainNav, MobileNav usw. innerhalb von <header>
+  return (
+    <header>
+      <MetaNav />
+      <MainNav />
+    </header>
+  );
+}
+
+export function MainNav() {
+  // Die Hauptnavigation incl. Branding auf Desktops
   return (
     <div className="border-b border-border/50 bg-background/95 py-2 dark:border-border/70">
       <div className="container flex gap-4">
@@ -119,6 +130,7 @@ const apps: {
   envVariable?: string;
   textColor: string;
 }[] = [
+  // Attribute der Navigationspunkte der AppSwitches in MetaNav
   {
     envVariable: "NEXT_PUBLIC_CP_FRONT",
     title: "Northware Cockpit",
@@ -137,6 +149,7 @@ const apps: {
 ];
 
 export async function MetaNav() {
+  // Die Meta Navigation mit App-Switches, UserMenu und ThemeSwitcher auf Desktop-Geräten
   let session = await auth();
   return (
     <>
@@ -202,6 +215,7 @@ export async function MetaNav() {
 }
 
 function SignOut() {
+  // Helper-Komponent für @northware/auth signOut
   return (
     <form
       action={async () => {
