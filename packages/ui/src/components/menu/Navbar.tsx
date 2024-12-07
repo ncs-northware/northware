@@ -37,10 +37,17 @@ export function SiteHeader() {
 }
 
 export async function MainNav() {
+  // TODO: Add NavMenu Rendering based on permissionKey
   const result = await db
-    .select()
+    .select({
+      itemId: mainNavTable.itemId,
+      title: mainNavTable.title,
+      href: mainNavTable.href,
+      childOf: mainNavTable.childOf,
+    })
     .from(mainNavTable)
-    .where(eq(mainNavTable.app, "cockpit"));
+    .where(eq(mainNavTable.app, "cockpit"))
+    .orderBy(mainNavTable.order);
 
   const topLevelItems = result.filter((item) => item.childOf == null);
   const childItems = (parent: string) => {
@@ -62,13 +69,15 @@ export async function MainNav() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <NavigationMenuLink
+                href="/"
+                className={navigationMenuTriggerStyle()}
+              >
                 Home
               </NavigationMenuLink>
             </NavigationMenuItem>
             {topLevelItems.map((item) => {
               const ItemChildren = childItems(item.itemId);
-              console.log(ItemChildren);
               if (ItemChildren.length == 0) {
                 return (
                   <NavigationMenuItem key={item.itemId}>
