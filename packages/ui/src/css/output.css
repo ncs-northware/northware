@@ -711,6 +711,10 @@ body {
   grid-row: span 3 / span 3;
 }
 
+.row-span-full {
+  grid-row: 1 / -1;
+}
+
 .-mx-1 {
   margin-left: -0.25rem;
   margin-right: -0.25rem;
@@ -836,6 +840,10 @@ body {
   height: 100vh;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -875,6 +883,18 @@ body {
 .w-max {
   width: -moz-max-content;
   width: max-content;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-20 {
+  width: 5rem;
+}
+
+.w-96 {
+  width: 24rem;
 }
 
 .min-w-\[8rem\] {
@@ -936,6 +956,10 @@ body {
 
 .list-none {
   list-style-type: none;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -1051,6 +1075,10 @@ body {
   border-color: transparent;
 }
 
+.border-primary {
+  border-color: hsl(var(--primary) / 100%);
+}
+
 .bg-background {
   background-color: hsl(var(--background) / 100%);
 }
@@ -1085,6 +1113,22 @@ body {
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-primary\/50 {
+  background-color: hsl(var(--primary) / 0.5);
+}
+
+.bg-accent {
+  background-color: hsl(var(--accent) / 100%);
+}
+
+.bg-primary\/70 {
+  background-color: hsl(var(--primary) / 0.7);
+}
+
+.bg-primary\/60 {
+  background-color: hsl(var(--primary) / 0.6);
 }
 
 .bg-gradient-to-b {
@@ -1359,6 +1403,10 @@ body {
   --tw-ring-offset-color: hsl(var(--background) / 100%);
 }
 
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1446,12 +1494,26 @@ body {
   background-color: hsl(var(--secondary) / 0.8);
 }
 
+.hover\:bg-primary\/70:hover {
+  background-color: hsl(var(--primary) / 0.7);
+}
+
+.hover\:bg-primary\/80:hover {
+  background-color: hsl(var(--primary) / 0.8);
+}
+
 .hover\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground) / 100%);
 }
 
 .hover\:underline:hover {
   text-decoration-line: underline;
+}
+
+.hover\:shadow-md:hover {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .focus\:bg-accent:focus {

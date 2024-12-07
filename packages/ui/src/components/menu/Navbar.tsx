@@ -7,7 +7,6 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
   navigationMenuButtonStyle,
-  NavigationMenuIndicator,
 } from "@northware/ui/components/menu/NavigationMenuPremitive";
 import {
   DropdownMenu,
@@ -20,10 +19,12 @@ import {
 import { cn } from "@northware/ui/utils";
 import { UserIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import * as React from "react";
 import { ThemeSwitch } from "@northware/ui/components/next-themes/ThemeSwitch";
 import { auth, signOut } from "@northware/auth/auth";
+import { db } from "@northware/database/connection";
+import { mainNavTable } from "@northware/database/schema";
+import { eq } from "drizzle-orm";
 
 export function SiteHeader() {
   // Rendert den Zusammengesetzen SiteHeader mit MetaNav, MainNav, MobileNav usw. innerhalb von <header>
@@ -35,7 +36,18 @@ export function SiteHeader() {
   );
 }
 
-export function MainNav() {
+export async function MainNav() {
+  const result = await db
+    .select()
+    .from(mainNavTable)
+    .where(eq(mainNavTable.app, "cockpit"));
+
+  const topLevelItems = result.filter((item) => item.childOf == null);
+  const childItems = (parent: string) => {
+    const children = result.filter((item) => item.childOf == parent);
+    return children;
+  };
+
   // Die Hauptnavigation incl. Branding auf Desktops
   return (
     <div className="border-b border-border/50 bg-background/95 py-2 dark:border-border/70">
@@ -50,79 +62,62 @@ export function MainNav() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
-                </NavigationMenuLink>
-              </Link>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Home
+              </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/"
-                      >
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          shadcn/ui
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          Beautifully designed components built with Radix UI
-                          and Tailwind CSS.
-                        </p>
-                      </a>
+            {topLevelItems.map((item) => {
+              const ItemChildren = childItems(item.itemId);
+              console.log(ItemChildren);
+              if (ItemChildren.length == 0) {
+                return (
+                  <NavigationMenuItem key={item.itemId}>
+                    <NavigationMenuLink
+                      href={item.href}
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      {item.title}
                     </NavigationMenuLink>
-                  </li>
-                  <ListItem href="/docs" title="Introduction">
-                    Re-usable components built using Radix UI and Tailwind CSS.
-                  </ListItem>
-                  <ListItem href="/docs/installation" title="Installation">
-                    How to install dependencies and structure your app.
-                  </ListItem>
-                  <ListItem
-                    href="/docs/primitives/typography"
-                    title="Typography"
-                  >
-                    Styles for headings, paragraphs, lists...etc
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+                  </NavigationMenuItem>
+                );
+              } else {
+                return (
+                  <NavigationMenuItem key={item.itemId}>
+                    <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="grid grid-cols-2 p-4 md:w-[400px] lg:w-[500px]">
+                        <NavigationMenuLink
+                          className="flex h-full w-full select-none flex-col justify-center rounded-md bg-primary/60 p-3 text-lg font-medium text-primary-foreground no-underline outline-none hover:bg-primary/80 hover:shadow-md"
+                          href={item.href}
+                        >
+                          {item.title}
+                        </NavigationMenuLink>
+                        <ul className="gap-3 p-4">
+                          {ItemChildren.map((child) => {
+                            return (
+                              <li key={child.itemId}>
+                                <NavigationMenuLink
+                                  className="block select-none space-y-1 rounded-md p-3 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  href={child.href}
+                                >
+                                  {child.title}
+                                </NavigationMenuLink>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                );
+              }
+            })}
           </NavigationMenuList>
         </NavigationMenu>
       </div>
     </div>
   );
 }
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className,
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
 
 const apps: {
   title: string;
