@@ -10,8 +10,8 @@ import {
 
 export const appEnum = pgEnum("app", ["cockpit", "finance", "trader", "admin"]);
 
-export const mainNav = pgTable(
-  "MainNav",
+export const mainNavTable = pgTable(
+  "MainNavTable",
   {
     recordId: serial().primaryKey().notNull(),
     itemId: varchar().unique().notNull(),
@@ -36,5 +36,5 @@ export const mainNav = pgTable(
   },
 );
 
-export type InsertNavItem = typeof mainNav.$inferInsert;
-export type SelectNavItem = typeof mainNav.$inferSelect;
+export type InsertNavItem = typeof mainNavTable.$inferInsert;
+export type SelectNavItem = typeof mainNavTable.$inferSelect;
