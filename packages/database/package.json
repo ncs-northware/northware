@@ -7,7 +7,7 @@
     "./user": "./schema/user.ts"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^0.10.3",
+    "@neondatabase/serverless": "^0.10.4",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.28.1",
     "drizzle-orm": "^0.38.2"
