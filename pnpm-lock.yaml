@@ -79,8 +79,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       drizzle-orm:
-        specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
+        specifier: ^0.38.2
+        version: 0.38.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
       next:
         specifier: 15.0.3
         version: 15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6)
@@ -131,8 +131,8 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3
       drizzle-orm:
-        specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
+        specifier: ^0.38.2
+        version: 0.38.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
       next-auth:
         specifier: 5.0.0-beta.25
         version: 5.0.0-beta.25(next@15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6))(react@18.3.1)
@@ -153,14 +153,14 @@ importers:
         specifier: ^0.28.1
         version: 0.28.1
       drizzle-orm:
-        specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
+        specifier: ^0.38.2
+        version: 0.38.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
 
   packages/eslint-config:
     devDependencies:
       '@vercel/style-guide':
         specifier: ^6.0.0
-        version: 6.0.0(eslint@9.15.0(jiti@1.21.6))(prettier@3.3.3)(typescript@5.6.3)
+        version: 6.0.0(@next/eslint-plugin-next@15.0.3)(eslint@9.15.0(jiti@1.21.6))(prettier@3.3.3)(typescript@5.6.3)
       eslint:
         specifier: ^9.15.0
         version: 9.15.0(jiti@1.21.6)
@@ -3966,15 +3966,15 @@ packages:
     resolution: {integrity: sha512-JimOV+ystXTWMgZkLHYHf2w3oS28hxiH1FR0dkmJLc7GHzdGJoJAQtQS5DRppnabsRZwE2U1F6CuezVBgmsBBQ==}
     hasBin: true
 
-  drizzle-orm@0.36.1:
-    resolution: {integrity: sha512-F4hbimnMEhyWzDowQB4xEuVJJWXLHZYD7FYwvo8RImY+N7pStGqsbfmT95jDbec1s4qKmQbiuxEDZY90LRrfIw==}
+  drizzle-orm@0.38.2:
+    resolution: {integrity: sha512-eCE3yPRAskLo1WpM9OHpFaM70tBEDsWhwR/0M3CKyztAXKR9Qs3asZlcJOEliIcUSg8GuwrlY0dmYDgmm6y5GQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
-      '@cloudflare/workers-types': '>=3'
+      '@cloudflare/workers-types': '>=4'
       '@electric-sql/pglite': '>=0.2.0'
       '@libsql/client': '>=0.10.0'
       '@libsql/client-wasm': '>=0.10.0'
-      '@neondatabase/serverless': '>=0.1'
+      '@neondatabase/serverless': '>=0.10.0'
       '@op-engineering/op-sqlite': '>=2'
       '@opentelemetry/api': ^1.4.1
       '@planetscale/database': '>=1'
@@ -3988,7 +3988,7 @@ packages:
       '@xata.io/client': '*'
       better-sqlite3: '>=7'
       bun-types: '*'
-      expo-sqlite: '>=13.2.0'
+      expo-sqlite: '>=14.0.0'
       knex: '*'
       kysely: '*'
       mysql2: '>=2'
@@ -11539,7 +11539,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vercel/style-guide@6.0.0(eslint@9.15.0(jiti@1.21.6))(prettier@3.3.3)(typescript@5.6.3)':
+  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@15.0.3)(eslint@9.15.0(jiti@1.21.6))(prettier@3.3.3)(typescript@5.6.3)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/eslint-parser': 7.25.1(@babel/core@7.26.0)(eslint@9.15.0(jiti@1.21.6))
@@ -11547,7 +11547,7 @@ snapshots:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3)
       '@typescript-eslint/parser': 7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3)
       eslint-config-prettier: 9.1.0(eslint@9.15.0(jiti@1.21.6))
-      eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.31.0)
+      eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6)))
       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-plugin-import@2.31.0)(eslint@9.15.0(jiti@1.21.6))
       eslint-plugin-eslint-comments: 3.2.0(eslint@9.15.0(jiti@1.21.6))
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6))
@@ -11562,6 +11562,7 @@ snapshots:
       eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3)
       prettier-plugin-packagejson: 2.5.2(prettier@3.3.3)
     optionalDependencies:
+      '@next/eslint-plugin-next': 15.0.3
       eslint: 9.15.0(jiti@1.21.6)
       prettier: 3.3.3
       typescript: 5.6.3
@@ -12724,7 +12725,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1):
+  drizzle-orm@0.38.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1):
     optionalDependencies:
       '@libsql/client-wasm': 0.14.0
       '@neondatabase/serverless': 0.10.3
@@ -12982,7 +12983,7 @@ snapshots:
       eslint: 9.15.0(jiti@1.21.6)
       eslint-plugin-turbo: 2.3.0(eslint@9.15.0(jiti@1.21.6))
 
-  eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.31.0):
+  eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6))):
     dependencies:
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6))
 
@@ -13000,7 +13001,7 @@ snapshots:
       debug: 4.3.7
       enhanced-resolve: 5.17.1
       eslint: 9.15.0(jiti@1.21.6)
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.15.0(jiti@1.21.6)))(eslint@9.15.0(jiti@1.21.6))
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
@@ -13019,7 +13020,7 @@ snapshots:
       debug: 4.3.7
       enhanced-resolve: 5.17.1
       eslint: 9.15.0(jiti@1.21.6)
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-plugin-import@2.31.0)(eslint@9.15.0(jiti@1.21.6)))(eslint@9.15.0(jiti@1.21.6))
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
@@ -13032,7 +13033,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.15.0(jiti@1.21.6)))(eslint@9.15.0(jiti@1.21.6)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -13043,12 +13044,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-plugin-import@2.31.0)(eslint@9.15.0(jiti@1.21.6)))(eslint@9.15.0(jiti@1.21.6)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3)
       eslint: 9.15.0(jiti@1.21.6)
+      eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-plugin-import@2.31.0)(eslint@9.15.0(jiti@1.21.6))
     transitivePeerDependencies:
       - supports-color
@@ -13070,7 +13072,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.15.0(jiti@1.21.6)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.15.0(jiti@1.21.6))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint-plugin-import@2.31.0)(eslint@9.15.0(jiti@1.21.6)))(eslint@9.15.0(jiti@1.21.6))
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
