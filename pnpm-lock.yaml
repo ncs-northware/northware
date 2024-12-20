@@ -79,8 +79,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       drizzle-orm:
-        specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
+        specifier: ^0.38.2
+        version: 0.38.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
       next:
         specifier: 15.0.3
         version: 15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6)
@@ -131,8 +131,8 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3
       drizzle-orm:
-        specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
+        specifier: ^0.38.2
+        version: 0.38.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
       next-auth:
         specifier: 5.0.0-beta.25
         version: 5.0.0-beta.25(next@15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6))(react@18.3.1)
@@ -144,8 +144,8 @@ importers:
   packages/database:
     dependencies:
       '@neondatabase/serverless':
-        specifier: ^0.10.3
-        version: 0.10.3
+        specifier: ^0.10.4
+        version: 0.10.4
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -153,8 +153,8 @@ importers:
         specifier: ^0.28.1
         version: 0.28.1
       drizzle-orm:
-        specifier: ^0.36.1
-        version: 0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
+        specifier: ^0.38.2
+        version: 0.38.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1)
 
   packages/eslint-config:
     devDependencies:
@@ -216,8 +216,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.459.0
-        version: 0.459.0(react@18.3.1)
+        specifier: ^0.469.0
+        version: 0.469.0(react@18.3.1)
       next:
         specifier: 15.0.3
         version: 15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.6)
@@ -2034,8 +2034,8 @@ packages:
   '@microsoft/tsdoc@0.14.2':
     resolution: {integrity: sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==}
 
-  '@neondatabase/serverless@0.10.3':
-    resolution: {integrity: sha512-F4kqSj++GUwLnO3OzPb95Y/xn3qVLkjJA/36YTqT7c3MRgA/IBOIs/Is1+HBZkGfEwfMG3A9tFkxiEg5eBjxDw==}
+  '@neondatabase/serverless@0.10.4':
+    resolution: {integrity: sha512-2nZuh3VUO9voBauuh+IGYRhGU/MskWHt1IuZvHcJw6GLjDgtqj/KViKo7SIrLdGLdot7vFbiRRw+BgEy3wT9HA==}
 
   '@next/env@15.0.3':
     resolution: {integrity: sha512-t9Xy32pjNOvVn2AS+Utt6VmyrshbpfUMhIjFO60gI58deSo/KgLOp31XZ4O+kY/Is8WAGYwA5gR7kOb1eORDBA==}
@@ -3966,15 +3966,15 @@ packages:
     resolution: {integrity: sha512-JimOV+ystXTWMgZkLHYHf2w3oS28hxiH1FR0dkmJLc7GHzdGJoJAQtQS5DRppnabsRZwE2U1F6CuezVBgmsBBQ==}
     hasBin: true
 
-  drizzle-orm@0.36.1:
-    resolution: {integrity: sha512-F4hbimnMEhyWzDowQB4xEuVJJWXLHZYD7FYwvo8RImY+N7pStGqsbfmT95jDbec1s4qKmQbiuxEDZY90LRrfIw==}
+  drizzle-orm@0.38.2:
+    resolution: {integrity: sha512-eCE3yPRAskLo1WpM9OHpFaM70tBEDsWhwR/0M3CKyztAXKR9Qs3asZlcJOEliIcUSg8GuwrlY0dmYDgmm6y5GQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
-      '@cloudflare/workers-types': '>=3'
+      '@cloudflare/workers-types': '>=4'
       '@electric-sql/pglite': '>=0.2.0'
       '@libsql/client': '>=0.10.0'
       '@libsql/client-wasm': '>=0.10.0'
-      '@neondatabase/serverless': '>=0.1'
+      '@neondatabase/serverless': '>=0.10.0'
       '@op-engineering/op-sqlite': '>=2'
       '@opentelemetry/api': ^1.4.1
       '@planetscale/database': '>=1'
@@ -3988,7 +3988,7 @@ packages:
       '@xata.io/client': '*'
       better-sqlite3: '>=7'
       bun-types: '*'
-      expo-sqlite: '>=13.2.0'
+      expo-sqlite: '>=14.0.0'
       knex: '*'
       kysely: '*'
       mysql2: '>=2'
@@ -5516,10 +5516,10 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@0.459.0:
-    resolution: {integrity: sha512-s+QG5PLUOmkylLoPfqsoP+cP2wPj8f+fSyYoIxvCOBDb6d72pJFZKpX1yxgennZkUZvTwWf4qy6K4YCJ4Y8dzA==}
+  lucide-react@0.469.0:
+    resolution: {integrity: sha512-28vvUnnKQ/dBwiCQtwJw7QauYnE7yd2Cyp4tTTJpvglX4EMpbflcdBgrgToX2j71B3YvugK/NH3BGUk+E/p/Fw==}
     peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   markdown-extensions@2.0.0:
     resolution: {integrity: sha512-o5vL7aDWatOTX8LzaS1WMoaoxIiLRQJuIKKe2wAw6IeULDHaqbiqiggmx+pKvZDb1Sj+pE46Sn1T7lCqfFtg1Q==}
@@ -10679,7 +10679,7 @@ snapshots:
 
   '@microsoft/tsdoc@0.14.2': {}
 
-  '@neondatabase/serverless@0.10.3':
+  '@neondatabase/serverless@0.10.4':
     dependencies:
       '@types/pg': 8.11.6
 
@@ -12725,10 +12725,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.36.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.3)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1):
+  drizzle-orm@0.38.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@18.3.12)(postgres@3.4.5)(react@18.3.1):
     optionalDependencies:
       '@libsql/client-wasm': 0.14.0
-      '@neondatabase/serverless': 0.10.3
+      '@neondatabase/serverless': 0.10.4
       '@types/pg': 8.11.6
       '@types/react': 18.3.12
       postgres: 3.4.5
@@ -14488,7 +14488,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@0.459.0(react@18.3.1):
+  lucide-react@0.469.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
