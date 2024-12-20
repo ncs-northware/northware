@@ -13,7 +13,7 @@
     "@northware/auth": "workspace:*",
     "@northware/ui": "workspace:*",
     "drizzle-orm": "^0.38.2",
-    "next": "15.0.3",
+    "next": "15.1.2",
     "next-auth": "5.0.0-beta.25",
     "react": "^18",
     "react-dom": "^18",
