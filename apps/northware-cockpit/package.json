@@ -12,8 +12,8 @@
   "dependencies": {
     "@northware/auth": "workspace:*",
     "@northware/ui": "workspace:*",
-    "drizzle-orm": "^0.36.1",
-    "next": "15.0.3",
+    "drizzle-orm": "^0.38.2",
+    "next": "15.1.2",
     "next-auth": "5.0.0-beta.25",
     "react": "^18",
     "react-dom": "^18",
@@ -25,7 +25,7 @@
     "@northware/tsconfig": "workspace:*",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.15.0",
-    "eslint-config-next": "^15.0.3",
+    "eslint-config-next": "^15.1.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.14"
   }
