@@ -4,7 +4,7 @@
   "private": true,
   "exports": {
     "./connection": "./db-connect.ts",
-    "./user": "./schema/user.ts"
+    "./schema": "./schema/index.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
