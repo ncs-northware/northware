@@ -6,10 +6,10 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@northware/ui/components/menu/NavigationMenuPremitive";
+} from "@northware/ui/components_/menu/NavigationMenuPremitive";
 
-import { menuData } from "@northware/ui/components/menu/menuData";
-import { Brand } from "@northware/ui/components/base/Brand";
+import { menuData } from "@northware/ui/components_/menu/menuData";
+import { Brand } from "@northware/ui/components_/base/Brand";
 
 export async function MainNav() {
   // TODO: Add NavMenu Rendering based on permissionKey

@@ -1,22 +1,22 @@
 import Image from "next/image";
-import { Button } from "@northware/ui/components/base/Button";
+import { Button } from "@northware/ui/components_/base/Button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@northware/ui/components/panels/Accordion";
+} from "@northware/ui/components_/panels/Accordion";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/panels/Dialog";
+} from "@northware/ui/components_/panels/Dialog";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { navigationMenuButtonStyle } from "./NavigationMenuPremitive";
-import { menuData } from "@northware/ui/components/menu/menuData";
-import { Brand } from "@northware/ui/components/base/Brand";
+import { menuData } from "@northware/ui/components_/menu/menuData";
+import { Brand } from "@northware/ui/components_/base/Brand";
 
 export async function MobileNav() {
   const menuItems = await menuData();

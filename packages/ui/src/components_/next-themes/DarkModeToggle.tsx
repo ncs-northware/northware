@@ -6,8 +6,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@northware/ui/components/menu/DropdownMenu";
-import { Button } from "@northware/ui/components/base/Button";
+} from "@northware/ui/components_/menu/DropdownMenu";
+import { Button } from "@northware/ui/components_/base/Button";
 
 export function DarkModeToggle() {
   const { setTheme } = useTheme();

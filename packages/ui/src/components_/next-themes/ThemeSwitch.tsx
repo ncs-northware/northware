@@ -3,7 +3,7 @@
 import * as React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "@northware/ui/components/base/Button";
+import { Button } from "@northware/ui/components_/base/Button";
 
 export function ThemeSwitch({ className }: { className?: string }) {
   const { setTheme, resolvedTheme } = useTheme();
