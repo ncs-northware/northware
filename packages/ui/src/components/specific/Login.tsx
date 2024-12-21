@@ -37,18 +37,7 @@ export function LoginForm({ onSubmit }: { onSubmit: (values: any) => void }) {
 
   return (
     <>
-      <Image
-        suppressHydrationWarning
-        src={
-          theme.resolvedTheme === "dark"
-            ? "/img/logo-light.svg"
-            : "/img/logo-dark.svg"
-        }
-        height={150}
-        width={380}
-        className="mb-6"
-        alt="Northware Cockpit Logo"
-      />
+      <Brand className="mb-6 text-2xl" iconWidth="w-14" />
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
