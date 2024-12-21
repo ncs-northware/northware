@@ -8,8 +8,8 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@northware/ui/components_/form-parts/Form";
-import { Input } from "@northware/ui/components_/form-parts/Input";
+} from "@northware/ui/components/form-parts/Form";
+import { Input } from "@northware/ui/components/form-parts/Input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -18,10 +18,10 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@northware/ui/components_/panels/Card";
+} from "@northware/ui/components/panels/Card";
 import { useTheme } from "next-themes";
-import { Button } from "@northware/ui/components_/base/Button";
-import { Brand } from "@northware/ui/components_/base/Brand";
+import { Button } from "@northware/ui/components/base/Button";
+import { Brand } from "@northware/ui/components/base/Brand";
 
 const formSchema = z.object({
   email: z.string(),
@@ -37,18 +37,7 @@ export function LoginForm({ onSubmit }: { onSubmit: (values: any) => void }) {
 
   return (
     <>
-      <Image
-        suppressHydrationWarning
-        src={
-          theme.resolvedTheme === "dark"
-            ? "/img/logo-light.svg"
-            : "/img/logo-dark.svg"
-        }
-        height={150}
-        width={380}
-        className="mb-6"
-        alt="Northware Cockpit Logo"
-      />
+      <Brand className="mb-6 text-2xl" iconWidth="w-14" />
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>

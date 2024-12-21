@@ -5,13 +5,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-<<<<<<<< HEAD:packages/ui/src/components_/menu/MetaNav.tsx
-} from "@northware/ui/components_/menu/DropdownMenu";
-import { ThemeSwitch } from "@northware/ui/components_/next-themes/ThemeSwitch";
-========
-} from "@northware/ui/components/menu_/DropdownMenu";
+} from "@northware/ui/components/menu/DropdownMenu";
 import { ThemeSwitch } from "@northware/ui/components/next-themes/ThemeSwitch";
->>>>>>>> main:packages/ui/src/components/menu_/MetaNav.tsx
 import { cn } from "@northware/ui/utils";
 import { auth, signOut } from "@northware/auth/auth";
 import {
@@ -20,11 +15,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-<<<<<<<< HEAD:packages/ui/src/components_/menu/MetaNav.tsx
-} from "@northware/ui/components_/menu/NavigationMenuPremitive";
-========
-} from "@northware/ui/components/menu_/NavigationMenuPremitive";
->>>>>>>> main:packages/ui/src/components/menu_/MetaNav.tsx
+} from "@northware/ui/components/menu/NavigationMenuPremitive";
 import { UserIcon } from "lucide-react";
 import { navigationMenuButtonStyle } from "./NavigationMenuPremitive";
 

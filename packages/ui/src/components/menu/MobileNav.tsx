@@ -1,27 +1,22 @@
 import Image from "next/image";
-import { Button } from "@northware/ui/components_/base/Button";
+import { Button } from "@northware/ui/components/base/Button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@northware/ui/components_/panels/Accordion";
+} from "@northware/ui/components/panels/Accordion";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components_/panels/Dialog";
+} from "@northware/ui/components/panels/Dialog";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { navigationMenuButtonStyle } from "./NavigationMenuPremitive";
-<<<<<<<< HEAD:packages/ui/src/components_/menu/MobileNav.tsx
-import { menuData } from "@northware/ui/components_/menu/menuData";
-import { Brand } from "@northware/ui/components_/base/Brand";
-========
-import { menuData } from "@northware/ui/components/menu_/menuData";
+import { menuData } from "@northware/ui/components/menu/menuData";
 import { Brand } from "@northware/ui/components/base/Brand";
->>>>>>>> main:packages/ui/src/components/menu_/MobileNav.tsx
 
 export async function MobileNav() {
   const menuItems = await menuData();
@@ -34,7 +29,7 @@ export async function MobileNav() {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="blank" className={navigationMenuButtonStyle()}>
+            <Button className={navigationMenuButtonStyle()}>
               <MenuIcon className="h-6 w-6" />
             </Button>
           </DialogTrigger>
