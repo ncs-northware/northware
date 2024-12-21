@@ -6,8 +6,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+<<<<<<< HEAD:packages/ui/src/components_/next-themes/DarkModeToggle.tsx
+} from "@northware/ui/components_/menu/DropdownMenu";
+import { Button } from "@northware/ui/components_/base/Button";
+=======
 } from "@northware/ui/components/menu_/DropdownMenu";
 import { Button } from "@northware/ui/components/base/Button";
+>>>>>>> main:packages/ui/src/components/next-themes/DarkModeToggle.tsx
 
 export function DarkModeToggle() {
   const { setTheme } = useTheme();
