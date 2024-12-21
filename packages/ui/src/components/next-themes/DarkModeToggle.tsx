@@ -11,7 +11,6 @@ import { Button } from "@northware/ui/components/base/Button";
 
 export function DarkModeToggle() {
   const { setTheme } = useTheme();
-  // FIXME: Maybe used for MobileNav later?
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

@@ -1,5 +1,5 @@
 import { db } from "@northware/database/connection";
-import { SelectUser, userTable } from "@northware/database/schema";
+import { SelectUser, userTable } from "@northware/database/user";
 import { eq } from "drizzle-orm";
 
 export async function getUser(
