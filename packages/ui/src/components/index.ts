@@ -12,7 +12,8 @@ export * from "@northware/ui/components/form-parts/Select";
 export * from "@northware/ui/components/layouts/Container";
 
 // Menu (Components that define Menus or Parts of it or Components that are used for Navigation)
-export * from "@northware/ui/components/menu/DropdownMenu";
+export * from "@northware/ui/components/menu_/DropdownMenu";
+export * from "@northware/ui/components/menu_/SiteHeader";
 
 // NextThemes (Components that are used to perform the NextThemes integration)
 export * from "@northware/ui/components/next-themes/DarkModeToggle";
