@@ -15,7 +15,7 @@ import {
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { navigationMenuButtonStyle } from "./NavigationMenuPremitive";
-import { menuData } from "@northware/ui/components/menu/menuData";
+import { menuData } from "@northware/ui/components/menu_/menuData";
 import { Brand } from "@northware/ui/components/base/Brand";
 
 export async function MobileNav() {

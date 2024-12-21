@@ -6,9 +6,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@northware/ui/components/menu/NavigationMenuPremitive";
+} from "@northware/ui/components/menu_/NavigationMenuPremitive";
 
-import { menuData } from "@northware/ui/components/menu/menuData";
+import { menuData } from "@northware/ui/components/menu_/menuData";
 import { Brand } from "@northware/ui/components/base/Brand";
 
 export async function MainNav() {
