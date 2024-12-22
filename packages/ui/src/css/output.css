@@ -1072,12 +1072,12 @@ body {
   border-width: 1px;
 }
 
-.border-2 {
-  border-width: 2px;
-}
-
 .border-0 {
   border-width: 0px;
+}
+
+.border-2 {
+  border-width: 2px;
 }
 
 .border-b {
@@ -1142,10 +1142,6 @@ body {
 
 .bg-transparent {
   background-color: transparent;
-}
-
-.bg-primary\/80 {
-  background-color: hsl(var(--primary) / 0.8);
 }
 
 .fill-current {
@@ -1912,6 +1908,10 @@ body {
 @media (min-width: 768px) {
   .md\:absolute {
     position: absolute;
+  }
+
+  .md\:block {
+    display: block;
   }
 
   .md\:flex {

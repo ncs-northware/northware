@@ -69,8 +69,8 @@ export function MobileNavLink({
         className={cn(
           linkClasses,
           isChild
-            ? "flex select-none items-center gap-2 space-y-1 rounded-md px-2 py-4 text-sm font-medium leading-none no-underline outline-none transition-colors"
-            : "flex flex-1 items-center justify-between rounded-md px-2 py-4 text-sm font-medium transition-all hover:underline",
+            ? "flex select-none items-center gap-2 space-y-1 rounded-md p-2 text-sm font-medium leading-none no-underline outline-none transition-colors"
+            : "flex flex-1 items-center justify-between rounded-md p-2 text-sm font-medium transition-all hover:underline",
           {
             "text-primary hover:bg-primary/60 hover:text-primary-foreground":
               isActive(),

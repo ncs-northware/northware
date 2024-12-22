@@ -22,7 +22,7 @@ export async function MobileNav() {
   const menuItems = await menuData();
 
   return (
-    <div className="flex justify-between p-4 md:hidden">
+    <div className="container flex justify-between py-4 md:hidden">
       <div className="ml-3 flex items-center gap-3">
         <Link href="/">
           <Brand />
