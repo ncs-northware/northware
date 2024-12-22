@@ -991,6 +991,10 @@ body {
   align-items: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -1082,6 +1086,10 @@ body {
 
 .border-b {
   border-bottom-width: 1px;
+}
+
+.border-t {
+  border-top-width: 1px;
 }
 
 .border-none {
@@ -1350,6 +1358,10 @@ body {
 
 .text-warning {
   color: hsl(var(--warning) / 100%);
+}
+
+.text-muted {
+  color: hsl(var(--muted) / 100%);
 }
 
 .no-underline {

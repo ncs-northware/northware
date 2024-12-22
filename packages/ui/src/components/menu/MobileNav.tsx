@@ -1,6 +1,6 @@
 import { Brand } from "@northware/ui/components/base/Brand";
 import { Button } from "@northware/ui/components/base/Button";
-import { menuData } from "@northware/ui/components/menu/menuData";
+import { apps, menuData } from "@northware/ui/components/menu/menuData";
 import {
   Accordion,
   AccordionContent,
@@ -13,10 +13,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@northware/ui/components/panels/Dialog";
-import { MenuIcon } from "lucide-react";
+import { MenuIcon, LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { navigationMenuButtonStyle } from "./NavigationMenuPremitive";
 import { MobileNavLink } from "@northware/ui/components/menu/NavLinks";
+import { auth, signOut } from "@northware/auth/auth";
+import { ThemeSwitch } from "@northware/ui/components/next-themes/ThemeSwitch";
 
 export async function MobileNav() {
   const menuItems = await menuData();
@@ -41,7 +43,7 @@ export async function MobileNav() {
                 <Brand />
               </Link>
             </DialogTitle>
-            <div className="flex flex-1 flex-col justify-between gap-8">
+            <div className="flex flex-1 flex-col justify-between">
               <ul className="grid gap-1">
                 <MobileNavLink href="/" title="Home" />
                 {menuItems.topLevelItems.map((item) => {
@@ -89,10 +91,75 @@ export async function MobileNav() {
                   }
                 })}
               </ul>
+              <MobileNavMeta />
             </div>
           </DialogContent>
         </Dialog>
       </div>
     </div>
+  );
+}
+
+async function MobileNavMeta() {
+  let session = await auth();
+  return (
+    <ul className="grid gap-1 border-t border-border/50 py-4 dark:border-border/70">
+      {apps.map((app) => {
+        const link: any = () => {
+          if (app.envVariable) {
+            return process.env[app.envVariable];
+          } else if (app.href) {
+            return app.href;
+          }
+          return "#"; // Rückgabe von null, wenn kein Link verfügbar ist
+        };
+        if (link() !== "current") {
+          return (
+            <MobileNavLink
+              key={app.title}
+              title={app.title}
+              href={link()}
+              linkClasses={`${app.textColor} ${"hover:" + app.textColor}`}
+            />
+          );
+        }
+      })}
+      <li className="flex items-center justify-between rounded-md p-2 text-sm font-medium">
+        {session?.user?.name ? (
+          <p>
+            <span>{session?.user?.name}</span>{" "}
+            <span className="text-muted-foreground">
+              &#40;{session?.user?.email}&#41;
+            </span>
+          </p>
+        ) : (
+          <p>
+            <span className="text-muted-foreground">
+              {session?.user?.email}
+            </span>
+          </p>
+        )}
+        <div className="flex gap-2">
+          <SignOut />
+          <ThemeSwitch variant="outline" />
+        </div>
+      </li>
+    </ul>
+  );
+}
+
+function SignOut() {
+  // Helper-Komponent für @northware/auth signOut
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await signOut();
+      }}
+    >
+      <Button variant="outline" size="icon" type="submit">
+        <LogOutIcon />
+      </Button>
+    </form>
   );
 }
