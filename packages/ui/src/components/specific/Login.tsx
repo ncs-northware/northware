@@ -1,18 +1,17 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Brand } from "@northware/ui/components/base/Brand";
+import { Button } from "@northware/ui/components/base/Button";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "@northware/ui/components/form-parts/Form";
 import { Input } from "@northware/ui/components/form-parts/Input";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -20,8 +19,8 @@ import {
   CardTitle,
 } from "@northware/ui/components/panels/Card";
 import { useTheme } from "next-themes";
-import { Button } from "@northware/ui/components/base/Button";
-import { Brand } from "@northware/ui/components/base/Brand";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const formSchema = z.object({
   email: z.string(),
