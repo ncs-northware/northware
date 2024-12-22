@@ -118,7 +118,7 @@ function SignOut() {
         await signOut();
       }}
     >
-      <button type="submit">Sign out</button>
+      <button type="submit">Abmelden</button>
     </form>
   );
 }

@@ -1,5 +1,6 @@
-import Image from "next/image";
+import { Brand } from "@northware/ui/components/base/Brand";
 import { Button } from "@northware/ui/components/base/Button";
+import { menuData } from "@northware/ui/components/menu/menuData";
 import {
   Accordion,
   AccordionContent,
@@ -15,8 +16,7 @@ import {
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { navigationMenuButtonStyle } from "./NavigationMenuPremitive";
-import { menuData } from "@northware/ui/components/menu/menuData";
-import { Brand } from "@northware/ui/components/base/Brand";
+import { MobileNavLink } from "@northware/ui/components/menu/NavLinks";
 
 export async function MobileNav() {
   const menuItems = await menuData();
@@ -24,7 +24,9 @@ export async function MobileNav() {
   return (
     <div className="flex justify-between p-4 md:hidden">
       <div className="ml-3 flex items-center gap-3">
-        <Brand />
+        <Link href="/">
+          <Brand />
+        </Link>
       </div>
       <div>
         <Dialog>
@@ -35,56 +37,47 @@ export async function MobileNav() {
           </DialogTrigger>
           <DialogContent className="inset-x-0 top-0 flex flex-col border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top">
             <DialogTitle className="font-semibold">
-              <Brand />
+              <Link href="/">
+                <Brand />
+              </Link>
             </DialogTitle>
             <div className="flex flex-1 flex-col justify-between gap-8">
               <ul className="grid gap-1">
+                <MobileNavLink href="/" title="Home" />
                 {menuItems.topLevelItems.map((item) => {
                   const ItemChildren = menuItems.childItems(item.itemId);
                   if (ItemChildren.length == 0) {
                     return (
-                      <li className="group w-full" key={item.itemId}>
-                        <Link
-                          className="flex flex-1 items-center justify-between border-b py-4 font-medium transition-all hover:underline"
-                          href={item.href}
-                        >
-                          {item.title}
-                        </Link>
-                      </li>
+                      <MobileNavLink
+                        key={item.itemId}
+                        href={item.href}
+                        title={item.title}
+                      />
                     );
                   } else {
                     return (
                       <li key={item.itemId}>
                         <Accordion type="single" collapsible className="w-full">
-                          <AccordionItem value="id">
+                          <AccordionItem value="id" className="border-0 px-2">
                             <AccordionTrigger>{item.title}</AccordionTrigger>
                             <AccordionContent>
                               <ul>
-                                <li className="group w-full">
-                                  <Link
-                                    href={item.href}
-                                    className="flex select-none items-center gap-2 space-y-1 rounded-md bg-primary/60 p-3 font-medium leading-none text-primary-foreground no-underline outline-none transition-colors hover:bg-primary/80"
-                                  >
-                                    <div className="text-sm font-medium leading-none">
-                                      {item.title}
-                                    </div>
-                                  </Link>
-                                </li>
+                                <MobileNavLink
+                                  title={item.title}
+                                  href={item.href}
+                                  isChild
+                                  linkClasses="bg-primary/60 text-primary-foreground hover:bg-primary/80"
+                                  controlActiveState={false}
+                                />
+
                                 {ItemChildren.map((child) => {
                                   return (
-                                    <li
-                                      className="group w-full"
+                                    <MobileNavLink
+                                      title={child.title}
+                                      href={child.href}
+                                      linkClasses="hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                       key={child.itemId}
-                                    >
-                                      <Link
-                                        href={child.href}
-                                        className="flex select-none items-center gap-2 space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                      >
-                                        <div className="text-sm font-medium leading-none">
-                                          {child.title}
-                                        </div>
-                                      </Link>
-                                    </li>
+                                    />
                                   );
                                 })}
                               </ul>
