@@ -29,7 +29,7 @@ export async function MobileNav() {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className={navigationMenuButtonStyle()}>
+            <Button className={navigationMenuButtonStyle()} variant="blank">
               <MenuIcon className="h-6 w-6" />
             </Button>
           </DialogTrigger>

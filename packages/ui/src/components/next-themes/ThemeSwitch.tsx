@@ -13,7 +13,7 @@ export function ThemeSwitch({ className }: { className?: string }) {
   }, [resolvedTheme, setTheme]);
 
   return (
-    <Button className={className} onClick={toggleTheme}>
+    <Button className={className} onClick={toggleTheme} variant="blank">
       <SunIcon className="hidden [html.dark_&]:block" />
       <MoonIcon className="hidden [html.light_&]:block" />
       <span className="sr-only">Toggle theme</span>
