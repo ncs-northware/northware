@@ -107,7 +107,7 @@ async function MetaNav() {
       <NavigationMenu className="flex justify-between py-2">
         <NavigationMenuList>
           {apps.map((app) => {
-            const link = () => {
+            const link: any = () => {
               if (app.envVariable) {
                 return process.env[app.envVariable];
               } else if (app.href) {
@@ -118,23 +118,22 @@ async function MetaNav() {
             if (link() !== "current") {
               return (
                 <NavigationMenuItem key={app.title}>
-                  <NavigationMenuLink
+                  <MainNavLink
+                    controlActiveState={false}
+                    title={app.title}
                     href={link()}
                     className={cn(
                       navigationMenuTriggerStyle(),
                       app.textColor,
                       "hover:" + app.textColor,
                     )}
-                  >
-                    {app.title}
-                  </NavigationMenuLink>
+                  />
                 </NavigationMenuItem>
               );
             }
           })}
         </NavigationMenuList>
         <nav className="flex">
-          <ThemeSwitch className={navigationMenuButtonStyle()} />
           <DropdownMenu>
             <DropdownMenuTrigger className={navigationMenuButtonStyle()}>
               <UserIcon />
@@ -159,6 +158,7 @@ async function MetaNav() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <ThemeSwitch className={navigationMenuButtonStyle()} />
         </nav>
       </NavigationMenu>
     </>
