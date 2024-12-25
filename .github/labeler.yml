@@ -22,7 +22,7 @@ packages/auth:
   - changed-files:
       - any-glob-to-any-file: packages/auth/**
 
-packages/database:
+packages/database and api:
   - changed-files:
       - any-glob-to-any-file: packages/database/**
 
