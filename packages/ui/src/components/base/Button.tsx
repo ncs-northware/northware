@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@northware/ui/utils";
 
 const buttonVariants = cva(
-  "flex items-center justify-center gap-2 rounded-md text-center font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-opacity-50 border-2 border-transparent shadow-md",
+  "flex items-center justify-center gap-2 rounded-md text-center font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-opacity-50 border-2 border-transparent",
   {
     variants: {
       variant: {
@@ -14,7 +14,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         link: "text-primary underline-offset-4 hover:underline",
-        blank: "border-none shadow-none focus:ring-0",
+        blank: "border-none focus:ring-0",
       },
       size: {
         default: "h-10 px-4 py-3",

@@ -17,7 +17,6 @@ export * from "@northware/ui/components/menu/DropdownMenu";
 export * from "@northware/ui/components/menu/SiteHeader";
 
 // NextThemes (Components that are used to perform the NextThemes integration)
-export * from "@northware/ui/components/next-themes/DarkModeToggle";
 export * from "@northware/ui/components/next-themes/ThemeProvider";
 
 // Panels (Components to Display Content in a special way)

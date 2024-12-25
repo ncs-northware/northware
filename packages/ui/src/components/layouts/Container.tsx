@@ -12,7 +12,7 @@ export function Container({
   return (
     <>
       <SiteHeader />
-      <main className={cn("container", className)}>{children}</main>
+      <main className={cn("container pt-8", className)}>{children}</main>
     </>
   );
 }

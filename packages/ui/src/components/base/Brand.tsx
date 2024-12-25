@@ -32,6 +32,7 @@ export function Brand({
           Northware <span className="text-primary">Cockpit</span>
         </span>
       ) : (
+        // TODO: Schriftzug über service steuern
         ""
       )}
     </div>
