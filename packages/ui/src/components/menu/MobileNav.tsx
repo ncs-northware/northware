@@ -99,7 +99,6 @@ export async function MobileNav() {
     </div>
   );
 }
-
 async function MobileNavMeta() {
   let session = await auth();
   return (
