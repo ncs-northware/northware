@@ -1,5 +1,5 @@
 import { SiteHeader } from "@northware/ui/components/menu/SiteHeader";
-import { cn } from "@northware/ui/utils";
+import { cn } from "@northware/ui/lib/utils";
 import { ReactNode } from "react";
 
 export function Container({

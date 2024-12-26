@@ -1,4 +1,4 @@
-import { cn } from "@northware/ui/utils";
+import { cn } from "@northware/ui/lib/utils";
 import Image from "next/image";
 
 export function Brand({

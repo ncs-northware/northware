@@ -21,7 +21,7 @@ import {
 } from "@northware/ui/components/menu/NavigationMenuPremitive";
 import { MainNavLink } from "@northware/ui/components/menu/NavLinks";
 import { ThemeSwitch } from "@northware/ui/components/next-themes/ThemeSwitch";
-import { cn } from "@northware/ui/utils";
+import { cn } from "@northware/ui/lib/utils";
 import { UserIcon } from "lucide-react";
 import Link from "next/link";
 
