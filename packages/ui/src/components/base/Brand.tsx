@@ -1,4 +1,4 @@
-import { cn } from "@northware/ui/utils";
+import { cn } from "@northware/ui/lib/utils";
 import Image from "next/image";
 
 export function Brand({
@@ -32,6 +32,7 @@ export function Brand({
           Northware <span className="text-primary">Cockpit</span>
         </span>
       ) : (
+        // TODO: Schriftzug über service steuern
         ""
       )}
     </div>

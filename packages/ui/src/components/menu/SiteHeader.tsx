@@ -1,12 +1,10 @@
 import { MainNav } from "@northware/ui/components/menu/MainNav";
-import { MetaNav } from "@northware/ui/components/menu/MetaNav";
 import { MobileNav } from "@northware/ui/components/menu/MobileNav";
 
 export function SiteHeader() {
   // Rendert den Zusammengesetzen SiteHeader mit MetaNav, MainNav, MobileNav usw. innerhalb von <header>
   return (
-    <header>
-      <MetaNav />
+    <header className="border-b border-border/50 dark:border-border/70">
       <MainNav />
       <MobileNav />
     </header>

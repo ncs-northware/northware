@@ -21,3 +21,28 @@ export async function menuData() {
   };
   return { topLevelItems, childItems };
 }
+
+// TODO In Config-Package auslagern
+export const apps: {
+  title: string;
+  href?: string;
+  envVariable?: string;
+  textColor: string;
+}[] = [
+  // Attribute der Navigationspunkte der AppSwitches in MetaNav
+  {
+    envVariable: "NEXT_PUBLIC_CP_FRONT",
+    title: "Northware Cockpit",
+    textColor: "text-cockpit",
+  },
+  {
+    envVariable: "NEXT_PUBLIC_FI_FRONT",
+    title: "Northware Finance",
+    textColor: "text-finance",
+  },
+  {
+    envVariable: "NEXT_PUBLIC_TRD_FRONT",
+    title: "Northware Trader",
+    textColor: "text-trader",
+  },
+];
