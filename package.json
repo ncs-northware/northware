@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/config-conventional": "^19.6.0",
     "@commitlint/prompt-cli": "^19.6.0",
     "@commitlint/types": "^19.5.0",
     "prettier": "^3.2.5",
