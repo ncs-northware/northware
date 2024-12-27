@@ -3,7 +3,6 @@ pnpm-lock.yaml
 
 # Generated Codes on root
 **/.git/
-**/.gitkeep/
 **/.turbo/
 **/.vscode/
 **/node_modules
