@@ -1,7 +1,7 @@
 import "./globals.css";
 import "@northware/ui/css";
 import { ThemeProvider } from "@northware/ui/components";
-import { source_sans } from "@northware/ui/fonts";
+import { source_sans } from "@northware/ui/lib";
 
 export const metadata = {
   title: {

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "../tailwind-config/tailwind.config.ts",
+    "css": "src/css/input.css",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@northware/ui/components",
+    "utils": "@northware/ui/lib/utils",
+    "hooks": "@northware/ui/hooks",
+    "lib": "@northware/ui/lib",
+    "ui": "@northware/ui/components"
+  }
+}
