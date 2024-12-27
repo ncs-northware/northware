@@ -1,11 +1,11 @@
 import { ReactNode, HTMLAttributes } from "react";
-import { cn } from "@northware/ui/utils";
+import { cn } from "@northware/ui/lib/utils";
 
 interface HeadlineProps extends HTMLAttributes<HTMLHeadingElement> {
   children: ReactNode;
   level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "title";
 }
-
+// TODO: über cva steuern?
 const basicClasses = "scroll-m-20 tracking-tight";
 
 export function Headline({

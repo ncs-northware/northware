@@ -5,7 +5,13 @@ import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@northware/ui/components/base/Button";
 
-export function ThemeSwitch({ className }: { className?: string }) {
+export function ThemeSwitch({
+  className,
+  variant = "blank",
+}: {
+  className?: string;
+  variant?: "blank" | "outline";
+}) {
   const { setTheme, resolvedTheme } = useTheme();
 
   const toggleTheme = React.useCallback(() => {
@@ -13,7 +19,12 @@ export function ThemeSwitch({ className }: { className?: string }) {
   }, [resolvedTheme, setTheme]);
 
   return (
-    <Button className={className} onClick={toggleTheme}>
+    <Button
+      className={className}
+      onClick={toggleTheme}
+      variant={variant}
+      size="icon"
+    >
       <SunIcon className="hidden [html.dark_&]:block" />
       <MoonIcon className="hidden [html.light_&]:block" />
       <span className="sr-only">Toggle theme</span>

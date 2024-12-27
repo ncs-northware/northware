@@ -1,19 +1,29 @@
-import { LoginForm, LoginWrapper } from "@northware/ui/components";
-import { signIn } from "@northware/auth/auth";
+import {
+  LoginForm,
+  LoginWrapper,
+  MessageLoggedIn,
+} from "@northware/ui/components";
 
-export default function LoginPage() {
+import { auth, signIn } from "@northware/auth/auth";
+
+export default async function LoginPage() {
   async function handleSubmit(values: any) {
     "use server";
     await signIn("credentials", {
-      redirectTo: "/dashboard",
+      redirectTo: "/",
       email: values.email,
       password: values.password,
     });
   }
 
+  let session = await auth();
   return (
     <LoginWrapper>
-      <LoginForm onSubmit={handleSubmit} />
+      {!session?.user ? (
+        <LoginForm onSubmit={handleSubmit} />
+      ) : (
+        <MessageLoggedIn user={session?.user} />
+      )}
     </LoginWrapper>
   );
 }
