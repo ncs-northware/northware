@@ -21,6 +21,7 @@ pnpm-lock.yaml
 # Please ignore ingnore files lol
 .gitignore
 .prettierignore
+.gitkeep
 
 # Different File Types
 *.png

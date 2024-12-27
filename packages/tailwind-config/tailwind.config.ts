@@ -3,6 +3,7 @@ import colorConfig from "./colors";
 import animate from "tailwindcss-animate";
 
 const config: Omit<Config, "content"> = {
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   darkMode: ["class"],
   presets: [colorConfig],
   theme: {
