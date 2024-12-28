@@ -6,5 +6,11 @@
   "schedule": ["* 13-24 * * 5", "* * * * 6,7"],
   "labels": ["dependencies"],
   "reviewers": ["onissen"],
-  "timezone": "Europe/Amsterdam"
+  "timezone": "Europe/Amsterdam",
+  "vulnerabilityAlerts": {
+    "labels": ["security", "dependencies"],
+    "reviewers": ["onissen"]
+  },
+  "dependencyDashboardLabels": ["dependencies", "github-management"],
+  "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard"
 }
