@@ -14,7 +14,7 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}) {
   return (
     <html className="theme-cockpit" lang="de" suppressHydrationWarning>
       <body className={`${source_sans.variable} font-sans`}>
