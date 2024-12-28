@@ -193,7 +193,7 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: ^3.9.1
-        version: 3.9.1(react-hook-form@7.53.2(react@18.3.1))
+        version: 3.9.1(react-hook-form@7.54.2(react@18.3.1))
       '@northware/auth':
         specifier: 'workspace:'
         version: link:../auth
@@ -243,8 +243,8 @@ importers:
         specifier: ^0.4.4
         version: 0.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-hook-form:
-        specifier: ^7.53.2
-        version: 7.53.2(react@18.3.1)
+        specifier: ^7.54.2
+        version: 7.54.2(react@18.3.1)
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0
@@ -7039,8 +7039,8 @@ packages:
     peerDependencies:
       react: ^16.6.0 || ^17.0.0 || ^18.0.0
 
-  react-hook-form@7.53.2:
-    resolution: {integrity: sha512-YVel6fW5sOeedd1524pltpHX+jgU2u3DSDtXEaBORNdqiNrsX/nUI/iGXONegttg0mJVnfrIkiV0cmTU6Oo2xw==}
+  react-hook-form@7.54.2:
+    resolution: {integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -10715,9 +10715,9 @@ snapshots:
     dependencies:
       '@hapi/hoek': 9.3.0
 
-  '@hookform/resolvers@3.9.1(react-hook-form@7.53.2(react@18.3.1))':
+  '@hookform/resolvers@3.9.1(react-hook-form@7.54.2(react@18.3.1))':
     dependencies:
-      react-hook-form: 7.53.2(react@18.3.1)
+      react-hook-form: 7.54.2(react@18.3.1)
 
   '@humanfs/core@0.19.1': {}
 
@@ -16630,7 +16630,7 @@ snapshots:
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
 
-  react-hook-form@7.53.2(react@18.3.1):
+  react-hook-form@7.54.2(react@18.3.1):
     dependencies:
       react: 18.3.1
 
