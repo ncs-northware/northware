@@ -3,7 +3,7 @@
   "extends": ["config:recommended"],
   "rangeStrategy": "bump",
   "semanticCommits": "enabled",
-  "schedule": ["* 13-20 * * 5,6"],
+  "schedule": ["* 10-24 * * 6,7"],
   "labels": ["dependencies"],
   "reviewers": ["onissen"],
   "timezone": "Europe/Amsterdam"
