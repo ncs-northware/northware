@@ -12,5 +12,6 @@
     "reviewers": ["onissen"]
   },
   "dependencyDashboardLabels": ["dependencies", "github-management"],
-  "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard"
+  "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard",
+  "ignoreDeps": ["pnpm"]
 }
