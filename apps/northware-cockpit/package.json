@@ -17,7 +17,7 @@
     "next-auth": "5.0.0-beta.25",
     "react": "^18",
     "react-dom": "^18",
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@northware/eslint-config": "workspace:*",
