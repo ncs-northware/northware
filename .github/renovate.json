@@ -13,5 +13,5 @@
   },
   "dependencyDashboardLabels": ["dependencies", "github-management"],
   "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard",
-  "ignoreDeps": ["pnpm"]
+  "ignoreDeps": ["node", "npm", "pnpm", "yarn"]
 }
