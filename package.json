@@ -4,13 +4,16 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "lint": "turbo lint",
+    "lint": "ultracite lint",
+    "format": "ultracite format",
     "localci": "turbo build lint --affected",
     "commit": "commit",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@changesets/cli": "^2.27.11",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@commitlint/prompt-cli": "^19.6.1",
@@ -18,8 +21,7 @@
     "@northware/tsconfig": "workspace:",
     "turbo": "^2.3.3",
     "typescript": "^5.7.2",
-    "@northware/tsconfig": "workspace:",
-    "@changesets/cli": "^2.27.11"
+    "ultracite": "4.1.14"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
