@@ -1,1 +1,0 @@
-# `@northware/eslint-config`
