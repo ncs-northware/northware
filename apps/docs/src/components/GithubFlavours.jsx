@@ -1,4 +1,4 @@
-import layout from "./GithubFlavours.module.css";
+import layout from './GithubFlavours.module.css';
 
 export const GithubBadge = ({
   background,
@@ -15,23 +15,23 @@ export const GithubBadge = ({
         borderColor: borderColor,
       }}
       className={`${layout.githubBadge} ${
-        statusTheme === "grey"
+        statusTheme === 'grey'
           ? layout.statusThemeGrey
-          : statusTheme === "blue"
+          : statusTheme === 'blue'
             ? layout.statusThemeBlue
-            : statusTheme === "green"
+            : statusTheme === 'green'
               ? layout.statusThemeGreen
-              : statusTheme === "yellow"
+              : statusTheme === 'yellow'
                 ? layout.statusThemeYellow
-                : statusTheme === "orange"
+                : statusTheme === 'orange'
                   ? layout.statusThemeOrange
-                  : statusTheme === "red"
+                  : statusTheme === 'red'
                     ? layout.statusThemeRed
-                    : statusTheme === "pink"
+                    : statusTheme === 'pink'
                       ? layout.statusThemePink
-                      : statusTheme === "purple"
+                      : statusTheme === 'purple'
                         ? layout.statusThemePurple
-                        : ""
+                        : ''
       }`}
     >
       {children}

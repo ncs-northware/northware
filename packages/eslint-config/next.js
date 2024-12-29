@@ -5,13 +5,13 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   extends: [
-    "eslint:recommended",
-    "prettier",
-    require.resolve("@vercel/style-guide/eslint/next"),
-    "turbo",
-    "next",
+    'eslint:recommended',
+    'prettier',
+    require.resolve('@vercel/style-guide/eslint/next'),
+    'turbo',
+    'next',
   ],
-  plugins: ["only-warn"],
+  plugins: ['only-warn'],
   globals: {
     React: true,
     JSX: true,
@@ -22,8 +22,8 @@ module.exports = {
   },
   ignorePatterns: [
     // Ignore dotfiles
-    ".*.js",
-    "node_modules/",
+    '.*.js',
+    'node_modules/',
   ],
-  overrides: [{ files: ["*.js?(x)"] }],
+  overrides: [{ files: ['*.js?(x)'] }],
 };

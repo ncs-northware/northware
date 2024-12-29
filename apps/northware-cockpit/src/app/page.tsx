@@ -1,4 +1,4 @@
-import { Container, Headline } from "@northware/ui/components";
+import { Container, Headline } from '@northware/ui/components';
 
 export default async function DashboardPage() {
   return (

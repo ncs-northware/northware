@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Brand } from "@northware/ui/components/base/Brand";
-import { Button } from "@northware/ui/components/base/Button";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Brand } from '@northware/ui/components/base/Brand';
+import { Button } from '@northware/ui/components/base/Button';
 import {
   Form,
   FormControl,
@@ -10,17 +10,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form-parts/Form";
-import { Input } from "@northware/ui/components/form-parts/Input";
+} from '@northware/ui/components/form-parts/Form';
+import { Input } from '@northware/ui/components/form-parts/Input';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@northware/ui/components/panels/Card";
-import { useTheme } from "next-themes";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+} from '@northware/ui/components/panels/Card';
+import { useTheme } from 'next-themes';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 const formSchema = z.object({
   email: z.string(),
@@ -31,7 +31,7 @@ export function LoginForm({ onSubmit }: { onSubmit: (values: any) => void }) {
   const theme = useTheme();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: '', password: '' },
   });
 
   return (

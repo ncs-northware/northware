@@ -1,24 +1,24 @@
-import { Brand } from "@northware/ui/components/base/Brand";
-import { Button } from "@northware/ui/components/base/Button";
-import { apps, menuData } from "@northware/ui/components/menu/menuData";
+import { auth, signOut } from '@northware/auth/auth';
+import { Brand } from '@northware/ui/components/base/Brand';
+import { Button } from '@northware/ui/components/base/Button';
+import { MobileNavLink } from '@northware/ui/components/menu/NavLinks';
+import { apps, menuData } from '@northware/ui/components/menu/menuData';
+import { ThemeSwitch } from '@northware/ui/components/next-themes/ThemeSwitch';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@northware/ui/components/panels/Accordion";
+} from '@northware/ui/components/panels/Accordion';
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/panels/Dialog";
-import { MenuIcon, LogOutIcon } from "lucide-react";
-import Link from "next/link";
-import { navigationMenuButtonStyle } from "./NavigationMenuPremitive";
-import { MobileNavLink } from "@northware/ui/components/menu/NavLinks";
-import { auth, signOut } from "@northware/auth/auth";
-import { ThemeSwitch } from "@northware/ui/components/next-themes/ThemeSwitch";
+} from '@northware/ui/components/panels/Dialog';
+import { LogOutIcon, MenuIcon } from 'lucide-react';
+import Link from 'next/link';
+import { navigationMenuButtonStyle } from './NavigationMenuPremitive';
 
 export async function MobileNav() {
   const menuItems = await menuData();
@@ -37,7 +37,7 @@ export async function MobileNav() {
               <MenuIcon className="h-6 w-6" />
             </Button>
           </DialogTrigger>
-          <DialogContent className="inset-x-0 top-0 flex flex-col border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top">
+          <DialogContent className="data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 flex flex-col border-b">
             <DialogTitle className="font-semibold">
               <Link href="/">
                 <Brand />
@@ -100,9 +100,9 @@ export async function MobileNav() {
   );
 }
 async function MobileNavMeta() {
-  let session = await auth();
+  const session = await auth();
   return (
-    <ul className="grid gap-1 border-t border-border/50 py-4 dark:border-border/70">
+    <ul className="grid gap-1 border-border/50 border-t py-4 dark:border-border/70">
       {apps.map((app) => {
         const link: any = () => {
           if (app.envVariable) {
@@ -110,23 +110,23 @@ async function MobileNavMeta() {
           } else if (app.href) {
             return app.href;
           }
-          return "#"; // Rückgabe von null, wenn kein Link verfügbar ist
+          return '#'; // Rückgabe von null, wenn kein Link verfügbar ist
         };
-        if (link() !== "current") {
+        if (link() !== 'current') {
           return (
             <MobileNavLink
               key={app.title}
               title={app.title}
               href={link()}
-              linkClasses={`${app.textColor} ${"hover:" + app.textColor}`}
+              linkClasses={`${app.textColor} ${'hover:' + app.textColor}`}
             />
           );
         }
       })}
-      <li className="flex items-center justify-between rounded-md p-2 text-sm font-medium">
+      <li className="flex items-center justify-between rounded-md p-2 font-medium text-sm">
         {session?.user?.name ? (
           <p>
-            <span>{session?.user?.name}</span>{" "}
+            <span>{session?.user?.name}</span>{' '}
             <span className="text-muted-foreground">
               &#40;{session?.user?.email}&#41;
             </span>
@@ -152,7 +152,7 @@ function SignOut() {
   return (
     <form
       action={async () => {
-        "use server";
+        'use server';
         await signOut();
       }}
     >

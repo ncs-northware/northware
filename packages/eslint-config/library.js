@@ -5,25 +5,25 @@
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ["eslint:recommended", "prettier", "turbo"],
-  plugins: ["only-warn"],
+  extends: ['eslint:recommended', 'prettier', 'turbo'],
+  plugins: ['only-warn'],
   globals: {
     React: true,
     JSX: true,
   },
-  parser: "babelParser",
+  parser: 'babelParser',
   env: {
     node: true,
   },
   ignorePatterns: [
     // Ignore dotfiles
-    ".*.js",
-    "node_modules/",
-    "dist/",
+    '.*.js',
+    'node_modules/',
+    'dist/',
   ],
   overrides: [
     {
-      files: ["*.js?(x)"],
+      files: ['*.js?(x)'],
     },
   ],
 };
