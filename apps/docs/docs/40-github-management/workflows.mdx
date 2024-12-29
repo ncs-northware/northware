@@ -108,14 +108,29 @@ Wenn durch den Durchlauf des Workflows Änderungen am Code vorgenommen wurden, w
 
 **Dieser Commit unterbricht nun alle laufenden Workflows.** Diese Workflows scheitern. Anschließend starten alle vorgesehenen Workflows wieder von neuem.
 
-## Dependabot
+## Renovate Bot
 
-[Dependabot](https://docs.github.com/en/code-security/dependabot) wird verwendet, um die im gesamten Repository verwendeten Dependencies aktuell zu halten.
-Wenn Dependabot Dependencies findet, bei denen es eine neue Version gibt, wird das Update umgesetzt und als Pull Request bereitgestellt.
+Mit dem [Renovate Bot](https://www.mend.io/renovate/) werden die Dependencies im GitHub Repository aktuell gehalten.
+Renovate prüft samstags und sonntags, ob es Dependencies (in PNPM-Packages und GitHub Actions) mit neuen Versionen gibt. Findet Renovate eine neue Version, 
+erstellt der Bot einen Pull Request, alle betroffenen Dateien (z.B. `pnpm-lock.yaml`, `package.json` und Workflow-Dateien) aktualisiert.
 
-In diesem Repository ist Dependabot so konfiguriert, das wöchentlich freitags um 14:00 Uhr der Durchlauf startet. onissen wird dann als Reviewer hinzugefügt, damit ich auf den PR aufmerksam werde.
+Im Repository sind der "Dependency graph" und die "Dependabot alerts" aktivert. So wird das Repository auf Sicherheitsrisiken geprüft und darüber benachrichtigt. 
+Renovate greift auf diese Daten zu und löst die Risiken ggf. durch ein Update der betroffenen Dependency.
 
-Mit `open-pull-request-limit: 0` und `versioning-strategy: increase` wird gewährleistet, das Dependabot im Monorepo-Umfeld funktioniert.
+### Konfigurationen
 
-Auch für **GitHub Actions** ist Dependabot konfiguriert, es wird also auch die Workflows auf neue Versionen prüfen.
-
+| Regel | Wert | Beschreibung |
+| ----- | ---- | ------------ |
+| [`extends`](https://docs.renovatebot.com/configuration-options/#extends) | | Config-Presets, die genutzt werden sollen
+| [`semanticCommits`](https://docs.renovatebot.com/configuration-options/#semanticcommits) | `enabled` |  |
+| [`labels`](https://docs.renovatebot.com/configuration-options/#labels) | `dependencies` | Vergebe das Label `dependencies` an alle Pull Requests, die von Renovate eröffnet werden. |
+| [`reviewers`](https://docs.renovatebot.com/configuration-options/#reviewers) | `onissen` | Fordere für jeden Pull Request ein Review von `onissen` an. |
+| [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy) | `bump` | Aktualisiere immer den Eintrag in der `package.json`, wenn eine neue Version verfügbar ist. Die `pnpm-lock.yaml` wird ebenfalls immer aktualisiert. Beispiel: `^1.0.0` wird zu `^1.1.0`, `^3.4.0` wird zu `^3.4.1` |
+| [`schedule`](https://docs.renovatebot.com/configuration-options/#schedule) | `* * * * 0,6` | Renovate führt Änderungen immer samstags und sonntags zu einer beliebigen Zeit durch. Außerhalb dieses Zeitplans wartet Renovate bis der Zeitplan wieder erreicht ist und führt erst dann die Änderung durch. |
+| [`timezone`](https://docs.renovatebot.com/configuration-options/#timezone) | `Europe/Amsterdam` | Zeitzone in der der `schedule` ausgeführt werden soll. |
+| [`vulnerabilityAlerts`](https://docs.renovatebot.com/configuration-options/#vulnerabilityalerts) |  | Konfiguration, wenn mit dem Pull Request eine Security Vulnerability behoben wird. Renovate liest die Vulnerability Alerts von Dependabot und löst diese wenn möglich. PRs die als `vulnerabilityAlerts` erstellt werden. Halten sich nicht an den `schedule`, sie werden also so schnell wie möglich eröffnet, damit der Fix möglichst schnell erfolgen kann. |
+| `vulnerabilityAlerts.labels` | `security`, `dependencies` |  |
+| `vulnerabilityAlerts.reviewers` | `onissen` |  |
+| [`dependencyDashboardTitle`](https://docs.renovatebot.com/configuration-options/#dependencydashboardtitle) | `[Renovate]: Dependency Dashboard` | Titel des Issues für das [Dependency Dashboard](https://docs.renovatebot.com/key-concepts/dashboard/) |
+| [`dependencyDashboardLabels`](https://docs.renovatebot.com/configuration-options/#dependencydashboardlabels) | "dependencies", "github-management" | Labels, die auf den Dependency Dashboard Issue angewendet werden. |
+| [`packageRules`](https://docs.renovatebot.com/configuration-options/#packagerules) | | Regeln, die nur auf bestimmte Packages angewendet werden. |

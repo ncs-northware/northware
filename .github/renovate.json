@@ -1,11 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "rangeStrategy": "bump",
   "semanticCommits": "enabled",
-  "schedule": ["* * * * 0,6"],
   "labels": ["dependencies"],
   "reviewers": ["onissen"],
+  "rangeStrategy": "bump",
+  "schedule": ["* * * * 0,6"],
   "timezone": "Europe/Amsterdam",
   "vulnerabilityAlerts": {
     "labels": ["security", "dependencies"],
@@ -13,5 +13,11 @@
   },
   "dependencyDashboardLabels": ["dependencies", "github-management"],
   "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard",
-  "ignoreDeps": ["node", "npm", "pnpm", "yarn"]
+  "packageRules": [
+    {
+      "description": "Disable Updates for Package Managers and Engines",
+      "matchPackageNames": ["node", "npm", "pnpm", "yarn" ],
+      "enabled": false
+    }
+  ]
 }
