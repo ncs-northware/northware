@@ -32,7 +32,7 @@ jobs:
       - name: Download deps
         run: pnpm install
 
-      - name: Code formatting
+      - name: Code formatting with Biome and Ultracite
         run: pnpm format
 
       - name: Apply fixes
