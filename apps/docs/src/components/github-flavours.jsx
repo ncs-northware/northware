@@ -1,4 +1,4 @@
-import layout from './GithubFlavours.module.css';
+import layout from './github-flavours.module.css';
 
 const getStatusThemeClass = (theme) => {
   switch (theme) {

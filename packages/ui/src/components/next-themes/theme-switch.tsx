@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@northware/ui/components/base/Button';
+import { Button } from '@northware/ui/components/base/button';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import * as React from 'react';

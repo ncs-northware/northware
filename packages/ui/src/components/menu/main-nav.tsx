@@ -1,5 +1,5 @@
 import { auth, signOut } from '@northware/auth/auth';
-import { Brand } from '@northware/ui/components/base/Brand';
+import { Brand } from '@northware/ui/components/base/brand';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,8 +7,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@northware/ui/components/menu/DropdownMenu';
-import { MainNavLink } from '@northware/ui/components/menu/NavLinks';
+} from '@northware/ui/components/menu/dropdown-menu';
+import { apps, menuData } from '@northware/ui/components/menu/menu-data';
+import { MainNavLink } from '@northware/ui/components/menu/nav-links';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,9 +18,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuButtonStyle,
   navigationMenuTriggerStyle,
-} from '@northware/ui/components/menu/NavigationMenuPremitive';
-import { apps, menuData } from '@northware/ui/components/menu/menuData';
-import { ThemeSwitch } from '@northware/ui/components/next-themes/ThemeSwitch';
+} from '@northware/ui/components/menu/navigation-menu-premitive';
+import { ThemeSwitch } from '@northware/ui/components/next-themes/theme-switch';
 import { cn } from '@northware/ui/lib/utils';
 import { UserIcon } from 'lucide-react';
 import Link from 'next/link';

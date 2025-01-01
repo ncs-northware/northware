@@ -1,24 +1,24 @@
 import { auth, signOut } from '@northware/auth/auth';
-import { Brand } from '@northware/ui/components/base/Brand';
-import { Button } from '@northware/ui/components/base/Button';
-import { MobileNavLink } from '@northware/ui/components/menu/NavLinks';
-import { apps, menuData } from '@northware/ui/components/menu/menuData';
-import { ThemeSwitch } from '@northware/ui/components/next-themes/ThemeSwitch';
+import { Brand } from '@northware/ui/components/base/brand';
+import { Button } from '@northware/ui/components/base/button';
+import { apps, menuData } from '@northware/ui/components/menu/menu-data';
+import { MobileNavLink } from '@northware/ui/components/menu/nav-links';
+import { ThemeSwitch } from '@northware/ui/components/next-themes/theme-switch';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@northware/ui/components/panels/Accordion';
+} from '@northware/ui/components/panels/accordion';
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from '@northware/ui/components/panels/Dialog';
+} from '@northware/ui/components/panels/dialog';
 import { LogOutIcon, MenuIcon } from 'lucide-react';
 import Link from 'next/link';
-import { navigationMenuButtonStyle } from './NavigationMenuPremitive';
+import { navigationMenuButtonStyle } from './navigation-menu-premitive';
 
 export async function MobileNav() {
   const menuItems = await menuData();

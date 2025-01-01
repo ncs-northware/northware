@@ -1,13 +1,13 @@
 import { signOut } from '@northware/auth/auth';
-import { Brand } from '@northware/ui/components/base/Brand';
-import { Button } from '@northware/ui/components/base/Button';
+import { Brand } from '@northware/ui/components/base/brand';
+import { Button } from '@northware/ui/components/base/button';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@northware/ui/components/panels/Card';
+} from '@northware/ui/components/panels/card';
 import Link from 'next/link';
 
 interface User {

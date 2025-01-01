@@ -1,8 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Brand } from '@northware/ui/components/base/Brand';
-import { Button } from '@northware/ui/components/base/Button';
+import { Brand } from '@northware/ui/components/base/brand';
+import { Button } from '@northware/ui/components/base/button';
 import {
   Form,
   FormControl,
@@ -10,14 +10,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@northware/ui/components/form-parts/Form';
-import { Input } from '@northware/ui/components/form-parts/Input';
+} from '@northware/ui/components/form-parts/form';
+import { Input } from '@northware/ui/components/form-parts/input';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from '@northware/ui/components/panels/Card';
+} from '@northware/ui/components/panels/card';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
