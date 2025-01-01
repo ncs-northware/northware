@@ -1,5 +1,28 @@
 import layout from './GithubFlavours.module.css';
 
+const getStatusThemeClass = (theme) => {
+  switch (theme) {
+    case 'grey':
+      return layout.statusThemeGrey;
+    case 'blue':
+      return layout.statusThemeBlue;
+    case 'green':
+      return layout.statusThemeGreen;
+    case 'yellow':
+      return layout.statusThemeYellow;
+    case 'orange':
+      return layout.statusThemeOrange;
+    case 'red':
+      return layout.statusThemeRed;
+    case 'pink':
+      return layout.statusThemePink;
+    case 'purple':
+      return layout.statusThemePurple;
+    default:
+      return '';
+  }
+};
+
 export const GithubBadge = ({
   background,
   color,
@@ -14,25 +37,7 @@ export const GithubBadge = ({
         color: color,
         borderColor: borderColor,
       }}
-      className={`${layout.githubBadge} ${
-        statusTheme === 'grey'
-          ? layout.statusThemeGrey
-          : statusTheme === 'blue'
-            ? layout.statusThemeBlue
-            : statusTheme === 'green'
-              ? layout.statusThemeGreen
-              : statusTheme === 'yellow'
-                ? layout.statusThemeYellow
-                : statusTheme === 'orange'
-                  ? layout.statusThemeOrange
-                  : statusTheme === 'red'
-                    ? layout.statusThemeRed
-                    : statusTheme === 'pink'
-                      ? layout.statusThemePink
-                      : statusTheme === 'purple'
-                        ? layout.statusThemePurple
-                        : ''
-      }`}
+      className={`${layout.githubBadge} ${getStatusThemeClass(statusTheme)}`}
     >
       {children}
     </span>
