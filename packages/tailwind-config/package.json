@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "tsc-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit",
+    "format": "ultracite format",
+    "lint": "ultracite lint"
   },
   "exports": {
     ".": "./tailwind.config.ts"

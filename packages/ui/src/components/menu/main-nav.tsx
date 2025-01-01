@@ -1,5 +1,5 @@
-import { auth, signOut } from "@northware/auth/auth";
-import { Brand } from "@northware/ui/components/base/Brand";
+import { auth, signOut } from '@northware/auth/auth';
+import { Brand } from '@northware/ui/components/base/brand';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,23 +7,22 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/menu/DropdownMenu";
-import { apps, menuData } from "@northware/ui/components/menu/menuData";
+} from '@northware/ui/components/menu/dropdown-menu';
+import { apps, menuData } from '@northware/ui/components/menu/menu-data';
+import { MainNavLink } from '@northware/ui/components/menu/nav-links';
 import {
   NavigationMenu,
-  navigationMenuButtonStyle,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuButtonStyle,
   navigationMenuTriggerStyle,
-} from "@northware/ui/components/menu/NavigationMenuPremitive";
-import { MainNavLink } from "@northware/ui/components/menu/NavLinks";
-import { ThemeSwitch } from "@northware/ui/components/next-themes/ThemeSwitch";
-import { cn } from "@northware/ui/lib/utils";
-import { UserIcon } from "lucide-react";
-import Link from "next/link";
+} from '@northware/ui/components/menu/navigation-menu-premitive';
+import { ThemeSwitch } from '@northware/ui/components/next-themes/theme-switch';
+import { cn } from '@northware/ui/lib/utils';
+import { UserIcon } from 'lucide-react';
+import Link from 'next/link';
 
 export async function MainNav() {
   // TODO: Add NavMenu Rendering based on permissionKey
@@ -48,7 +47,8 @@ export async function MainNav() {
               </NavigationMenuItem>
               {menuItems.topLevelItems.map((item) => {
                 const ItemChildren = menuItems.childItems(item.itemId);
-                if (ItemChildren.length == 0) {
+                if (ItemChildren.length === 0) {
+                  // Top-Level-Element ohne Untermenü
                   return (
                     <NavigationMenuItem key={item.itemId}>
                       <MainNavLink
@@ -58,38 +58,36 @@ export async function MainNav() {
                       />
                     </NavigationMenuItem>
                   );
-                } else {
-                  return (
-                    <NavigationMenuItem key={item.itemId}>
-                      <NavigationMenuTrigger>
-                        {item.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <div className="grid grid-cols-2 p-4 md:w-[400px] lg:w-[500px]">
-                          <MainNavLink
-                            controlActiveState={false}
-                            title={item.title}
-                            href={item.href}
-                            className="flex h-full w-full select-none flex-col justify-center rounded-md bg-primary/60 p-3 text-lg font-medium text-primary-foreground no-underline outline-none hover:bg-primary/80 hover:shadow-md"
-                          />
-                          <ul className="gap-3 p-4">
-                            {ItemChildren.map((child) => {
-                              return (
-                                <li key={child.itemId}>
-                                  <MainNavLink
-                                    className="block select-none space-y-1 rounded-md p-3 text-sm font-medium leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                    title={child.title}
-                                    href={child.href}
-                                  />
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  );
                 }
+                return (
+                  // Top-Level-Element mit Untermenü
+                  <NavigationMenuItem key={item.itemId}>
+                    <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="grid grid-cols-2 p-4 md:w-[400px] lg:w-[500px]">
+                        <MainNavLink
+                          controlActiveState={false}
+                          title={item.title}
+                          href={item.href}
+                          className="flex h-full w-full select-none flex-col justify-center rounded-md bg-primary/60 p-3 font-medium text-lg text-primary-foreground no-underline outline-none hover:bg-primary/80 hover:shadow-md"
+                        />
+                        <ul className="gap-3 p-4">
+                          {ItemChildren.map((child) => {
+                            return (
+                              <li key={child.itemId}>
+                                <MainNavLink
+                                  className="block select-none space-y-1 rounded-md p-3 font-medium text-sm leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  title={child.title}
+                                  href={child.href}
+                                />
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                );
               })}
             </NavigationMenuList>
           </NavigationMenu>
@@ -101,31 +99,25 @@ export async function MainNav() {
 
 async function MetaNav() {
   // Die Meta Navigation mit App-Switches, UserMenu und ThemeSwitcher auf Desktop-Geräten
-  let session = await auth();
+  const session = await auth();
   return (
     <>
       <NavigationMenu className="flex justify-between py-2">
         <NavigationMenuList>
           {apps.map((app) => {
-            const link: any = () => {
-              if (app.envVariable) {
-                return process.env[app.envVariable];
-              } else if (app.href) {
-                return app.href;
-              }
-              return "#"; // Rückgabe von null, wenn kein Link verfügbar ist
-            };
-            if (link() !== "current") {
+            const link: string =
+              process.env[app.envVariable || ''] || app.href || '#';
+            if (link !== 'current') {
               return (
                 <NavigationMenuItem key={app.title}>
                   <MainNavLink
                     controlActiveState={false}
                     title={app.title}
-                    href={link()}
+                    href={link}
                     className={cn(
                       navigationMenuTriggerStyle(),
                       app.textColor,
-                      "hover:" + app.textColor,
+                      `hover:${app.textColor}`
                     )}
                   />
                 </NavigationMenuItem>
@@ -142,13 +134,13 @@ async function MetaNav() {
             <DropdownMenuContent>
               <DropdownMenuLabel>
                 {session?.user?.name ? (
-                  <p className="text-sm font-medium leading-none">
+                  <p className="font-medium text-sm leading-none">
                     {session?.user?.name}
                   </p>
                 ) : (
-                  ""
+                  ''
                 )}
-                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                <p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
                   {session?.user?.email}
                 </p>
               </DropdownMenuLabel>
@@ -170,7 +162,7 @@ function SignOut() {
   return (
     <form
       action={async () => {
-        "use server";
+        'use server';
         await signOut();
       }}
     >

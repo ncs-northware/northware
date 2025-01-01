@@ -1,11 +1,11 @@
-import { cn } from "@northware/ui/lib/utils";
-import Image from "next/image";
+import { cn } from '@northware/ui/lib/utils';
+import Image from 'next/image';
 
 export function Brand({
   className,
   textOnly = false,
   iconOnly = false,
-  iconWidth = "w-10",
+  iconWidth = 'w-10',
 }: {
   className?: string;
   textOnly?: boolean;
@@ -14,9 +14,11 @@ export function Brand({
 }) {
   return (
     <div
-      className={cn("flex items-center gap-1 text-xl font-semibold", className)}
+      className={cn('flex items-center gap-1 font-semibold text-xl', className)}
     >
-      {!textOnly ? (
+      {textOnly ? (
+        ''
+      ) : (
         <Image
           src="/img/icon.png"
           alt="Icon"
@@ -24,16 +26,14 @@ export function Brand({
           height={250}
           className={iconWidth}
         />
-      ) : (
-        ""
       )}
-      {!iconOnly ? (
+      {iconOnly ? (
+        // TODO: Schriftzug über service steuern
+        ''
+      ) : (
         <span>
           Northware <span className="text-primary">Cockpit</span>
         </span>
-      ) : (
-        // TODO: Schriftzug über service steuern
-        ""
       )}
     </div>
   );

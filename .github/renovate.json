@@ -16,7 +16,7 @@
   "packageRules": [
     {
       "description": "Disable Updates for Package Managers and Engines",
-      "matchPackageNames": ["node", "npm", "pnpm", "yarn" ],
+      "matchPackageNames": ["node", "npm", "pnpm", "yarn"],
       "enabled": false
     }
   ]

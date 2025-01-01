@@ -5,23 +5,25 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
-    "localci": "turbo build lint --affected",
-    "format": "prettier --write \"**/*.*\"",
+    "lint:root": "ultracite lint",
+    "format": "turbo format",
+    "format:root": "ultracite format",
+    "localci": "turbo build lint:root --affected",
     "commit": "commit",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@changesets/cli": "^2.27.11",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@commitlint/prompt-cli": "^19.6.1",
     "@commitlint/types": "^19.5.0",
-    "prettier": "^3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.9",
+    "@northware/tsconfig": "workspace:",
     "turbo": "^2.3.3",
     "typescript": "^5.7.2",
-    "@northware/tsconfig": "workspace:",
-    "@changesets/cli": "^2.27.11"
+    "ultracite": "4.1.14"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {

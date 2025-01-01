@@ -26,10 +26,6 @@ packages/database and api:
   - changed-files:
       - any-glob-to-any-file: packages/database/**
 
-packages/eslint-config:
-  - changed-files:
-      - any-glob-to-any-file: packages/eslint-config/**
-
 packages/tsconfig:
   - changed-files:
       - any-glob-to-any-file: packages/tsconfig/**

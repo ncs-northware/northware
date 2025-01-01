@@ -1,2 +1,2 @@
-export * from "./user";
-export * from "./mainNav";
+export * from './user';
+export * from './main-nav';

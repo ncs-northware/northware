@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
     "build": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css",
-    "tsc-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit",
+    "format": "ultracite format",
+    "lint": "ultracite lint"
   },
   "exports": {
     "./css": "./src/css/output.css",

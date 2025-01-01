@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { MoonIcon, SunIcon } from "lucide-react";
-import { useTheme } from "next-themes";
-import { Button } from "@northware/ui/components/base/Button";
+import { Button } from '@northware/ui/components/base/button';
+import { MoonIcon, SunIcon } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import * as React from 'react';
 
 export function ThemeSwitch({
   className,
-  variant = "blank",
+  variant = 'blank',
 }: {
   className?: string;
-  variant?: "blank" | "outline";
+  variant?: 'blank' | 'outline';
 }) {
   const { setTheme, resolvedTheme } = useTheme();
 
   const toggleTheme = React.useCallback(() => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   }, [resolvedTheme, setTheme]);
 
   return (

@@ -2,6 +2,11 @@
   "name": "@northware/database",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "tsc-check": "tsc --noEmit",
+    "lint": "ultracite lint",
+    "format": "ultracite format"
+  },
   "exports": {
     "./connection": "./db-connect.ts",
     "./schema": "./schema/index.ts"

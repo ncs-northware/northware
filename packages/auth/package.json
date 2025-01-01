@@ -12,7 +12,9 @@
     "@northware/tsconfig": "workspace:"
   },
   "scripts": {
-    "tsc-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit",
+    "lint": "ultracite lint",
+    "format": "ultracite format"
   },
   "exports": {
     "./auth": "./lib/auth.ts",

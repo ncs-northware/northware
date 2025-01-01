@@ -1,6 +1,6 @@
-import { db } from "@northware/database/connection";
-import { mainNavTable } from "@northware/database/schema";
-import { eq } from "drizzle-orm";
+import { db } from '@northware/database/connection';
+import { mainNavTable } from '@northware/database/schema';
+import { eq } from 'drizzle-orm';
 
 export async function menuData() {
   const result = await db
@@ -11,12 +11,12 @@ export async function menuData() {
       childOf: mainNavTable.childOf,
     })
     .from(mainNavTable)
-    .where(eq(mainNavTable.app, "cockpit"))
+    .where(eq(mainNavTable.app, 'cockpit'))
     .orderBy(mainNavTable.order);
 
   const topLevelItems = result.filter((item) => item.childOf == null);
   const childItems = (parent: string) => {
-    const children = result.filter((item) => item.childOf == parent);
+    const children = result.filter((item) => item.childOf === parent);
     return children;
   };
   return { topLevelItems, childItems };
@@ -31,18 +31,18 @@ export const apps: {
 }[] = [
   // Attribute der Navigationspunkte der AppSwitches in MetaNav
   {
-    envVariable: "NEXT_PUBLIC_CP_FRONT",
-    title: "Northware Cockpit",
-    textColor: "text-cockpit",
+    envVariable: 'NEXT_PUBLIC_CP_FRONT',
+    title: 'Northware Cockpit',
+    textColor: 'text-cockpit',
   },
   {
-    envVariable: "NEXT_PUBLIC_FI_FRONT",
-    title: "Northware Finance",
-    textColor: "text-finance",
+    envVariable: 'NEXT_PUBLIC_FI_FRONT',
+    title: 'Northware Finance',
+    textColor: 'text-finance',
   },
   {
-    envVariable: "NEXT_PUBLIC_TRD_FRONT",
-    title: "Northware Trader",
-    textColor: "text-trader",
+    envVariable: 'NEXT_PUBLIC_TRD_FRONT',
+    title: 'Northware Trader',
+    textColor: 'text-trader',
   },
 ];

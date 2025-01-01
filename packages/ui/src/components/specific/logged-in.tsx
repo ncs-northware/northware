@@ -1,16 +1,21 @@
-import { signOut } from "@northware/auth/auth";
-import { Brand } from "@northware/ui/components/base/Brand";
-import { Button } from "@northware/ui/components/base/Button";
+import { signOut } from '@northware/auth/auth';
+import { Brand } from '@northware/ui/components/base/brand';
+import { Button } from '@northware/ui/components/base/button';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@northware/ui/components/panels/Card";
-import Link from "next/link";
+} from '@northware/ui/components/panels/card';
+import Link from 'next/link';
 
-export function MessageLoggedIn({ user }: { user: any }) {
+interface User {
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+}
+
+export function MessageLoggedIn({ user }: { user: User }) {
   return (
     <>
       <Brand className="mb-6 text-2xl" iconWidth="w-14" />
@@ -22,11 +27,11 @@ export function MessageLoggedIn({ user }: { user: any }) {
         </CardHeader>
         <CardContent>
           {user?.name ? (
-            <p className="text-sm font-medium leading-none">{user?.name}</p>
+            <p className="font-medium text-sm leading-none">{user?.name}</p>
           ) : (
-            ""
+            ''
           )}
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
             {user?.email}
           </p>
         </CardContent>
@@ -36,7 +41,7 @@ export function MessageLoggedIn({ user }: { user: any }) {
           </Link>
           <form
             action={async () => {
-              "use server";
+              'use server';
               await signOut();
             }}
           >

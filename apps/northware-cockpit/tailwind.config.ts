@@ -1,1 +1,1 @@
-export * from "@northware/tailwind-config";
+export * from '@northware/tailwind-config';

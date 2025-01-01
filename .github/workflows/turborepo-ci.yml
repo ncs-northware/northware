@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  build:
+  ci:
     name: Build and Lint
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -40,5 +40,8 @@ jobs:
       - name: Build
         run: pnpm turbo run build --affected
 
-      - name: Lint
-        run: pnpm turbo run lint --affected
+      - name: Lint on Root with Biome and Ultracite
+        run: pnpm turbo run lint:root --affected
+
+      # - name: Lint Packages and Apps
+      #   run: pnpm turbo run lint --affected

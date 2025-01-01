@@ -6,8 +6,9 @@
     "dev": "next dev --turbo --port 40110",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "tsc-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit",
+    "lint": "ultracite lint",
+    "format": "ultracite format"
   },
   "dependencies": {
     "@northware/auth": "workspace:*",
@@ -20,12 +21,9 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@northware/eslint-config": "workspace:*",
     "@northware/tailwind-config": "workspace:*",
     "@northware/tsconfig": "workspace:*",
     "autoprefixer": "^10.4.20",
-    "eslint": "^9.15.0",
-    "eslint-config-next": "^15.1.3",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17"
   }
