@@ -18,7 +18,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@northware/ui/components/panels/Card';
-import { useTheme } from 'next-themes';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -27,8 +26,9 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-export function LoginForm({ onSubmit }: { onSubmit: (values: any) => void }) {
-  const theme = useTheme();
+export function LoginForm({
+  onSubmit,
+}: { onSubmit: (values: { email: string; password: string }) => void }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { email: '', password: '' },

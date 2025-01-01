@@ -47,7 +47,8 @@ export async function MainNav() {
               </NavigationMenuItem>
               {menuItems.topLevelItems.map((item) => {
                 const ItemChildren = menuItems.childItems(item.itemId);
-                if (ItemChildren.length == 0) {
+                if (ItemChildren.length === 0) {
+                  // Top-Level-Element ohne Untermenü
                   return (
                     <NavigationMenuItem key={item.itemId}>
                       <MainNavLink
@@ -57,38 +58,36 @@ export async function MainNav() {
                       />
                     </NavigationMenuItem>
                   );
-                } else {
-                  return (
-                    <NavigationMenuItem key={item.itemId}>
-                      <NavigationMenuTrigger>
-                        {item.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <div className="grid grid-cols-2 p-4 md:w-[400px] lg:w-[500px]">
-                          <MainNavLink
-                            controlActiveState={false}
-                            title={item.title}
-                            href={item.href}
-                            className="flex h-full w-full select-none flex-col justify-center rounded-md bg-primary/60 p-3 font-medium text-lg text-primary-foreground no-underline outline-none hover:bg-primary/80 hover:shadow-md"
-                          />
-                          <ul className="gap-3 p-4">
-                            {ItemChildren.map((child) => {
-                              return (
-                                <li key={child.itemId}>
-                                  <MainNavLink
-                                    className="block select-none space-y-1 rounded-md p-3 font-medium text-sm leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                    title={child.title}
-                                    href={child.href}
-                                  />
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  );
                 }
+                return (
+                  // Top-Level-Element mit Untermenü
+                  <NavigationMenuItem key={item.itemId}>
+                    <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="grid grid-cols-2 p-4 md:w-[400px] lg:w-[500px]">
+                        <MainNavLink
+                          controlActiveState={false}
+                          title={item.title}
+                          href={item.href}
+                          className="flex h-full w-full select-none flex-col justify-center rounded-md bg-primary/60 p-3 font-medium text-lg text-primary-foreground no-underline outline-none hover:bg-primary/80 hover:shadow-md"
+                        />
+                        <ul className="gap-3 p-4">
+                          {ItemChildren.map((child) => {
+                            return (
+                              <li key={child.itemId}>
+                                <MainNavLink
+                                  className="block select-none space-y-1 rounded-md p-3 font-medium text-sm leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  title={child.title}
+                                  href={child.href}
+                                />
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                );
               })}
             </NavigationMenuList>
           </NavigationMenu>
@@ -106,25 +105,19 @@ async function MetaNav() {
       <NavigationMenu className="flex justify-between py-2">
         <NavigationMenuList>
           {apps.map((app) => {
-            const link: any = () => {
-              if (app.envVariable) {
-                return process.env[app.envVariable];
-              } else if (app.href) {
-                return app.href;
-              }
-              return '#'; // Rückgabe von null, wenn kein Link verfügbar ist
-            };
-            if (link() !== 'current') {
+            const link: string =
+              process.env[app.envVariable || ''] || app.href || '#';
+            if (link !== 'current') {
               return (
                 <NavigationMenuItem key={app.title}>
                   <MainNavLink
                     controlActiveState={false}
                     title={app.title}
-                    href={link()}
+                    href={link}
                     className={cn(
                       navigationMenuTriggerStyle(),
                       app.textColor,
-                      'hover:' + app.textColor
+                      `hover:${app.textColor}`
                     )}
                   />
                 </NavigationMenuItem>

@@ -16,7 +16,7 @@ export async function menuData() {
 
   const topLevelItems = result.filter((item) => item.childOf == null);
   const childItems = (parent: string) => {
-    const children = result.filter((item) => item.childOf == parent);
+    const children = result.filter((item) => item.childOf === parent);
     return children;
   };
   return { topLevelItems, childItems };

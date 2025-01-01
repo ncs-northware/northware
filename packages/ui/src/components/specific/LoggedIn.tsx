@@ -10,7 +10,12 @@ import {
 } from '@northware/ui/components/panels/Card';
 import Link from 'next/link';
 
-export function MessageLoggedIn({ user }: { user: any }) {
+interface User {
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+}
+
+export function MessageLoggedIn({ user }: { user: User }) {
   return (
     <>
       <Brand className="mb-6 text-2xl" iconWidth="w-14" />
