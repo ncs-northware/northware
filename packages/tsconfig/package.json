@@ -1,5 +1,9 @@
 {
   "name": "@northware/tsconfig",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "scripts": {
+    "lint": "ultracite lint",
+    "format": "ultracite format"
+  }
 }
