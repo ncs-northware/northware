@@ -33,7 +33,7 @@ jobs:
         run: pnpm install
 
       - name: Code formatting with Biome and Ultracite
-        run: pnpm format:root
+        run: pnpm turbo run format:root --affected
 
       - name: Apply fixes
         uses: autofix-ci/action@ff86a557419858bb967097bfc916833f5647fa8c
