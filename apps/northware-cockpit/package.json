@@ -6,7 +6,9 @@
     "dev": "next dev --turbo --port 40110",
     "build": "next build",
     "start": "next start",
-    "tsc-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit",
+    "lint": "ultracite lint",
+    "format": "ultracite format"
   },
   "dependencies": {
     "@northware/auth": "workspace:*",

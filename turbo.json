@@ -23,6 +23,10 @@
       "dependsOn": ["^lint"]
     },
     "//#lint:root": {},
+    "format": {
+      "dependsOn": ["^format"]
+    },
+    "//#format:root": {},
     "tsc-check": {
       "dependsOn": ["^tsc-check"]
     }

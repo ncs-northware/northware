@@ -4,10 +4,11 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "lint": "turbo lint lint:root",
+    "lint": "turbo lint",
     "lint:root": "ultracite lint",
-    "format": "ultracite format",
-    "localci": "turbo build lint lint:root --affected",
+    "format": "turbo format",
+    "format:root": "ultracite format",
+    "localci": "turbo build lint:root --affected",
     "commit": "commit",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"
