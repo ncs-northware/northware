@@ -14,6 +14,7 @@ const Configuration: UserConfig = {
   ignores: [
     (commitMessage) => {
       // add an exception for github
+      // biome-ignore lint/performance/useTopLevelRegex: not avoidable
       return /^Merge branch '.*' into [a-zA-Z0-9/\-_]+$/.test(commitMessage);
     },
   ],

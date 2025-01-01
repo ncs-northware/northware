@@ -12,11 +12,6 @@
     }
   },
   "files": {
-    "ignore": [
-      "**/node_modules/**",
-      "**/dist/**",
-      "**/css/output.css",
-      "commitlint.config.ts"
-    ]
+    "ignore": ["**/node_modules/**", "**/dist/**", "**/css/output.css"]
   }
 }
