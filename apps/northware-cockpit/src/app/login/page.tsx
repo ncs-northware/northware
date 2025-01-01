@@ -7,7 +7,7 @@ import {
 import { auth, signIn } from '@northware/auth/auth';
 
 export default async function LoginPage() {
-  async function handleSubmit(values: any) {
+  async function handleSubmit(values: { email: string; password: string }) {
     'use server';
     await signIn('credentials', {
       redirectTo: '/',
