@@ -13,11 +13,23 @@ export const {
   ...authConfig,
   providers: [
     Credentials({
-      async authorize({ email, password }: any) {
+      async authorize(credentials) {
+        const { email, password } = credentials as {
+          email: string;
+          password: string;
+        };
         const user = await getUser(email);
-        if (user.length === 0) return null;
-        const passwordsMatch = await compare(password, user[0].password!);
-        if (passwordsMatch) return user[0] as any;
+        if (user.length === 0) {
+          return null;
+        }
+        const passwordsMatch = await compare(password, user[0].password || '');
+        if (passwordsMatch) {
+          return {
+            name: user[0].name,
+            email: user[0].email,
+          };
+        }
+        return null;
       },
     }),
   ],

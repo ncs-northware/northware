@@ -14,12 +14,11 @@ export const authConfig = {
       const isOnDashboard = nextUrl.pathname.startsWith('/');
 
       if (isOnDashboard) {
-        if (isLoggedIn) return true;
+        if (isLoggedIn) {
+          return true;
+        }
         return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/', nextUrl));
       }
-
       return true;
     },
   },
