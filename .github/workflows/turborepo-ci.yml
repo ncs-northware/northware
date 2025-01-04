@@ -41,7 +41,4 @@ jobs:
         run: pnpm turbo run build --affected
 
       - name: Lint on Root with Biome and Ultracite
-        run: pnpm turbo run lint:root --affected
-
-      # - name: Lint Packages and Apps
-      #   run: pnpm turbo run lint --affected
+        run: pnpm turbo run lint:ci
