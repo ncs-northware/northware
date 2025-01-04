@@ -23,6 +23,7 @@
       "dependsOn": ["^lint"]
     },
     "//#lint:root": {},
+    "//#lint:ci": {},
     "format": {
       "dependsOn": ["^format"]
     },

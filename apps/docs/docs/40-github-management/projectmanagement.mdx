@@ -10,7 +10,7 @@ Im Northware Repository gibt es vordefinierte **Issue-Templates**, um den übers
 - **Problem melden**: Während der Entwicklung oder Nutzung der App ist aufgefallen, das etwas nicht wie vorgesehen funktioniert. Der Issue wird automatisch mit <GithubBadge background="#FBCA04" color="black">invalid</GithubBadge> gelabeled.
 - **Neues Feature:** Ein Vorschlag für ein neues Feature, das es bisher so noch nicht in der App gibt oder das ein bestehendes Feature erweitert. Der Issue wird automatisch mit <GithubBadge background="#a2eeef" color="black">enhancement</GithubBadge> gelabeled.
 - **Erweiterung der Dokumentation:** Ein fertiges Feature soll in dieser Dokumentation erklärt werden. Der Issue wird automatisch mit <GithubBadge background="#25C19F" color="black">docs-wanted</GithubBadge> gelabeled.
-- **Security Vulnerability Tracking**: [Dependabot](./workflows#dependabot) hat eine Security Vulnerability gefunden. In diesem Issue wird getracked, was getan werden kann, um die Vulnerabilty zu beseitigen. Der Issue wird automatisch mit <GithubBadge background="#FBCA04" color="black">security</GithubBadge> gelabeled.
+- **Security Vulnerability Tracking**: Dependabot hat eine Security Vulnerability gefunden. In diesem Issue wird getracked, was getan werden kann, um die Vulnerabilty zu beseitigen. Der Issue wird automatisch mit <GithubBadge background="#FBCA04" color="black">security</GithubBadge> gelabeled.
 
 :::tip
 
@@ -38,7 +38,7 @@ Wenn Issues nur wegen der Referenzierung oder automatisch verlinkt werden, obwoh
 
 :::
 
-Der Wokflow [Labeler](./workflows#labeler) labeled den Pull Request basierend auf den geänderten Dateien mit den richtigen <GithubBadge borderColor="black">apps/</GithubBadge> oder <GithubBadge background="#F0B9F8" color="black">packages/</GithubBadge> Labels.
+Der Wokflow [Labeler](./workflows#labeler) labeled den Pull Request basierend auf den geänderten Dateien mit den richtigen <GithubBadge borderColor="black" color="black" background="white">apps/</GithubBadge> oder <GithubBadge background="#F0B9F8" color="black">packages/</GithubBadge> Labels.
 
 Jeder Pull Request wird automatisch dem Projekt **Northware New** mit dem Status <GithubBadge statusTheme="blue">Triage</GithubBadge> hinzugefügt und muss vom Nutzer ggf. angepasst werden. Pull Requests an denen noch gearbeitet wird sollen den Status <GithubBadge statusTheme="yellow">In Progress</GithubBadge> erhalten. Wenn die Änderungen des PR noch auf ein Review warten, erhalten sie den Status <GithubBadge statusTheme="pink">For Review</GithubBadge>. Wenn der PR gemerged wurde, wird er automatisch dem Status <GithubBadge statusTheme="purple">Done</GithubBadge> zugeordnet.
 
@@ -48,7 +48,7 @@ Mit Labels lassen sich Issues und Pull Requests kategorisieren. Labels sind bei 
 denn auf Basis dieser Kennzeichnungen werden teilweise Workflows abgearbeitet und Filter gesetzt.
 
 Es gibt bei der Entwicklung von Northware Labels, die den Typ eines Issues oder Pull Requests kennzeichnen (z.B. <GithubBadge background="#A2EEEF" color="black">enhancement</GithubBadge>),
-Labels die betroffene Codeteile (<GithubBadge borderColor="black" color="black">apps/</GithubBadge> und <GithubBadge background="#F0B9F8" color="black">packages/</GithubBadge> Labels) und
+Labels die betroffene Codeteile (<GithubBadge borderColor="black" color="black" background="white">apps/</GithubBadge> und <GithubBadge background="#F0B9F8" color="black">packages/</GithubBadge> Labels) und
 Labels die von Bots und Workflows verwendet werden (z.B. <GithubBadge background="#0366D6" color="white">dependencies</GithubBadge> und <GithubBadge background="black" color="white">github-actions</GithubBadge>).
 
 ### Type Labels
@@ -97,7 +97,6 @@ der Hintergrundfarbe <span style={{color: 'black', background: '#F0B9F8'}}>#F0B9
 | <GithubBadge background="#F0B9F8" color="black">packages/database</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/database` Package |
 | <GithubBadge background="#F0B9F8" color="black">packages/tsconfig</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/tsconfig` Package |
 | <GithubBadge background="#F0B9F8" color="black">packages/tailwind-config</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/tailwind-config` Package |
-| <GithubBadge background="#F0B9F8" color="black">packages/eslint-config</GithubBadge> | Dieser Issue/PR ändert etwas an dem `@northware/eslint-config` Package |
 
 ### Labels für andere Dateipfade
 
@@ -147,7 +146,7 @@ Diese Ansich ebthält alle Einträge, die das Northware New Projekt enthält
 
 #### Apps
 
-In dieser Ansicht werden alle Einträge angezeigt, die ein <GithubBadge color="black" borderColor="black">apps/</GithubBadge> Label haben und daher eine Änderung einer oder mehrerer Apps bewirken.
+In dieser Ansicht werden alle Einträge angezeigt, die ein <GithubBadge color="black" borderColor="black" background="white">apps/</GithubBadge> Label haben und daher eine Änderung einer oder mehrerer Apps bewirken.
 
 #### Packages
 

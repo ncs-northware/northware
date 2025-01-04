@@ -5,7 +5,7 @@
 ### Pull Request Labeler {#labeler}
 
 Der Workflow "Pull Request Labeler" (`.github/workflows/pr_labeler.yml`) nutzt die GitHub Action [Labeler](https://github.com/marketplace/actions/labeler).
-Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit <GithubBadge color="black" borderColor="black">apps/</GithubBadge> und <GithubBadge color="black" background="#F0B9F8">packages/</GithubBadge> Labels.
+Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit <GithubBadge color="black" borderColor="black" background="white">apps/</GithubBadge> und <GithubBadge color="black" background="#F0B9F8">packages/</GithubBadge> Labels.
 Damit dieses Labeling korrekt funktioniert müssen die einzelnen Labels in der Konfigurationsdatei `.github/labeler.yml` zu den zugehörigen Dateipfaden zugeordnet werden.
 
 ```yaml title=".github/workflows/pr_labeler.yml"
@@ -30,7 +30,6 @@ jobs:
 ```yaml title=".github/labeler.yml"
 
 # This file serves as configuration file for the labeler Workflow (.github/workflows/pr_labeler.yml)
-# Labels for Repo-Root (Turborepo Administration)
 
 # Labels for Github Health Files
 
@@ -48,15 +47,13 @@ apps/northware-cockpit:
   - changed-files:
       - any-glob-to-any-file: apps/northware-cockpit/**
 
-...
-
 # Labels for pakages/* changes
 
 packages/auth:
   - changed-files:
       - any-glob-to-any-file: packages/auth/**
 
-packages/database:
+packages/database and api:
   - changed-files:
       - any-glob-to-any-file: packages/database/**
 
@@ -86,15 +83,15 @@ Die Workflows sind nicht mit klassischen GitHub Actions sondern über das [integ
 
 Der Workflow **Turborepo CI** (`.github/workflows/turborepo-ci.yml`) wird immer dann ausgelöst, wenn Code auf den `main` Branch gepusht wird oder ein neuer Pull Request eröffnet oder aktualisiert wird.
 
-Der Workflow nutzt den vorliegenden Code und installiert das Projekt in einer Node.js Umgebung mit `pnpm`.
-Mit `pnpm build --affected` werden die von der Änderung betroffenen Code-Teile gebaut. 
-Mit `pnpm lint --affected` werden **Lint-Tests** des betroffenen Codes ausgeführt.
+- Der Workflow nutzt den vorliegenden Code und installiert das Projekt in einer Node.js Umgebung mit `pnpm`.
+- Mit `pnpm build --affected` werden die von der Änderung betroffenen Code-Teile gebaut.
+- Mit `pnpm lint:ci` werden die von der Änderung betroffenen Code-Teile mit [Biome](/General/formatting) überprüft.
 
 Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgebrochen.
 
 :::info Local CI
 
-Der Turborepo CI-Workflow durchläuft bei jedem Pull Request und bei jedem Merge die Schritte `pnpm turbo build --affected` und `pnpm turbo run lint --affected`. 
+Der Turborepo CI-Workflow durchläuft bei jedem Pull Request und bei jedem Merge die Schritte `pnpm turbo build --affected` und `pnpm turbo run lint:ci`. 
 Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist lässt sich dieser Ablauf mit `pnpm localci` auch lokal abbilden, damit Fehler schon vor dem CI-Durchlauf auffallen.
 
 :::
@@ -103,7 +100,7 @@ Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist läs
 
 Der Workflow **autofix.ci** (.github/workflows/autofix.yml) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.
 
-Innerhalb des Workflows wird das Projekt vollständig gebaut, der vorhandene Code wird formatiert.
+Innerhalb des Workflows wird das Projekt vollständig gebaut, der vorhandene Code wird mit `pnpm format:root` formatiert.
 Wenn durch den Durchlauf des Workflows Änderungen am Code vorgenommen wurden, werden diese Code Fixes auf den vorhandenen Pull Request commitet.
 
 **Dieser Commit unterbricht nun alle laufenden Workflows.** Diese Workflows scheitern. Anschließend starten alle vorgesehenen Workflows wieder von neuem.
