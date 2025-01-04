@@ -1,6 +1,11 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "extends": ["ultracite"],
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "defaultBranch": "main"
+  },
   "javascript": {
     "globals": ["React"]
   },

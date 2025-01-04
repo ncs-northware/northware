@@ -6,9 +6,10 @@
     "build": "turbo build",
     "lint": "turbo lint",
     "lint:root": "ultracite lint",
+    "lint:ci": "biome ci ./",
     "format": "turbo format",
     "format:root": "ultracite format",
-    "localci": "turbo build lint:root --affected",
+    "localci": "turbo build lint:ci --affected",
     "commit": "commit",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"
