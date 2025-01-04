@@ -7,6 +7,10 @@
   "files": {
     "ignore": [
       "**/node_modules/**",
+      "**/.turbo",
+      "**/.docusaurus",
+      "**/.next",
+      "tsconfig.tsbuildinfo",
       "**/dist/**",
       "**/css/output.css",
       "apps/docs/src/theme/**"
