@@ -5,7 +5,7 @@
 ### Pull Request Labeler {#labeler}
 
 Der Workflow "Pull Request Labeler" (`.github/workflows/pr_labeler.yml`) nutzt die GitHub Action [Labeler](https://github.com/marketplace/actions/labeler).
-Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit <GithubBadge color="black" borderColor="black">apps/</GithubBadge> und <GithubBadge color="black" background="#F0B9F8">packages/</GithubBadge> Labels.
+Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit <GithubBadge color="black" borderColor="black" background="white">apps/</GithubBadge> und <GithubBadge color="black" background="#F0B9F8">packages/</GithubBadge> Labels.
 Damit dieses Labeling korrekt funktioniert müssen die einzelnen Labels in der Konfigurationsdatei `.github/labeler.yml` zu den zugehörigen Dateipfaden zugeordnet werden.
 
 ```yaml title=".github/workflows/pr_labeler.yml"
