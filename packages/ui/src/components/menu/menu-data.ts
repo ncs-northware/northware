@@ -1,8 +1,9 @@
 import { db } from '@northware/database/connection';
 import { mainNavTable } from '@northware/database/schema';
+import type { ServiceType } from '@northware/service-config';
 import { eq } from 'drizzle-orm';
 
-export async function menuData() {
+export async function menuData(service: ServiceType) {
   const result = await db
     .select({
       itemId: mainNavTable.itemId,
@@ -11,7 +12,7 @@ export async function menuData() {
       childOf: mainNavTable.childOf,
     })
     .from(mainNavTable)
-    .where(eq(mainNavTable.app, 'cockpit'))
+    .where(eq(mainNavTable.app, service))
     .orderBy(mainNavTable.order);
 
   const topLevelItems = result.filter((item) => item.childOf == null);
@@ -22,27 +23,35 @@ export async function menuData() {
   return { topLevelItems, childItems };
 }
 
-// TODO In Config-Package auslagern
-export const apps: {
+export const suiteAppsMeta: {
   title: string;
-  href?: string;
-  envVariable?: string;
+  envVariable: string;
+  slug: 'cockpit' | 'admin' | 'finance' | 'trader';
   textColor: string;
 }[] = [
   // Attribute der Navigationspunkte der AppSwitches in MetaNav
   {
-    envVariable: 'NEXT_PUBLIC_CP_FRONT',
     title: 'Northware Cockpit',
+    envVariable: 'NEXT_PBLIC_COCKPIT_URL',
+    slug: 'cockpit',
     textColor: 'text-cockpit',
   },
   {
-    envVariable: 'NEXT_PUBLIC_FI_FRONT',
     title: 'Northware Finance',
+    envVariable: 'NEXT_PUBLIC_FINANCE_URL',
+    slug: 'finance',
     textColor: 'text-finance',
   },
   {
-    envVariable: 'NEXT_PUBLIC_TRD_FRONT',
     title: 'Northware Trader',
+    envVariable: 'NEXT_PUBLIC_TRADER_URL',
+    slug: 'trader',
     textColor: 'text-trader',
+  },
+  {
+    title: 'Admin Panel',
+    envVariable: 'NEXT_PUBLIC_ADMIN_URL',
+    slug: 'admin',
+    textColor: 'text-foreground',
   },
 ];

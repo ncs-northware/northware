@@ -1,7 +1,11 @@
 import { auth, signOut } from '@northware/auth/auth';
+import type { ServiceType } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';
-import { apps, menuData } from '@northware/ui/components/menu/menu-data';
+import {
+  menuData,
+  suiteAppsMeta,
+} from '@northware/ui/components/menu/menu-data';
 import { MobileNavLink } from '@northware/ui/components/menu/nav-links';
 import { ThemeSwitch } from '@northware/ui/components/next-themes/theme-switch';
 import {
@@ -20,14 +24,14 @@ import { LogOutIcon, MenuIcon } from 'lucide-react';
 import Link from 'next/link';
 import { navigationMenuButtonStyle } from './navigation-menu-premitive';
 
-export async function MobileNav() {
-  const menuItems = await menuData();
+export async function MobileNav({ service }: { service: ServiceType }) {
+  const menuItems = await menuData(service);
 
   return (
     <div className="container flex justify-between py-4 md:hidden">
       <div className="ml-3 flex items-center gap-3">
         <Link href="/">
-          <Brand />
+          <Brand service={service} />
         </Link>
       </div>
       <div>
@@ -37,12 +41,16 @@ export async function MobileNav() {
               <MenuIcon className="h-6 w-6" />
             </Button>
           </DialogTrigger>
-          <DialogContent className="data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 flex flex-col border-b">
+          <DialogContent
+            aria-describedby="Hauptmenü"
+            className="data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 flex flex-col border-b"
+          >
             <DialogTitle className="font-semibold">
               <Link href="/">
-                <Brand />
+                <Brand service={service} />
               </Link>
             </DialogTitle>
+
             <div className="flex flex-1 flex-col justify-between">
               <ul className="grid gap-1">
                 <MobileNavLink href="/" title="Home" />
@@ -92,7 +100,7 @@ export async function MobileNav() {
                   );
                 })}
               </ul>
-              <MobileNavMeta />
+              <MobileNavMeta service={service} />
             </div>
           </DialogContent>
         </Dialog>
@@ -100,19 +108,17 @@ export async function MobileNav() {
     </div>
   );
 }
-async function MobileNavMeta() {
+async function MobileNavMeta({ service }: { service: ServiceType }) {
   const session = await auth();
   return (
     <ul className="grid gap-1 border-border/50 border-t py-4 dark:border-border/70">
-      {apps.map((app) => {
-        const link: string =
-          process.env[app.envVariable || ''] || app.href || '#';
-        if (link !== 'current') {
+      {suiteAppsMeta.map((app) => {
+        if (app.slug !== service) {
           return (
             <MobileNavLink
               key={app.title}
               title={app.title}
-              href={link}
+              href={process.env[app.envVariable] || '#'}
               linkClasses={`${app.textColor} ${`hover:${app.textColor}`}`}
             />
           );
