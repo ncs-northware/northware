@@ -49,6 +49,15 @@
       "pages": ["general/formatting", "general/typo", "general/filestructure"]
     },
     {
+      "group": "GitHub Management",
+      "pages": [
+        "github-management/project-management",
+        "github-management/branches-commits",
+        "github-management/release-strategy",
+        "github-management/workflows"
+      ]
+    },
+    {
       "group": "Apps",
       "pages": ["apps/docs", "apps/northware-cockpit"]
     },
@@ -59,17 +68,6 @@
         "packages/database",
         "packages/tailwind-config",
         "packages/ui"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
       ]
     },
     {
