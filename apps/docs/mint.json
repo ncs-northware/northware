@@ -38,30 +38,27 @@
       "url": "api-reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
+  "anchors": [],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "",
+      "pages": ["introduction"]
+    },
+    {
+      "group": "General",
+      "pages": ["general/formatting", "general/typo", "general/filestructure"]
+    },
+    {
+      "group": "Apps",
+      "pages": ["apps/docs", "apps/northware-cockpit"]
+    },
+    {
+      "group": "Packages",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "packages/auth",
+        "packages/database",
+        "packages/tailwind-config",
+        "packages/ui"
       ]
     },
     {
@@ -76,10 +73,12 @@
       ]
     },
     {
+      "group": "Components",
+      "pages": ["ui/introduction"]
+    },
+    {
       "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
+      "pages": ["api-reference/introduction"]
     },
     {
       "group": "Endpoint Examples",
