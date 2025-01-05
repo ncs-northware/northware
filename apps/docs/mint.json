@@ -1,31 +1,38 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Northware Docs",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logos/dark.svg",
+    "light": "/logos/light.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/logos/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#0891ff",
+    "light": "#57b4ff",
+    "dark": "#0066b8",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#0891ff",
+      "to": "#57b4ff"
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+  "font": {
+    "headings": {
+      "family": "Source Sans Pro"
+    },
+    "body": {
+      "family": "Source Sans Pro"
     }
-  ],
+  },
+  "codeBlock": { "mode": "auto" },
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "type": "github",
+    "url": "https://github.com/ncs-northware/northware"
   },
   "tabs": [
+    {
+      "name": "Northware UI",
+      "url": "ui"
+    },
     {
       "name": "API Reference",
       "url": "api-reference"
@@ -83,9 +90,22 @@
       ]
     }
   ],
-  "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+  "footer": {
+    "links": [
+      {
+        "title": "Mintlify Resouces",
+        "links": [
+          {
+            "label": "Mintlify Docs",
+            "url": "https://mintlify.com/docs/quickstart"
+          },
+          {
+            "label": "Mintlify Community",
+            "url": "https://mintlify.com/community"
+          },
+          { "label": "Mintlify Blog", "url": "https://mintlify.com/blog" }
+        ]
+      }
+    ]
   }
 }
