@@ -28,17 +28,32 @@
     "type": "github",
     "url": "https://github.com/ncs-northware/northware"
   },
-  "tabs": [
+  "topAnchor": {
+    "name": "General",
+    "icon": "book-open"
+  },
+  "anchors": [
+    {
+      "name": "Apps",
+      "url": "apps",
+      "icon": "window"
+    },
+    {
+      "name": "Packages",
+      "url": "packages",
+      "icon": "box-taped"
+    },
     {
       "name": "Northware UI",
-      "url": "ui"
+      "url": "ui",
+      "icon": "puzzle-piece"
     },
     {
       "name": "API Reference",
-      "url": "api-reference"
+      "url": "api-reference",
+      "icon": "terminal"
     }
   ],
-  "anchors": [],
   "navigation": [
     {
       "group": "",
@@ -46,20 +61,20 @@
     },
     {
       "group": "General",
-      "pages": ["general/formatting", "general/typo", "general/filestructure"]
+      "pages": ["general/filestructure", "general/formatting"]
     },
     {
       "group": "GitHub Management",
       "pages": [
-        "github-management/project-management",
-        "github-management/branches-commits",
-        "github-management/release-strategy",
-        "github-management/workflows"
+        "general/github-management/project-management",
+        "general/github-management/workflows",
+        "general/github-management/branches-commits",
+        "general/github-management/release-strategy"
       ]
     },
     {
       "group": "Apps",
-      "pages": ["apps/docs", "apps/northware-cockpit"]
+      "pages": ["apps/northware-cockpit", "apps/docs"]
     },
     {
       "group": "Packages",
@@ -72,7 +87,7 @@
     },
     {
       "group": "Components",
-      "pages": ["ui/introduction"]
+      "pages": ["ui/introduction", "ui/typo"]
     },
     {
       "group": "API Documentation",
