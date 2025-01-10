@@ -1,7 +1,9 @@
+import type { ServiceType } from './types';
+
 export const suiteAppsMeta: {
   title: string;
   href: string;
-  slug: 'cockpit' | 'admin' | 'finance' | 'trader';
+  slug: ServiceType;
   textColor: string;
 }[] = [
   // Attribute der Navigationspunkte der AppSwitches in MetaNav
