@@ -1,0 +1,144 @@
+---
+title: Branches und Commits
+---
+
+## Coding Branches
+
+Jede Änderung am Repository sollte auf einem eigenen Branch vorgenommen werden. 
+Die Änderungen werden dann, wenn sie fertig sind und möglichst alle [CI/CD Workflows](./workflows#cicd) erfolgreich abgeschlossen wurden, 
+mit einem Pull Request auf den `main` Branch gemerged.
+
+Der `main` Branch ist geschützt, um direkte Commits auf diesen Branch zu vermeiden.
+
+Der `main` Branch enthält immer den aktuellen (möglichst stabilen) Enwicklungsstand (Nightly-Version), der noch nicht als (Beta) Version veröffentlicht ist. 
+Der Code auf dem `main` Branch kann aber in Teilen instabil sein. Als Tags veröffentlichte (Nicht-Beta) Versionen sollten stabil sein und ausschließlich fertige Features enthalten.
+
+### Empfehlung zur Benennung von Branches
+
+Es gibt keine festen Regeln, wie Branches benannt werden müssen. Jeder Name ist zulässig. 
+Es gibt aber Empfehlungen, wie eine übersichtliche kontinuierliche und präzise Benennung von Branches erreicht werden kann.
+
+Ich folge hier Empfehlungen aus [diesem Medium-Artikel](https://medium.com/@abhay.pixolo/naming-conventions-for-git-branches-a-cheatsheet-8549feca2534) und meinen eigenen Vorstellungen.
+
+#### Issue-bezogene Branches
+
+Branches, die einen einzelnen Issue lösen und danach gelöscht werden können direkt in GitHub erstellt und verlint werden. 
+Diese Branches werden nach dem Schema `id-issue-title` benannt (z.B. `46-add-northware-docs-on-github-pages`). Diese Bezeichnung ist für diese Art Branches zu übernehmen.
+Wenn zu diesem Issue weitere Branches erstellt werden, können diese durch `/bla` Benennungen ergänzt werden. Hier ist aber darauf zu achten, dass die `/` Branches nicht mit dem ursprünglichen Branch co-existieren können (siehe unten).
+
+#### Freie Branch-Titel
+
+Branches die in ihrem Namen keinen Bezug zu Issues haben (sollen), können frei benannt werden. 
+Es gehört zu den Best Practices, das die Branches in Kleinbuchstaben zu benennen und Leerzeichen durch Bindestriche zu ersetzen (z.B. `bugfix-dummy` statt `Bugfix Dummy`).
+Der Name des Branches soll beschreibend, kurz und prägnant sein und am Besten reflektieren welche Arbeit auf dem Branch gemacht wurde.
+
+Außerdem können Präfix verwendet werden um zu definieren, welcher Codeteil auf dem Branch bearbeitet wird (z.B. `cockpit/hrmanagement` oder `auth/errors`) oder 
+welchen Zweck die Änderungen haben (z.B. `docs/gh-management` oder `fix/menu-style`). Eine Kombination aus beidem ist auch möglich (z.B. `theme/fix/menu-style`).
+
+Auch wenn es all diese Möglichkeiten gibt, ist der einzelne Prefix des Codeteils gegenüber dem Zweck-Prefix und auch gegenüber der Kobination vorzuziehen.
+
+<Warning>
+Es ist nicht möglich, Branches ohne Prefix zu verwenden und zur gleichen Zeit einen Branch mit Prefix zu verwenden der gleich lautet, wie der Branchname ohne Prefix.
+Es kann also z.B. nicht der Branch `cockpit` neben dem Branch `cockpit/hrmanagement` existieren. 
+Wird nur der Branch `cockpit` oder nur der Branch `cockpit/hrmanagement` zu einem Zeitpunkt verwendet, funktioniert es.
+Für Codeteil bezeichnungen ist dennoch der Prefix-Ansatz zu wählen und die Einzelbennennug. 
+Wird also damit begonnen an der App `admin` zu arbeiten, sollte der Branch nicht einfach `admin` sondern lieber `admin/init` heißen, damit die Möglichkeit besteht
+gleichzeitig einen Branch mit dem selben Prefix zu verwenden.
+
+Sollte es einmal dazu kommen, das ein Branch-Name (z.B. `github-management`) schon einmal verwendet wurde, und nun wird, 
+nachdem dieser Remote-Branch gelöscht wurde ein neuer Branch `github-management/dependabot` eingeführt, so kann es passieren lokal noch gespeichert ist, 
+dass es den Remote-Branch `github-management` noch gibt, und dies zu Konflikten führt.
+
+In diesem Fall kann der Command `git remote prune origin` verwendet werden, um Verlinkungen zu nicht mehr vorhandenen Remote-Branches zu entfernen.
+</Warning>
+
+## Commits
+
+Commits im GitHub Repository sollen den vorgegebenen Regeln von **Conventional Commits** folgen.
+Um die Entwickler bei dem erstellen von Conventional Commits zu unterstützen, wird in dem Repository [commitlint](https://commitlint.js.org/) genutzt.
+Wenn zum commiten von Codeänderungen der Command `pnpm commit` genutzt wird, wird der Nutzer mit unterschiedlichen Abfragen durch die vorgesehenen Commitbereiche geführt.
+
+<Warning>
+Aktuell wird der Nutzer nicht dazu gezwungen, einen Commit mit commitlint auszuführen, sondern er hat auch weiterhin die Möglichkeit, jede Art von Commit-Message anzugeben.
+Es sollte dennoch möglichst der Commit-Prompt (`pnpm commit`) genutzt werden, damit es übersichtlich bleibt.
+</Warning>
+
+### Commit Conventions
+
+Grundsätzlich folgen Commits, die mit pnpm commit erstellt werden diesem Schema:
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+Dieses Schema folgt den anerkannten [Best-Practices für Conventional Commits](https://www.conventionalcommits.org/de) und den vorgegebenen Input-Möglichkeiten von commitlint.
+Mit entsprechenden Konfigurationen und im folgenden beschriebenen Vorstellungen werden diese Regeln an das Arbeiten an ncs-northware/northware angepasst.
+
+Die beschrieben Regeln sind ebenfalls inspiriert von den Conventions von [Strapi](https://contributor.strapi.io/guides/contributing#git-conventions) und [Angular](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#-commit-message-format).
+
+Wenn ein Commit all den unten beschriebenen Regeln folgt, sieht er z.B. so aus:
+
+```
+docs(demo): Documentation for my new feature
+    
+Add some documentation for my new feature called Test within my demo app.
+    
+close #100
+```
+
+Automatische Commits, die von GitHub oder von Bots und Workflows ausgelöst werden, sollten möglichst so konfiguriert werden, dass sie dem Commit-Schema folgen. 
+Sie folgen aber teilweise eigenen Regeln und verfolgen teilweise ein komplett anderes Schema.
+
+#### Type - Um welche Art von Änderung handelt es sich?
+
+**type** gibt an um welche Art von Veränderung es sich handelt, es ist sozusagen eine Kategorie. commitlint ist so konfiguriert, dass nur die folgenden Typen zulässig sind:
+
+| Type | Wann soll dieser Typ genutzt werden? |
+| ---- | ------------------------------------ |
+| feat | Es wird ein neues Feature hinzugefügt |
+| fix | Es wird ein Bug behoben |
+| docs | Es wird etwas an der inhaltlichen Dokumentation geändert. Andere Codeteile sind nicht betroffen. **Hinweis:** Wenn an der Dokusaurus-Webapp etwas verändert wird, dass sich nicht auf den Inhalt der Docs bezieht, ist ein anderer Typ zu wählen. |
+| chore | Dieser Commit gehört keiner bestimmten Kategorie an. Es wird etwas "mal schnell" geändert oder es geht um kleinere Änderungen, die in keine Kategorie so richtig passen |
+| revert | Ein Commit bzw. eine Änderung wird zurückgenommen |
+
+#### Scope - Welcher Codeteil ist betroffen?
+
+Hier wird beschrieben welcher Codeteil (App, Package, Rootverzeichnis, Github Management) mit diesem Commit verändert wird.
+Der genaue Wortlaut von `scope` ist nicht vorgegeben, es sollte aber eine kurze und prägnante Bezeichnung orientiert an den [App- und Package-Labels](./projectmanagement#labels) sein.
+
+Bei Änderungen an Apps kann z.B. `cockpit`, `finance` oder `admin` verwendet werden. Die Prefix `northware-` und auch `apps/` sollten weggelassen werden.
+Bei Änderungen an Packages kann z.B. `theme`, `auth` oder `tailwind-config` verwendet werden. Der Prefix `package/` sollte weggelassen werden.
+
+<Note> 
+- Um die Regel des kurzen und prägnanten Scopes zu befolgen ist es auch zulässig, einen anderen als den Scope des Labels zu verwenden, wenn es den Commit übersichtlicher macht.
+- **Wenn ein Commit mehrere Codeteile verändert,** ist der Scope `mixed` zu wählen. In diesem Fall sollte im Body oder Subject erwähnt sein, welche Codeteile verändert wurden.
+- Änderungen an CI-Konfigurationen erhalten in anderen Umgebungen i.d.R. einen eigenen Type. In diesem Repository ist es nicht so. 
+Wenn Änderungen an der CI durchgeführt werden, kann ein beliebiger Type verwendet werden. Hier sollte dann der **Scope** `ci` oder `cicd` lauten, 
+wenn es keinen Grund gibt stattdessen `gh-managment` o.ä. zu verwenden.
+</Note>
+
+
+
+#### Subject - Zusammenfassung/Überschrift des Commits
+
+Hier soll kurz und prägnant zusammengefasst werden, um was es bei dem Commit geht. 
+Es gehört außerdem zu den Best practices hier den Imperativ (Befehlsform) also `fix` oder `change` anstatt anderer Formen (wie z.B. `changed` oder `fixes`) zu verwenden.
+
+#### Body - Warum wurde diese Änderung vorgenommen?
+
+Im Body des Commits können weitere Beschreibungen folgen. Welche Form diese Informationen haben (Spiegelstrich-Liste, Fließtext o.ä.) ist nicht vorgegeben.
+Wichtig ist nur, hier nicht zu beschreiben welcher Code wie geändert wurde (das sieht man ja schon in den `diff`-Ansichten), sondern welche Motivation dahinter stand, den Code zu ändern.
+Auch im Body sollte möglichst der Imperativ verwendet werden.
+
+Wird als Scope `mixed` verwendet, sollte im Body beschrieben werden, welche Codeteile verändert wurden.
+
+#### Footer - Referenzen zu Issues, PRs, Commits, ...
+
+Der Footer kann verwendet werden, um gelöste Issues, zugehörige Pull Requests oder Commits und andere Referenzen herzustellen. 
+Um sicherzustellen, dass GitHub die Referenzen richtig erkennt, sollten die  [Keywords](https://docs.github.com/de/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword) (Imperativ) verwendet werden.
+
+Wenn es zu einem Commit keine Referenzen gibt oder die Referenzen anders (z.B. über Issue-Branches und/oder Development-Verlinkungen im Pull Request) hergestellt werden sollen, kann der Footer auch leer bleiben.
