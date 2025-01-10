@@ -1,0 +1,18 @@
+{
+  "name": "@northware/service-config",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "ultracite lint",
+    "format": "ultracite format"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "devDependencies": {
+    "@northware/tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}

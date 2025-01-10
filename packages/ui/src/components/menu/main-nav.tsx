@@ -1,4 +1,5 @@
 import { auth, signOut } from '@northware/auth/auth';
+import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import {
   DropdownMenu,
@@ -8,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@northware/ui/components/menu/dropdown-menu';
-import { apps, menuData } from '@northware/ui/components/menu/menu-data';
+import { menuData } from '@northware/ui/components/menu/menu-data';
 import { MainNavLink } from '@northware/ui/components/menu/nav-links';
 import {
   NavigationMenu,
@@ -24,17 +25,17 @@ import { cn } from '@northware/ui/lib/utils';
 import { UserIcon } from 'lucide-react';
 import Link from 'next/link';
 
-export async function MainNav() {
+export async function MainNav({ service }: { service: ServiceType }) {
   // TODO: Add NavMenu Rendering based on permissionKey
-  const menuItems = await menuData();
+  const menuItems = await menuData(service);
   // Die Hauptnavigation incl. Branding auf Desktops
   return (
     <div className="container hidden md:block">
-      <MetaNav />
+      <MetaNav service={service} />
       <div className="flex bg-background/95 py-2">
         <div className="flex gap-4">
           <Link href="/">
-            <Brand />
+            <Brand service={service} />
           </Link>
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
@@ -97,23 +98,21 @@ export async function MainNav() {
   );
 }
 
-async function MetaNav() {
+async function MetaNav({ service }: { service: ServiceType }) {
   // Die Meta Navigation mit App-Switches, UserMenu und ThemeSwitcher auf Desktop-Geräten
   const session = await auth();
   return (
     <>
       <NavigationMenu className="flex justify-between py-2">
         <NavigationMenuList>
-          {apps.map((app) => {
-            const link: string =
-              process.env[app.envVariable || ''] || app.href || '#';
-            if (link !== 'current') {
+          {suiteAppsMeta.map((app) => {
+            if (service !== app.slug) {
               return (
                 <NavigationMenuItem key={app.title}>
                   <MainNavLink
                     controlActiveState={false}
                     title={app.title}
-                    href={link}
+                    href={app.href || '#'}
                     className={cn(
                       navigationMenuTriggerStyle(),
                       app.textColor,

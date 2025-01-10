@@ -1,0 +1,121 @@
+---
+title: '@northware/service-config'
+description: 'Das Package `@northware/service-config` stellt helfende Funktionalitäten bereit, um zu kontrollieren, welche App der Northware-Suite gerade genutzt wird.'
+---
+
+Überall wo es nötig ist, kann @northware/service-config verwendet werden, um innerhalb von Packages die aktuell genutzte App herauszufinden (z.B. Conditional-Rendering von UI-Komponenten oder API-Fetching-Filter).
+Mit `@northware/service-config` soll es so schnell und einfach möglich sein, die Konfigurationen der Apps zentral zu verändern.
+
+## App-Auswertung als Component-Prop
+
+Der einfachste Weg, die aktuell genutzte App ausuwerten bzw. zu definieren, ist ihn als ein Component-Prop zu definieren und dann an Child-Komponenten weiter zu geben. 
+Der Vorteil hierbei ist, dass der Wert auch in Server-Komponenten nutzbar ist.
+Um den Prop nicht immer wieder mit TypeScript zu defineren, sollte für den Prop der ServiceType verwendet werden, der von `@northware/service-config` bereitgestellt wird.
+
+```tsx service-config/types.ts
+export type ServiceType = 'cockpit' | 'admin' | 'finance' | 'trader';
+```
+
+Der Type kann dann in Komponenten verwendet werden, die direkt in die App integriert werden. 
+An alle von der Komponente selbst verwendeten Komponenten kann der Wert des Props weitergegeben werden.
+
+```tsx ui/components/layout/container.tsx {1, 7, 11, 15}
+import type { ServiceType } from '@northware/service-config';
+...
+
+export function Container({
+  children,
+  className,
+  service,
+}: {
+  children: ReactNode;
+  className?: string;
+  service: ServiceType;
+}) {
+  return (
+    <>
+      <SiteHeader service={service} />
+      <main className={cn('container pt-8', className)}>{children}</main>
+    </>
+  );
+}
+
+```
+
+Durch die Verwendung von `ServiceType` wird sichergestellt, dass der Prop der Komponente nur die vorgegebenen Werte akzeptiert. 
+So lässt sich eine neue App einfach über `ServiceType` zu den akzeptierten Werten hinzufügen und alle anderen Werte werden zurückgewiesen.
+
+### Verwendung des Service Props als Filter für API-Calls
+
+Komponenten, die auf Daten aus der API zugreifen, können den Service-Prop auch als Argument an Funktionen weitergeben. 
+Die Funktionen, die die Daten der API bereitstellen können dann anhand dieses Wertes filtern.
+
+```tsx ui/components/menu/main-nav.tsx {4}
+import { menuData } from '@northware/ui/components/menu/menu-data';
+
+export async function MainNav({ service }: { service: ServiceType }) {
+  const menuItems = await menuData(service);
+  return (
+    ...
+  )
+}
+```
+
+```ts ui/components/menu/menuData.ts {15}
+import { db } from '@northware/database/connection';
+import { mainNavTable } from '@northware/database/schema';
+import type { ServiceType } from '@northware/service-config';
+import { eq } from 'drizzle-orm';
+
+export async function menuData(service: ServiceType) {
+  const result = await db
+    .select({
+      itemId: mainNavTable.itemId,
+      title: mainNavTable.title,
+      href: mainNavTable.href,
+      childOf: mainNavTable.childOf,
+    })
+    .from(mainNavTable)
+    .where(eq(mainNavTable.app, service))
+    .orderBy(mainNavTable.order);
+
+  const topLevelItems = result.filter((item) => item.childOf == null);
+  const childItems = (parent: string) => {
+    const children = result.filter((item) => item.childOf === parent);
+    return children;
+  };
+  return { topLevelItems, childItems };
+}
+
+```
+
+## suiteApps Array in den Meta-Navigationen
+
+Auch der Array für die in der Meta-Navigation verlinkten Apps wird von `@northware/service-config` bereitgestellt.
+Die Meta-Navigationen in Mobile und Desktop-Ansichten mappen dann durch diesen Array um entsprechende Links zu präsentieren.
+
+```tsx service-config/apps.ts
+export const suiteAppsMeta: {
+  title: string;
+  href: string;
+  slug: ServiceType;
+  textColor: string;
+}[] = [
+  // Attribute der Navigationspunkte der AppSwitches in MetaNav
+  {
+    title: 'Northware Cockpit',
+    href: 'http://localhost:40110',
+    slug: 'cockpit',
+    textColor: 'text-cockpit',
+  },
+  {
+    title: 'Northware Finance',
+    href: 'http://localhost:40120',
+    slug: 'finance',
+    textColor: 'text-finance',
+  },
+  ...
+]
+```
+
+Über diesen zentralen Array lassen sich nun die Klassen der einzelnen App-Buttons und die Links zu den Apps steuern.

@@ -26,17 +26,17 @@ packages/database and api:
   - changed-files:
       - any-glob-to-any-file: packages/database/**
 
-packages/tsconfig:
+packages/service-config:
   - changed-files:
-      - any-glob-to-any-file: packages/tsconfig/**
+      - any-glob-to-any-file: packages/service-config/**
 
 packages/tailwind-config:
   - changed-files:
       - any-glob-to-any-file: packages/tailwind-config/**
 
-packages/theme:
+packages/tsconfig:
   - changed-files:
-      - any-glob-to-any-file: packages/theme/**
+      - any-glob-to-any-file: packages/tsconfig/**
 
 packages/ui:
   - changed-files:

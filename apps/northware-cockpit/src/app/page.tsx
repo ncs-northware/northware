@@ -2,7 +2,7 @@ import { Container, Headline } from '@northware/ui/components';
 
 export default function DashboardPage() {
   return (
-    <Container>
+    <Container service="cockpit">
       <Headline level="h1">Dashboard Home</Headline>
     </Container>
   );

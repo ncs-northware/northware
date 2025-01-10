@@ -1290,6 +1290,10 @@ body {
   color: hsl(var(--destructive) / 100%);
 }
 
+.text-foreground {
+  color: hsl(var(--foreground) / 100%);
+}
+
 .text-muted-foreground {
   color: hsl(var(--muted-foreground) / 100%);
 }
