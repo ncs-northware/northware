@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { ServiceType } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';
 import {
@@ -28,7 +29,11 @@ const formSchema = z.object({
 
 export function LoginForm({
   onSubmit,
-}: { onSubmit: (values: { email: string; password: string }) => void }) {
+  service,
+}: {
+  onSubmit: (values: { email: string; password: string }) => void;
+  service: ServiceType;
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { email: '', password: '' },
@@ -36,7 +41,7 @@ export function LoginForm({
 
   return (
     <>
-      <Brand className="mb-6 text-2xl" iconWidth="w-14" />
+      <Brand className="mb-6 text-2xl" iconWidth="w-14" service={service} />
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>

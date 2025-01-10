@@ -20,9 +20,9 @@ export default async function LoginPage() {
   return (
     <LoginWrapper>
       {session?.user ? (
-        <MessageLoggedIn user={session?.user} />
+        <MessageLoggedIn user={session?.user} service="cockpit" />
       ) : (
-        <LoginForm onSubmit={handleSubmit} />
+        <LoginForm onSubmit={handleSubmit} service="cockpit" />
       )}
     </LoginWrapper>
   );

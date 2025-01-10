@@ -1,4 +1,5 @@
 import { signOut } from '@northware/auth/auth';
+import type { ServiceType } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';
 import {
@@ -15,10 +16,13 @@ interface User {
   email?: string | null | undefined;
 }
 
-export function MessageLoggedIn({ user }: { user: User }) {
+export function MessageLoggedIn({
+  user,
+  service,
+}: { user: User; service: ServiceType }) {
   return (
     <>
-      <Brand className="mb-6 text-2xl" iconWidth="w-14" />
+      <Brand className="mb-6 text-2xl" iconWidth="w-14" service={service} />
       <Card>
         <CardHeader>
           <CardTitle className="text-2-xl">
