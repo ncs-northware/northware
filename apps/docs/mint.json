@@ -46,12 +46,7 @@
     {
       "name": "Northware UI",
       "url": "ui",
-      "icon": "puzzle-piece"
-    },
-    {
-      "name": "API Reference",
-      "url": "api-reference",
-      "icon": "terminal"
+      "icon": "react"
     }
   ],
   "navigation": [
@@ -88,18 +83,6 @@
     {
       "group": "Components",
       "pages": ["ui/introduction", "ui/typo"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
-      ]
     }
   ],
   "footer": {
