@@ -1286,16 +1286,8 @@ body {
   color: hsl(var(--card-foreground) / 100%);
 }
 
-.text-cockpit {
-  color: hsl(var(--cockpit) / 100%);
-}
-
 .text-destructive {
   color: hsl(var(--destructive) / 100%);
-}
-
-.text-finance {
-  color: hsl(var(--finance) / 100%);
 }
 
 .text-foreground {
@@ -1322,12 +1314,24 @@ body {
   color: hsl(var(--secondary-foreground) / 100%);
 }
 
-.text-trader {
-  color: hsl(var(--trader) / 100%);
-}
-
 .text-warning {
   color: hsl(var(--warning) / 100%);
+}
+
+.text-cockpit {
+  color: hsl(var(--cockpit) / 100%);
+}
+
+.text-finance {
+  color: hsl(var(--finance) / 100%);
+}
+
+.text-foreground {
+  color: hsl(var(--foreground) / 100%);
+}
+
+.text-trader {
+  color: hsl(var(--trader) / 100%);
 }
 
 .no-underline {
