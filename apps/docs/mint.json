@@ -76,6 +76,7 @@
       "pages": [
         "packages/auth",
         "packages/database",
+        "packages/service-config",
         "packages/tailwind-config",
         "packages/ui"
       ]
