@@ -128,9 +128,6 @@ importers:
         specifier: ^16.4.7
         version: 16.4.7
     devDependencies:
-      '@northware/tailwind-config':
-        specifier: workspace:*
-        version: link:../tailwind-config
       '@northware/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig

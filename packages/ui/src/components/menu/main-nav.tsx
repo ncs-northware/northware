@@ -1,5 +1,5 @@
 import { auth, signOut } from '@northware/auth/auth';
-import type { ServiceType } from '@northware/service-config';
+import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import {
   DropdownMenu,
@@ -9,10 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@northware/ui/components/menu/dropdown-menu';
-import {
-  menuData,
-  suiteAppsMeta,
-} from '@northware/ui/components/menu/menu-data';
+import { menuData } from '@northware/ui/components/menu/menu-data';
 import { MainNavLink } from '@northware/ui/components/menu/nav-links';
 import {
   NavigationMenu,
@@ -115,7 +112,7 @@ async function MetaNav({ service }: { service: ServiceType }) {
                   <MainNavLink
                     controlActiveState={false}
                     title={app.title}
-                    href={process.env[app.envVariable] || '#'}
+                    href={app.href || '#'}
                     className={cn(
                       navigationMenuTriggerStyle(),
                       app.textColor,

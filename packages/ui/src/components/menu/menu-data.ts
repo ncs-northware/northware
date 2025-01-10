@@ -22,36 +22,3 @@ export async function menuData(service: ServiceType) {
   };
   return { topLevelItems, childItems };
 }
-
-export const suiteAppsMeta: {
-  title: string;
-  envVariable: string;
-  slug: 'cockpit' | 'admin' | 'finance' | 'trader';
-  textColor: string;
-}[] = [
-  // Attribute der Navigationspunkte der AppSwitches in MetaNav
-  {
-    title: 'Northware Cockpit',
-    envVariable: 'NEXT_PBLIC_COCKPIT_URL',
-    slug: 'cockpit',
-    textColor: 'text-cockpit',
-  },
-  {
-    title: 'Northware Finance',
-    envVariable: 'NEXT_PUBLIC_FINANCE_URL',
-    slug: 'finance',
-    textColor: 'text-finance',
-  },
-  {
-    title: 'Northware Trader',
-    envVariable: 'NEXT_PUBLIC_TRADER_URL',
-    slug: 'trader',
-    textColor: 'text-trader',
-  },
-  {
-    title: 'Admin Panel',
-    envVariable: 'NEXT_PUBLIC_ADMIN_URL',
-    slug: 'admin',
-    textColor: 'text-foreground',
-  },
-];
