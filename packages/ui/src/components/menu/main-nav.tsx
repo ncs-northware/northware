@@ -9,7 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@northware/ui/components/menu/dropdown-menu';
-import { menuData } from '@northware/ui/components/menu/menu-data';
+import {
+  appTextColors,
+  menuData,
+} from '@northware/ui/components/menu/menu-data';
 import { MainNavLink } from '@northware/ui/components/menu/nav-links';
 import {
   NavigationMenu,
@@ -115,8 +118,8 @@ async function MetaNav({ service }: { service: ServiceType }) {
                     href={app.href || '#'}
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      app.textColor,
-                      `hover:${app.textColor}`
+                      appTextColors.get(app.slug),
+                      `hover:${appTextColors.get(app.slug)}`
                     )}
                   />
                 </NavigationMenuItem>

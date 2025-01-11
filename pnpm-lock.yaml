@@ -123,10 +123,6 @@ importers:
         version: 0.38.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@19.0.4)(postgres@3.4.5)(react@19.0.0)
 
   packages/service-config:
-    dependencies:
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.4.7
     devDependencies:
       '@northware/tsconfig':
         specifier: workspace:*
