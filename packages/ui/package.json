@@ -16,7 +16,7 @@
     "./hooks": "./src/hooks/index.ts"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
+    "@hookform/resolvers": "^3.10.0",
     "@northware/auth": "workspace:",
     "@northware/service-config": "workspace:",
     "@northware/database": "workspace:",
