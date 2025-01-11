@@ -2,7 +2,10 @@ import { auth, signOut } from '@northware/auth/auth';
 import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';
-import { menuData } from '@northware/ui/components/menu/menu-data';
+import {
+  appTextColors,
+  menuData,
+} from '@northware/ui/components/menu/menu-data';
 import { MobileNavLink } from '@northware/ui/components/menu/nav-links';
 import { ThemeSwitch } from '@northware/ui/components/next-themes/theme-switch';
 import {
@@ -116,7 +119,7 @@ async function MobileNavMeta({ service }: { service: ServiceType }) {
               key={app.title}
               title={app.title}
               href={app.href || '#'}
-              linkClasses={`${app.textColor} ${`hover:${app.textColor}`}`}
+              linkClasses={`${appTextColors.get(app.slug)} ${`hover:${appTextColors.get(app.slug)}`}`}
             />
           );
         }
