@@ -853,10 +853,6 @@ body {
   height: 1px;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .max-h-96 {
   max-height: 24rem;
 }
@@ -904,10 +900,6 @@ body {
 
 .min-w-\[var\(--radix-select-trigger-width\)\] {
   min-width: var(--radix-select-trigger-width);
-}
-
-.max-w-sm {
-  max-width: 24rem;
 }
 
 .flex-1 {

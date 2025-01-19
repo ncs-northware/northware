@@ -24,5 +24,4 @@ export * from '@northware/ui/components/panels/dialog';
 export * from '@northware/ui/components/panels/card';
 
 // Specific (Components that are used for a specific feature)
-export * from '@northware/ui/components/specific/login';
 export * from '@northware/ui/components/specific/logged-in';

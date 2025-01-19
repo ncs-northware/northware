@@ -1,4 +1,4 @@
-import { signOut } from '@northware/auth/auth';
+// import { signOut } from '@northware/auth/auth';
 import type { ServiceType } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';
@@ -46,7 +46,7 @@ export function MessageLoggedIn({
           <form
             action={async () => {
               'use server';
-              await signOut();
+              // await signOut();
             }}
           >
             <Button variant="outline" type="submit">

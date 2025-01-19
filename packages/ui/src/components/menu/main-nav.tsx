@@ -1,4 +1,4 @@
-import { auth, signOut } from '@northware/auth/auth';
+// import { auth, signOut } from '@northware/auth/auth';
 import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import {
@@ -103,7 +103,7 @@ export async function MainNav({ service }: { service: ServiceType }) {
 
 async function MetaNav({ service }: { service: ServiceType }) {
   // Die Meta Navigation mit App-Switches, UserMenu und ThemeSwitcher auf Desktop-Geräten
-  const session = await auth();
+  // const session = await auth();
   return (
     <>
       <NavigationMenu className="flex justify-between py-2">
@@ -135,15 +135,15 @@ async function MetaNav({ service }: { service: ServiceType }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>
-                {session?.user?.name ? (
+                {/* {session?.user?.name ? (
                   <p className="font-medium text-sm leading-none">
                     {session?.user?.name}
                   </p>
                 ) : (
                   ''
-                )}
+                )} */}
                 <p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
-                  {session?.user?.email}
+                  {/* {session?.user?.email} */}
                 </p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -165,7 +165,7 @@ function SignOut() {
     <form
       action={async () => {
         'use server';
-        await signOut();
+        // await signOut();
       }}
     >
       <button type="submit">Abmelden</button>

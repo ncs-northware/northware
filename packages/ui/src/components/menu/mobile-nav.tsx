@@ -1,4 +1,4 @@
-import { auth, signOut } from '@northware/auth/auth';
+// import { auth, signOut } from '@northware/auth/auth';
 import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';
@@ -109,7 +109,7 @@ export async function MobileNav({ service }: { service: ServiceType }) {
   );
 }
 async function MobileNavMeta({ service }: { service: ServiceType }) {
-  const session = await auth();
+  // const session = await auth();
   return (
     <ul className="grid gap-1 border-border/50 border-t py-4 dark:border-border/70">
       {suiteAppsMeta.map((app) => {
@@ -125,7 +125,7 @@ async function MobileNavMeta({ service }: { service: ServiceType }) {
         }
       })}
       <li className="flex items-center justify-between rounded-md p-2 font-medium text-sm">
-        {session?.user?.name ? (
+        {/* {session?.user?.name ? (
           <p>
             <span>{session?.user?.name}</span>{' '}
             <span className="text-muted-foreground">
@@ -138,7 +138,7 @@ async function MobileNavMeta({ service }: { service: ServiceType }) {
               {session?.user?.email}
             </span>
           </p>
-        )}
+        )} */}
         <div className="flex gap-2">
           <SignOut />
           <ThemeSwitch variant="outline" />
@@ -154,7 +154,7 @@ function SignOut() {
     <form
       action={async () => {
         'use server';
-        await signOut();
+        // await signOut();
       }}
     >
       <Button variant="outline" size="icon" type="submit">
