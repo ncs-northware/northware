@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "stream",
+  "ui": "tui",
   "globalEnv": ["DATABASE_URL", "AUTH_SECRET"],
   "tasks": {
     "build": {

@@ -11,7 +11,10 @@
     "format": "ultracite format"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.10.2",
     "@northware/ui": "workspace:*",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.3",
     "drizzle-orm": "^0.38.3",
     "next": "15.1.4",
     "react": "^19.0.0",
