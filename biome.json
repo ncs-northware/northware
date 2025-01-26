@@ -9,6 +9,17 @@
   "javascript": {
     "globals": ["React"]
   },
+  "linter": {
+    "rules": {
+      "nursery": {
+        "useSortedClasses": {
+          "level": "warn",
+          "fix": "safe",
+          "options": {}
+        }
+      }
+    }
+  },
   "files": {
     "ignore": [
       "**/node_modules/**",
@@ -17,8 +28,7 @@
       "**/.next",
       "tsconfig.tsbuildinfo",
       "**/dist/**",
-      "**/css/output.css",
-      "apps/docs/src/theme/**"
+      "**/css/output.css"
     ]
   }
 }
