@@ -1,0 +1,7 @@
+{
+  "extends": "@northware/tsconfig/nextjs.json",
+  "include": ["."],
+  "compilerOptions": {
+    "baseUrl": "."
+  }
+}
