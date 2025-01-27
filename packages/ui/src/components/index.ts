@@ -1,3 +1,6 @@
+// Auth (Components that define the Content of Auth Pages such as SignIn and SignedIn Components)
+export * from '@northware/ui/components/auth/login';
+
 // Base Components (Basics to use instead of HTML Elements or Components that are used often)
 export * from '@northware/ui/components/base/brand';
 export * from '@northware/ui/components/base/button';
@@ -16,12 +19,10 @@ export * from '@northware/ui/components/layouts/container';
 export * from '@northware/ui/components/menu/dropdown-menu';
 export * from '@northware/ui/components/menu/site-header';
 
-// NextThemes (Components that are used to perform the NextThemes integration)
-export * from '@northware/ui/components/next-themes/theme-provider';
-
 // Panels (Components to Display Content in a special way)
 export * from '@northware/ui/components/panels/dialog';
 export * from '@northware/ui/components/panels/card';
+export * from '@northware/ui/components/panels/alert';
 
-// Specific (Components that are used for a specific feature)
-export * from '@northware/ui/components/specific/logged-in';
+// Providers (Components that define a surrounding Context for specific services grouped in on Component)
+export * from '@northware/ui/components/providers/ui-provider';
