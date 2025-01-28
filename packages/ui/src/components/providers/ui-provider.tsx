@@ -1,4 +1,4 @@
-import { AuthProvider } from '@northware/auth/clerk';
+import { AuthProvider } from '@northware/auth/client';
 import { ThemeProvider } from '@northware/ui/components/providers/theme-provider';
 import type { ThemeProviderProps } from 'next-themes';
 

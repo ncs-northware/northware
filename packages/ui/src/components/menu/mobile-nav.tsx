@@ -1,5 +1,5 @@
-import { SignOutButton } from '@northware/auth/clerk';
-import { currentUser } from '@northware/auth/clerk';
+import { SignOutButton } from '@northware/auth/client';
+import { currentUser } from '@northware/auth/server';
 import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';

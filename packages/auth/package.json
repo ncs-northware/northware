@@ -8,7 +8,8 @@
     "lint": "ultracite lint"
   },
   "exports": {
-    "./clerk": "./src/clerk.ts"
+    "./client": "./src/client.ts",
+    "./server": "./src/server.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.10.2",

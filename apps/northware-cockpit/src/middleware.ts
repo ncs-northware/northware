@@ -1,4 +1,4 @@
-import { clerkMiddleware, createRouteMatcher } from '@northware/auth/clerk';
+import { clerkMiddleware, createRouteMatcher } from '@northware/auth/server';
 
 const isPublicRoute = createRouteMatcher(['/login(.*)']);
 
