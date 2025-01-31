@@ -62,6 +62,9 @@ importers:
       drizzle-orm:
         specifier: ^0.38.3
         version: 0.38.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@19.0.4)(postgres@3.4.5)(react@19.0.0)
+      lucide-react:
+        specifier: ^0.471.0
+        version: 0.471.0(react@19.0.0)
       next:
         specifier: 15.1.4
         version: 15.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.80.6)
@@ -102,6 +105,9 @@ importers:
       '@northware/service-config':
         specifier: workspace:*
         version: link:../service-config
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
     devDependencies:
       '@northware/tsconfig':
         specifier: workspace:*
