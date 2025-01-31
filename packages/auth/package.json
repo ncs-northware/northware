@@ -14,7 +14,8 @@
   "dependencies": {
     "@clerk/nextjs": "^6.10.2",
     "@northware/database": "workspace:*",
-    "@northware/service-config": "workspace:*"
+    "@northware/service-config": "workspace:*",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
