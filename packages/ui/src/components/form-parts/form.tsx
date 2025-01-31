@@ -15,7 +15,6 @@ import {
 } from 'react-hook-form';
 
 const Form = FormProvider;
-
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -94,7 +93,7 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-destructive', className)}
+      className={cn(error && 'text-danger', className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -155,7 +154,7 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('font-medium text-destructive text-sm', className)}
+      className={cn('font-medium text-danger text-sm', className)}
       {...props}
     >
       {body}

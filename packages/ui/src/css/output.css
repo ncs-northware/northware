@@ -1329,12 +1329,12 @@ body {
   color: hsl(var(--cockpit) / 100%);
 }
 
-.text-danger-foreground {
-  color: hsl(var(--danger-foreground) / 100%);
+.text-danger {
+  color: hsl(var(--danger) / 100%);
 }
 
-.text-destructive {
-  color: hsl(var(--destructive) / 100%);
+.text-danger-foreground {
+  color: hsl(var(--danger-foreground) / 100%);
 }
 
 .text-finance {

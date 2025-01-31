@@ -28,6 +28,7 @@ import { ThemeSwitch } from '@northware/ui/components/menu/theme-switch';
 import { cn } from '@northware/ui/lib/utils';
 import { UserIcon } from 'lucide-react';
 import Link from 'next/link';
+
 export async function MainNav({ service }: { service: ServiceType }) {
   // TODO: Add NavMenu Rendering based on permissionKey
   const menuItems = await menuData(service);
