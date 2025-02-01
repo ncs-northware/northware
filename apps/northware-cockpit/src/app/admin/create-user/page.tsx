@@ -1,4 +1,4 @@
-import CreateUserForm from '@/components/create-user-form';
+import { CreateUserForm } from '@/components/create-user-form';
 import { Container, Headline } from '@northware/ui/components';
 
 export default function AdminDashboard() {
