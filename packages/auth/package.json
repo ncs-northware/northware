@@ -5,7 +5,7 @@
   "dependencies": {
     "@northware/database": "workspace:*",
     "bcrypt-ts": "^5.0.3",
-    "drizzle-orm": "^0.38.3",
+    "drizzle-orm": "^0.39.1",
     "next-auth": "5.0.0-beta.25"
   },
   "devDependencies": {
