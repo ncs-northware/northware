@@ -36,8 +36,8 @@ importers:
         specifier: ^5.7.3
         version: 5.7.3
       ultracite:
-        specifier: 4.1.14
-        version: 4.1.14
+        specifier: 4.1.18
+        version: 4.1.18
 
   apps/docs:
     devDependencies:
@@ -2809,8 +2809,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ultracite@4.1.14:
-    resolution: {integrity: sha512-x/wsSJqRcWV1/q++pPE9b9nynH6F6T1LUUxvxNkUyyOZrFr3N7VuPUuujamkF7yvcc6YPl8fq5nfz7ehFCC16Q==}
+  ultracite@4.1.18:
+    resolution: {integrity: sha512-tHYPMzhLTbdHxDMMdWDuB9zb+uhd+XtLa30L4/1wn63/N6MUVg5jNxEczzX/h4FGSDrr3W91VpnVX4neNitk0w==}
     hasBin: true
 
   undici-types@6.19.8:
@@ -5238,7 +5238,7 @@ snapshots:
 
   typescript@5.7.3: {}
 
-  ultracite@4.1.14:
+  ultracite@4.1.18:
     dependencies:
       commander: 12.1.0
 
