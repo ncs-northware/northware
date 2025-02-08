@@ -1,61 +1,95 @@
 'use client';
-import { z } from 'zod';
-
-import {
-  Button,
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-} from '@northware/ui/components';
-import { useForm } from 'react-hook-form';
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-});
+import { type FormData, formSchema } from '@/lib/user-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-export function CreateUserForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
+import { useState } from 'react';
+import { type SubmitHandler, useForm } from 'react-hook-form';
+
+export default function CreateUserForm({
+  createUser,
+}: { createUser: SubmitHandler<FormData> }) {
+  const [errors, setErrors] = useState<string[]>([]);
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      firstName: '',
+      lastName: '',
+      emailAddress: '',
       username: '',
+      password: '',
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      await createUser(data);
+    } catch (err) {
+      if (err instanceof Error) {
+        // Parse die Fehlermeldungen aus dem Error-Objekt
+        const errorMessages = JSON.parse(err.message) as string[];
+        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
+      } else {
+        setErrors(['Es ist ein unbekannter Fehler aufgetreten.']);
+      }
+    }
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      <label htmlFor="firstName">Vorname</label>
+      <input
+        {...form.register('firstName')}
+        type="text"
+        id="firstName"
+        name="firstName"
+      />
+      <p>{form.formState.errors.firstName?.message}</p>
+
+      <label htmlFor="lastName">Nachname</label>
+      <input
+        {...form.register('lastName')}
+        type="text"
+        id="lastName"
+        name="lastName"
+      />
+      <p>{form.formState.errors.lastName?.message}</p>
+
+      <label htmlFor="emailAddress">E-Mail</label>
+      <input
+        {...form.register('emailAddress')}
+        type="email"
+        id="emailAddress"
+        name="emailAddress"
+      />
+      <p>{form.formState.errors.emailAddress?.message}</p>
+
+      <label htmlFor="username">Benutzername</label>
+      <input
+        {...form.register('username')}
+        type="text"
+        id="username"
+        name="username"
+      />
+      <p>{form.formState.errors.username?.message}</p>
+
+      <label htmlFor="password">Password</label>
+      <input
+        {...form.register('password')}
+        type="password"
+        id="password"
+        name="password"
+      />
+      <p>{form.formState.errors.password?.message}</p>
+
+      <p>
+        <ul>
+          {errors.map((error, index) => (
+            <li key={index}>{error}</li>
+          ))}
+        </ul>
+      </p>
+
+      <button type="submit">Benutzer hinzufügen</button>
+    </form>
   );
 }

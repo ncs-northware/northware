@@ -1,49 +1,15 @@
 'use server';
 
+import type { FormData } from '@/lib/user-schema';
 import { clerkClient } from '@northware/auth/server';
-import { z } from 'zod';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
-const FormSchema = z.object({
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  email: z.string().email(),
-  username: z.string(),
-  password: z.string(),
-});
-
-export async function createUser(formData: FormData) {
-  const validatedFields = FormSchema.safeParse({
-    firstName: formData.get('firstName'),
-    lastName: formData.get('lastName'),
-    email: formData.get('email'),
-    username: formData.get('username'),
-    password: formData.get('password'),
-  });
-
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing fields',
-    };
-  }
-
-  const { firstName, lastName, email, username, password } =
-    validatedFields.data;
-
-  try {
-    const client = await clerkClient();
-    const response = await client.users.createUser({
-      firstName: firstName,
-      lastName: lastName,
-      emailAddress: [email],
-      username: username,
-      password: password,
-    });
-
-    console.info(response);
-  } catch (error) {
-    console.info(error);
-  }
+interface ClerkError {
+  errors: Array<{
+    code: string;
+    message: string;
+  }>;
 }
 
 export async function getUsers() {
@@ -53,6 +19,42 @@ export async function getUsers() {
     return response;
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function createUser(formData: FormData) {
+  const { firstName, lastName, username, emailAddress, password } = formData;
+  // console.log(firstName, lastName, username, emailAddress, password);
+  try {
+    const client = await clerkClient();
+    await client.users.createUser({
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      emailAddress: [emailAddress],
+      password: password,
+    });
+    revalidatePath('/admin');
+    redirect('/admin');
+  } catch (error) {
+    const errorMessages: string[] = [];
+    const typesafeError = error as ClerkError;
+    if (typesafeError.errors) {
+      typesafeError.errors.map((error) => {
+        switch (error.code) {
+          case 'form_password_length_too_short':
+            errorMessages.push('Das Passwort ist zu kurz');
+            break;
+          default:
+            errorMessages.push(
+              error.message || 'Es ist ein unbekannter Fehler aufgetreten'
+            );
+        }
+      });
+    } else {
+      errorMessages.push('Es ist ein unbekannter Fehler aufgetreten.');
+    }
+    throw new Error(JSON.stringify(errorMessages));
   }
 }
 
