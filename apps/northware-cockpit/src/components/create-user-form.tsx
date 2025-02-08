@@ -1,15 +1,18 @@
 'use client';
-import { type FormData, formSchema } from '@/lib/user-schema';
+import {
+  type TCreateUserFormSchema,
+  createUserFormSchema,
+} from '@/lib/user-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 
 export default function CreateUserForm({
   createUser,
-}: { createUser: SubmitHandler<FormData> }) {
+}: { createUser: SubmitHandler<TCreateUserFormSchema> }) {
   const [errors, setErrors] = useState<string[]>([]);
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<TCreateUserFormSchema>({
+    resolver: zodResolver(createUserFormSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -19,7 +22,7 @@ export default function CreateUserForm({
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<TCreateUserFormSchema> = async (data) => {
     setErrors([]); // Fehler zurücksetzen
     try {
       await createUser(data);
@@ -29,13 +32,20 @@ export default function CreateUserForm({
         const errorMessages = JSON.parse(err.message) as string[];
         setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
       } else {
-        setErrors(['Es ist ein unbekannter Fehler aufgetreten.']);
+        setErrors([
+          'Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.',
+        ]);
       }
     }
   };
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
+      {/* 
+      TODO: Verwendung gestyleter Input-Komponenten + Label 
+      TODO: Styling für Form-Validation Messages
+      TODO: Alert für Server Errors (errorMessages)
+      */}
       <label htmlFor="firstName">Vorname</label>
       <input
         {...form.register('firstName')}
@@ -80,7 +90,6 @@ export default function CreateUserForm({
         name="password"
       />
       <p>{form.formState.errors.password?.message}</p>
-
       <p>
         <ul>
           {errors.map((error, index) => (
