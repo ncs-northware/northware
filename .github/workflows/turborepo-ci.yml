@@ -18,7 +18,9 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       DATABASE_URL: ${{secrets.DATABASE_URL}}
-      AUTH_SECRET: ${{secrets.AUTH_SECRET}}
+      CLERK_SECRET_KEY: ${{secrets.CLERK_SECRET_KEY}}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}}
+      
 
     steps:
       - name: Check out code
