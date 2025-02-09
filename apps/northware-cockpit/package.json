@@ -14,7 +14,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@northware/auth": "workspace:*",
     "@northware/ui": "workspace:*",
-    "@types/react": "^19.0.4",
+    "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "lucide-react": "^0.471.0",
     "drizzle-orm": "^0.39.1",
