@@ -16,7 +16,7 @@
     "./hooks": "./src/hooks/index.ts"
   },
   "dependencies": {
-    "@clerk/elements": "^0.22.15",
+    "@clerk/elements": "^0.22.20",
     "@hookform/resolvers": "^3.10.0",
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:",
