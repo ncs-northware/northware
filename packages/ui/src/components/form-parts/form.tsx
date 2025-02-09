@@ -1,7 +1,7 @@
 'use client';
 
 import { Label } from '@northware/ui/components/form-parts/label';
-import { cn } from '@northware/ui/lib/utils';
+import { cn } from '@northware/ui/lib';
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
@@ -15,6 +15,7 @@ import {
 } from 'react-hook-form';
 
 const Form = FormProvider;
+
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -93,7 +94,7 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-danger', className)}
+      className={cn(error && 'text-destructive', className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -154,7 +155,7 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('font-medium text-danger text-sm', className)}
+      className={cn('font-medium text-destructive text-sm', className)}
       {...props}
     >
       {body}
