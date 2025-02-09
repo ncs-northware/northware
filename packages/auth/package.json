@@ -2,23 +2,24 @@
   "name": "@northware/auth",
   "version": "0.0.0",
   "private": true,
-  "dependencies": {
-    "@northware/database": "workspace:*",
-    "bcrypt-ts": "^5.0.3",
-    "drizzle-orm": "^0.39.1",
-    "next-auth": "5.0.0-beta.25"
-  },
-  "devDependencies": {
-    "@northware/tsconfig": "workspace:"
-  },
+
   "scripts": {
     "tsc-check": "tsc --noEmit",
-    "lint": "ultracite lint",
-    "format": "ultracite format"
+    "format": "ultracite format",
+    "lint": "ultracite lint"
   },
   "exports": {
-    "./auth": "./lib/auth.ts",
-    "./user": "./lib/user-connect.ts",
-    "./authConfig": "./lib/auth.config.ts"
+    "./client": "./src/client.ts",
+    "./server": "./src/server.ts"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^6.10.2",
+    "@northware/database": "workspace:*",
+    "@northware/service-config": "workspace:*",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@northware/tsconfig": "workspace:*",
+    "typescript": "^5.7.3"
   }
 }

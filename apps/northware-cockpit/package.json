@@ -11,13 +11,17 @@
     "format": "ultracite format"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
     "@northware/auth": "workspace:*",
     "@northware/ui": "workspace:*",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.3",
+    "lucide-react": "^0.471.0",
     "drizzle-orm": "^0.39.1",
     "next": "15.1.6",
-    "next-auth": "5.0.0-beta.25",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
     "zod": "^3.24.1"
   },
   "devDependencies": {

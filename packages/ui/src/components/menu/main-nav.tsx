@@ -1,4 +1,5 @@
-import { auth, signOut } from '@northware/auth/auth';
+import { SignOutButton } from '@northware/auth/client';
+import { currentUser } from '@northware/auth/server';
 import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import {
@@ -23,7 +24,7 @@ import {
   navigationMenuButtonStyle,
   navigationMenuTriggerStyle,
 } from '@northware/ui/components/menu/navigation-menu-premitive';
-import { ThemeSwitch } from '@northware/ui/components/next-themes/theme-switch';
+import { ThemeSwitch } from '@northware/ui/components/menu/theme-switch';
 import { cn } from '@northware/ui/lib/utils';
 import { UserIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -103,7 +104,7 @@ export async function MainNav({ service }: { service: ServiceType }) {
 
 async function MetaNav({ service }: { service: ServiceType }) {
   // Die Meta Navigation mit App-Switches, UserMenu und ThemeSwitcher auf Desktop-Geräten
-  const session = await auth();
+  const user = await currentUser();
   return (
     <>
       <NavigationMenu className="flex justify-between py-2">
@@ -135,20 +136,19 @@ async function MetaNav({ service }: { service: ServiceType }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>
-                {session?.user?.name ? (
+                {user?.firstName !== null || user?.lastName !== null ? (
                   <p className="font-medium text-sm leading-none">
-                    {session?.user?.name}
+                    {user?.firstName !== null ? user?.firstName : null}{' '}
+                    {user?.lastName !== null ? user?.lastName : null}
                   </p>
-                ) : (
-                  ''
-                )}
+                ) : null}
                 <p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
-                  {session?.user?.email}
+                  {`${user?.emailAddresses[0].emailAddress}`}
                 </p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <SignOut />
+                <SignOutButton>Abmelden</SignOutButton>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -156,19 +156,5 @@ async function MetaNav({ service }: { service: ServiceType }) {
         </nav>
       </NavigationMenu>
     </>
-  );
-}
-
-function SignOut() {
-  // Helper-Komponent für @northware/auth signOut
-  return (
-    <form
-      action={async () => {
-        'use server';
-        await signOut();
-      }}
-    >
-      <button type="submit">Abmelden</button>
-    </form>
   );
 }

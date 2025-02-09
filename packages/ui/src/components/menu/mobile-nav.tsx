@@ -1,4 +1,5 @@
-import { auth, signOut } from '@northware/auth/auth';
+import { SignOutButton } from '@northware/auth/client';
+import { currentUser } from '@northware/auth/server';
 import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';
@@ -7,7 +8,7 @@ import {
   menuData,
 } from '@northware/ui/components/menu/menu-data';
 import { MobileNavLink } from '@northware/ui/components/menu/nav-links';
-import { ThemeSwitch } from '@northware/ui/components/next-themes/theme-switch';
+import { ThemeSwitch } from '@northware/ui/components/menu/theme-switch';
 import {
   Accordion,
   AccordionContent,
@@ -109,7 +110,7 @@ export async function MobileNav({ service }: { service: ServiceType }) {
   );
 }
 async function MobileNavMeta({ service }: { service: ServiceType }) {
-  const session = await auth();
+  const user = await currentUser();
   return (
     <ul className="grid gap-1 border-border/50 border-t py-4 dark:border-border/70">
       {suiteAppsMeta.map((app) => {
@@ -125,41 +126,32 @@ async function MobileNavMeta({ service }: { service: ServiceType }) {
         }
       })}
       <li className="flex items-center justify-between rounded-md p-2 font-medium text-sm">
-        {session?.user?.name ? (
+        {user?.firstName !== null || user?.lastName !== null ? (
           <p>
-            <span>{session?.user?.name}</span>{' '}
+            <span>
+              {user?.firstName !== null ? user?.firstName : null}{' '}
+              {user?.lastName !== null ? user?.lastName : null}
+            </span>{' '}
             <span className="text-muted-foreground">
-              &#40;{session?.user?.email}&#41;
+              &#40;{user?.emailAddresses[0].emailAddress}&#41;
             </span>
           </p>
         ) : (
           <p>
             <span className="text-muted-foreground">
-              {session?.user?.email}
+              {user?.emailAddresses[0].emailAddress}
             </span>
           </p>
         )}
         <div className="flex gap-2">
-          <SignOut />
+          <SignOutButton>
+            <Button type="submit" size="icon" variant="outline">
+              <LogOutIcon />
+            </Button>
+          </SignOutButton>
           <ThemeSwitch variant="outline" />
         </div>
       </li>
     </ul>
-  );
-}
-
-function SignOut() {
-  // Helper-Komponent für @northware/auth signOut
-  return (
-    <form
-      action={async () => {
-        'use server';
-        await signOut();
-      }}
-    >
-      <Button variant="outline" size="icon" type="submit">
-        <LogOutIcon />
-      </Button>
-    </form>
   );
 }

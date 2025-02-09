@@ -1,9 +1,22 @@
-import { authConfig } from '@northware/auth/authConfig';
-import NextAuth from 'next-auth';
+import { clerkMiddleware, createRouteMatcher } from '@northware/auth/server';
 
-export default NextAuth(authConfig).auth;
+const isPublicRoute = createRouteMatcher(['/login(.*)']);
+
+export default clerkMiddleware(async (auth, request) => {
+  if (!isPublicRoute(request)) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/login';
+    await auth.protect({
+      unauthenticatedUrl: url.toString(),
+    });
+  }
+});
 
 export const config = {
-  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
 };
