@@ -2,4 +2,4 @@
 
 `@northware/database` is used to connect any app inside this project to the Neon Databse and to define the Database Schema with Drizzle.
 
-**[@northware/database on Northware Docs](https://ncs-northware.github.io/northware/Packages/database)**
+**[Read the docs on @northware/database](https://ncsnorthware.mintlify.app/packages/database)**

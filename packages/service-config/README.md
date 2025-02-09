@@ -2,4 +2,4 @@
 
 Helper Functions to control which Service of the Northware Suite is currently running.
 
-**[Read more in the Docs](https://ncsnorthware.mintlify.app/packages/service-config)**
+**[Read the docs on @northware/service-config](https://ncsnorthware.mintlify.app/packages/service-config)**

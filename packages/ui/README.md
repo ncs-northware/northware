@@ -19,3 +19,5 @@ import "./globals.css";
 // Stylesheet from @northware/ui
 import "@northware/ui/styles.css";
 ```
+
+[Read the full documentation on @northware/ui](https://ncsnorthware.mintlify.app/ui/introduction)
