@@ -63,7 +63,7 @@ importers:
         specifier: ^19.0.3
         version: 19.0.3(@types/react@19.0.8)
       drizzle-orm:
-        specifier: ^0.39.1
+        specifier: ^0.39.2
         version: 0.39.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@19.0.8)(postgres@3.4.5)(react@19.0.0)
       lucide-react:
         specifier: ^0.471.0
@@ -134,7 +134,7 @@ importers:
         specifier: ^0.30.4
         version: 0.30.4
       drizzle-orm:
-        specifier: ^0.39.1
+        specifier: ^0.39.2
         version: 0.39.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@19.0.8)(postgres@3.4.5)(react@19.0.0)
 
   packages/service-config:
@@ -206,7 +206,7 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       drizzle-orm:
-        specifier: ^0.39.1
+        specifier: ^0.39.2
         version: 0.39.2(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(@types/react@19.0.8)(postgres@3.4.5)(react@19.0.0)
       lucide-react:
         specifier: ^0.474.0
