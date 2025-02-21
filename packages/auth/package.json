@@ -13,7 +13,7 @@
     "./server": "./src/server.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.11.1",
+    "@clerk/nextjs": "^6.12.0",
     "@northware/database": "workspace:*",
     "@northware/service-config": "workspace:*",
     "server-only": "^0.0.1"
