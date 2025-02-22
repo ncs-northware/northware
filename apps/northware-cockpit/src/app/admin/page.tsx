@@ -1,7 +1,7 @@
 import { getUsers } from '@/lib/user-actions';
 import { Button, Container, Headline } from '@northware/ui/components';
+import { PencilIcon } from 'lucide-react';
 import Link from 'next/link';
-
 export default async function UsersPage() {
   const userArray = await getUsers();
   return (
@@ -29,7 +29,13 @@ export default async function UsersPage() {
               </td>
               <td>{user.username}</td>
               <td>{user.emailAddresses[0].emailAddress}</td>
-              <td>Buttons</td>
+              <td>
+                <Button variant="link" size="icon">
+                  <Link href={`/admin/edit-user/${user.id}/accounts`}>
+                    <PencilIcon />
+                  </Link>
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>

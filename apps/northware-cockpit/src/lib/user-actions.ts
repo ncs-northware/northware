@@ -101,6 +101,16 @@ export async function createUser(formData: TCreateUserFormSchema) {
   }
 }
 
+export async function getSingleUser(id: string) {
+  try {
+    const client = await clerkClient();
+    const response = await client.users.getUser(id);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function deleteUser(id: string) {
   try {
     const client = await clerkClient();
