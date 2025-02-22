@@ -43,26 +43,26 @@ export const accountsRelations = relations(accountsTable, ({ many }) => ({
 export const permissionsToRoles = pgTable(
   'PermissionsToRoles',
   {
-    permissionId: integer()
+    permissionKey: varchar()
       .notNull()
-      .references(() => permissionsTable.recordId),
-    roleId: integer()
+      .references(() => permissionsTable.permissionKey),
+    roleKey: varchar()
       .notNull()
-      .references(() => rolesTable.recordId),
+      .references(() => rolesTable.roleKey),
   },
-  (t) => [primaryKey({ columns: [t.permissionId, t.roleId] })]
+  (t) => [primaryKey({ columns: [t.permissionKey, t.roleKey] })]
 );
 
 export const permissionsToRolesRelations = relations(
   permissionsToRoles,
   ({ one }) => ({
     permisson: one(permissionsTable, {
-      fields: [permissionsToRoles.permissionId],
-      references: [permissionsTable.recordId],
+      fields: [permissionsToRoles.permissionKey],
+      references: [permissionsTable.permissionKey],
     }),
     role: one(rolesTable, {
-      fields: [permissionsToRoles.roleId],
-      references: [rolesTable.recordId],
+      fields: [permissionsToRoles.roleKey],
+      references: [rolesTable.roleKey],
     }),
   })
 );
@@ -70,22 +70,22 @@ export const permissionsToRolesRelations = relations(
 export const permissionsToAccounts = pgTable(
   'PermissionsToAccounts',
   {
-    permissionId: integer()
+    permissionKey: varchar()
       .notNull()
-      .references(() => permissionsTable.recordId),
+      .references(() => permissionsTable.permissionKey),
     accountId: integer()
       .notNull()
       .references(() => accountsTable.recordId),
   },
-  (t) => [primaryKey({ columns: [t.permissionId, t.accountId] })]
+  (t) => [primaryKey({ columns: [t.permissionKey, t.accountId] })]
 );
 
 export const permissionsToAccountsRelations = relations(
   permissionsToAccounts,
   ({ one }) => ({
     permission: one(permissionsTable, {
-      fields: [permissionsToAccounts.permissionId],
-      references: [permissionsTable.recordId],
+      fields: [permissionsToAccounts.permissionKey],
+      references: [permissionsTable.permissionKey],
     }),
     account: one(accountsTable, {
       fields: [permissionsToAccounts.accountId],
@@ -97,22 +97,22 @@ export const permissionsToAccountsRelations = relations(
 export const rolesToAccounts = pgTable(
   'RolesToAccounts',
   {
-    roleId: integer()
+    roleKey: varchar()
       .notNull()
-      .references(() => rolesTable.recordId),
+      .references(() => rolesTable.roleKey),
     accountId: integer()
       .notNull()
       .references(() => accountsTable.recordId),
   },
-  (t) => [primaryKey({ columns: [t.roleId, t.accountId] })]
+  (t) => [primaryKey({ columns: [t.roleKey, t.accountId] })]
 );
 
 export const rolesToAccountsRelations = relations(
   rolesToAccounts,
   ({ one }) => ({
     role: one(rolesTable, {
-      fields: [rolesToAccounts.roleId],
-      references: [rolesTable.recordId],
+      fields: [rolesToAccounts.roleKey],
+      references: [rolesTable.roleKey],
     }),
     account: one(accountsTable, {
       fields: [rolesToAccounts.accountId],
