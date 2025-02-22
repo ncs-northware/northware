@@ -2,6 +2,7 @@
 
 import type { TCreateUserFormSchema } from '@/lib/user-schema';
 import { clerkClient } from '@northware/auth/server';
+import { revalidatePath } from 'next/cache';
 
 interface ClerkError {
   errors: Array<{
@@ -32,8 +33,7 @@ export async function createUser(formData: TCreateUserFormSchema) {
       emailAddress: [emailAddress],
       password: password,
     });
-
-    // TODO: fehlerfreier Übergang zu createAccount z.B. mit revalidatePath und redirect oder router.push
+    revalidatePath('/admin');
   } catch (error) {
     const errorMessages: string[] = [];
     const typesafeError = error as ClerkError;
@@ -92,7 +92,7 @@ export async function createUser(formData: TCreateUserFormSchema) {
       });
     } else {
       errorMessages.push(
-        'Es ist ein unbekannter Fehler beim anlegen des Nutzers aufgetreten.'
+        'Es ist ein unbekannter Fehler beim Anlegen des Nutzers aufgetreten.'
       );
     }
     if (errorMessages.length > 0) {
