@@ -11,7 +11,7 @@
     "format": "ultracite format"
   },
   "dependencies": {
-    "@hookform/resolvers": "^4.1.0",
+    "@hookform/resolvers": "^4.1.1",
     "@northware/auth": "workspace:*",
     "@northware/ui": "workspace:*",
     "@types/react": "^19.0.10",
