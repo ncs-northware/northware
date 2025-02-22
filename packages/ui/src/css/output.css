@@ -1337,6 +1337,10 @@ body {
   color: hsl(var(--danger-foreground) / 100%);
 }
 
+.text-destructive {
+  color: hsl(var(--destructive) / 100%);
+}
+
 .text-finance {
   color: hsl(var(--finance) / 100%);
 }
