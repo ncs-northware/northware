@@ -80,6 +80,9 @@ importers:
       react-hook-form:
         specifier: ^7.54.2
         version: 7.54.2(react@19.0.0)
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -111,6 +114,9 @@ importers:
       '@northware/service-config':
         specifier: workspace:*
         version: link:../service-config
+      drizzle-orm:
+        specifier: ^0.39.3
+        version: 0.39.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
