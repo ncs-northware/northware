@@ -2,6 +2,8 @@
 
 import type { TCreateUserFormSchema } from '@/lib/user-schema';
 import { clerkClient } from '@northware/auth/server';
+import { db } from '@northware/database/connection';
+import { rolesTable } from '@northware/database/schema';
 import { revalidatePath } from 'next/cache';
 
 interface ClerkError {
@@ -119,5 +121,27 @@ export async function deleteUser(id: string) {
     console.info(response);
   } catch (error) {
     console.error(error);
+  }
+}
+
+export type TRoleList = {
+  recordId: number;
+  roleKey: string;
+  roleName: string | null; // Optional, da varchar() ohne .notNull()
+};
+
+export type TRoleListResponse =
+  | { success: true; roleList: TRoleList[] }
+  | { success: false; error: Error };
+
+export async function getRoleList(): Promise<TRoleListResponse> {
+  try {
+    const response = await db.select().from(rolesTable);
+    return { success: true, roleList: response };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error : new Error('Unknown Error'),
+    };
   }
 }
