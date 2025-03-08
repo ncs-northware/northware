@@ -1089,8 +1089,16 @@ body {
   border-color: hsl(var(--input) / 100%);
 }
 
+.border-primary {
+  border-color: hsl(var(--primary) / 100%);
+}
+
 .border-transparent {
   border-color: transparent;
+}
+
+.border-foreground {
+  border-color: hsl(var(--foreground) / 100%);
 }
 
 .bg-background {
@@ -1327,6 +1335,10 @@ body {
 
 .text-cockpit {
   color: hsl(var(--cockpit) / 100%);
+}
+
+.text-current {
+  color: currentColor;
 }
 
 .text-danger {
@@ -1731,12 +1743,20 @@ body {
   background-color: hsl(var(--accent) / 0.5);
 }
 
+.data-\[state\=checked\]\:bg-primary[data-state="checked"] {
+  background-color: hsl(var(--primary) / 100%);
+}
+
 .data-\[state\=open\]\:bg-accent[data-state="open"] {
   background-color: hsl(var(--accent) / 100%);
 }
 
 .data-\[state\=open\]\:bg-accent\/50[data-state="open"] {
   background-color: hsl(var(--accent) / 0.5);
+}
+
+.data-\[state\=checked\]\:text-primary-foreground[data-state="checked"] {
+  color: hsl(var(--primary-foreground) / 100%);
 }
 
 .data-\[state\=open\]\:text-muted-foreground[data-state="open"] {
