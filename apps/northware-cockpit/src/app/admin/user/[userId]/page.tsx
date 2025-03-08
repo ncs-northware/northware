@@ -7,12 +7,15 @@ export default async function EditUserPage({
 }: { params: Promise<{ userId: string }> }) {
   const { userId } = await params;
   const user = await getSingleUser(userId);
-  const userRoles = await getUserRoles(userId);
-  console.log('userRoles', userRoles);
+  const userRolesResponse = await getUserRoles(userId);
+  const roleListResponse = await getRoleList();
   return (
     <Container service="cockpit">
       <Headline level="h2">Accounts von {user?.username}</Headline>
-      <RolesForm roleResponse={await getRoleList()} />
+      <RolesForm
+        rolesResponse={roleListResponse}
+        userRolesResponse={userRolesResponse}
+      />
     </Container>
   );
 }

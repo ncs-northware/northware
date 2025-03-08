@@ -15,15 +15,21 @@ import {
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+type RolesFormProps = {
+  rolesResponse: TRoleListResponse;
+  userRolesResponse: (string | null)[];
+};
+
 export function RolesForm({
-  roleResponse,
-}: { roleResponse: TRoleListResponse }) {
-  if (!roleResponse.success) {
-    return <div>Fehler: {roleResponse.error.message}</div>;
+  rolesResponse,
+  userRolesResponse,
+}: RolesFormProps) {
+  if (!rolesResponse.success) {
+    return <div>Fehler: {rolesResponse.error.message}</div>;
   }
 
   const FormSchema = z.object(
-    roleResponse.roleList.reduce(
+    rolesResponse.roleList.reduce(
       (acc, role) => {
         acc[role.roleKey] = z.boolean().default(false).optional();
         return acc;
@@ -32,9 +38,9 @@ export function RolesForm({
     )
   );
 
-  const defaultValues = roleResponse.roleList.reduce(
+  const defaultValues = rolesResponse.roleList.reduce(
     (acc, role) => {
-      acc[role.roleKey] = false;
+      acc[role.roleKey] = userRolesResponse.includes(role.roleKey) || false;
       return acc;
     },
     {} as Record<string, boolean>
@@ -53,7 +59,7 @@ export function RolesForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {roleResponse.roleList.map((role) => (
+        {rolesResponse.roleList.map((role) => (
           <FormField
             key={role.recordId}
             control={form.control}

@@ -46,7 +46,10 @@ export async function getUserPermissions(clerkUserId?: string) {
 
   return userPermissions;
 }
-export async function getUserRoles(clerkUserId: string) {
+
+export async function getUserRoles(
+  clerkUserId: string
+): Promise<(string | null)[]> {
   const rawRoles = await db
     .select({
       accountRole: rolesToAccounts.roleKey,
