@@ -1,11 +1,5 @@
 import { relations } from 'drizzle-orm';
-import {
-  integer,
-  pgTable,
-  primaryKey,
-  serial,
-  varchar,
-} from 'drizzle-orm/pg-core';
+import { pgTable, primaryKey, serial, varchar } from 'drizzle-orm/pg-core';
 
 export const permissionsTable = pgTable('PermissionsTable', {
   recordId: serial().primaryKey().notNull(),
@@ -30,8 +24,7 @@ export const rolesRelations = relations(rolesTable, ({ many }) => ({
 }));
 
 export const accountsTable = pgTable('AccountsTable', {
-  recordId: serial().primaryKey().notNull(),
-  clerkUserId: varchar(),
+  clerkUserId: varchar().notNull().primaryKey(),
   clerkUserName: varchar(),
 });
 
@@ -73,11 +66,11 @@ export const permissionsToAccounts = pgTable(
     permissionKey: varchar()
       .notNull()
       .references(() => permissionsTable.permissionKey),
-    accountId: integer()
+    accountUserId: varchar()
       .notNull()
-      .references(() => accountsTable.recordId),
+      .references(() => accountsTable.clerkUserId),
   },
-  (t) => [primaryKey({ columns: [t.permissionKey, t.accountId] })]
+  (t) => [primaryKey({ columns: [t.permissionKey, t.accountUserId] })]
 );
 
 export const permissionsToAccountsRelations = relations(
@@ -88,8 +81,8 @@ export const permissionsToAccountsRelations = relations(
       references: [permissionsTable.permissionKey],
     }),
     account: one(accountsTable, {
-      fields: [permissionsToAccounts.accountId],
-      references: [accountsTable.recordId],
+      fields: [permissionsToAccounts.accountUserId],
+      references: [accountsTable.clerkUserId],
     }),
   })
 );
@@ -100,11 +93,11 @@ export const rolesToAccounts = pgTable(
     roleKey: varchar()
       .notNull()
       .references(() => rolesTable.roleKey),
-    accountId: integer()
+    accountUserId: varchar()
       .notNull()
-      .references(() => accountsTable.recordId),
+      .references(() => accountsTable.clerkUserId),
   },
-  (t) => [primaryKey({ columns: [t.roleKey, t.accountId] })]
+  (t) => [primaryKey({ columns: [t.roleKey, t.accountUserId] })]
 );
 
 export const rolesToAccountsRelations = relations(
@@ -115,8 +108,8 @@ export const rolesToAccountsRelations = relations(
       references: [rolesTable.roleKey],
     }),
     account: one(accountsTable, {
-      fields: [rolesToAccounts.accountId],
-      references: [accountsTable.recordId],
+      fields: [rolesToAccounts.accountUserId],
+      references: [accountsTable.clerkUserId],
     }),
   })
 );
