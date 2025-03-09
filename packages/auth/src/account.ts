@@ -15,7 +15,7 @@ export async function getUserPermissions(clerkUserId?: string) {
     .from(accountsTable)
     .innerJoin(
       rolesToAccounts,
-      eq(accountsTable.recordId, rolesToAccounts.accountId)
+      eq(accountsTable.clerkUserId, rolesToAccounts.accountUserId)
     )
     .innerJoin(
       permissionsToRoles,
@@ -28,7 +28,7 @@ export async function getUserPermissions(clerkUserId?: string) {
     .from(accountsTable)
     .innerJoin(
       permissionsToAccounts,
-      eq(accountsTable.recordId, permissionsToAccounts.accountId)
+      eq(accountsTable.clerkUserId, permissionsToAccounts.accountUserId)
     )
     .where(eq(accountsTable.clerkUserId, user));
 
@@ -57,7 +57,7 @@ export async function getUserRoles(
     .from(accountsTable)
     .leftJoin(
       rolesToAccounts,
-      eq(accountsTable.recordId, rolesToAccounts.accountId)
+      eq(accountsTable.clerkUserId, rolesToAccounts.accountUserId)
     )
     .leftJoin(
       permissionsToRoles,
