@@ -1,6 +1,6 @@
 'use client';
 
-import type { TRoleListResponse } from '@/lib/user-actions';
+import { type TRoleListResponse, updateRoles } from '@/lib/user-actions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@northware/ui/components/base/button';
 import { Checkbox } from '@northware/ui/components/form-parts/checkbox';
@@ -18,11 +18,13 @@ import { z } from 'zod';
 type RolesFormProps = {
   rolesResponse: TRoleListResponse;
   userRolesResponse: (string | null)[];
+  userId: string;
 };
 
 export function RolesForm({
   rolesResponse,
   userRolesResponse,
+  userId,
 }: RolesFormProps) {
   if (!rolesResponse.success) {
     return <div>Fehler: {rolesResponse.error.message}</div>;
@@ -52,8 +54,12 @@ export function RolesForm({
     defaultValues,
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    alert(JSON.stringify(data));
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      await updateRoles(data, userRolesResponse, userId);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

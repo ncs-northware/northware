@@ -3,9 +3,11 @@
 import type { TCreateUserFormSchema } from '@/lib/user-schema';
 import { clerkClient } from '@northware/auth/server';
 import { db } from '@northware/database/connection';
-import { rolesTable } from '@northware/database/schema';
+import { rolesTable, rolesToAccounts } from '@northware/database/schema';
+import { and, eq, inArray } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 
+/****************** Clerk User **********************/
 interface ClerkError {
   errors: Array<{
     code: string;
@@ -124,6 +126,8 @@ export async function deleteUser(id: string) {
   }
 }
 
+/******************* User Accounts ********************/
+
 export type TRoleList = {
   recordId: number;
   roleKey: string;
@@ -143,5 +147,37 @@ export async function getRoleList(): Promise<TRoleListResponse> {
       success: false,
       error: error instanceof Error ? error : new Error('Unknown Error'),
     };
+  }
+}
+
+export async function updateRoles(data, userRoles, userId) {
+  const selectedRoles = Object.entries(data)
+    .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
+    .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
+
+  const rolesToAdd = selectedRoles.filter(
+    (selectedRole) => !userRoles.includes(selectedRole)
+  );
+  const rolesToRemove = userRoles.filter(
+    (userRole) => !selectedRoles.includes(userRole)
+  );
+
+  const insertRoles = new Array();
+  rolesToAdd.forEach((role, i) => {
+    insertRoles[i] = { roleKey: role, accountUserId: userId };
+  });
+
+  if (insertRoles.length > 0) {
+    await db.insert(rolesToAccounts).values(insertRoles).onConflictDoNothing();
+  }
+  if (rolesToRemove.length > 0) {
+    await db
+      .delete(rolesToAccounts)
+      .where(
+        and(
+          inArray(rolesToAccounts.roleKey, rolesToRemove),
+          eq(rolesToAccounts.accountUserId, userId)
+        )
+      );
   }
 }

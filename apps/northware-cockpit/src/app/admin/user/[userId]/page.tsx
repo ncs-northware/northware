@@ -15,6 +15,7 @@ export default async function EditUserPage({
       <RolesForm
         rolesResponse={roleListResponse}
         userRolesResponse={userRolesResponse}
+        userId={userId}
       />
     </Container>
   );

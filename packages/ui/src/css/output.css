@@ -1097,10 +1097,6 @@ body {
   border-color: transparent;
 }
 
-.border-foreground {
-  border-color: hsl(var(--foreground) / 100%);
-}
-
 .bg-background {
   background-color: hsl(var(--background) / 100%);
 }
