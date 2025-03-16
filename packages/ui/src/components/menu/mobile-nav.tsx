@@ -1,5 +1,5 @@
 import { SignOutButton } from '@northware/auth/client';
-import { currentUser } from '@northware/auth/server';
+import { type User, currentUser } from '@northware/auth/server';
 import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import { Button } from '@northware/ui/components/base/button';
@@ -26,7 +26,8 @@ import Link from 'next/link';
 import { navigationMenuButtonStyle } from './navigation-menu-premitive';
 
 export async function MobileNav({ service }: { service: ServiceType }) {
-  const menuItems = await menuData(service);
+  const user = await currentUser();
+  const menuItems = await menuData(service, user?.id);
 
   return (
     <div className="container flex justify-between py-4 md:hidden">
@@ -101,7 +102,7 @@ export async function MobileNav({ service }: { service: ServiceType }) {
                   );
                 })}
               </ul>
-              <MobileNavMeta service={service} />
+              <MobileNavMeta service={service} user={user} />
             </div>
           </DialogContent>
         </Dialog>
@@ -109,8 +110,10 @@ export async function MobileNav({ service }: { service: ServiceType }) {
     </div>
   );
 }
-async function MobileNavMeta({ service }: { service: ServiceType }) {
-  const user = await currentUser();
+async function MobileNavMeta({
+  service,
+  user,
+}: { service: ServiceType; user: User | null }) {
   return (
     <ul className="grid gap-1 border-border/50 border-t py-4 dark:border-border/70">
       {suiteAppsMeta.map((app) => {

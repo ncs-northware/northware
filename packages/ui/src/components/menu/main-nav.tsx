@@ -1,5 +1,5 @@
 import { SignOutButton } from '@northware/auth/client';
-import { currentUser } from '@northware/auth/server';
+import { type User, currentUser } from '@northware/auth/server';
 import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
 import { Brand } from '@northware/ui/components/base/brand';
 import {
@@ -28,14 +28,14 @@ import { ThemeSwitch } from '@northware/ui/components/menu/theme-switch';
 import { cn } from '@northware/ui/lib/utils';
 import { UserIcon } from 'lucide-react';
 import Link from 'next/link';
-
 export async function MainNav({ service }: { service: ServiceType }) {
   // TODO: Add NavMenu Rendering based on permissionKey
-  const menuItems = await menuData(service);
+  const user = await currentUser();
+  const menuItems = await menuData(service, user?.id);
   // Die Hauptnavigation incl. Branding auf Desktops
   return (
     <div className="container hidden md:block">
-      <MetaNav service={service} />
+      <MetaNav service={service} user={user} />
       <div className="flex bg-background/95 py-2">
         <div className="flex gap-4">
           <Link href="/">
@@ -102,9 +102,11 @@ export async function MainNav({ service }: { service: ServiceType }) {
   );
 }
 
-async function MetaNav({ service }: { service: ServiceType }) {
+async function MetaNav({
+  service,
+  user,
+}: { service: ServiceType; user: User | null }) {
   // Die Meta Navigation mit App-Switches, UserMenu und ThemeSwitcher auf Desktop-Geräten
-  const user = await currentUser();
   return (
     <>
       <NavigationMenu className="flex justify-between py-2">
