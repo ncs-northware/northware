@@ -24,11 +24,11 @@
     "ignore": [
       "**/node_modules/**",
       "**/.turbo",
-      "**/.docusaurus",
       "**/.next",
       "tsconfig.tsbuildinfo",
       "**/dist/**",
-      "**/css/output.css"
+      "**/css/output.css",
+      "**/drizzle-migrations/**"
     ]
   }
 }
