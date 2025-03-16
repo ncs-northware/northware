@@ -30,7 +30,7 @@ export async function createUser(formData: TCreateUserFormSchema) {
   const { firstName, lastName, username, emailAddress, password } = formData;
   try {
     const client = await clerkClient();
-    const response = await client.users.createUser({
+    await client.users.createUser({
       firstName: firstName,
       lastName: lastName,
       username: username,
@@ -150,34 +150,52 @@ export async function getRoleList(): Promise<TRoleListResponse> {
   }
 }
 
-export async function updateRoles(data, userRoles, userId) {
-  const selectedRoles = Object.entries(data)
-    .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
-    .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
+type UpdateRolesParams = {
+  data: { [x: string]: boolean | undefined };
+  userRolesResponse: (string | null)[];
+  userId: string;
+};
 
-  const rolesToAdd = selectedRoles.filter(
-    (selectedRole) => !userRoles.includes(selectedRole)
-  );
-  const rolesToRemove = userRoles.filter(
-    (userRole) => !selectedRoles.includes(userRole)
-  );
+export async function updateRoles({
+  data,
+  userRolesResponse,
+  userId,
+}: UpdateRolesParams) {
+  try {
+    const selectedRoles = Object.entries(data)
+      .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
+      .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
 
-  const insertRoles = new Array();
-  rolesToAdd.forEach((role, i) => {
-    insertRoles[i] = { roleKey: role, accountUserId: userId };
-  });
+    const rolesToAdd = selectedRoles.filter(
+      (selectedRole) => !userRolesResponse.includes(selectedRole)
+    );
+    const rolesToRemove = userRolesResponse
+      .filter((userRole): userRole is string => userRole !== null)
+      .filter((userRole) => !selectedRoles.includes(userRole));
 
-  if (insertRoles.length > 0) {
-    await db.insert(rolesToAccounts).values(insertRoles).onConflictDoNothing();
-  }
-  if (rolesToRemove.length > 0) {
-    await db
-      .delete(rolesToAccounts)
-      .where(
-        and(
-          inArray(rolesToAccounts.roleKey, rolesToRemove),
-          eq(rolesToAccounts.accountUserId, userId)
-        )
-      );
+    const insertRoles = new Array();
+    rolesToAdd.forEach((role, i) => {
+      insertRoles[i] = { roleKey: role, accountUserId: userId };
+    });
+
+    if (insertRoles.length > 0) {
+      await db
+        .insert(rolesToAccounts)
+        .values(insertRoles)
+        .onConflictDoNothing();
+    }
+    if (rolesToRemove.length > 0) {
+      await db
+        .delete(rolesToAccounts)
+        .where(
+          and(
+            inArray(rolesToAccounts.roleKey, rolesToRemove),
+            eq(rolesToAccounts.accountUserId, userId)
+          )
+        );
+    }
+    revalidatePath('/admin');
+  } catch (error) {
+    return error;
   }
 }

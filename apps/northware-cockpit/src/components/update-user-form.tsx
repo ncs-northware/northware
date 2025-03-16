@@ -11,6 +11,9 @@ import {
   FormItem,
   FormLabel,
 } from '@northware/ui/components/form-parts/form';
+import { Alert } from '@northware/ui/components/panels/alert';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -26,6 +29,9 @@ export function RolesForm({
   userRolesResponse,
   userId,
 }: RolesFormProps) {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+
   if (!rolesResponse.success) {
     return <div>Fehler: {rolesResponse.error.message}</div>;
   }
@@ -56,9 +62,12 @@ export function RolesForm({
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      await updateRoles(data, userRolesResponse, userId);
+      await updateRoles({ data, userRolesResponse, userId });
+      router.push('/admin');
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        setError(error.message);
+      }
     }
   }
 
@@ -85,6 +94,12 @@ export function RolesForm({
             )}
           />
         ))}
+
+        {error && (
+          <Alert variant="danger">
+            <p>{error}</p>
+          </Alert>
+        )}
         <Button type="submit">Submit</Button>
       </form>
     </Form>
