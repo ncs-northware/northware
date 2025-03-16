@@ -63,12 +63,8 @@
           "name": "MainNavTable_childOf_MainNavTable_itemId_fk",
           "tableFrom": "MainNavTable",
           "tableTo": "MainNavTable",
-          "columnsFrom": [
-            "childOf"
-          ],
-          "columnsTo": [
-            "itemId"
-          ],
+          "columnsFrom": ["childOf"],
+          "columnsTo": ["itemId"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -76,12 +72,8 @@
           "name": "MainNavTable_permissionKey_PermissionsTable_permissionKey_fk",
           "tableFrom": "MainNavTable",
           "tableTo": "PermissionsTable",
-          "columnsFrom": [
-            "permissionKey"
-          ],
-          "columnsTo": [
-            "permissionKey"
-          ],
+          "columnsFrom": ["permissionKey"],
+          "columnsTo": ["permissionKey"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -91,9 +83,7 @@
         "MainNavTable_itemId_unique": {
           "name": "MainNavTable_itemId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "itemId"
-          ]
+          "columns": ["itemId"]
         }
       },
       "policies": {},
@@ -155,9 +145,7 @@
         "PermissionsTable_permissionKey_unique": {
           "name": "PermissionsTable_permissionKey_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "permissionKey"
-          ]
+          "columns": ["permissionKey"]
         }
       },
       "policies": {},
@@ -187,12 +175,8 @@
           "name": "PermissionsToAccounts_permissionKey_PermissionsTable_permissionKey_fk",
           "tableFrom": "PermissionsToAccounts",
           "tableTo": "PermissionsTable",
-          "columnsFrom": [
-            "permissionKey"
-          ],
-          "columnsTo": [
-            "permissionKey"
-          ],
+          "columnsFrom": ["permissionKey"],
+          "columnsTo": ["permissionKey"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -200,12 +184,8 @@
           "name": "PermissionsToAccounts_accountUserId_AccountsTable_clerkUserId_fk",
           "tableFrom": "PermissionsToAccounts",
           "tableTo": "AccountsTable",
-          "columnsFrom": [
-            "accountUserId"
-          ],
-          "columnsTo": [
-            "clerkUserId"
-          ],
+          "columnsFrom": ["accountUserId"],
+          "columnsTo": ["clerkUserId"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -213,10 +193,7 @@
       "compositePrimaryKeys": {
         "PermissionsToAccounts_permissionKey_accountUserId_pk": {
           "name": "PermissionsToAccounts_permissionKey_accountUserId_pk",
-          "columns": [
-            "permissionKey",
-            "accountUserId"
-          ]
+          "columns": ["permissionKey", "accountUserId"]
         }
       },
       "uniqueConstraints": {},
@@ -247,12 +224,8 @@
           "name": "PermissionsToRoles_permissionKey_PermissionsTable_permissionKey_fk",
           "tableFrom": "PermissionsToRoles",
           "tableTo": "PermissionsTable",
-          "columnsFrom": [
-            "permissionKey"
-          ],
-          "columnsTo": [
-            "permissionKey"
-          ],
+          "columnsFrom": ["permissionKey"],
+          "columnsTo": ["permissionKey"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -260,12 +233,8 @@
           "name": "PermissionsToRoles_roleKey_RolesTable_roleKey_fk",
           "tableFrom": "PermissionsToRoles",
           "tableTo": "RolesTable",
-          "columnsFrom": [
-            "roleKey"
-          ],
-          "columnsTo": [
-            "roleKey"
-          ],
+          "columnsFrom": ["roleKey"],
+          "columnsTo": ["roleKey"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -273,10 +242,7 @@
       "compositePrimaryKeys": {
         "PermissionsToRoles_permissionKey_roleKey_pk": {
           "name": "PermissionsToRoles_permissionKey_roleKey_pk",
-          "columns": [
-            "permissionKey",
-            "roleKey"
-          ]
+          "columns": ["permissionKey", "roleKey"]
         }
       },
       "uniqueConstraints": {},
@@ -314,9 +280,7 @@
         "RolesTable_roleKey_unique": {
           "name": "RolesTable_roleKey_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "roleKey"
-          ]
+          "columns": ["roleKey"]
         }
       },
       "policies": {},
@@ -346,12 +310,8 @@
           "name": "RolesToAccounts_roleKey_RolesTable_roleKey_fk",
           "tableFrom": "RolesToAccounts",
           "tableTo": "RolesTable",
-          "columnsFrom": [
-            "roleKey"
-          ],
-          "columnsTo": [
-            "roleKey"
-          ],
+          "columnsFrom": ["roleKey"],
+          "columnsTo": ["roleKey"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -359,12 +319,8 @@
           "name": "RolesToAccounts_accountUserId_AccountsTable_clerkUserId_fk",
           "tableFrom": "RolesToAccounts",
           "tableTo": "AccountsTable",
-          "columnsFrom": [
-            "accountUserId"
-          ],
-          "columnsTo": [
-            "clerkUserId"
-          ],
+          "columnsFrom": ["accountUserId"],
+          "columnsTo": ["clerkUserId"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -372,10 +328,7 @@
       "compositePrimaryKeys": {
         "RolesToAccounts_roleKey_accountUserId_pk": {
           "name": "RolesToAccounts_roleKey_accountUserId_pk",
-          "columns": [
-            "roleKey",
-            "accountUserId"
-          ]
+          "columns": ["roleKey", "accountUserId"]
         }
       },
       "uniqueConstraints": {},
