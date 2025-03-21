@@ -1,14 +1,14 @@
 import { getUsers } from '@/lib/user-actions';
 import { Button, Container, Headline } from '@northware/ui/components';
+import { PencilIcon } from 'lucide-react';
 import Link from 'next/link';
-
-export default async function UsersPage() {
+export default async function AdminDashboard() {
   const userArray = await getUsers();
   return (
     <Container service="cockpit">
       <Headline level="h1">Admin Dashboard</Headline>
       <Button variant="default">
-        <Link href="admin/create-user">Benutzer hinzufügen</Link>
+        <Link href="admin/user/create">Benutzer hinzufügen</Link>
       </Button>
       <table>
         <thead>
@@ -29,7 +29,13 @@ export default async function UsersPage() {
               </td>
               <td>{user.username}</td>
               <td>{user.emailAddresses[0].emailAddress}</td>
-              <td>Buttons</td>
+              <td>
+                <Button variant="link" size="icon">
+                  <Link href={`/admin/user/${user.id}`}>
+                    <PencilIcon />
+                  </Link>
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>

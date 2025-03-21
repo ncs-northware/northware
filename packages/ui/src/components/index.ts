@@ -7,6 +7,7 @@ export * from '@northware/ui/components/base/button';
 export * from '@northware/ui/components/base/headline';
 
 // Form Parts (Components that are typically part of a Form)
+export * from '@northware/ui/components/form-parts/checkbox';
 export * from '@northware/ui/components/form-parts/form';
 export * from '@northware/ui/components/form-parts/input';
 export * from '@northware/ui/components/form-parts/label';

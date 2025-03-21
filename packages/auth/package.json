@@ -2,7 +2,6 @@
   "name": "@northware/auth",
   "version": "0.0.0",
   "private": true,
-
   "scripts": {
     "tsc-check": "tsc --noEmit",
     "format": "ultracite format",
@@ -10,12 +9,14 @@
   },
   "exports": {
     "./client": "./src/client.ts",
-    "./server": "./src/server.ts"
+    "./server": "./src/server.ts",
+    "./account": "./src/account.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.12.0",
+    "@clerk/nextjs": "^6.12.8",
     "@northware/database": "workspace:*",
     "@northware/service-config": "workspace:*",
+    "drizzle-orm": "^0.41.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {

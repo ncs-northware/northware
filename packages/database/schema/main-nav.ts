@@ -1,40 +1,31 @@
+import { relations } from 'drizzle-orm';
 import {
-  foreignKey,
-  pgEnum,
+  type AnyPgColumn,
   pgTable,
   serial,
   smallint,
-  unique,
   varchar,
 } from 'drizzle-orm/pg-core';
+import { permissionsTable } from './users';
 
-export const appEnum = pgEnum('app', ['cockpit', 'finance', 'trader', 'admin']);
+export const mainNavTable = pgTable('MainNavTable', {
+  recordId: serial().primaryKey().notNull(),
+  itemId: varchar().unique().notNull(),
+  title: varchar().notNull(),
+  href: varchar().notNull(),
+  app: varchar().notNull(),
+  order: smallint(),
+  childOf: varchar().references((): AnyPgColumn => mainNavTable.itemId),
+  permissionKey: varchar().references(() => permissionsTable.permissionKey),
+});
 
-export const mainNavTable = pgTable(
-  'MainNavTable',
-  {
-    recordId: serial().primaryKey().notNull(),
-    itemId: varchar().unique().notNull(),
-    title: varchar().notNull(),
-    href: varchar().notNull(),
-    app: appEnum(),
-    order: smallint(),
-    childOf: varchar(),
-    permissionKey: varchar('permission_key'),
-  },
-  (table) => {
-    return {
-      mainNavChildOfMainNavIdFk: foreignKey({
-        columns: [table.childOf],
-        foreignColumns: [table.itemId],
-        name: 'MainNav_childOf_MainNav_itemId_fk',
-      }),
-      mainNavPermissionKeyUnique: unique('MainNav_permission_key_unique').on(
-        table.permissionKey
-      ),
-    };
-  }
-);
-
-export type InsertNavItem = typeof mainNavTable.$inferInsert;
-export type SelectNavItem = typeof mainNavTable.$inferSelect;
+export const mainNavRelations = relations(mainNavTable, ({ one }) => ({
+  childOf: one(mainNavTable, {
+    fields: [mainNavTable.childOf],
+    references: [mainNavTable.itemId],
+  }),
+  permissionKey: one(permissionsTable, {
+    fields: [mainNavTable.permissionKey],
+    references: [permissionsTable.permissionKey],
+  }),
+}));

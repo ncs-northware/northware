@@ -2,7 +2,7 @@ import CreateUserForm from '@/components/create-user-form';
 import { createUser } from '@/lib/user-actions';
 import { Container, Headline } from '@northware/ui/components';
 
-export default function AdminDashboard() {
+export default function CreateUserPage() {
   return (
     <Container service="cockpit">
       <Headline level="h1">Benutzer erstellen</Headline>

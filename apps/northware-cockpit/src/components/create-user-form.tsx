@@ -4,6 +4,19 @@ import {
   createUserFormSchema,
 } from '@/lib/user-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@northware/ui/components/base/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@northware/ui/components/form-parts/form';
+import { Input } from '@northware/ui/components/form-parts/input';
+import { Alert } from '@northware/ui/components/panels/alert';
+import { useRouter } from 'next/navigation';
+
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 
@@ -22,10 +35,13 @@ export default function CreateUserForm({
     },
   });
 
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<TCreateUserFormSchema> = async (data) => {
     setErrors([]); // Fehler zurücksetzen
     try {
       await createUser(data);
+      router.push('/admin');
     } catch (err) {
       if (err instanceof Error) {
         // Parse die Fehlermeldungen aus dem Error-Objekt
@@ -40,65 +56,88 @@ export default function CreateUserForm({
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      {/* 
-      TODO: Verwendung gestyleter Input-Komponenten + Label 
-      TODO: Styling für Form-Validation Messages
-      TODO: Alert für Server Errors (errorMessages)
-      */}
-      <label htmlFor="firstName">Vorname</label>
-      <input
-        {...form.register('firstName')}
-        type="text"
-        id="firstName"
-        name="firstName"
-      />
-      <p>{form.formState.errors.firstName?.message}</p>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        {/* 
+        TODO: Styling für Form-Validation Messages
+        */}
+        <FormField
+          control={form.control}
+          name="firstName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Vorname</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nachname</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="emailAddress"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>E-Mail</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Benutzername</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Passwort</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {errors.length > 0 && (
+          <Alert variant="danger">
+            <ul>
+              {errors.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </Alert>
+        )}
 
-      <label htmlFor="lastName">Nachname</label>
-      <input
-        {...form.register('lastName')}
-        type="text"
-        id="lastName"
-        name="lastName"
-      />
-      <p>{form.formState.errors.lastName?.message}</p>
-
-      <label htmlFor="emailAddress">E-Mail</label>
-      <input
-        {...form.register('emailAddress')}
-        type="email"
-        id="emailAddress"
-        name="emailAddress"
-      />
-      <p>{form.formState.errors.emailAddress?.message}</p>
-
-      <label htmlFor="username">Benutzername</label>
-      <input
-        {...form.register('username')}
-        type="text"
-        id="username"
-        name="username"
-      />
-      <p>{form.formState.errors.username?.message}</p>
-
-      <label htmlFor="password">Password</label>
-      <input
-        {...form.register('password')}
-        type="password"
-        id="password"
-        name="password"
-      />
-      <p>{form.formState.errors.password?.message}</p>
-      <p>
-        <ul>
-          {errors.map((error, index) => (
-            <li key={index}>{error}</li>
-          ))}
-        </ul>
-      </p>
-
-      <button type="submit">Benutzer hinzufügen</button>
-    </form>
+        <Button type="submit">Benutzer hinzufügen</Button>
+      </form>
+    </Form>
   );
 }

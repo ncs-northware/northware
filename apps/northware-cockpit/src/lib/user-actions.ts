@@ -2,7 +2,12 @@
 
 import type { TCreateUserFormSchema } from '@/lib/user-schema';
 import { clerkClient } from '@northware/auth/server';
+import { db } from '@northware/database/connection';
+import { rolesTable, rolesToAccounts } from '@northware/database/schema';
+import { and, eq, inArray } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
 
+/****************** Clerk User **********************/
 interface ClerkError {
   errors: Array<{
     code: string;
@@ -25,15 +30,14 @@ export async function createUser(formData: TCreateUserFormSchema) {
   const { firstName, lastName, username, emailAddress, password } = formData;
   try {
     const client = await clerkClient();
-    const response = await client.users.createUser({
+    await client.users.createUser({
       firstName: firstName,
       lastName: lastName,
       username: username,
       emailAddress: [emailAddress],
       password: password,
     });
-
-    // TODO: fehlerfreier Übergang zu createAccount z.B. mit revalidatePath und redirect oder router.push
+    revalidatePath('/admin');
   } catch (error) {
     const errorMessages: string[] = [];
     const typesafeError = error as ClerkError;
@@ -92,12 +96,22 @@ export async function createUser(formData: TCreateUserFormSchema) {
       });
     } else {
       errorMessages.push(
-        'Es ist ein unbekannter Fehler beim anlegen des Nutzers aufgetreten.'
+        'Es ist ein unbekannter Fehler beim Anlegen des Nutzers aufgetreten.'
       );
     }
     if (errorMessages.length > 0) {
       throw new Error(JSON.stringify(errorMessages));
     }
+  }
+}
+
+export async function getSingleUser(id: string) {
+  try {
+    const client = await clerkClient();
+    const response = await client.users.getUser(id);
+    return response;
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -109,5 +123,79 @@ export async function deleteUser(id: string) {
     console.info(response);
   } catch (error) {
     console.error(error);
+  }
+}
+
+/******************* User Accounts ********************/
+
+export type TRoleList = {
+  recordId: number;
+  roleKey: string;
+  roleName: string | null; // Optional, da varchar() ohne .notNull()
+};
+
+export type TRoleListResponse =
+  | { success: true; roleList: TRoleList[] }
+  | { success: false; error: Error };
+
+export async function getRoleList(): Promise<TRoleListResponse> {
+  try {
+    const response = await db.select().from(rolesTable);
+    return { success: true, roleList: response };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error : new Error('Unknown Error'),
+    };
+  }
+}
+
+type UpdateRolesParams = {
+  data: { [x: string]: boolean | undefined };
+  userRolesResponse: (string | null)[];
+  userId: string;
+};
+
+export async function updateRoles({
+  data,
+  userRolesResponse,
+  userId,
+}: UpdateRolesParams) {
+  try {
+    const selectedRoles = Object.entries(data)
+      .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
+      .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
+
+    const rolesToAdd = selectedRoles.filter(
+      (selectedRole) => !userRolesResponse.includes(selectedRole)
+    );
+    const rolesToRemove = userRolesResponse
+      .filter((userRole): userRole is string => userRole !== null)
+      .filter((userRole) => !selectedRoles.includes(userRole));
+
+    const insertRoles = new Array();
+    rolesToAdd.forEach((role, i) => {
+      insertRoles[i] = { roleKey: role, accountUserId: userId };
+    });
+
+    if (insertRoles.length > 0) {
+      await db
+        .insert(rolesToAccounts)
+        .values(insertRoles)
+        .onConflictDoNothing();
+    }
+    if (rolesToRemove.length > 0) {
+      await db
+        .delete(rolesToAccounts)
+        .where(
+          and(
+            inArray(rolesToAccounts.roleKey, rolesToRemove),
+            eq(rolesToAccounts.accountUserId, userId)
+          )
+        );
+    }
+    revalidatePath('/admin');
+  } catch (error) {
+    return error;
   }
 }

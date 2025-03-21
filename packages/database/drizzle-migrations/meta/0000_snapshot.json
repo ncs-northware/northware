@@ -1,0 +1,362 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.MainNavTable": {
+      "name": "MainNavTable",
+      "schema": "",
+      "columns": {
+        "recordId": {
+          "name": "recordId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "itemId": {
+          "name": "itemId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "href": {
+          "name": "href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "app": {
+          "name": "app",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "order": {
+          "name": "order",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "childOf": {
+          "name": "childOf",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "permissionKey": {
+          "name": "permissionKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "MainNavTable_childOf_MainNavTable_itemId_fk": {
+          "name": "MainNavTable_childOf_MainNavTable_itemId_fk",
+          "tableFrom": "MainNavTable",
+          "tableTo": "MainNavTable",
+          "schemaTo": "public",
+          "columnsFrom": ["childOf"],
+          "columnsTo": ["itemId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "MainNavTable_permissionKey_PermissionsTable_permissionKey_fk": {
+          "name": "MainNavTable_permissionKey_PermissionsTable_permissionKey_fk",
+          "tableFrom": "MainNavTable",
+          "tableTo": "PermissionsTable",
+          "schemaTo": "public",
+          "columnsFrom": ["permissionKey"],
+          "columnsTo": ["permissionKey"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "MainNavTable_itemId_unique": {
+          "columns": ["itemId"],
+          "nullsNotDistinct": false,
+          "name": "MainNavTable_itemId_unique"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.PermissionsTable": {
+      "name": "PermissionsTable",
+      "schema": "",
+      "columns": {
+        "recordId": {
+          "name": "recordId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "permissionKey": {
+          "name": "permissionKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "permissionName": {
+          "name": "permissionName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "PermissionsTable_permissionKey_unique": {
+          "columns": ["permissionKey"],
+          "nullsNotDistinct": false,
+          "name": "PermissionsTable_permissionKey_unique"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.AccountsTable": {
+      "name": "AccountsTable",
+      "schema": "",
+      "columns": {
+        "clerkUserId": {
+          "name": "clerkUserId",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clerkUserName": {
+          "name": "clerkUserName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.RolesTable": {
+      "name": "RolesTable",
+      "schema": "",
+      "columns": {
+        "recordId": {
+          "name": "recordId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "roleKey": {
+          "name": "roleKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "roleName": {
+          "name": "roleName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "RolesTable_roleKey_unique": {
+          "columns": ["roleKey"],
+          "nullsNotDistinct": false,
+          "name": "RolesTable_roleKey_unique"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.PermissionsToRoles": {
+      "name": "PermissionsToRoles",
+      "schema": "",
+      "columns": {
+        "permissionKey": {
+          "name": "permissionKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "roleKey": {
+          "name": "roleKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "PermissionsToRoles_roleKey_RolesTable_roleKey_fk": {
+          "name": "PermissionsToRoles_roleKey_RolesTable_roleKey_fk",
+          "tableFrom": "PermissionsToRoles",
+          "tableTo": "RolesTable",
+          "schemaTo": "public",
+          "columnsFrom": ["roleKey"],
+          "columnsTo": ["roleKey"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "PermissionsToRoles_permissionKey_PermissionsTable_permissionKey": {
+          "name": "PermissionsToRoles_permissionKey_PermissionsTable_permissionKey",
+          "tableFrom": "PermissionsToRoles",
+          "tableTo": "PermissionsTable",
+          "schemaTo": "public",
+          "columnsFrom": ["permissionKey"],
+          "columnsTo": ["permissionKey"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "PermissionsToRoles_permissionKey_roleKey_pk": {
+          "name": "PermissionsToRoles_permissionKey_roleKey_pk",
+          "columns": ["permissionKey", "roleKey"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.PermissionsToAccounts": {
+      "name": "PermissionsToAccounts",
+      "schema": "",
+      "columns": {
+        "permissionKey": {
+          "name": "permissionKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accountUserId": {
+          "name": "accountUserId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "PermissionsToAccounts_permissionKey_PermissionsTable_permission": {
+          "name": "PermissionsToAccounts_permissionKey_PermissionsTable_permission",
+          "tableFrom": "PermissionsToAccounts",
+          "tableTo": "PermissionsTable",
+          "schemaTo": "public",
+          "columnsFrom": ["permissionKey"],
+          "columnsTo": ["permissionKey"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "PermissionsToAccounts_accountUserId_AccountsTable_clerkUserId_f": {
+          "name": "PermissionsToAccounts_accountUserId_AccountsTable_clerkUserId_f",
+          "tableFrom": "PermissionsToAccounts",
+          "tableTo": "AccountsTable",
+          "schemaTo": "public",
+          "columnsFrom": ["accountUserId"],
+          "columnsTo": ["clerkUserId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "PermissionsToAccounts_permissionKey_accountUserId_pk": {
+          "name": "PermissionsToAccounts_permissionKey_accountUserId_pk",
+          "columns": ["permissionKey", "accountUserId"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.RolesToAccounts": {
+      "name": "RolesToAccounts",
+      "schema": "",
+      "columns": {
+        "roleKey": {
+          "name": "roleKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accountUserId": {
+          "name": "accountUserId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "RolesToAccounts_roleKey_RolesTable_roleKey_fk": {
+          "name": "RolesToAccounts_roleKey_RolesTable_roleKey_fk",
+          "tableFrom": "RolesToAccounts",
+          "tableTo": "RolesTable",
+          "schemaTo": "public",
+          "columnsFrom": ["roleKey"],
+          "columnsTo": ["roleKey"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "RolesToAccounts_accountUserId_AccountsTable_clerkUserId_fk": {
+          "name": "RolesToAccounts_accountUserId_AccountsTable_clerkUserId_fk",
+          "tableFrom": "RolesToAccounts",
+          "tableTo": "AccountsTable",
+          "schemaTo": "public",
+          "columnsFrom": ["accountUserId"],
+          "columnsTo": ["clerkUserId"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "RolesToAccounts_roleKey_accountUserId_pk": {
+          "name": "RolesToAccounts_roleKey_accountUserId_pk",
+          "columns": ["roleKey", "accountUserId"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}
