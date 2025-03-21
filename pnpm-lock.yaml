@@ -66,8 +66,8 @@ importers:
         specifier: ^19.0.4
         version: 19.0.4(@types/react@19.0.10)
       drizzle-orm:
-        specifier: ^0.39.3
-        version: 0.39.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
+        specifier: ^0.41.0
+        version: 0.41.0(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
       lucide-react:
         specifier: ^0.483.0
         version: 0.483.0(react@19.0.0)
@@ -118,8 +118,8 @@ importers:
         specifier: workspace:*
         version: link:../service-config
       drizzle-orm:
-        specifier: ^0.39.3
-        version: 0.39.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
+        specifier: ^0.41.0
+        version: 0.41.0(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
@@ -143,8 +143,8 @@ importers:
         specifier: ^0.30.4
         version: 0.30.4
       drizzle-orm:
-        specifier: ^0.39.3
-        version: 0.39.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
+        specifier: ^0.41.0
+        version: 0.41.0(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
 
   packages/service-config:
     devDependencies:
@@ -218,8 +218,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       drizzle-orm:
-        specifier: ^0.39.3
-        version: 0.39.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
+        specifier: ^0.41.0
+        version: 0.41.0(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5)
       lucide-react:
         specifier: ^0.483.0
         version: 0.483.0(react@19.0.0)
@@ -1897,8 +1897,8 @@ packages:
     resolution: {integrity: sha512-B2oJN5UkvwwNHscPWXDG5KqAixu7AUzZ3qbe++KU9SsQ+cZWR4DXEPYcvWplyFAno0dhRJECNEhNxiDmFaPGyQ==}
     hasBin: true
 
-  drizzle-orm@0.39.3:
-    resolution: {integrity: sha512-EZ8ZpYvDIvKU9C56JYLOmUskazhad+uXZCTCRN4OnRMsL+xAJ05dv1eCpAG5xzhsm1hqiuC5kAZUCS924u2DTw==}
+  drizzle-orm@0.41.0:
+    resolution: {integrity: sha512-7A4ZxhHk9gdlXmTdPj/lREtP+3u8KvZ4yEN6MYVxBzZGex5Wtdc+CWSbu7btgF6TB0N+MNPrvW7RKBbxJchs/Q==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -1919,6 +1919,7 @@ packages:
       better-sqlite3: '>=7'
       bun-types: '*'
       expo-sqlite: '>=14.0.0'
+      gel: '>=2'
       knex: '*'
       kysely: '*'
       mysql2: '>=2'
@@ -1965,6 +1966,8 @@ packages:
       bun-types:
         optional: true
       expo-sqlite:
+        optional: true
+      gel:
         optional: true
       knex:
         optional: true
@@ -4645,7 +4648,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.39.3(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5):
+  drizzle-orm@0.41.0(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.4)(@types/pg@8.11.6)(postgres@3.4.5):
     optionalDependencies:
       '@libsql/client-wasm': 0.14.0
       '@neondatabase/serverless': 0.10.4
