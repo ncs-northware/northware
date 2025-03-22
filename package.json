@@ -24,7 +24,7 @@
     "@northware/tsconfig": "workspace:",
     "turbo": "^2.4.4",
     "typescript": "^5.8.2",
-    "ultracite": "4.1.20"
+    "ultracite": "4.2.0"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
