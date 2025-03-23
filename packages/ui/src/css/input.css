@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
 @source "../../../apps/**/*.{ts,tsx}";
 @source "../../../components/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
@@ -40,6 +42,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --cockpit: oklch(0.685 0.169 237.323);
+  --cockpit-foreground: oklch(0.985 0 0);
+  --finance: oklch(0.637 0.237 25.331);
+  --finance-foreground: oklch(0.985 0 0);
+  --trader: oklch(0.705 0.213 47.604);
+  --trader-foreground: oklch(0.145 0 0);
 }
 
 .dark {
@@ -76,21 +84,27 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  --cockpit: oklch(0.685 0.169 237.323);
+  --cockpit-foreground: oklch(0.985 0 0);
+  --finance: oklch(0.637 0.237 25.331);
+  --finance-foreground: oklch(0.985 0 0);
+  --trader: oklch(0.705 0.213 47.604);
+  --trader-foreground: oklch(0.145 0 0);
 }
 
 .theme-cockpit {
-  --primary: 199 89% 48%;
-  --primary-foreground: 0 0% 98%;
+  --primary: oklch(0.685 0.169 237.323);
+  --primary-foreground: oklch(0.985 0 0);
 }
 
 .theme-finance {
-  --primary: 0 84% 60%;
-  --primary-foreground: 0 0% 98%;
+  --primary: oklch(0.637 0.237 25.331);
+  --primary-foreground: oklch(0.985 0 0);
 }
 
 .theme-trader {
-  --primary: 25 95% 53%;
-  --primary-foreground: 240 10% 3.9%;
+  --primary: oklch(0.705 0.213 47.604);
+  --primary-foreground: oklch(0.145 0 0);
 }
 
 @theme inline {
@@ -133,6 +147,22 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-cockpit: var(--cockpit);
+  --color-cockpit-foreground: var(--cockpit-foreground);
+  --color-finance: var(--finance);
+  --color-finance-foreground: var(--finance-foreground);
+  --color-trader: var(--trader);
+  --color-trader-foreground: var(--trader-foreground);
+  --font-sans: var(--font-sourcesans);
+}
+
+@theme {
+  --breakpoint-2xl: 80rem;
+}
+
+@utility container {
+  padding-top: 1.5rem;
+  margin: auto;
 }
 
 @layer base {
