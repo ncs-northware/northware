@@ -1,7 +1,7 @@
 import './globals.css';
 import '@northware/ui/css';
-import { UIProvider } from '@northware/ui/components';
-import { source_sans } from '@northware/ui/lib';
+import { UIProvider } from '@northware/ui/components/providers/ui-provider';
+import { source_sans } from '@northware/ui/lib/fonts';
 export const metadata = {
   title: {
     template: '%s | Northware Cockpit',

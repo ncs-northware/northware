@@ -1,7 +1,8 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Configuration Options here
+	// Configuration Options here
+	transpilePackages: ["@northare/ui"],
 };
 
 export default nextConfig;
