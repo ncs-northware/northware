@@ -1,7 +1,7 @@
 'use client';
 
 import { Label } from '@northware/ui/components/form-parts/label';
-import { cn } from '@northware/ui/lib';
+import { cn } from '@northware/ui/lib/utils';
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
