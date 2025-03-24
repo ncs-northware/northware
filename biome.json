@@ -27,7 +27,6 @@
       "**/.next",
       "tsconfig.tsbuildinfo",
       "**/dist/**",
-      "**/css/output.css",
       "**/drizzle-migrations/**"
     ]
   }

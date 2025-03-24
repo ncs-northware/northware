@@ -9,7 +9,7 @@
     "lint": "ultracite lint"
   },
   "exports": {
-    "./css": "./src/css/input.css",
+    "./css": "./src/css/general.css",
     "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
