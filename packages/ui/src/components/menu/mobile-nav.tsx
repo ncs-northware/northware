@@ -23,7 +23,7 @@ import {
 } from '@northware/ui/components/panels/dialog';
 import { LogOutIcon, MenuIcon } from 'lucide-react';
 import Link from 'next/link';
-import { navigationMenuButtonStyle } from './navigation-menu-premitive';
+import { navigationMenuButtonStyle } from './navigation-menu';
 
 export async function MobileNav({ service }: { service: ServiceType }) {
   const user = await currentUser();

@@ -1,6 +1,6 @@
 'use client';
 
-import { NavigationMenuLink } from '@northware/ui/components/menu/navigation-menu-premitive';
+import { NavigationMenuLink } from '@northware/ui/components/menu/navigation-menu';
 import { cn } from '@northware/ui/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

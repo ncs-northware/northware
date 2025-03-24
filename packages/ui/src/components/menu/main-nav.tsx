@@ -23,7 +23,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuButtonStyle,
   navigationMenuTriggerStyle,
-} from '@northware/ui/components/menu/navigation-menu-premitive';
+} from '@northware/ui/components/menu/navigation-menu';
 import { ThemeSwitch } from '@northware/ui/components/menu/theme-switch';
 import { cn } from '@northware/ui/lib/utils';
 import { UserIcon } from 'lucide-react';
