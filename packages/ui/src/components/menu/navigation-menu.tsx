@@ -18,7 +18,7 @@ function NavigationMenu({
       data-slot="navigation-menu"
       data-viewport={viewport}
       className={cn(
-        'group/navigation-menu relative flex max-w-max flex-1 items-center justify-center',
+        'group/navigation-menu relative flex flex-1 items-center justify-center',
         className
       )}
       {...props}
@@ -59,7 +59,12 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
+  // Basis-Styling für NavigationMenuTrigger und, wenn es verwendet wird für NavigationMenuLink u.a. um die gleichen Styles einfach verwenden zu können.
   'group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-accent data-[state=open]:text-accent-foreground data-[state=open]:focus:bg-accent data-[state=open]:bg-accent/50 ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 transition-[color,box-shadow] focus-visible:ring-4 focus-visible:outline-1'
+);
+const navigationMenuButtonStyle = cva(
+  // Spezielle Stylings für Buttons, die die Button Komponente an NavigationMenuTrigger-Stylings anpassen
+  'group inline-flex h-9 w-max items-center justify-center rounded-md border-none bg-background p-2 font-medium text-sm shadow-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none focus:ring-0 disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50'
 );
 
 function NavigationMenuTrigger({
@@ -166,4 +171,5 @@ export {
   NavigationMenuIndicator,
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
+  navigationMenuButtonStyle,
 };
