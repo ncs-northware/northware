@@ -1,31 +1,31 @@
-import { type VariantProps, cva } from 'class-variance-authority';
-import type * as React from 'react';
+import { type VariantProps, cva } from "class-variance-authority";
+import type * as React from "react";
 
-import { cn } from '@northware/ui/lib/utils';
+import { cn } from "@northware/ui/lib/utils";
 import {
   CircleAlertIcon,
   CircleCheckIcon,
   InfoIcon,
   TriangleAlertIcon,
-} from 'lucide-react';
+} from "lucide-react";
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current',
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
   {
     variants: {
       variant: {
-        default: 'bg-background text-foreground',
+        default: "bg-background text-foreground",
         danger:
-          'bg-danger text-danger-foreground [&>svg]:text-danger-foreground',
-        info: 'bg-info text-info-foreground [&>svg]:text-info-foreground',
+          "bg-danger text-danger-foreground [&>svg]:text-danger-foreground",
+        info: "bg-info text-info-foreground [&>svg]:text-info-foreground",
         success:
-          'bg-success text-success-foreground [&>svg]:text-success-foreground',
+          "bg-success text-success-foreground [&>svg]:text-success-foreground",
         warning:
-          'bg-warning text-warning-foreground [&>svg]:text-warning-foreground',
+          "bg-warning text-warning-foreground [&>svg]:text-warning-foreground",
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: "default",
     },
   }
 );
@@ -34,7 +34,7 @@ function Alert({
   className,
   variant,
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants>) {
+}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
   return (
     <div
       data-slot="alert"
@@ -45,12 +45,12 @@ function Alert({
   );
 }
 
-function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
+function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-title"
       className={cn(
-        'col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight',
+        "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
         className
       )}
       {...props}
@@ -61,12 +61,12 @@ function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
 function AlertDescription({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-description"
       className={cn(
-        'col-start-2 grid justify-items-start gap-1 text-muted-foreground text-sm [&_p]:leading-relaxed',
+        "col-start-2 grid justify-items-start gap-1 text-muted-foreground text-sm [&_p]:leading-relaxed",
         className
       )}
       {...props}
@@ -76,16 +76,16 @@ function AlertDescription({
 
 const AlertIcon = ({
   variant,
-}: { variant: 'default' | 'danger' | 'info' | 'success' | 'warning' }) => {
-  const classes = 'h-4 w-4';
+}: { variant: "default" | "danger" | "info" | "success" | "warning" }) => {
+  const classes = "h-4 w-4";
   switch (variant) {
-    case 'danger':
+    case "danger":
       return <CircleAlertIcon className={classes} />;
-    case 'info':
+    case "info":
       return <InfoIcon className={classes} />;
-    case 'success':
+    case "success":
       return <CircleCheckIcon className={classes} />;
-    case 'warning':
+    case "warning":
       return <TriangleAlertIcon className={classes} />;
     default:
       return <InfoIcon className={classes} />;

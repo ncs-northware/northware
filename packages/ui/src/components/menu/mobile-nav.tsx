@@ -1,29 +1,29 @@
-import { SignOutButton } from '@northware/auth/client';
-import { type User, currentUser } from '@northware/auth/server';
-import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
-import { Brand } from '@northware/ui/components/base/brand';
-import { Button } from '@northware/ui/components/base/button';
+import { SignOutButton } from "@northware/auth/client";
+import { type User, currentUser } from "@northware/auth/server";
+import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
+import { Brand } from "@northware/ui/components/base/brand";
+import { Button } from "@northware/ui/components/base/button";
 import {
   appTextColors,
   menuData,
-} from '@northware/ui/components/menu/menu-data';
-import { MobileNavLink } from '@northware/ui/components/menu/nav-links';
-import { ThemeSwitch } from '@northware/ui/components/menu/theme-switch';
+} from "@northware/ui/components/menu/menu-data";
+import { MobileNavLink } from "@northware/ui/components/menu/nav-links";
+import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@northware/ui/components/panels/accordion';
+} from "@northware/ui/components/panels/accordion";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from '@northware/ui/components/panels/dialog';
-import { LogOutIcon, MenuIcon } from 'lucide-react';
-import Link from 'next/link';
-import { navigationMenuButtonStyle } from './navigation-menu';
+} from "@northware/ui/components/panels/dialog";
+import { LogOutIcon, MenuIcon } from "lucide-react";
+import Link from "next/link";
+import { navigationMenuButtonStyle } from "./navigation-menu";
 
 export async function MobileNav({ service }: { service: ServiceType }) {
   const user = await currentUser();
@@ -122,7 +122,7 @@ async function MobileNavMeta({
             <MobileNavLink
               key={app.title}
               title={app.title}
-              href={app.href || '#'}
+              href={app.href || "#"}
               linkClasses={`${appTextColors.get(app.slug)} ${`hover:${appTextColors.get(app.slug)}`}`}
             />
           );
@@ -132,9 +132,9 @@ async function MobileNavMeta({
         {user?.firstName !== null || user?.lastName !== null ? (
           <p>
             <span>
-              {user?.firstName !== null ? user?.firstName : null}{' '}
+              {user?.firstName !== null ? user?.firstName : null}{" "}
               {user?.lastName !== null ? user?.lastName : null}
-            </span>{' '}
+            </span>{" "}
             <span className="text-muted-foreground">
               &#40;{user?.emailAddresses[0].emailAddress}&#41;
             </span>

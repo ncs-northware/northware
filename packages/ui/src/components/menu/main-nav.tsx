@@ -1,7 +1,7 @@
-import { SignOutButton } from '@northware/auth/client';
-import { type User, currentUser } from '@northware/auth/server';
-import { type ServiceType, suiteAppsMeta } from '@northware/service-config';
-import { Brand } from '@northware/ui/components/base/brand';
+import { SignOutButton } from "@northware/auth/client";
+import { type User, currentUser } from "@northware/auth/server";
+import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
+import { Brand } from "@northware/ui/components/base/brand";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,12 +9,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@northware/ui/components/menu/dropdown-menu';
+} from "@northware/ui/components/menu/dropdown-menu";
 import {
   appTextColors,
   menuData,
-} from '@northware/ui/components/menu/menu-data';
-import { MainNavLink } from '@northware/ui/components/menu/nav-links';
+} from "@northware/ui/components/menu/menu-data";
+import { MainNavLink } from "@northware/ui/components/menu/nav-links";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -23,11 +23,11 @@ import {
   NavigationMenuTrigger,
   navigationMenuButtonStyle,
   navigationMenuTriggerStyle,
-} from '@northware/ui/components/menu/navigation-menu';
-import { ThemeSwitch } from '@northware/ui/components/menu/theme-switch';
-import { cn } from '@northware/ui/lib/utils';
-import { UserIcon } from 'lucide-react';
-import Link from 'next/link';
+} from "@northware/ui/components/menu/navigation-menu";
+import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
+import { cn } from "@northware/ui/lib/utils";
+import { UserIcon } from "lucide-react";
+import Link from "next/link";
 export async function MainNav({ service }: { service: ServiceType }) {
   // TODO: Add NavMenu Rendering based on permissionKey
   const user = await currentUser();
@@ -118,7 +118,7 @@ async function MetaNav({
                   <MainNavLink
                     controlActiveState={false}
                     title={app.title}
-                    href={app.href || '#'}
+                    href={app.href || "#"}
                     className={cn(
                       navigationMenuTriggerStyle(),
                       appTextColors.get(app.slug),
@@ -140,7 +140,7 @@ async function MetaNav({
               <DropdownMenuLabel>
                 {user?.firstName !== null || user?.lastName !== null ? (
                   <p className="font-medium text-sm leading-none">
-                    {user?.firstName !== null ? user?.firstName : null}{' '}
+                    {user?.firstName !== null ? user?.firstName : null}{" "}
                     {user?.lastName !== null ? user?.lastName : null}
                   </p>
                 ) : null}
