@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import {
   type TCreateUserFormSchema,
   createUserFormSchema,
-} from '@/lib/user-schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@northware/ui/components/base/button';
+} from "@/lib/user-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@northware/ui/components/base/button";
 import {
   Form,
   FormControl,
@@ -12,13 +12,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@northware/ui/components/form-parts/form';
-import { Input } from '@northware/ui/components/form-parts/input';
-import { Alert } from '@northware/ui/components/panels/alert';
-import { useRouter } from 'next/navigation';
+} from "@northware/ui/components/form-parts/form";
+import { Input } from "@northware/ui/components/form-parts/input";
+import { Alert } from "@northware/ui/components/panels/alert";
+import { useRouter } from "next/navigation";
 
-import { useState } from 'react';
-import { type SubmitHandler, useForm } from 'react-hook-form';
+import { useState } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
 export default function CreateUserForm({
   createUser,
@@ -27,11 +27,11 @@ export default function CreateUserForm({
   const form = useForm<TCreateUserFormSchema>({
     resolver: zodResolver(createUserFormSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      emailAddress: '',
-      username: '',
-      password: '',
+      firstName: "",
+      lastName: "",
+      emailAddress: "",
+      username: "",
+      password: "",
     },
   });
 
@@ -41,7 +41,7 @@ export default function CreateUserForm({
     setErrors([]); // Fehler zurücksetzen
     try {
       await createUser(data);
-      router.push('/admin');
+      router.push("/admin");
     } catch (err) {
       if (err instanceof Error) {
         // Parse die Fehlermeldungen aus dem Error-Objekt
@@ -49,7 +49,7 @@ export default function CreateUserForm({
         setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
       } else {
         setErrors([
-          'Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.',
+          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
         ]);
       }
     }

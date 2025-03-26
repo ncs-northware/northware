@@ -1,4 +1,4 @@
-import { LoginForm, LoginWrapper } from '@northware/ui/components/auth/login';
+import { LoginForm, LoginWrapper } from "@northware/ui/components/auth/login";
 
 const LoginPage = () => {
   return (

@@ -1,9 +1,9 @@
-import { getUsers } from '@/lib/user-actions';
-import { Button } from '@northware/ui/components/base/button';
-import { Headline } from '@northware/ui/components/base/headline';
-import { Container } from '@northware/ui/components/layouts/container';
-import { PencilIcon } from 'lucide-react';
-import Link from 'next/link';
+import { getUsers } from "@/lib/user-actions";
+import { Button } from "@northware/ui/components/base/button";
+import { Headline } from "@northware/ui/components/base/headline";
+import { Container } from "@northware/ui/components/layouts/container";
+import { PencilIcon } from "lucide-react";
+import Link from "next/link";
 export default async function AdminDashboard() {
   const userArray = await getUsers();
   return (

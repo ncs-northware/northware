@@ -1,1 +1,1 @@
-export { default } from '@northware/ui/postcss.config';
+export { default } from "@northware/ui/postcss.config";
