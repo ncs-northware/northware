@@ -149,9 +149,9 @@ async function MetaNav({
                 </p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <SignOutButton>Abmelden</SignOutButton>
-              </DropdownMenuItem>
+              <SignOutButton>
+                <DropdownMenuItem>Abmelden</DropdownMenuItem>
+              </SignOutButton>
             </DropdownMenuContent>
           </DropdownMenu>
           <ThemeSwitch className={navigationMenuButtonStyle()} />
