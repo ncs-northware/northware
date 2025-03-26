@@ -1,15 +1,15 @@
-import type { UserConfig } from '@commitlint/types';
-import { RuleConfigSeverity } from '@commitlint/types';
+import type { UserConfig } from "@commitlint/types";
+import { RuleConfigSeverity } from "@commitlint/types";
 
 const Configuration: UserConfig = {
-  extends: ['@commitlint/config-conventional'],
+  extends: ["@commitlint/config-conventional"],
   rules: {
-    'type-enum': [
+    "type-enum": [
       RuleConfigSeverity.Warning,
-      'always',
-      ['chore', 'docs', 'feat', 'fix', 'revert'],
+      "always",
+      ["chore", "docs", "feat", "fix", "revert"],
     ],
-    'scope-max-length': [RuleConfigSeverity.Warning, 'always', 40],
+    "scope-max-length": [RuleConfigSeverity.Warning, "always", 40],
   },
   ignores: [
     (commitMessage) => {
