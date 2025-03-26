@@ -1,4 +1,4 @@
-import type { ServiceType } from './types';
+import type { ServiceType } from "./types";
 
 export const suiteAppsMeta: {
   title: string;
@@ -8,23 +8,23 @@ export const suiteAppsMeta: {
   // Attribute der Navigationspunkte der AppSwitches in MetaNav
   //   TODO: permission-based rendering
   {
-    title: 'Northware Cockpit',
-    href: 'http://localhost:40110',
-    slug: 'cockpit',
+    title: "Northware Cockpit",
+    href: "http://localhost:40110",
+    slug: "cockpit",
   },
   {
-    title: 'Northware Finance',
-    href: 'http://localhost:40120',
-    slug: 'finance',
+    title: "Northware Finance",
+    href: "http://localhost:40120",
+    slug: "finance",
   },
   {
-    title: 'Northware Trader',
-    href: 'http://localhost:40130',
-    slug: 'trader',
+    title: "Northware Trader",
+    href: "http://localhost:40130",
+    slug: "trader",
   },
   {
-    title: 'Admin Panel',
-    href: 'http://localhost:40190',
-    slug: 'admin',
+    title: "Admin Panel",
+    href: "http://localhost:40190",
+    slug: "admin",
   },
 ];
