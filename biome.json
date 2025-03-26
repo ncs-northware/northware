@@ -7,17 +7,9 @@
     "defaultBranch": "main"
   },
   "javascript": {
-    "globals": ["React"]
-  },
-  "linter": {
-    "rules": {
-      "nursery": {
-        "useSortedClasses": {
-          "level": "warn",
-          "fix": "safe",
-          "options": {}
-        }
-      }
+    "globals": ["React"],
+    "formatter": {
+      "quoteStyle": "double"
     }
   },
   "files": {
@@ -27,7 +19,6 @@
       "**/.next",
       "tsconfig.tsbuildinfo",
       "**/dist/**",
-      "**/css/output.css",
       "**/drizzle-migrations/**"
     ]
   }

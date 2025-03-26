@@ -1,11 +1,11 @@
-'use server';
+"use server";
 
-import type { TCreateUserFormSchema } from '@/lib/user-schema';
-import { clerkClient } from '@northware/auth/server';
-import { db } from '@northware/database/connection';
-import { rolesTable, rolesToAccounts } from '@northware/database/schema';
-import { and, eq, inArray } from 'drizzle-orm';
-import { revalidatePath } from 'next/cache';
+import type { TCreateUserFormSchema } from "@/lib/user-schema";
+import { clerkClient } from "@northware/auth/server";
+import { db } from "@northware/database/connection";
+import { rolesTable, rolesToAccounts } from "@northware/database/schema";
+import { and, eq, inArray } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 /****************** Clerk User **********************/
 interface ClerkError {
@@ -37,51 +37,51 @@ export async function createUser(formData: TCreateUserFormSchema) {
       emailAddress: [emailAddress],
       password: password,
     });
-    revalidatePath('/admin');
+    revalidatePath("/admin");
   } catch (error) {
     const errorMessages: string[] = [];
     const typesafeError = error as ClerkError;
     if (typesafeError.errors) {
       typesafeError.errors.map((error) => {
         switch (error.code) {
-          case 'form_password_length_too_short':
+          case "form_password_length_too_short":
             errorMessages.push(
-              'Das Passwort muss mindestens 8 Zeichen lang sein.'
+              "Das Passwort muss mindestens 8 Zeichen lang sein."
             );
             break;
-          case 'form_password_size_in_bytes_exceeded':
+          case "form_password_size_in_bytes_exceeded":
             errorMessages.push(
-              'Das Passwort darf maximal 72 Zeichen lang sein.'
+              "Das Passwort darf maximal 72 Zeichen lang sein."
             );
             break;
-          case 'form_password_pwned':
+          case "form_password_pwned":
             errorMessages.push(
-              'Dies ist ein kompromitiertes Passwort. Bitte nutzen Sie ein anderes Passwort.'
+              "Dies ist ein kompromitiertes Passwort. Bitte nutzen Sie ein anderes Passwort."
             );
             break;
-          case 'form_username_invalid_length':
+          case "form_username_invalid_length":
             errorMessages.push(
-              'Der Benutzername muss zwischen 4 und 64 Zeichen lang sein.'
+              "Der Benutzername muss zwischen 4 und 64 Zeichen lang sein."
             );
             break;
-          case 'form_param_format_invalid':
+          case "form_param_format_invalid":
             errorMessages.push(
-              'Bitte geben Sie eine gültige E-Mail Adresse an.'
+              "Bitte geben Sie eine gültige E-Mail Adresse an."
             );
             break;
-          case 'form_identifier_exists':
+          case "form_identifier_exists":
             switch (error.meta.paramName) {
-              case 'email_address':
+              case "email_address":
                 errorMessages.push(
-                  'Diese E-Mail Adresse ist bereits registriert.'
+                  "Diese E-Mail Adresse ist bereits registriert."
                 );
                 break;
-              case 'username':
-                errorMessages.push('Dieser Benutzername ist bereits vergeben.');
+              case "username":
+                errorMessages.push("Dieser Benutzername ist bereits vergeben.");
                 break;
               default:
                 errorMessages.push(
-                  'Der Username oder die E-Mail-Adresse ist bereits vergeben.'
+                  "Der Username oder die E-Mail-Adresse ist bereits vergeben."
                 );
                 break;
             }
@@ -89,14 +89,14 @@ export async function createUser(formData: TCreateUserFormSchema) {
           default:
             errorMessages.push(
               `Es ist ein Fehler aufgetreten: ${error.message} (Fehlercode: ${error.code})` ||
-                'Es ist ein unbekannter Fehler bei der Kommunikation mit dem Server aufgetreten.'
+                "Es ist ein unbekannter Fehler bei der Kommunikation mit dem Server aufgetreten."
             );
             break;
         }
       });
     } else {
       errorMessages.push(
-        'Es ist ein unbekannter Fehler beim Anlegen des Nutzers aufgetreten.'
+        "Es ist ein unbekannter Fehler beim Anlegen des Nutzers aufgetreten."
       );
     }
     if (errorMessages.length > 0) {
@@ -145,7 +145,7 @@ export async function getRoleList(): Promise<TRoleListResponse> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error : new Error('Unknown Error'),
+      error: error instanceof Error ? error : new Error("Unknown Error"),
     };
   }
 }
@@ -194,7 +194,7 @@ export async function updateRoles({
           )
         );
     }
-    revalidatePath('/admin');
+    revalidatePath("/admin");
   } catch (error) {
     return error;
   }

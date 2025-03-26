@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { type TRoleListResponse, updateRoles } from '@/lib/user-actions';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@northware/ui/components/base/button';
-import { Checkbox } from '@northware/ui/components/form-parts/checkbox';
+import { type TRoleListResponse, updateRoles } from "@/lib/user-actions";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@northware/ui/components/base/button";
+import { Checkbox } from "@northware/ui/components/form-parts/checkbox";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from '@northware/ui/components/form-parts/form';
-import { Alert } from '@northware/ui/components/panels/alert';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+} from "@northware/ui/components/form-parts/form";
+import { Alert } from "@northware/ui/components/panels/alert";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 type RolesFormProps = {
   rolesResponse: TRoleListResponse;
@@ -63,7 +63,7 @@ export function RolesForm({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await updateRoles({ data, userRolesResponse, userId });
-      router.push('/admin');
+      router.push("/admin");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

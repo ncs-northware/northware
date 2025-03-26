@@ -22,10 +22,5 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "emmet.showExpandedAbbreviation": "never",
-  "github.copilot.chat.commitMessageGeneration.instructions": [
-    {
-      "file": ".copilot-commit-message-instructions.md"
-    }
-  ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,13 +1,13 @@
-import { db } from '@northware/database/connection';
+import { db } from "@northware/database/connection";
 import {
   accountsTable,
   permissionsToAccounts,
   permissionsToRoles,
   rolesToAccounts,
-} from '@northware/database/schema';
-import { eq } from 'drizzle-orm';
+} from "@northware/database/schema";
+import { eq } from "drizzle-orm";
 export async function getUserPermissions(clerkUserId?: string) {
-  const user = clerkUserId || '';
+  const user = clerkUserId || "";
   const rawRoles = await db
     .select({
       rolePermission: permissionsToRoles.permissionKey,
@@ -63,7 +63,7 @@ export async function getUserRoles(
       permissionsToRoles,
       eq(rolesToAccounts.roleKey, permissionsToRoles.roleKey)
     )
-    .where(eq(accountsTable.clerkUserId, clerkUserId || ''));
+    .where(eq(accountsTable.clerkUserId, clerkUserId || ""));
 
   const userRoles = [...new Set(rawRoles.map((role) => role.accountRole))];
 

@@ -1,4 +1,4 @@
-import { Container } from '@northware/ui/components';
+import { Container } from "@northware/ui/components/layouts/container";
 
 export default function Page() {
   return (

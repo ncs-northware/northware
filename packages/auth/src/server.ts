@@ -1,2 +1,2 @@
-import 'server-only';
-export * from '@clerk/nextjs/server';
+import "server-only";
+export * from "@clerk/nextjs/server";

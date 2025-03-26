@@ -30,10 +30,6 @@ packages/service-config:
   - changed-files:
       - any-glob-to-any-file: packages/service-config/**
 
-packages/tailwind-config:
-  - changed-files:
-      - any-glob-to-any-file: packages/tailwind-config/**
-
 packages/tsconfig:
   - changed-files:
       - any-glob-to-any-file: packages/tsconfig/**

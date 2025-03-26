@@ -1,7 +1,9 @@
-import { RolesForm } from '@/components/update-user-form';
-import { getRoleList, getSingleUser } from '@/lib/user-actions';
-import { getUserRoles } from '@northware/auth/account';
-import { Container, Headline } from '@northware/ui/components';
+import { RolesForm } from "@/components/update-user-form";
+import { getRoleList, getSingleUser } from "@/lib/user-actions";
+import { getUserRoles } from "@northware/auth/account";
+import { Headline } from "@northware/ui/components/base/headline";
+import { Container } from "@northware/ui/components/layouts/container";
+
 export default async function EditUserPage({
   params,
 }: { params: Promise<{ userId: string }> }) {

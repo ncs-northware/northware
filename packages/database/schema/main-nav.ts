@@ -1,14 +1,14 @@
-import { relations } from 'drizzle-orm';
+import { relations } from "drizzle-orm";
 import {
   type AnyPgColumn,
   pgTable,
   serial,
   smallint,
   varchar,
-} from 'drizzle-orm/pg-core';
-import { permissionsTable } from './users';
+} from "drizzle-orm/pg-core";
+import { permissionsTable } from "./users";
 
-export const mainNavTable = pgTable('MainNavTable', {
+export const mainNavTable = pgTable("MainNavTable", {
   recordId: serial().primaryKey().notNull(),
   itemId: varchar().unique().notNull(),
   title: varchar().notNull(),

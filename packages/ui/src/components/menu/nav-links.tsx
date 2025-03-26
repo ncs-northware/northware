@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { NavigationMenuLink } from '@northware/ui/components/menu/navigation-menu-premitive';
-import { cn } from '@northware/ui/lib/utils';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { NavigationMenuLink } from "@northware/ui/components/menu/navigation-menu";
+import { cn } from "@northware/ui/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function MainNavLink({
   href,
@@ -21,7 +21,7 @@ export function MainNavLink({
     if (!controlActiveState) {
       return false;
     }
-    if (href === '/') {
+    if (href === "/") {
       return pathname === href;
     }
     return pathname.startsWith(href);
@@ -30,7 +30,7 @@ export function MainNavLink({
     <NavigationMenuLink
       href={href}
       className={cn(className, {
-        'text-primary hover:bg-primary/60 hover:text-primary-foreground':
+        "text-primary hover:bg-primary/60 hover:text-primary-foreground":
           isActive(),
       })}
     >
@@ -57,7 +57,7 @@ export function MobileNavLink({
     if (!controlActiveState) {
       return false;
     }
-    if (href === '/') {
+    if (href === "/") {
       return pathname === href;
     }
     return pathname.startsWith(href);
@@ -69,10 +69,10 @@ export function MobileNavLink({
         className={cn(
           linkClasses,
           isChild
-            ? 'flex select-none items-center gap-2 space-y-1 rounded-md p-2 font-medium text-sm leading-none no-underline outline-none transition-colors'
-            : 'flex flex-1 items-center justify-between rounded-md p-2 font-medium text-sm transition-all hover:underline',
+            ? "flex select-none items-center gap-2 space-y-1 rounded-md p-2 font-medium text-sm leading-none no-underline outline-none transition-colors"
+            : "flex flex-1 items-center justify-between rounded-md p-2 font-medium text-sm transition-all hover:underline",
           {
-            'text-primary hover:bg-primary/60 hover:text-primary-foreground':
+            "text-primary hover:bg-primary/60 hover:text-primary-foreground":
               isActive(),
           }
         )}

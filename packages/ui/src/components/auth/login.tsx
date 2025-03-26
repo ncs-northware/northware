@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import * as Clerk from '@clerk/elements/common';
-import * as SignIn from '@clerk/elements/sign-in';
-import type { ServiceType } from '@northware/service-config';
-import { Brand } from '@northware/ui/components/base/brand';
-import { Button } from '@northware/ui/components/base/button';
-import { Input } from '@northware/ui/components/form-parts/input';
-import { Label } from '@northware/ui/components/form-parts/label';
-import { Alert, AlertDescription } from '@northware/ui/components/panels/alert';
+import * as Clerk from "@clerk/elements/common";
+import * as SignIn from "@clerk/elements/sign-in";
+import type { ServiceType } from "@northware/service-config";
+import { Brand } from "@northware/ui/components/base/brand";
+import { Button } from "@northware/ui/components/base/button";
+import { Input } from "@northware/ui/components/form-parts/input";
+import { Label } from "@northware/ui/components/form-parts/label";
+import { Alert, AlertDescription } from "@northware/ui/components/panels/alert";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@northware/ui/components/panels/card';
-import { LoaderCircle } from 'lucide-react';
+} from "@northware/ui/components/panels/card";
+import { LoaderCircle } from "lucide-react";
 
 export function LoginForm({ service }: { service: ServiceType }) {
   return (
@@ -57,7 +57,7 @@ export function LoginForm({ service }: { service: ServiceType }) {
                           return isLoading ? (
                             <LoaderCircle className="size-4 animate-spin" />
                           ) : (
-                            'Weiter'
+                            "Weiter"
                           );
                         }}
                       </Clerk.Loading>
@@ -106,7 +106,7 @@ export function LoginForm({ service }: { service: ServiceType }) {
                             return isLoading ? (
                               <LoaderCircle className="size-4 animate-spin" />
                             ) : (
-                              'Anmelden'
+                              "Anmelden"
                             );
                           }}
                         </Clerk.Loading>
@@ -126,12 +126,12 @@ export function LoginForm({ service }: { service: ServiceType }) {
 function LoginErrorAlert({ code, message }: { code: string; message: string }) {
   const alertMessage = () => {
     switch (code) {
-      case 'form_identifier_not_found':
-        return 'Die angegebene E-Mail-Adresse wurde nicht gefunden.';
-      case 'form_param_format_invalid':
-        return 'Bitte geben Sie eine gültige E-Mail-Adresse an.';
-      case 'form_password_incorrect':
-        return 'Das Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.';
+      case "form_identifier_not_found":
+        return "Die angegebene E-Mail-Adresse wurde nicht gefunden.";
+      case "form_param_format_invalid":
+        return "Bitte geben Sie eine gültige E-Mail-Adresse an.";
+      case "form_password_incorrect":
+        return "Das Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.";
 
       default:
         return `${message} (${code})`;

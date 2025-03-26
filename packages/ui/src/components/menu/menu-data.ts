@@ -1,8 +1,8 @@
-import { getUserPermissions } from '@northware/auth/account';
-import { db } from '@northware/database/connection';
-import { mainNavTable } from '@northware/database/schema';
-import type { ServiceType } from '@northware/service-config';
-import { and, eq, inArray } from 'drizzle-orm';
+import { getUserPermissions } from "@northware/auth/account";
+import { db } from "@northware/database/connection";
+import { mainNavTable } from "@northware/database/schema";
+import type { ServiceType } from "@northware/service-config";
+import { and, eq, inArray } from "drizzle-orm";
 
 export async function menuData(service: ServiceType, userId?: string) {
   const userPermissions = await getUserPermissions(userId);
@@ -18,7 +18,7 @@ export async function menuData(service: ServiceType, userId?: string) {
     .where(
       and(
         eq(mainNavTable.app, service),
-        userPermissions.includes('allAccess')
+        userPermissions.includes("allAccess")
           ? undefined
           : inArray(mainNavTable.permissionKey, userPermissions)
       )
@@ -34,8 +34,8 @@ export async function menuData(service: ServiceType, userId?: string) {
 }
 
 export const appTextColors = new Map<ServiceType, string>([
-  ['cockpit', 'text-cockpit'],
-  ['finance', 'text-finance'],
-  ['trader', 'text-trader'],
-  ['admin', 'text-foreground'],
+  ["cockpit", "text-cockpit"],
+  ["finance", "text-finance"],
+  ["trader", "text-trader"],
+  ["admin", "text-foreground"],
 ]);

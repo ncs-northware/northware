@@ -1,1 +1,1 @@
-export type ServiceType = 'cockpit' | 'admin' | 'finance' | 'trader';
+export type ServiceType = "cockpit" | "admin" | "finance" | "trader";
