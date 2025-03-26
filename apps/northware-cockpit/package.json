@@ -15,7 +15,7 @@
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:*",
     "@northware/ui": "workspace:*",
-    "@types/react": "^19.0.10",
+    "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "drizzle-orm": "^0.41.0",
     "lucide-react": "^0.483.0",
