@@ -96,6 +96,12 @@ importers:
 
   apps/storybook:
     dependencies:
+      '@northware/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      lucide-react:
+        specifier: ^0.483.0
+        version: 0.483.0(react@19.0.0)
       next:
         specifier: 15.2.4
         version: 15.2.4(@babel/core@7.26.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.80.6)
@@ -115,9 +121,6 @@ importers:
       '@storybook/addon-essentials':
         specifier: 8.6.10
         version: 8.6.10(@types/react@19.0.12)(storybook@8.6.10(prettier@2.8.8))
-      '@storybook/addon-onboarding':
-        specifier: 8.6.10
-        version: 8.6.10(storybook@8.6.10(prettier@2.8.8))
       '@storybook/blocks':
         specifier: 8.6.10
         version: 8.6.10(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.6.10(prettier@2.8.8))
@@ -2334,11 +2337,6 @@ packages:
 
   '@storybook/addon-measure@8.6.10':
     resolution: {integrity: sha512-ef5vAum7tMdiTsGsHOIHaLCyN0e3gLU2X4gzNelqH0/x/09C2QQaiOFDIpvbKt6HSjpHJeYcUOGzF7U/o4xVkw==}
-    peerDependencies:
-      storybook: ^8.6.10
-
-  '@storybook/addon-onboarding@8.6.10':
-    resolution: {integrity: sha512-n4wtlZqYQiigtYCDCRXH1ilmGGv+DG5mggiTLpcLJEh9tZg2dGUptSyGARRF6igYYeiZTdDo8OPvwFUZc5N+vg==}
     peerDependencies:
       storybook: ^8.6.10
 
@@ -8301,10 +8299,6 @@ snapshots:
       '@storybook/global': 5.0.0
       storybook: 8.6.10(prettier@2.8.8)
       tiny-invariant: 1.3.3
-
-  '@storybook/addon-onboarding@8.6.10(storybook@8.6.10(prettier@2.8.8))':
-    dependencies:
-      storybook: 8.6.10(prettier@2.8.8)
 
   '@storybook/addon-outline@8.6.10(storybook@8.6.10(prettier@2.8.8))':
     dependencies:
