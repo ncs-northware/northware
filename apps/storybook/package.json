@@ -5,21 +5,19 @@
   "scripts": {
     "dev": "storybook dev -p 40181",
     "build": "storybook build",
-    "start": "next start",
-    "lint": "next lint",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "tsc-check": "tsc --noEmit"
   },
   "dependencies": {
     "@northware/ui": "workspace:*",
     "lucide-react": "^0.483.0",
     "next": "15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "3",
-    "@eslint/eslintrc": "^3",
     "@storybook/addon-essentials": "8.6.10",
     "@storybook/blocks": "8.6.10",
     "@storybook/nextjs": "8.6.10",
@@ -29,9 +27,6 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.4",
-    "eslint-plugin-storybook": "^0.12.0",
     "storybook": "8.6.10",
     "tailwindcss": "^4",
     "typescript": "^5"
