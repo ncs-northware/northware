@@ -121,6 +121,9 @@ importers:
       '@chromatic-com/storybook':
         specifier: '3'
         version: 3.2.6(react@19.0.0)(storybook@8.6.10(prettier@2.8.8))
+      '@northware/service-config':
+        specifier: workspace:*
+        version: link:../../packages/service-config
       '@storybook/addon-essentials':
         specifier: 8.6.10
         version: 8.6.10(@types/react@19.0.12)(storybook@8.6.10(prettier@2.8.8))
