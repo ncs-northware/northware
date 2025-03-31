@@ -1,9 +1,7 @@
-import { ThemeProvider } from "@northware/ui/components/providers/theme-provider";
-import { withThemeByClassName } from "@storybook/addon-themes";
+import { storybookThemes } from "@northware/service-config";
 import type { Preview } from "@storybook/react";
 // biome-ignore lint/correctness/noUnusedImports: React has to be imported to use jsx in this file.
 import React from "react";
-
 import "@northware/ui/css";
 
 const preview: Preview = {
@@ -14,22 +12,38 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    themes: {
+      default: storybookThemes.default,
+      values: storybookThemes.items,
+    },
+  },
+  globalTypes: {
+    theme: {
+      name: "Theme",
+      description: "App Theme for Components",
+      defaultValue: storybookThemes.default,
+      toolbar: {
+        icon: "paintbrush",
+        items: storybookThemes.items,
+        showName: true,
+      },
+    },
   },
   decorators: [
-    withThemeByClassName({
-      themes: {
-        light: "light",
-        dark: "dark",
-      },
-      defaultTheme: "light",
-    }),
-    (Story) => (
-      <div className="bg-background">
-        <ThemeProvider>
-          <Story />
-        </ThemeProvider>
-      </div>
-    ),
+    (Story, context) => {
+      const theme =
+        context.parameters.themes?.values.find(
+          (t) => t.value === context.globals.theme
+        )?.value ||
+        context.parameters.themes?.default ||
+        "theme-cockpit";
+
+      return (
+        <div className={`bg-background ${theme} p-2`}>
+          <Story {...context} />
+        </div>
+      );
+    },
   ],
 };
 
