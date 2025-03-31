@@ -28,3 +28,41 @@ export const suiteAppsMeta: {
     slug: "admin",
   },
 ];
+
+export const storybookThemes = {
+  default: "theme-cockpit",
+  items: [
+    {
+      title: "Cockpit Light",
+      value: "theme-cockpit",
+    },
+    {
+      title: "Cockpit Dark",
+      value: "theme-cockpit dark",
+    },
+    {
+      title: "Finance Light",
+      value: "theme-finance",
+    },
+    {
+      title: "Finance Dark",
+      value: "theme-finance dark",
+    },
+    {
+      title: "Trader Light",
+      value: "theme-trader",
+    },
+    {
+      title: "Trader Dark",
+      value: "theme-trader dark",
+    },
+    {
+      title: "Admin Panel Light",
+      value: "theme-admin",
+    },
+    {
+      title: "Admin Panel Dark",
+      value: "theme-admin dark",
+    },
+  ],
+};
