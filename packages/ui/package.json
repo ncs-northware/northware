@@ -44,7 +44,7 @@
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "^4.0.15",
-    "@types/react": "^19.0.12",
+    "@types/react": "^19.1.0",
     "tailwindcss": "^4.0.15"
   }
 }
