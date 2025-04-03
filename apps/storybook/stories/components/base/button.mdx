@@ -1,0 +1,42 @@
+import * as ButtonStories from "./button.stories"
+import { Meta, Canvas, Controls, Stories  } from "@storybook/blocks"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Zeigt einen Button oder eine Komponente, die wie ein Button aussieht.
+
+<ShadcnDocs path="components/button" />
+<ViewSource path="components/base/button.tsx" />
+
+<Canvas of={ButtonStories.Default} />
+<Controls of={ButtonStories.Default} />
+
+## Benutzung
+
+```tsx
+import { Button } from "@northware/ui/components/base/button"
+<Button variant="default">Button</Button>
+```
+
+## Link
+
+Um einen Link zu erstellen, der wie ein Button aussieht, kann die Helper-Function `buttonVariants` verwendet werden.
+
+```tsx
+import { buttonVariants } from "@northware/ui/components/base/button"
+<Link className={buttonVariants({ variant: "outline" })}>Click here</Link>
+```
+
+Alternativ kann die Link-Komponente innerhalb eines Buttons mit dem Attribut asChild verwendet werden.
+
+```tsx
+<Button asChild>
+  <Link href="/login">Login</Link>
+</Button>
+```
+
+
+<Stories />
