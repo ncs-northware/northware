@@ -12,6 +12,10 @@ apps/docs:
   - changed-files:
       - any-glob-to-any-file: apps/docs/**
 
+apps/storybook:
+  - changed-files:
+      - any-glob-to-any-file: apps/storybook/**
+
 apps/northware-cockpit:
   - changed-files:
       - any-glob-to-any-file: apps/northware-cockpit/**
