@@ -3,6 +3,7 @@ import type { Preview } from "@storybook/react";
 // biome-ignore lint/correctness/noUnusedImports: React has to be imported to use jsx in this file.
 import React from "react";
 import "@northware/ui/css";
+import { source_sans } from "@northware/ui/lib/fonts";
 
 const preview: Preview = {
   parameters: {
@@ -39,7 +40,9 @@ const preview: Preview = {
         "theme-cockpit";
 
       return (
-        <div className={`bg-background ${theme} p-2`}>
+        <div
+          className={`bg-background ${theme} ${source_sans.variable} p-2 font-sans`}
+        >
           <Story {...context} />
         </div>
       );
