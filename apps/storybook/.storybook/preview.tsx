@@ -1,9 +1,10 @@
-import { storybookThemes } from "@northware/service-config";
 import type { Preview } from "@storybook/react";
 // biome-ignore lint/correctness/noUnusedImports: React has to be imported to use jsx in this file.
 import React from "react";
 import "@northware/ui/css";
+import { StorybookThemeProvider } from "@northware/ui/components/providers/theme-provider";
 import { source_sans } from "@northware/ui/lib/fonts";
+import { withThemeByClassName } from "@storybook/addon-themes";
 
 const preview: Preview = {
   parameters: {
@@ -13,37 +14,26 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    themes: {
-      default: storybookThemes.default,
-      values: storybookThemes.items,
-    },
   },
-  globalTypes: {
-    theme: {
-      name: "Theme",
-      description: "App Theme for Components",
-      defaultValue: storybookThemes.default,
-      toolbar: {
-        icon: "paintbrush",
-        items: storybookThemes.items,
-        showName: true,
-      },
-    },
-  },
-  decorators: [
-    (Story, context) => {
-      const theme =
-        context.parameters.themes?.values.find(
-          (t) => t.value === context.globals.theme
-        )?.value ||
-        context.parameters.themes?.default ||
-        "theme-cockpit";
 
+  decorators: [
+    withThemeByClassName({
+      themes: {
+        cockpitLight: "cockpit-light",
+        cockpitDark: "cockpit-dark",
+        financeLight: "finance-light",
+        financeDark: "finance-dark",
+        traderLight: "trader-light",
+        traderDark: "trader-dark",
+      },
+      defaultTheme: "cockpit-light",
+    }),
+    (Story, context) => {
       return (
-        <div
-          className={`bg-background ${theme} ${source_sans.variable} p-2 font-sans`}
-        >
-          <Story {...context} />
+        <div className={`bg-background ${source_sans.variable} p-2 font-sans`}>
+          <StorybookThemeProvider>
+            <Story {...context} />
+          </StorybookThemeProvider>
         </div>
       );
     },
