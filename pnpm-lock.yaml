@@ -118,9 +118,6 @@ importers:
         specifier: ^3.24.2
         version: 3.24.2
     devDependencies:
-      '@chromatic-com/storybook':
-        specifier: '3'
-        version: 3.2.6(react@19.1.0)(storybook@8.6.10(prettier@2.8.8))
       '@northware/service-config':
         specifier: workspace:*
         version: link:../../packages/service-config
@@ -978,12 +975,6 @@ packages:
 
   '@changesets/write@0.4.0':
     resolution: {integrity: sha512-CdTLvIOPiCNuH71pyDu3rA+Q0n65cmAbXnwWH84rKGiFumFzkmHNT8KHTMEchcxN+Kl8I54xGUhJ7l3E7X396Q==}
-
-  '@chromatic-com/storybook@3.2.6':
-    resolution: {integrity: sha512-FDmn5Ry2DzQdik+eq2sp/kJMMT36Ewe7ONXUXM2Izd97c7r6R/QyGli8eyh/F0iyqVvbLveNYFyF0dBOJNwLqw==}
-    engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
-    peerDependencies:
-      storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
   '@clerk/backend@1.26.0':
     resolution: {integrity: sha512-ioZBMnwm4DD8IVPGDjFW3wkyn1JTMvTlsmdHGYsjdbXLtbRFVRJelAIMMGLcSmqMgzTKxnrJSOz8PxPjSMUFtw==}
@@ -2770,10 +2761,6 @@ packages:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
 
-  ansi-regex@6.1.0:
-    resolution: {integrity: sha512-7HSX4QQb4CspciLpVFwyRe79O3xsIZDDLER21kERQ71oaPodF8jL725AgJMFAYbooIqolJoRLuM81SpeUkpkvA==}
-    engines: {node: '>=12'}
-
   ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
     engines: {node: '>=8'}
@@ -3003,18 +2990,6 @@ packages:
   chokidar@4.0.1:
     resolution: {integrity: sha512-n8enUVCED/KVRQlab1hr3MVpcVMvxtZjmEa956u+4YijlmQED223XMSYj2tLuKvr4jcCTzNNMpQDUer72MMmzA==}
     engines: {node: '>= 14.16.0'}
-
-  chromatic@11.27.0:
-    resolution: {integrity: sha512-jQ2ufjS+ePpg+NtcPI9B2eOi+pAzlRd2nhd1LgNMsVCC9Bzf5t8mJtyd8v2AUuJS0LdX0QVBgkOnlNv9xviHzA==}
-    hasBin: true
-    peerDependencies:
-      '@chromatic-com/cypress': ^0.*.* || ^1.0.0
-      '@chromatic-com/playwright': ^0.*.* || ^1.0.0
-    peerDependenciesMeta:
-      '@chromatic-com/cypress':
-        optional: true
-      '@chromatic-com/playwright':
-        optional: true
 
   chrome-trace-event@1.0.4:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
@@ -3616,10 +3591,6 @@ packages:
 
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
-
-  filesize@10.1.6:
-    resolution: {integrity: sha512-sJslQKU2uM33qH5nqewAwVB2QgR6w1aMNsYUp3aN5rMRyXEwJGmZvaWzeJFNTOXWlHQyBFCWrdj3fV/fsTOX8w==}
-    engines: {node: '>= 10.4.0'}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -4667,12 +4638,6 @@ packages:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
 
-  react-confetti@6.4.0:
-    resolution: {integrity: sha512-5MdGUcqxrTU26I2EU7ltkWPwxvucQTuqMm8dUz72z2YMqTD6s9vMcDUysk7n9jnC+lXuCPeJJ7Knf98VEYE9Rg==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      react: ^16.3.0 || ^17.0.1 || ^18.0.0 || ^19.0.0
-
   react-docgen-typescript@2.2.2:
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
     peerDependencies:
@@ -5051,10 +5016,6 @@ packages:
     resolution: {integrity: sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==}
     engines: {node: '>=8'}
 
-  strip-ansi@7.1.0:
-    resolution: {integrity: sha512-iq6eVVI64nQQTRYq2KtEg2d2uU7LElhTJwsH4YzIHZshxlgZms/wIc4VoDQTlG/IvVIrBKG06CrZnp0qv7hkcQ==}
-    engines: {node: '>=12'}
-
   strip-bom@3.0.0:
     resolution: {integrity: sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==}
     engines: {node: '>=4'}
@@ -5242,9 +5203,6 @@ packages:
 
   tw-animate-css@1.2.5:
     resolution: {integrity: sha512-ABzjfgVo+fDbhRREGL4KQZUqqdPgvc5zVrLyeW9/6mVqvaDepXc7EvedA+pYmMnIOsUAQMwcWzNvom26J2qYvQ==}
-
-  tween-functions@1.2.0:
-    resolution: {integrity: sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==}
 
   type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
@@ -6403,19 +6361,6 @@ snapshots:
       fs-extra: 7.0.1
       human-id: 4.1.1
       prettier: 2.8.8
-
-  '@chromatic-com/storybook@3.2.6(react@19.1.0)(storybook@8.6.10(prettier@2.8.8))':
-    dependencies:
-      chromatic: 11.27.0
-      filesize: 10.1.6
-      jsonfile: 6.1.0
-      react-confetti: 6.4.0(react@19.1.0)
-      storybook: 8.6.10(prettier@2.8.8)
-      strip-ansi: 7.1.0
-    transitivePeerDependencies:
-      - '@chromatic-com/cypress'
-      - '@chromatic-com/playwright'
-      - react
 
   '@clerk/backend@1.26.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -8256,8 +8201,6 @@ snapshots:
 
   ansi-regex@5.0.1: {}
 
-  ansi-regex@6.1.0: {}
-
   ansi-styles@4.3.0:
     dependencies:
       color-convert: 2.0.1
@@ -8531,8 +8474,6 @@ snapshots:
     dependencies:
       readdirp: 4.0.2
     optional: true
-
-  chromatic@11.27.0: {}
 
   chrome-trace-event@1.0.4: {}
 
@@ -9094,8 +9035,6 @@ snapshots:
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
-
-  filesize@10.1.6: {}
 
   fill-range@7.1.1:
     dependencies:
@@ -10113,11 +10052,6 @@ snapshots:
 
   range-parser@1.2.1: {}
 
-  react-confetti@6.4.0(react@19.1.0):
-    dependencies:
-      react: 19.1.0
-      tween-functions: 1.2.0
-
   react-docgen-typescript@2.2.2(typescript@5.8.2):
     dependencies:
       typescript: 5.8.2
@@ -10541,10 +10475,6 @@ snapshots:
     dependencies:
       ansi-regex: 5.0.1
 
-  strip-ansi@7.1.0:
-    dependencies:
-      ansi-regex: 6.1.0
-
   strip-bom@3.0.0: {}
 
   strip-indent@3.0.0:
@@ -10695,8 +10625,6 @@ snapshots:
       turbo-windows-arm64: 2.4.4
 
   tw-animate-css@1.2.5: {}
-
-  tween-functions@1.2.0: {}
 
   type-fest@0.21.3: {}
 
