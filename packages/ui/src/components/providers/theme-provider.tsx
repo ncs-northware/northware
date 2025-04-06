@@ -27,14 +27,14 @@ export function StorybookThemeProvider({
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="cockpit-light"
+      defaultTheme="CockpitLight"
       themes={[
-        "cockpit-light",
-        "cockpit-dark",
-        "finance-light",
-        "finance-dark",
-        "trader-light",
-        "trader-dark",
+        "CockpitLight",
+        "CockpitDark",
+        "FinanceLight",
+        "FinanceDark",
+        "TraderLight",
+        "TraderDark",
       ]}
       enableSystem={false}
       disableTransitionOnChange
