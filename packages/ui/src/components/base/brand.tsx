@@ -1,17 +1,17 @@
 import type { ServiceType } from "@northware/service-config";
+import IconCockpit from "@northware/ui/icons/generated/icon-cockpit";
+import IconFinance from "@northware/ui/icons/generated/icon-finance";
+import IconTrader from "@northware/ui/icons/generated/icon-trader";
 import { cn } from "@northware/ui/lib/utils";
-import Image from "next/image";
 
 export function Brand({
   className,
   textOnly = false,
-  iconOnly = false,
   iconWidth = "w-10",
   service,
 }: {
   className?: string;
   textOnly?: boolean;
-  iconOnly?: boolean;
   iconWidth?: string;
   service: ServiceType;
 }) {
@@ -34,24 +34,27 @@ export function Brand({
     <div
       className={cn("flex items-center gap-1 font-semibold text-xl", className)}
     >
-      {textOnly ? (
-        ""
-      ) : (
-        <Image
-          src="/img/icon.png"
-          alt="Icon"
-          width={250}
-          height={250}
-          className={iconWidth}
-        />
-      )}
-      {iconOnly ? (
-        ""
-      ) : (
-        <span>
-          Northware <span className="text-primary">{subBrand()}</span>
-        </span>
-      )}
+      {textOnly ? "" : <BrandIcon service={service} className={iconWidth} />}
+      <span>
+        Northware <span className={`text-${service}`}>{subBrand()}</span>
+      </span>
     </div>
   );
+}
+
+export function BrandIcon({
+  service,
+  ...props
+}: React.HTMLAttributes<SVGElement> & { service: ServiceType }) {
+  if (service === "cockpit") {
+    return <IconCockpit {...props} />;
+  }
+
+  if (service === "finance") {
+    return <IconFinance {...props} />;
+  }
+
+  if (service === "trader") {
+    return <IconTrader {...props} />;
+  }
 }

@@ -19,3 +19,28 @@ export function ThemeProvider({
     </NextThemesProvider>
   );
 }
+
+export function StorybookThemeProvider({
+  children,
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>) {
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="cockpit-light"
+      themes={[
+        "cockpit-light",
+        "cockpit-dark",
+        "finance-light",
+        "finance-dark",
+        "trader-light",
+        "trader-dark",
+      ]}
+      enableSystem={false}
+      disableTransitionOnChange
+      {...props}
+    >
+      {children}
+    </NextThemesProvider>
+  );
+}

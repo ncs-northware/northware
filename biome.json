@@ -20,7 +20,8 @@
       "tsconfig.tsbuildinfo",
       "**/dist/**",
       "**/build/**",
-      "**/drizzle-migrations/**"
+      "**/drizzle-migrations/**",
+      "**/storybook-static/**"
     ]
   }
 }

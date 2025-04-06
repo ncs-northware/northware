@@ -1,0 +1,36 @@
+{
+  "name": "storybook",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "storybook dev --no-open -p 40181",
+    "build": "storybook build",
+    "tsc-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@northware/ui": "workspace:*",
+    "lucide-react": "^0.483.0",
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "3",
+    "@northware/service-config": "workspace:*",
+    "@storybook/addon-essentials": "8.6.10",
+    "@storybook/addon-themes": "8.6.10",
+    "@storybook/blocks": "8.6.10",
+    "@storybook/nextjs": "8.6.10",
+    "@storybook/react": "8.6.10",
+    "@storybook/test": "8.6.10",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "storybook": "8.6.10",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
