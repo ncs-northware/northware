@@ -1,3 +1,4 @@
+"use strict";
 module.exports = {
   dimensions: true,
   svgProps: { fill: "{fill}", stroke: "{stroke}" },
