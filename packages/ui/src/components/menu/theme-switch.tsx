@@ -8,9 +8,11 @@ import * as React from "react";
 export function ThemeSwitch({
   className,
   variant = "blank",
+  withDescriptionText = false,
 }: {
   className?: string;
   variant?: "blank" | "outline";
+  withDescriptionText?: boolean;
 }) {
   const { setTheme, resolvedTheme } = useTheme();
 
@@ -23,11 +25,18 @@ export function ThemeSwitch({
       className={className}
       onClick={toggleTheme}
       variant={variant}
-      size="icon"
+      size={withDescriptionText ? "sm" : "icon"}
     >
       <SunIcon className="hidden [html.dark_&]:block" />
       <MoonIcon className="hidden [html.light_&]:block" />
       <span className="sr-only">Toggle theme</span>
+      {withDescriptionText && (
+        <span className="ml-2 ">
+          {resolvedTheme === "dark"
+            ? "Helles Design aktivieren"
+            : "Dunkles Design aktivieren"}
+        </span>
+      )}
     </Button>
   );
 }
