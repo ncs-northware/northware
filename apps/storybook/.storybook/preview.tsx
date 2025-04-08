@@ -19,20 +19,20 @@ const preview: Preview = {
   decorators: [
     withThemeByClassName({
       themes: {
-        cockpitLight: "cockpit-light",
-        cockpitDark: "cockpit-dark",
-        financeLight: "finance-light",
-        financeDark: "finance-dark",
-        traderLight: "trader-light",
-        traderDark: "trader-dark",
+        CockpitLight: "CockpitLight",
+        CockpitDark: "CockpitDark",
+        FinanceLight: "FinanceLight",
+        FinanceDark: "FinanceDark",
+        TraderLight: "TraderLight",
+        TraderDark: "TraderDark",
       },
-      defaultTheme: "cockpit-light",
+      defaultTheme: "CockpitLight",
     }),
-    (Story, context) => {
+    (Story) => {
       return (
         <div className={`bg-background ${source_sans.variable} p-2 font-sans`}>
           <StorybookThemeProvider>
-            <Story {...context} />
+            <Story />
           </StorybookThemeProvider>
         </div>
       );
