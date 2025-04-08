@@ -66,7 +66,7 @@ function AlertDescription({
     <div
       data-slot="alert-description"
       className={cn(
-        "col-start-2 grid justify-items-start gap-1 text-muted-foreground text-sm [&_p]:leading-relaxed",
+        "col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
         className
       )}
       {...props}
@@ -77,18 +77,17 @@ function AlertDescription({
 const AlertIcon = ({
   variant,
 }: { variant: "default" | "danger" | "info" | "success" | "warning" }) => {
-  const classes = "h-4 w-4";
   switch (variant) {
     case "danger":
-      return <CircleAlertIcon className={classes} />;
+      return <CircleAlertIcon className="size-4" />;
     case "info":
-      return <InfoIcon className={classes} />;
+      return <InfoIcon className="size-4" />;
     case "success":
-      return <CircleCheckIcon className={classes} />;
+      return <CircleCheckIcon className="size-4" />;
     case "warning":
-      return <TriangleAlertIcon className={classes} />;
+      return <TriangleAlertIcon className="size-4" />;
     default:
-      return <InfoIcon className={classes} />;
+      return <InfoIcon className="size-4" />;
   }
 };
 
