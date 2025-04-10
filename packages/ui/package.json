@@ -6,14 +6,14 @@
     "tsc-check": "tsc --noEmit",
     "format": "ultracite format",
     "lint": "ultracite lint",
-    "generate:icons": "svgr --config-file svgr.config.cjs --out-dir ./src/icons/generated --ignore-existing -- ./src/icons/raw"
+    "generate:icons": "svgr --config-file svgr.config.js --ignore-existing -- ./src/icons/assets"
   },
   "exports": {
     "./css": "./src/globals.css",
     "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/*.tsx",
+    "./icons": "./src/icons/output/index.ts",
     "./icons/lucide": "./src/icons/lucide.ts",
-    "./icons/generated/*": "./src/icons/generated/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
     "./postcss.config": "./postcss.config.mjs"
   },

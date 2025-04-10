@@ -1,20 +1,13 @@
 import type { SVGProps } from "react";
 import { type Ref, forwardRef } from "react";
-interface IconProps extends Omit<SVGProps<SVGSVGElement>, "fill" | "stroke"> {
-  /**
-   * @default "currentColor"
-   */
-  fill?: string & {};
-  stroke?: string & {};
+interface SVGRProps {
+  title?: string;
+  titleId?: string;
 }
-const IconFinance = (
-  { fill: fillProp = "currentColor", stroke: strokeProp, ...props }: IconProps,
+const SvgFinanceIcon = (
+  { title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps,
   ref: Ref<SVGSVGElement>
 ) => {
-  const title = "IconFinance";
-  const titleId = "IconFinance";
-  const fill = fillProp;
-  const stroke = strokeProp;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,13 +19,11 @@ const IconFinance = (
         strokeMiterlimit: 2,
       }}
       viewBox="0 0 512 512"
-      fill={fill}
-      stroke={stroke}
       ref={ref}
       aria-labelledby={titleId}
       {...props}
     >
-      <title id={titleId}>{title}</title>
+      {title ? <title id={titleId}>{title}</title> : null}
       <path
         d="M768.592 438.883h388.603v122.003H768.592z"
         style={{
@@ -47,10 +38,10 @@ const IconFinance = (
             fill: "none",
           }}
         />
-        <clipPath id="icon-finance_svg__a">
+        <clipPath id="finance-icon_svg__a">
           <path d="M342.087 675.92c4.279-.977 9.55-.977 13.829 0l61.02 13.931c4.279.977 6.915 2.783 6.915 4.736v27.863c0 1.954-2.636 3.759-6.915 4.736l-61.02 13.931c-4.279.977-9.55.977-13.829 0l-61.021-13.931c-4.278-.977-6.914-2.782-6.914-4.736v-27.863c0-1.953 2.636-3.759 6.914-4.736z" />
         </clipPath>
-        <g clipPath="url(#icon-finance_svg__a)">
+        <g clipPath="url(#finance-icon_svg__a)">
           <path
             d="M342.087 675.92c4.279-.977 9.55-.977 13.829 0l61.02 13.931c4.279.977 6.915 2.783 6.915 4.736v27.863c0 1.954-2.636 3.759-6.915 4.736l-61.02 13.931c-4.279.977-9.55.977-13.829 0l-61.021-13.931c-4.278-.977-6.914-2.782-6.914-4.736v-27.863c0-1.953 2.636-3.759 6.914-4.736z"
             style={{
@@ -105,5 +96,5 @@ const IconFinance = (
     </svg>
   );
 };
-const ForwardRef = forwardRef(IconFinance);
+const ForwardRef = forwardRef(SvgFinanceIcon);
 export default ForwardRef;

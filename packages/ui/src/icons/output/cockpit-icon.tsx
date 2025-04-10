@@ -1,20 +1,13 @@
 import type { SVGProps } from "react";
 import { type Ref, forwardRef } from "react";
-interface IconProps extends Omit<SVGProps<SVGSVGElement>, "fill" | "stroke"> {
-  /**
-   * @default "currentColor"
-   */
-  fill?: string & {};
-  stroke?: string & {};
+interface SVGRProps {
+  title?: string;
+  titleId?: string;
 }
-const IconCockpit = (
-  { fill: fillProp = "currentColor", stroke: strokeProp, ...props }: IconProps,
+const SvgCockpitIcon = (
+  { title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps,
   ref: Ref<SVGSVGElement>
 ) => {
-  const title = "IconCockpit";
-  const titleId = "IconCockpit";
-  const fill = fillProp;
-  const stroke = strokeProp;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,13 +19,11 @@ const IconCockpit = (
         strokeMiterlimit: 2,
       }}
       viewBox="0 0 2138 2134"
-      fill={fill}
-      stroke={stroke}
       ref={ref}
       aria-labelledby={titleId}
       {...props}
     >
-      <title id={titleId}>{title}</title>
+      {title ? <title id={titleId}>{title}</title> : null}
       <path
         d="M2.191 0h2133.33v2133.33H2.191z"
         style={{
@@ -45,10 +36,10 @@ const IconCockpit = (
           fill: "none",
         }}
       />
-      <clipPath id="icon-cockpit_svg__a">
+      <clipPath id="cockpit-icon_svg__a">
         <path d="M985.524 73.113c51.567-29.773 115.1-29.773 166.667 0l735.443 424.608c51.567 29.772 83.334 84.793 83.334 144.337v849.217c0 59.544-31.767 114.565-83.334 144.338l-735.443 424.608c-51.567 29.772-115.1 29.772-166.667 0l-735.443-424.608c-51.567-29.773-83.333-84.794-83.333-144.338V642.058c0-59.544 31.766-114.565 83.333-144.337z" />
       </clipPath>
-      <g clipPath="url(#icon-cockpit_svg__a)">
+      <g clipPath="url(#cockpit-icon_svg__a)">
         <path
           d="M985.524 73.113c51.567-29.773 115.1-29.773 166.667 0l735.443 424.608c51.567 29.772 83.334 84.793 83.334 144.337v849.217c0 59.544-31.767 114.565-83.334 144.338l-735.443 424.608c-51.567 29.772-115.1 29.772-166.667 0l-735.443-424.608c-51.567-29.773-83.333-84.794-83.333-144.338V642.058c0-59.544 31.766-114.565 83.333-144.337z"
           style={{
@@ -89,5 +80,5 @@ const IconCockpit = (
     </svg>
   );
 };
-const ForwardRef = forwardRef(IconCockpit);
+const ForwardRef = forwardRef(SvgCockpitIcon);
 export default ForwardRef;
