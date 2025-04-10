@@ -6,7 +6,7 @@
     "tsc-check": "tsc --noEmit",
     "format": "ultracite format",
     "lint": "ultracite lint",
-    "generate:icons": "svgr --config-file svgr.config.js --ignore-existing -- ./src/icons/assets"
+    "generate-icons": "svgr --config-file svgr.config.js --ignore-existing -- ./src/icons/assets"
   },
   "exports": {
     "./css": "./src/globals.css",
