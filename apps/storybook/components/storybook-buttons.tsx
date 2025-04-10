@@ -1,6 +1,5 @@
 import { Button } from "@northware/ui/components/base/button";
-import SvgGithub from "@northware/ui/icons/generated/github";
-import SvgShadcnui from "@northware/ui/icons/generated/shadcnui";
+import { GithubIcon, ShadcnuiIcon } from "@northware/ui/icons";
 import Link from "next/link";
 export const ViewSource = ({ path }: { path: string }) => {
   const baseurl =
@@ -8,7 +7,7 @@ export const ViewSource = ({ path }: { path: string }) => {
   return (
     <Button asChild variant="secondary" size="sm">
       <Link href={`${baseurl}/${path}`} target="_blank">
-        <SvgGithub className="text-primary" />
+        <GithubIcon className="text-primary" />
         Quellcode anzeigen
       </Link>
     </Button>
@@ -21,7 +20,7 @@ export const ShadcnDocs = ({ path }: { path: string }) => {
   return (
     <Button asChild variant="secondary" size="sm">
       <Link href={`${baseurl}/${path}`} target="_blank">
-        <SvgShadcnui className="text-primary" />
+        <ShadcnuiIcon className="text-primary" />
         shadcn/ui Docs
       </Link>
     </Button>
