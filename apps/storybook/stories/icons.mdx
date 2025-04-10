@@ -1,0 +1,55 @@
+import { Meta, IconGallery, IconItem } from "@storybook/blocks"
+import * as Icons from "@northware/ui/icons"
+
+<Meta title="Icons" />
+
+# Icons
+
+## Lucide Icons
+
+Northware nutzt die Icon-Library [Lucide](https://lucide.dev/). Diese Icons werden an allen Stellen verwendet, wo Icons eingesetzt werden.
+Um nicht in jeder App das Package [`lucide-react`](https://lucide.dev/guide/packages/lucide-react) installieren zu müssen, 
+stellt `@northware/ui` die Icons unter dem Endpoint `@northware/ui/icons/lucide` bereit.
+
+## Extra Icons
+
+Neben den Icons von Lucide werden auch einige weitere Icons benötigt. Diese Icons wurden extra für Northware erstellt oder als SVGs von anderen Anbietern integriert.
+
+Mithilfe des Tools [SVGR](https://react-svgr.com/) lassen sich aus den SVG-Dateien React-Komponenten generieren.
+
+<IconGallery>
+    {Object.keys(Icons).map((iconName) => (
+      <IconItem key={iconName} name={iconName}>
+        {React.createElement(Icons[iconName])}
+      </IconItem>
+    ))}
+</IconGallery>
+
+### Hinzufügen weiterer Icons
+
+Um ein weiteres Icon zu `@northware/ui/icons` hinzuzufügen, muss die SVG-Datei des Icons im Ordner `/packages/ui/src/icons/assets` abgelegt werden.
+Um das Icon als React Komponente bereitzustellen muss folgender Command im Root-Verzeichnis ausgeführt werden:
+
+```bash
+pnpm generate-icons
+```
+
+Im Hintergrund navigiert dieser Befehl in das Verzeichnis `packages/ui` und führt dort folgenden Befehl aus:
+
+```bash
+svgr --config-file svgr.config.js --ignore-existing -- ./src/icons/assets
+```
+
+Hier werden also mit der SVGR CLI alle Icons im Ordner `icons/assets` der Config-Datei entsprechend kompiliert. Bereits kompilierte Icons werden dabei ignoriert.
+Der Config-Datei entsprechend werden die React-Komponenten im Ordner `icons/output` abgelegt. Das Tool generiert eine `index.ts` Datei im Output-Ordner, 
+über die die Komponenten unter `@northware/ui/icons` bereitgestellt werden.
+
+**SVGR benennt die generierten React Komponenten nach dem Namen der SVG-Datei.** Die Komponente zur Datei `github-icon.svg` heißt demnach `GithubIcon`, 
+hieße die Datei `github.svg` würde die Komponente `Github` heißen. Es ist demnach wichtig zu überlegen, wie die SVG-Datei heißen sollte.
+Eine guter Weg ist es, die Dateien mit `*-icon.svg` zu benennen. Das verdeutlicht, das es sich hier um ein Icon handelt und passt gut zu Lucide,
+wo jedes Icon auch so benannt ist (so gibt es die Komponente `Menu` wie auch `MenuIcon`).
+
+### Icon-Anbieter
+
+- Da Lucide keine Brand Icons mehr bereitstellt (siehe dazu die Issues [lucide-icons/lucide#670](https://github.com/lucide-icons/lucide/issues/670) und [feathericons/feather#763](https://github.com/feathericons/feather/issues/763)),
+  müssen diese als SVG-Dateien von [Simple Icons](https://simpleicons.org/) bereitgestellt werden.
