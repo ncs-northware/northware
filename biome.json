@@ -12,6 +12,13 @@
       "quoteStyle": "double"
     }
   },
+  "linter": {
+    "rules": {
+      "a11y": {
+        "noSvgWithoutTitle": "off"
+      }
+    }
+  },
   "files": {
     "ignore": [
       "**/node_modules/**",
