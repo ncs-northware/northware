@@ -1,6 +1,6 @@
 module.exports = {
   dimensions: true,
-  outDir: "./src/icons/output",
+  outDir: "./icons/output",
   svgProps: { fill: "currentcolor" },
   jsxRuntime: "classic",
   ref: true,
