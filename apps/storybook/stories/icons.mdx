@@ -28,7 +28,7 @@ Mithilfe des Tools [SVGR](https://react-svgr.com/) lassen sich aus den SVG-Datei
 
 ### Hinzufügen weiterer Icons
 
-Um ein weiteres Icon zu `@northware/ui/icons` hinzuzufügen, muss die SVG-Datei des Icons im Ordner `/packages/ui/src/icons/assets` abgelegt werden.
+Um ein weiteres Icon zu `@northware/ui/icons` hinzuzufügen, muss die SVG-Datei des Icons im Ordner `/packages/ui/icons/assets` abgelegt werden.
 Um das Icon als React Komponente bereitzustellen muss folgender Command im Root-Verzeichnis ausgeführt werden:
 
 ```bash
@@ -38,7 +38,7 @@ pnpm generate-icons
 Im Hintergrund navigiert dieser Befehl in das Verzeichnis `packages/ui` und führt dort folgenden Befehl aus:
 
 ```bash
-svgr --config-file svgr.config.js --ignore-existing -- ./src/icons/assets
+svgr --config-file svgr.config.js --ignore-existing -- ./icons/assets
 ```
 
 Hier werden also mit der SVGR CLI alle Icons im Ordner `icons/assets` der Config-Datei entsprechend kompiliert. Bereits kompilierte Icons werden dabei ignoriert.

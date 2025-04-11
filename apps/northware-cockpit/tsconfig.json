@@ -5,7 +5,7 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./src/*"],
-      "@northware/ui/*": ["../../packages/ui/src/*"]
+      "@northware/ui/*": ["../../packages/ui/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
