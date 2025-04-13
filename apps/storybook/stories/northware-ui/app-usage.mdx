@@ -1,0 +1,144 @@
+import { Meta } from "@storybook/blocks"
+
+<Meta title="Northware UI/Verwendung in einer App" />
+
+# Verwendung von `@northware/ui` in einer App
+
+Um mit `@northware/ui` starten zu können, muss das Package als Dependency in der App installiert werden. 
+Dazu braucht es folgenden Eintrag in der `package.json` der App damit klar ist, das die App auf `@northware/ui` zugreifen soll.
+
+```json
+{
+   ...
+   "dependencies": {
+        "@northware/ui": "workspace:*"
+        ...
+    }
+   ...
+}
+```
+
+Mit diesem Eintrag in der `package.json` muss nochmal `pnpm i` im Root-Package ausgeführt werden, damit PNPM die Verbindungen zwischen App und Package herstellt.
+
+## Die layout.tsx
+
+Die Layout-Datei der App muss auf `@northware/ui` zugreifen. Zum einen benötigt die App das Styling aus `@northware/ui/css`. 
+Unter diesem Endpoint wird das grundlegende Theme zur Verfügung gestellt. Die App benötigt dann keine eigene CSS-Datei mehr.
+
+Außerdem benötigt die App die Font-Konfiguration für die von Northware verwendete Schriftart, die ebenfalls von `@northware/ui` bereitgestellt wird.
+
+Weiterhin sollte die App die Komponete GeneralProvider von `@northware/ui` verwenden. Diese enthält alle für die App nötigen Provider-Komponenten (`ThemeProvider`, 
+damit der User zwischen Light und DarkMode wechseln kann sowie `AuthProvider` von `@northware/auth` damit die User-Authentification richtig funktioniert).
+
+```tsx
+import "@northware/ui/css";
+import { GeneralProvider } from "@northware/ui/components/providers/general-provider";
+import { source_sans } from "@northware/ui/lib/fonts";
+```
+
+Auch an dem Markup des Layouts müssen einige Veränderungen vorgenommen werden.
+
+- Das `<html>` Tag benötigt eine `theme-*` Klasse, damit die für die App richtige Farbgestaltung verwendet wird. [Mehr dazu](?path=/docs/northware-ui-css-theme--docs#app-theming-klassen)
+- Das `<html>` Tag benötigt das `suppressHydrationWarning` Property, da es sonst zu Problemen mit next-themes kommt. [Mehr dazu](https://github.com/pacocoursey/next-themes?tab=readme-ov-file)
+- Über das `<body>` Tag wird die Schriftart definiert. Zum einen wird hier die Schriftart von `@northware/ui` übergeben, andererseits wird diese Schriftart über die Tailwind-Klasse `.font-sans` angewendet. [Mehr dazu](?path=/docs/northware-ui-utilities-und-funktionen--docs#fonts)
+- Die `children` von `RootLayout` müssen von `<GeneralProvider>` umgeben sein.
+
+Die fertige `layout.tsx` der App könnte dann so aussehen:
+
+```tsx
+import "@northware/ui/css";
+import { GeneralProvider } from "@northware/ui/components/providers/general-provider";
+import { source_sans } from "@northware/ui/lib/fonts";
+
+export const metadata = {
+  title: {
+    template: "%s | Northware Cockpit",
+    default: "Northware Cockpit",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html className="theme-cockpit" lang="de" suppressHydrationWarning>
+      <body className={`${source_sans.variable} font-sans`}>
+        <GeneralProvider>{children}</GeneralProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+## Anpassungen der next.config.ts
+
+`@northware/ui/css` stellt alle benötigten CSS-Variablen, Tailwind-Konfigurationen und weiteres Styling unkompiliert bereit. Die Apps müssen diesen Code jeweils selbst kompilieren.
+Dazu muss folgende Anpassung der `next.config.ts` vorgenommen werden:
+
+```ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  // Configuration Options here
+  transpilePackages: ["@northare/ui"],
+};
+
+export default nextConfig;
+```
+
+## PostCSS Config
+
+Tailwind wird mit PostCSS verwendet. Dazu muss in der App eine `postcss.config.mjs` erstellt werden. Diese kann dann wieder auf `@northware/ui` zugreifen.
+
+```js
+export { default } from "@northware/ui/postcss.config";
+```
+
+## Anpassungen der tsconfig.json
+
+Damit die Imports von `@northware/ui` richtig funktionieren, muss der Import von `@northware/ui` in der `tsconfig.json` definiert werden.
+
+```json
+{
+    ...
+    "compilerOptions": {
+        ...
+        "paths": {
+            "@/*": ["./src/*"],
+            "@northware/ui/*": ["../../packages/ui/*"]
+        }
+        ...
+    }
+}
+```
+
+## shadcn/ui Konfiguration auf App-Level
+
+Damit die shadcn CLI auch auf App-Level funktioniert, wird eine `components.json` Datei benötigt.
+Mit dieser Konfigurationsdatei entscheidet die CLI dann, welche Komponenten, Hooks und Libs in @northware/ui und welche auf App-Level erstellt werden.
+Möglicherweise muss die Entscheidung der CLI im Einzelfall korrigiert werden. 
+
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "../../packages/ui/css/globals.css",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@/components",
+    "hooks": "@/hooks",
+    "lib": "@/lib",
+    "utils": "@northware/ui/lib/utils",
+    "ui": "@northware/ui/components"
+  }
+}
+```

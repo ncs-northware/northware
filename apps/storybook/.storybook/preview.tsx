@@ -15,6 +15,21 @@ const preview: Preview = {
       },
     },
     layout: "centered",
+    options: {
+      storySort: {
+        order: [
+          "Northware UI",
+          [
+            "Über das Package",
+            "Verwendung in einer App",
+            "CSS-Theme",
+            "Icons",
+            "Utilities und Funktionen",
+          ],
+          "Components",
+        ],
+      },
+    },
   },
 
   decorators: [

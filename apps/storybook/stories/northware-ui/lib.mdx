@@ -1,0 +1,29 @@
+import { Meta } from "@storybook/blocks"
+import { ViewSource } from "../../components/storybook-buttons"
+
+<Meta title="Northware UI/Utilities und Funktionen" />
+
+# Utilities und Funktionen
+
+<ViewSource path="lib" />
+
+Unter dem Endpoint `@northware/ui/lib` werden unterstützende Funktionen bereitgestellt, die in den Nothware Packages und Apps an mehreren Stellen verwendet werden.
+
+## Fonts
+
+Die Northware Apps verwenden die Schriftart [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) von Google Fonts. 
+Die Schriftart muss über die `layout.tsx` der App importiert werden und es braucht dafür die Definition einer Variable.
+Diese Variable `source_sans` kann über `@northware/ui/lib/fonts` importiert werden.
+
+- [Mehr zu der Nutzung in einer App](?path=/docs/northware-ui-verwendung-in-einer-app--docs#die-layouttsx)
+- [Über die Verwendung von Fonts in Next.js mit Tailwind CSS](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#with-tailwind-css)
+
+## `cn` Helper
+
+Die Funktion `cn` wird unter `@northware/ui/lib/utils` zur Verfügung gestellt. 
+Hierbei handelt es sich um eine Helper-Function, die steuert, das CSS-Klassen, die auf eine einzelne Instanz einer Komponente angewendet werden gegenüber Klassen, 
+die innerhalb der Komponente definiert wurden bevorzugt werden. So lassen sich die Komponenten auf eine andere als die vordefinierte Weise stylen, 
+auch wenn dieses Styling, dem vordefinierten Styling entgegensteht.
+
+Um dies zu ermöglichen werden de Tools [`clsx`](https://github.com/lukeed/clsx) und [`tailwind-merge`](https://github.com/dcastil/tailwind-merge) verwendet.
+Diees Vorgehen wird von shadcn/ui vorgeschlagen und die Komponenten sind auf die Verwendung der Funktion `cn` angewiesen. [Mehr dazu](https://ui.shadcn.com/docs/installation/manual#add-a-cn-helper)

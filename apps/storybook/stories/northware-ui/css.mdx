@@ -1,0 +1,54 @@
+import { Meta } from "@storybook/blocks"
+import { ShadcnDocs, ViewSource } from "../../components/storybook-buttons"
+
+<Meta title="Northware UI/CSS-Theme" />
+
+# CSS-Theme
+
+<ViewSource path="globals.css" />
+<ShadcnDocs path="theming" />
+
+Unter `@northware/ui/css` stellt das Package die globale CSS-Datei bereit. Diese Datei enthält das grundlegende Theme für Northware und die Konfiguration für Tailwind 4.
+
+Mit `@northware/ui` sind ein Light-Theme und ein Dark-Theme nutzbar. Die für das Light-Theme nötigen CSS-Variablen sind unter der `:root` Pseudo-Klasse hinterlegt. 
+Die CSS-Variablen für das Dark-Theme sind der Klasse `.dark` zugewiesen.
+Das vom User genutzte Theme wird über `next-themes` und den zugehörigen `ThemeProvider` gesteuert.
+
+Alle Farben sind im OKLCH-Farbraum notiert und folgen so dem von Tailwind CSS bevorzugten Farbraum.
+`@northware/ui` nutzt das Zinc Color Theme von shadcn/ui. Dies bringt einige CSS-Variablen im Light und Dark-Theme mit sich,
+die im oberen Teil der CSS-Datei definiert sind. Achtung: Hier sind nicht nur Farben sondern auch weitere Styling-Variablen definiert.
+
+[Mehr zum shadcn Zink Theme](https://ui.shadcn.com/docs/theming#zinc)
+
+Außerdem gibt es einige Alert-Colors für Meldungen und um States in der UI darzustellen. 
+Für jede Art von Alert ist definiert, welche Farbe im Hintergrund und welche im Vordergrund verwendet werden soll.
+
+Für jede Northware App lässt sich die jeweilige Kombination aus Hintergrund und Vordergrund-Farbe über zugehörige CSS-Variablen und Utility-Classes anwenden. 
+Dies ist unabhängig von der App in der die Klasse aufgerufen wird.
+
+## App-Theming Klassen
+
+Für jede App gibt es eine `theme-*`-Klasse. Mit dieser Klasse werden die CSS-Variablen `primary` und `primary-foreground` je nach den anzuwenden Brand-Colors gesteuert.
+Jede App benötigt eine `theme-*` Klasse, damit die richtige Farbgebung erreicht wird. Diese wird in der `layout.tsx` auf das `html`-Element angewendet. [Mehr dazu](?path=/docs/northware-ui-verwendung-in-einer-app--docs#die-layouttsx)
+
+## Theme-Klassen für Storybook
+
+Da das Storybook für jede App ein Light- und Dark-Theme enthält und es hierfür einen besonderen `ThemeProvider` gibt, werden für Storybook besondere Klassen benötigt, die genau so auf `@northware/ui` anwendbar sind.
+Die `globals.css` enthält daher auch die Definitionen für die von Storybook verwendeten Klassen:
+
+- `.CockpitLight`: Das Light-Theme von Northware Cockpit. Diese Klasse übernimmt das Styling von `:root` sowie von `.theme-cockpit`
+- `.CockpitDark`: Das Dark-Theme von Northware Cockpit. Diese Klasse übernimmt das Styling von `.dark` sowie von `.theme-cockpit`
+- `.FinanceLight`: Das Light-Theme von Northware Finance. Diese Klasse übernimmt das Styling von `:root` sowie von `.theme-finance`
+- `.FinanceDark`: Das Dark-Theme von Northware Finance. Diese Klasse übernimmt das Styling von `.dark` sowie von `.theme-finance`
+- `.TraderLight`: Das Light-Theme von Northware Trader. Diese Klasse übernimmt das Styling von `:root` sowie von `.theme-trader`
+- `.TraderDark`: Das Dark-Theme von Northware Trader. Diese Klasse übernimmt das Styling von `.dark` sowie von `.theme-trader`
+
+## Tailwind Konfigurationen
+
+Mit `@theme inline` lassen sich die definierten Farben auf Tailwind anwenden. Denn Tailwind CSS verwendet selbst CSS-Variablen um die Utility-Klasses zu stylen. 
+Um die eigenen CSS-Variablen auf diese von Tailwind vorgegebenen Variablen anzuwenden, muss die `@theme inline` Direktive verwendet werden.
+`@theme inline` wird dabei nicht nur für Farben sondern auch für andere Stylings (z.B. `border-radius` und `fonts`) verwendet.
+
+Es gibt auch noch weitere Anpassungen des Tailwind Themes. So wurde der Breakpoint für 2XL-Bilschirme im Responsive-Design auf `80rem` verkleinert.
+Es wurde die Utility-Class `.container` hinzugefügt, die je nach Breakpoint das mit `.container` augestattete Element zentriert.
+Außerdem werden für shadcn über `@layer base` die Klassen `.border-border` und `.outline-ring/50` auf alle Elemente und `bg-background` und `text-foreground` auf den `body` angewendet.
