@@ -22,6 +22,7 @@ export function ThemeSwitch({
 
   return (
     <Button
+      suppressHydrationWarning
       className={className}
       onClick={toggleTheme}
       variant={variant}
