@@ -23,7 +23,7 @@ const meta: Meta<typeof Select> = {
     SelectTrigger,
     SelectValue,
   },
-  argTypes: {},
+  parameters: { layout: "centered" },
   render: (args) => (
     <Select {...args}>
       <SelectTrigger className="w-96">

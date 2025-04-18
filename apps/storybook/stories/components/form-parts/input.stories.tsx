@@ -13,6 +13,7 @@ const meta = {
     disabled: false,
     className: "w-96",
   },
+  parameters: { layout: "centered" },
 } satisfies Meta<typeof Input>;
 
 export default meta;

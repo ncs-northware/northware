@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta = {
   title: "Components/Form Parts/Switch",
   component: Switch,
-  argTypes: {},
+  parameters: { layout: "centered" },
   render: (args) => (
     <div className="flex items-center space-x-2">
       <Switch {...args} />

@@ -14,6 +14,9 @@ const meta = {
     service: "cockpit",
     className: "h-20",
   },
+  parameters: {
+    layout: "centered",
+  },
 } satisfies Meta<typeof BrandIcon>;
 
 export default meta;
