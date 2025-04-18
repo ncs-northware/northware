@@ -1,0 +1,43 @@
+import { Meta, Canvas, Controls, Stories } from "@storybook/blocks"
+import * as DialogStories from "./dialog.stories"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta of={DialogStories} />
+
+# Dialog
+
+Ein Fenster, das das Hauptfenster oder ein anderes Dialog-Fenster überlagert und Inhalte angezeigt.
+
+<ShadcnDocs path="components/dialog" />
+<ViewSource path="components/panels/dialog.tsx" />
+
+<Canvas of={DialogStories.Demo} />
+<Controls of={DialogStories.Demo} />
+
+## Benutzung
+
+```tsx
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@northware/ui/components/panels/dialog"
+
+<Dialog>
+  <DialogTrigger>Open</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Are you absolutely sure?</DialogTitle>
+      <DialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
+```
+
+<Stories />

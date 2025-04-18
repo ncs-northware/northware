@@ -1,0 +1,45 @@
+import { Meta, Canvas, Controls, Stories } from "@storybook/blocks"
+import * as CardStories from "./card.stories"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta of={CardStories} />
+
+# Card
+
+Eine Card ist eine Komponente, mit der verschiede Inhalte dargestellt werden.
+Die Card kann einen CardTitle haben. Innerhalb von CardContent  kann ein beliebiger Inhalt dargestellt werden. 
+Im CardFooter können zum Beispiel Buttons angezeigt werden.
+
+<ShadcnDocs path="components/card" />
+<ViewSource path="components/panels/card.tsx" />
+
+<Canvas of={CardStories.BeispielMitText} />
+<Controls of={CardStories.BeispielMitText} />
+
+## Benutzung
+
+```tsx
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@northware/ui/components/panels/card"
+
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card Description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Card Content</p>
+  </CardContent>
+  <CardFooter>
+    <p>Card Footer</p>
+  </CardFooter>
+</Card>
+```
+
+<Stories />
