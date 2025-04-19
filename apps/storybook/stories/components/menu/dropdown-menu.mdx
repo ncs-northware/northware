@@ -1,0 +1,42 @@
+import { Meta, Canvas, Controls, Stories } from "@storybook/blocks"
+import * as DropdownStories from "./dropdown-menu.stories"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta of={DropdownStories} />
+
+# Dropdown Menu
+
+Zeigt dem Benutzer ein Menü an, das über eine Schaltfläche (z.B. einen Button) ausgelöst wird.
+Das Dropdown kann z.B. eine Reihe von Aktionen oder Funktionen anzeigen.
+
+<ShadcnDocs path="components/dropdown-menu" />
+<ViewSource path="components/menu/dropdown-menu.tsx" />
+
+<Canvas of={DropdownStories.Default} />
+
+## Benutzung
+
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@northware/ui/components/menu/dropdown-menu"
+
+<DropdownMenu>
+  <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem>Profile</DropdownMenuItem>
+    <DropdownMenuItem>Billing</DropdownMenuItem>
+    <DropdownMenuItem>Team</DropdownMenuItem>
+    <DropdownMenuItem>Subscription</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+<Stories />
