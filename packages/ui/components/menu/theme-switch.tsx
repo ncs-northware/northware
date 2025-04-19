@@ -28,8 +28,8 @@ export function ThemeSwitch({
       variant={variant}
       size={withDescriptionText ? "sm" : "icon"}
     >
-      <SunIcon className="hidden [html.dark_&]:block" />
-      <MoonIcon className="hidden [html.light_&]:block" />
+      <SunIcon className="hidden group-[.storybook-darkTheme]:block [html.dark_&]:block" />
+      <MoonIcon className="hidden group-[.storybook-lightTheme]:block [html.light_&]:block" />
       <span className="sr-only">Toggle theme</span>
       {withDescriptionText && (
         <span className="ml-2 ">
