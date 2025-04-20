@@ -45,7 +45,7 @@
     },
     {
       "name": "Northware UI",
-      "url": "ui",
+      "url": "http://localhost:40181",
       "icon": "react"
     }
   ],
@@ -77,13 +77,8 @@
         "packages/auth",
         "packages/database",
         "packages/service-config",
-        "packages/tailwind-config",
-        "packages/ui"
+        "packages/tailwind-config"
       ]
-    },
-    {
-      "group": "Components",
-      "pages": ["ui/introduction", "ui/typo"]
     }
   ],
   "footer": {
