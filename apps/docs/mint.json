@@ -45,7 +45,7 @@
     },
     {
       "name": "Northware UI",
-      "url": "http://localhost:40181",
+      "url": "https://northware-storybook.netlify.app",
       "icon": "react"
     }
   ],
