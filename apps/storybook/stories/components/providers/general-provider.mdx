@@ -1,0 +1,29 @@
+import { Meta } from "@storybook/blocks"
+import { ViewSource } from "../../../components/storybook-buttons"
+
+<Meta title="Components/Providers/GeneralProvider" />
+
+# GeneralProvider
+
+Über den `GeneralProvider` lassen sich eine Reihe von kontextuellen und funktionalen Providern implementieren.
+
+<ViewSource path="components/providers/general-provider.tsx" />
+
+Der `GeneralProvider` verwendet den [ThemeProvider](?path=/docs/components-providers-themeprovider--docs) von `@northware/ui` um den Wechsel zwischen Light- und Dark-Mode zu ermöglichen
+und den `AuthProvider` von `@northware/auth` um die Authentifizierungs-Funktionalität zu ermöglichen.
+
+Die Komponente ist inspiriert von dem [DesignSystemProvider von next-forge](https://docs.next-forge.com/packages/design-system/provider)
+
+## Benutzung
+
+```tsx
+import { GeneralProvider } from "@northware/ui/components/providers/general-provider"
+
+export function GeneralProvider({children}:{children: React.ReactNode}) {
+    return (
+        <GeneralProvider>
+            {children}
+        </GeneralProvider>
+    )
+}
+```

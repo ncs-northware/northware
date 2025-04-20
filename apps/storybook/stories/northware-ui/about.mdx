@@ -1,0 +1,40 @@
+import { Meta } from "@storybook/blocks"
+import { Alert, AlertIcon, AlertDescription } from "@northware/ui/components/panels/alert"
+
+<Meta title="Northware UI/Über das Package" />
+
+# Über das Package
+
+`@northware/ui` ist Component Library für die Northware Apps.
+Sie enthält grundlegende aber auch komplexe Komponenten, die innerhalb aller Northware Apps genutzt werden können.
+Das Package stellt auch das CSS-Styling, Helper-Funktionen, Icons und Hooks bereit. 
+So muss innerhalb der Apps nur noch wenig über die UI nachgedacht werden.
+
+`@northware/ui` nutzt [shadcn/ui](https://ui.shadcn.com/) als Startpunkt der UI und damit auch [Tailwind CSS](https://tailwindcss.com/).
+Um `@northware/ui` vollwertig verwenden zu können, müssen die Apps konfiguriert werden. Diese Dokumentation zeigt, wie das funktioiniert.
+
+[Verwendung in einer App](?path=/docs/northware-ui-verwendung-in-einer-app--docs)
+
+## PostCSS
+
+Tailwind CSS verwendet PostCSS. Die dafür notwendige Konfigurationsdatei wird unter `@northware/ui/postcss.config` bereitgestellt und kann von dort von den Apps abgerufen werden.
+Im Hintergrund wird in der `postcss.config.mjs` im `@northware/ui` Package `@tailwindcss/postcss` als Plugin geladen. Dieses beinhaltet alle benötigten Konfigurationen.
+
+## Eigene UI-Komponenten und Funktionen auf App-Level
+
+Nicht jede Komponente im Northware Ökosystem muss zwingend im `@northware/ui` Package erstellt werden. Manchmal gibt es Komponenten, die nur für eine einzelne App erstellt wurden
+oder für diese App weiterentwickelt werden müssen. Solche Komponenten können im `/src/components` Ordner der App abgelegt werden.
+
+Auch gibt es einzelne Funktionen und Hooks, die nur auf App-Level benötigt werden und deshalb in den ensprechenden Ordnern `/src/lib` und `/src/hooks` abgelegt werden.
+
+Wenn Komponenten oder Funktionen speziell für eine Seite verwendet werden sollen, sollten sie außerdem direkt im zugehörigen Route-Order unter `/apps` abgelegt werden.
+
+<Alert variant="warning">
+    <AlertDescription>
+        `@northware/ui` ist Teil der Nothware Monorepo und stellt die UI-Komponenten für das Projekt bereit. Die bereitgestellten Komponenten wurden nach bestem Wissen und Gewissen erstellt.
+        Der bereitgestellte Code kann dennoch in Teilen oder vollständig unsicher und/oder instabil sein und ist keinesfalls rechtssicher.
+        
+        Das Projekt Northware (einschließlich Northware Cockpit, Northware Trader, Northware Finance, Northware Docs und alle in diesem Repository enthaltenen Apps und Packages
+        dienen ausschließlich zu Demonstrations- und Lernzwecken. Das Projekt wurde nicht zur Produktivverwendung in der realen (Geschäfts-) Welt entwickelt. 
+    </AlertDescription>
+</Alert>

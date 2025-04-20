@@ -1,0 +1,198 @@
+import { Meta } from "@storybook/blocks"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta title="Components/Form Parts/Form" />
+
+# Form
+
+Formulare können mit [React Hook Form](https://react-hook-form.com/), [Zod](https://react-hook-form.com/) und den Komponenten von shadcn/ui erstellt werden.
+
+<ShadcnDocs path="components/form" />
+<ViewSource path="components/form-parts/form.tsx" />
+
+Die `<Form />` Komponente ist ein Wrapper um das `react-hook-form` Package.
+Die weiteren Form Komponenten nehmen viele weitere Aufgaben rund um `react-hook-form` war um das Erstellen von Formularen und
+ den Umgang mit den daraus resultierenden Werten zu vereinfachen.
+
+## Einfaches Beispiel
+
+```tsx
+const form = useForm()
+
+<Form>
+  <FormField
+    control={form.control}
+    name="username"
+    render={({field}) => (
+      <FormItem>
+        <FormLabel>Username</FormLabel>
+        <FormControl>
+          <Input placeholder="shadcn" {...field} />
+        </FormControl>
+        <FormDescription>This is your public display name.</FormDescription>
+        <FormMessage />
+      </FormItem>
+    )}
+  />
+</Form>
+```
+
+## Benutzung
+
+### Erstellen eines Form Schema
+
+Mit [Zod](https://zod.dev/) kann das Grundgerüst des Formulars definiert. 
+Hier wird also definiert, welche Werte für einzelne Formularfelder zugelassen sind und weche Fehlermeldung der Nutzer erhält, wenn ein Wert nicht das richtige Format hat.
+
+```tsx
+"use client"
+
+import { z } from "zod"
+
+const formSchema = z.object({
+  email: z.string().email(),
+  username: z.string().min(2).max(50),
+  password: z.string()
+})
+```
+
+### Definieren eines Formulars
+
+Der `useForm` Hook von `react-hook-form` wird verwendet, um das Formular zu erstellen
+
+```tsx
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+const formSchema = z.object({
+  email: z.string().email({message: "Bitte geben Sie eine gültige E-Mail Adresse an."}),
+  username: z.string().min(2, {message: "Der Benutzername muss mindestens 2 Zeichen lang sein."}),
+  password: z.string()
+})
+
+export function ProfileForm() {
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      username: "",
+      password: ""
+    },
+  })
+
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
+  }
+}
+```
+
+Da `FormField` eine controlled Component verwendet, muss allen Formularfeldern ein Standardwert (`defaultValue`) gegeben werden.
+Mehr Informationen über controlled Components bei [React Hook Form](https://react-hook-form.com/docs/usecontroller)
+
+### Das Formular erstellen
+
+Die `<Form />` Komponente kann nun verwendet werden, um das Formular zu erstellen.
+
+```tsx
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { Button } from "@northware/ui/components/base/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@northware/ui/components/form-parts/form"
+import { Input } from "@northware/ui/components/form-parts/input"
+
+const formSchema = z.object({
+  email: z.string().email({message: "Bitte geben Sie eine gültige E-Mail Adresse an."}),
+  username: z.string().min(2, {message: "Der Benutzername muss mindestens 2 Zeichen lang sein."}),
+  password: z.string()
+})
+
+export function ProfileForm() {
+  // ...
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>E-Mail Adresse</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormDescription>
+                Wo können wir Sie erreichen?
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Benutzername</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                Ihr öffentlich sichtbarer Name
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Passwort</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}
+
+```
+
+### Endergebnis
+
+So entsteht ein vollständig barrierefreies Formular, das type-safe ist und auf der Client-Side validiert wird.
+
+![Das fertige Formular](/contents/form-example.png)
+
+## Weitere Möglichkeiten
+
+React Hook Form ist nicht nur mit der Input-Komponente sondern mit vieln weiteren Komponenten nutzbar. 
+Bei shadcn/ui gibt es dazu weitere [Beispiele](https://ui.shadcn.com/docs/components/form#examples).

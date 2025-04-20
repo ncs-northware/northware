@@ -13,6 +13,7 @@ const meta = {
   args: {
     service: "cockpit",
   },
+  parameters: { layout: "centered" },
 } satisfies Meta<typeof Brand>;
 
 export default meta;

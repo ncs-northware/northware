@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@northware/ui/*": ["./src/*"]
+      "@northware/ui/*": ["./*"]
     }
   },
   "exclude": ["dist", "build", "node_modules"],

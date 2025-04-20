@@ -1,0 +1,62 @@
+import { Meta, Canvas, Controls, Stories } from "@storybook/blocks"
+import * as AlertStories from "./alert.stories"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta of={AlertStories} />
+
+# Alert
+
+Zeigt eine Nachricht für den User, die seine Aufmerksamkeit erfordert.
+
+<ShadcnDocs path="components/alert" />
+<ViewSource path="components/panels/alert.tsx" />
+
+<Canvas of={AlertStories.Default} />
+<Controls of={AlertStories.Default} />
+
+- [Benutzung](#benutzung)
+- [Alerts mit Icon](#alerts-mit-icon)
+- [Stories](#stories)
+
+## Benutzung
+
+```tsx
+import { Alert, AlertDescription, AlertTitle } from "@northware/ui/components/panels/alert"
+
+<Alert>
+  <AlertTitle>Übrigens...</AlertTitle>
+  <AlertDescription>
+    Du kannst Komponenten mit der shadcn CLI hinzufügen.
+  </AlertDescription>
+</Alert>
+```
+
+## Alerts mit Icon
+
+Die Alerts lassen sich auch mit einem Icon in der linken Ecke bauen.Dazu muss nur eine Icon-Komponente innerhalb des Alerts eingefügt werden.
+Dieses Icon kann ein beliebiges Icon von Lucide sein. Alternativ kann die Komponente `<AlertIcon />` verwendet werden.
+Diese Komponente akzeptiert den Property `variant` mit den gleichen Werten wie es die Alert Komponente tut und zeigt basierend auf diesem Wert ein vordefiniertes Icon von Lucide.
+
+```tsx
+import { Alert, AlertDescription, AlertTitle, AlertIcon } from "@northware/ui/components/panels/alert"
+
+<Alert variant="default">
+  <AlertIcon variant="default">
+  <AlertTitle>Übrigens...</AlertTitle>
+  <AlertDescription>
+    Du kannst Komponenten mit der shadcn CLI hinzufügen.
+  </AlertDescription>
+</Alert>
+```
+
+### Ein Alert mit `AlertIcon`
+
+<Canvas of={AlertStories.WithAlertIcon} />
+<Controls of={AlertStories.WithAlertIcon} />
+
+### Ein Alert mit einem beliebigen Icon von Lucide
+
+<Canvas of={AlertStories.WithCustomIcon} />
+
+## Stories
+<Stories title="" />

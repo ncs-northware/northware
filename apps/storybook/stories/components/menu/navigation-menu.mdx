@@ -1,0 +1,42 @@
+import { Meta, Canvas, Controls, Stories } from "@storybook/blocks"
+import * as NavigationStories from "./navigation-menu.stories"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta of={NavigationStories} />
+
+# Navigation Menu
+
+Eine Zusammenstellung von Links um zwischen Seiten zu navigieren. 
+Hierbei handelt es sich um die Grundlage der Hauptnavigation auf Basis der [Radix UI Premitive](https://www.radix-ui.com/primitives/docs/components/navigation-menu) NavigationMenu.
+
+<ShadcnDocs path="components/navigation-menu" />
+<ViewSource path="components/menu/navigation-menu.tsx" />
+
+<Canvas of={NavigationStories.Default} />
+<Controls of={NavigationStories.Default} />
+
+## Benutzung
+
+```tsx
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu"
+
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <NavigationMenuLink>Link</NavigationMenuLink>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```

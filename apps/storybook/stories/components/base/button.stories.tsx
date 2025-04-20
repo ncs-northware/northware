@@ -1,6 +1,6 @@
 import { Button } from "@northware/ui/components/base/button";
+import { Loader2, Mail } from "@northware/ui/icons/lucide";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Loader2, Mail } from "lucide-react";
 import Link from "next/link";
 
 /**

@@ -1,0 +1,96 @@
+import {Meta} from "@storybook/blocks"
+import { ViewSource } from "../../../components/storybook-buttons"
+
+<Meta title="Components/Auth/Login" />
+
+# Login Komponenten
+
+<ViewSource path="components/auth/login.tsx" />
+
+![Sample LoginPage](/contents/login-page.png)
+
+In Apps, die User Authentication benötigen wird [Clerk](https://clerk.com/) als Authentication Service genutzt.
+
+Die Funktionaliäten von Clerk werden mit einigen sebst geschriebenen Funktionen ausgebaut. Diese Funktionaliäten werden über `@northware/auth` bereitgestellt.
+
+Jede App mit Authentication benötigt eine Login-Page. Die dafür benötigten Komponenten werden von `@northware/ui` bereitgestellt.
+
+## Login-Page erstellen
+
+Eine Login-Page kann wie jede andere Seite im `app/` Ordner erstellt werden. Wichtig ist jedoch, dass diese Datei in einem Catch-all Ordner liegt.
+Eine gute Wahl ist daher `app/login/[[...login]]/page.tsx`. Die Login-Page ist somit unter dem Pfad `/login` erreichbar. 
+Dies passt dann auch wieder zu einer möglichen Middleware-Konfiguration, die alle Seiten außer `/login` nur angemeldeten Nutzer bereitstellt.
+
+```tsx
+
+// app/login/[[...login]]/page.tsx
+
+import { LoginForm, LoginWrapper } from "@northware/ui/components/auth/login";
+
+const LoginPage = () => {
+  return (
+    <LoginForm service="cockpit" />
+  );
+};
+
+export default LoginPage;
+
+```
+
+```ts
+
+// middleware.ts
+
+import { clerkMiddleware, createRouteMatcher } from "@northware/auth/server";
+
+const isPublicRoute = createRouteMatcher(["/login(.*)"]);
+
+export default clerkMiddleware(async (auth, request) => {
+  if (!isPublicRoute(request)) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    await auth.protect({
+      unauthenticatedUrl: url.toString(),
+    });
+  }
+});
+
+export const config = {
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always run for API routes
+    "/(api|trpc)(.*)",
+  ],
+};
+
+```
+
+## LoginForm Komponente
+
+Die LoginForm Komponente rendert ein Login-Formular und handlet die Login-Funktionalität.
+Die Komponente nutzt [Clerk Elements](https://clerk.com/docs/customization/elements/overview),
+um eine eigene UI zu erstellen, ohne die Logik im Hintergrund pflegen zu müssen.
+
+Da die App mehrmals mit der Clerk API kommuniziert, wird der Login-Prozess in meheren Steps durchgeführt.
+Erst gibt der User seine E-Mail Adresse an. Auf dem nächsten Screen kann er dann das Passwort eingeben.
+
+Neben den Komponenten von Clerk Elements nutzt `LoginForm` Die schadcn/ui Komponenten `Card`, `Input`, `Label` und `Button`.
+
+Um das Farbschema zu defnieren, erwartet `LoginForm` den Property `service` (`ServiceType` von `@northware/service-config`)
+
+<div className="flex items-center">
+![LoginForm E-Mail Eingabe](/contents/login-form-start.png)
+
+![LoginForm Passwort Eingabe](/contents/login-form-verifications.png)
+</div>
+
+## LoginErrorAlert Komponente
+
+![LoginForm with Error Sample](/contents/login-form-error.png)
+
+Die Formulare für die einzelnen Signin Steps enthalten jeweils eine `Clerk.FieldError` Komponente.
+Diese Komponente stellt der Komponente `LoginErrorAlert` den Clerk Error Code und die von Clerk bereitgestellte Error-Message bereit.
+
+Innerhalb der Komponente `LoginErrorAlert` wird je nach Error-Code eine selbst formulierte Fehlermeldung generiert. Diese wird dann in einem `Alert` ausgegeben.
+Sollte ein Error-Code von der Komponente nicht erkannt werden (es tritt ein Fehler auf, für den es noch keine selbst formulierte Fehlermeldung gibt) wird die von Clerk bereitgestellte Error Message und der zugehörige Error Code als Alert ausgegeben.

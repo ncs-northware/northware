@@ -68,9 +68,6 @@ importers:
       drizzle-orm:
         specifier: ^0.41.0
         version: 0.41.0(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@1.0.0)(@types/pg@8.11.6)(gel@2.0.1)(postgres@3.4.5)
-      lucide-react:
-        specifier: ^0.487.0
-        version: 0.487.0(react@19.1.0)
       next:
         specifier: 15.2.4
         version: 15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.80.6)
@@ -99,9 +96,6 @@ importers:
       '@northware/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      lucide-react:
-        specifier: ^0.487.0
-        version: 0.487.0(react@19.1.0)
       next:
         specifier: 15.2.4
         version: 15.2.4(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.80.6)

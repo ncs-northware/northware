@@ -2,7 +2,7 @@ import type { Preview } from "@storybook/react";
 // biome-ignore lint/correctness/noUnusedImports: React has to be imported to use jsx in this file.
 import React from "react";
 import "@northware/ui/css";
-import { StorybookThemeProvider } from "@northware/ui/components/providers/theme-provider";
+import { ThemeProvider } from "@northware/ui/components/providers/theme-provider";
 import { source_sans } from "@northware/ui/lib/fonts";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
@@ -12,6 +12,21 @@ const preview: Preview = {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
+      },
+    },
+    options: {
+      storySort: {
+        order: [
+          "Northware UI",
+          [
+            "Über das Package",
+            "Verwendung in einer App",
+            "CSS-Theme",
+            "Icons",
+            "Utilities und Funktionen",
+          ],
+          "Components",
+        ],
       },
     },
   },
@@ -31,9 +46,20 @@ const preview: Preview = {
     (Story) => {
       return (
         <div className={`bg-background ${source_sans.variable} p-2 font-sans`}>
-          <StorybookThemeProvider>
+          <ThemeProvider
+            themes={[
+              "CockpitLight",
+              "CockpitDark",
+              "FinanceLight",
+              "FinanceDark",
+              "TraderLight",
+              "TraderDark",
+            ]}
+            enableSystem={false}
+            defaultTheme="CockpitLight"
+          >
             <Story />
-          </StorybookThemeProvider>
+          </ThemeProvider>
         </div>
       );
     },
