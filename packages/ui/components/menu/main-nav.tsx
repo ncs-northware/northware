@@ -10,10 +10,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@northware/ui/components/menu/dropdown-menu";
-import {
-  appTextColors,
-  menuData,
-} from "@northware/ui/components/menu/menu-data";
 import { MainNavLink } from "@northware/ui/components/menu/nav-links";
 import {
   NavigationMenu,
@@ -25,12 +21,14 @@ import {
   navigationMenuTriggerStyle,
 } from "@northware/ui/components/menu/navigation-menu";
 import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
+import { appTextColors, menuData } from "@northware/ui/lib/menu-data";
 import { cn } from "@northware/ui/lib/utils";
 import { UserIcon } from "lucide-react";
 import Link from "next/link";
 export async function MainNav({ service }: { service: ServiceType }) {
   // TODO: Add NavMenu Rendering based on permissionKey
   const user = await currentUser();
+  console.log(user);
   const menuItems = await menuData(service, user?.id);
   // Die Hauptnavigation incl. Branding auf Desktops
   return (

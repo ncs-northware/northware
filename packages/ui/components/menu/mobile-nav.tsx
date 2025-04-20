@@ -3,10 +3,6 @@ import { type User, currentUser } from "@northware/auth/server";
 import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/base/brand";
 import { Button } from "@northware/ui/components/base/button";
-import {
-  appTextColors,
-  menuData,
-} from "@northware/ui/components/menu/menu-data";
 import { MobileNavLink } from "@northware/ui/components/menu/nav-links";
 import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
 import {
@@ -21,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@northware/ui/components/panels/dialog";
+import { appTextColors, menuData } from "@northware/ui/lib/menu-data";
 import { LogOutIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { navigationMenuButtonStyle } from "./navigation-menu";
