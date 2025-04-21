@@ -37,5 +37,5 @@ export const appTextColors = new Map<ServiceType, string>([
   ["cockpit", "text-cockpit"],
   ["finance", "text-finance"],
   ["trader", "text-trader"],
-  ["admin", "text-foreground"],
+  ["admin", "text-admin"],
 ]);

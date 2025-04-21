@@ -1,5 +1,10 @@
 import type { ServiceType } from "@northware/service-config";
-import { CockpitIcon, FinanceIcon, TraderIcon } from "@northware/ui/icons";
+import {
+  AdminIcon,
+  CockpitIcon,
+  FinanceIcon,
+  TraderIcon,
+} from "@northware/ui/icons";
 
 import { cn } from "@northware/ui/lib/utils";
 
@@ -45,15 +50,17 @@ export function BrandIcon({
   service,
   ...props
 }: React.HTMLAttributes<SVGElement> & { service: ServiceType }) {
-  if (service === "cockpit") {
-    return <CockpitIcon {...props} />;
-  }
+  switch (service) {
+    case "cockpit":
+      return <CockpitIcon {...props} />;
+    case "finance":
+      return <FinanceIcon {...props} />;
+    case "trader":
+      return <TraderIcon {...props} />;
+    case "admin":
+      return <AdminIcon {...props} />;
 
-  if (service === "finance") {
-    return <FinanceIcon {...props} />;
-  }
-
-  if (service === "trader") {
-    return <TraderIcon {...props} />;
+    default:
+      return "";
   }
 }
