@@ -28,11 +28,10 @@ import Link from "next/link";
 export async function MainNav({ service }: { service: ServiceType }) {
   // TODO: Add NavMenu Rendering based on permissionKey
   const user = await currentUser();
-  console.log(user);
   const menuItems = await menuData(service, user?.id);
   // Die Hauptnavigation incl. Branding auf Desktops
   return (
-    <div className="container hidden md:block">
+    <div className="container hidden pt-1 md:block">
       <MetaNav service={service} user={user} />
       <div className="flex bg-background/95 py-2">
         <div className="flex gap-4">
