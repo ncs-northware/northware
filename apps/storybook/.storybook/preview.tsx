@@ -5,6 +5,9 @@ import "@northware/ui/css";
 import { ThemeProvider } from "@northware/ui/components/providers/theme-provider";
 import { source_sans } from "@northware/ui/lib/fonts";
 import { withThemeByClassName } from "@storybook/addon-themes";
+import { initialize, mswLoader } from "msw-storybook-addon";
+
+initialize();
 
 const preview: Preview = {
   parameters: {
@@ -64,6 +67,7 @@ const preview: Preview = {
       );
     },
   ],
+  loaders: [mswLoader],
 };
 
 export default preview;
