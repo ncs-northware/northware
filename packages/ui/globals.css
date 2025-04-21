@@ -149,6 +149,11 @@
   --primary-foreground: oklch(0.145 0 0);
 }
 
+.theme-admin {
+  --primary: oklch(70.4% 0.14 182.503);
+  --primary-foreground: oklch(0.985 0 0);
+}
+
 @theme inline {
   /* shadcn variables */
   --color-background: var(--background);
