@@ -42,7 +42,7 @@ export async function MobileNav({ service }: { service: ServiceType }) {
           </DialogTrigger>
           <DialogContent
             aria-describedby="Hauptmenü"
-            className="data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 flex flex-col border-b"
+            className="data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top translate-0 top-0 left-0 flex w-full max-w-full flex-col border-b"
           >
             <DialogTitle className="font-semibold">
               <Link href="/">
