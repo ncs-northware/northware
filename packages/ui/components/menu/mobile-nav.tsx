@@ -122,7 +122,7 @@ async function MobileNavMeta({
               href={
                 process.env[`NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`] || "#"
               }
-              linkClasses={`text-${app.slug} hover:text-${app.slug}`}
+              linkClasses={app.color}
             />
           );
         }

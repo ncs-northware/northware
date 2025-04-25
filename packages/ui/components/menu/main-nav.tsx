@@ -120,11 +120,7 @@ async function MetaNav({
                         `NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`
                       ] || ""
                     }
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      `text-${app.slug}`,
-                      `hover:text-${app.slug}`
-                    )}
+                    className={cn(navigationMenuTriggerStyle(), app.color)}
                   />
                 </NavigationMenuItem>
               );

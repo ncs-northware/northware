@@ -19,6 +19,13 @@ export function Brand({
   iconWidth?: string;
   service: ServiceType;
 }) {
+  const brandColors = {
+    admin: "text-admin",
+    cockpit: "text-cockpit",
+    finance: "text-finance",
+    trader: "text-trader",
+  };
+
   const subBrand = () => {
     switch (service) {
       case "cockpit":
@@ -40,7 +47,8 @@ export function Brand({
     >
       {textOnly ? "" : <BrandIcon service={service} className={iconWidth} />}
       <span>
-        Northware <span className={`text-${service}`}>{subBrand()}</span>
+        Northware{" "}
+        <span className={`${brandColors[service]}`}>{subBrand()}</span>
       </span>
     </div>
   );
