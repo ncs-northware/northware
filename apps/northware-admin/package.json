@@ -15,6 +15,7 @@
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:*",
     "@northware/ui": "workspace:*",
+    "@tanstack/react-table": "^8.21.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "drizzle-orm": "^0.42.0",

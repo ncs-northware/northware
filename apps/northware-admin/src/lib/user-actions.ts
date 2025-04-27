@@ -20,9 +20,15 @@ export async function getUsers() {
   try {
     const client = await clerkClient();
     const response = await client.users.getUserList();
-    return response;
+    const users = response.data.map((user) => ({
+      id: user.id,
+      fullName: user.fullName,
+      email: user.emailAddresses[0].emailAddress,
+      username: user.username,
+    }));
+    return users;
   } catch (error) {
-    console.error(error);
+    return [];
   }
 }
 
