@@ -12,7 +12,7 @@ export default async function EditUserPage({
   const userRolesResponse = await getUserRoles(userId);
   const roleListResponse = await getRoleList();
   return (
-    <Container service="cockpit">
+    <Container service="admin">
       <Headline level="h2">Accounts von {user?.username}</Headline>
       <RolesForm
         rolesResponse={roleListResponse}

@@ -4,11 +4,12 @@ import { Headline } from "@northware/ui/components/base/headline";
 import { Container } from "@northware/ui/components/layouts/container";
 import { PencilIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
-export default async function AdminDashboard() {
+
+export default async function UserDashboard() {
   const userArray = await getUsers();
   return (
-    <Container service="cockpit">
-      <Headline level="h1">Admin Dashboard</Headline>
+    <Container service="admin">
+      <Headline level="h1">Benutzerverwaltung</Headline>
       <Button variant="default">
         <Link href="admin/user/create">Benutzer hinzufügen</Link>
       </Button>

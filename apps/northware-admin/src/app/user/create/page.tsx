@@ -5,7 +5,7 @@ import { Container } from "@northware/ui/components/layouts/container";
 
 export default function CreateUserPage() {
   return (
-    <Container service="cockpit">
+    <Container service="admin">
       <Headline level="h1">Benutzer erstellen</Headline>
       <CreateUserForm createUser={createUser} />
     </Container>
