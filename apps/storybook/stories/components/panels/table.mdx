@@ -1,0 +1,49 @@
+import { Meta, Canvas, Controls, Stories } from "@storybook/blocks"
+import * as TableStories from "./table.stories"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta of={TableStories} />
+
+# Table
+
+Einige responsive Komponenten für eine einfache Tabelle
+
+<ShadcnDocs path="components/table" />
+<ViewSource path="components/panels/table.tsx" />
+
+<Canvas of={TableStories.Default} />
+<Controls of={TableStories.Default} />
+
+## Benutzung
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@northware/ui/components/panels/table"
+
+<Table>
+  <TableCaption>A list of your recent invoices.</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[100px]">Invoice</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead>Method</TableHead>
+      <TableHead className="text-right">Amount</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">INV001</TableCell>
+      <TableCell>Paid</TableCell>
+      <TableCell>Credit Card</TableCell>
+      <TableCell className="text-right">$250.00</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```

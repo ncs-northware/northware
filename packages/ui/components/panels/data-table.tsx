@@ -52,7 +52,7 @@ import {
 import { useState } from "react";
 import { Checkbox } from "../form-parts/checkbox";
 
-interface DataTableProps<TData, TValue> {
+export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterPlaceholder?: string;

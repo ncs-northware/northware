@@ -1,0 +1,29 @@
+import { Meta, Canvas, Controls, Stories } from "@storybook/blocks"
+import * as DataTableStories from "./data-table.stories"
+import { ViewSource, ShadcnDocs } from "../../../components/storybook-buttons"
+
+<Meta of={DataTableStories} />
+
+# DataTable
+
+Die Komponente `DataTable` ist eine komplexe Tabelle die die Komponente `Table` mit [@tanstack/react-table](https://tanstack.com/table/v8) erweitert.
+Die Tabelle lässt sich sortieren und filtern und enthält eine pagination.
+
+<ShadcnDocs path="components/data-table" />
+<ViewSource path="components/panels/data-table.tsx" />
+
+<Canvas of={DataTableStories.Default} />
+<Controls of={DataTableStories.Default} />
+
+## Benutzung
+
+```tsx
+import { DataTable } from "@northware/ui/components/panels/data-table";
+
+const data = [...]
+const columns = [...]
+
+<DataTable columns={columns} data={data} />
+```
+
+<Stories />
