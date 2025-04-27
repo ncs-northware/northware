@@ -22,7 +22,6 @@ export function ThemeSwitch({
 
   return (
     <Button
-      suppressHydrationWarning
       className={className}
       onClick={toggleTheme}
       variant={variant}
@@ -32,7 +31,7 @@ export function ThemeSwitch({
       <MoonIcon className="hidden group-[.storybook-lightTheme]:block [html.light_&]:block" />
       <span className="sr-only">Toggle theme</span>
       {withDescriptionText && (
-        <span className="ml-2 ">
+        <span className="ml-2" suppressHydrationWarning>
           {resolvedTheme === "dark"
             ? "Helles Design aktivieren"
             : "Dunkles Design aktivieren"}
