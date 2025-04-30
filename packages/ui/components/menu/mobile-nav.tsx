@@ -36,7 +36,7 @@ export async function MobileNav({ service }: { service: ServiceType }) {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className={navigationMenuButtonStyle()} variant="blank">
+            <Button className={navigationMenuButtonStyle()} variant="ghost">
               <MenuIcon className="h-6 w-6" />
             </Button>
           </DialogTrigger>

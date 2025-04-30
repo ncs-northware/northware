@@ -1,5 +1,19 @@
 "use client";
+
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  ChevronsUpDownIcon,
+  EyeOffIcon,
+} from "lucide-react";
+
 import { Button } from "@northware/ui/components/base/button";
+import { Checkbox } from "@northware/ui/components/form-parts/checkbox";
 import { Input } from "@northware/ui/components/form-parts/input";
 import {
   Select,
@@ -38,19 +52,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ArrowDown,
-  ArrowUp,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeftIcon,
-  ChevronsRightIcon,
-  ChevronsUpDown,
-  EyeOff,
-} from "lucide-react";
 import { useState } from "react";
-import { Checkbox } from "../form-parts/checkbox";
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -341,33 +343,33 @@ export function DataTableColumnHeader<TData, TValue>({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="blank"
+            variant="ghost"
             size="sm"
             className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
             <span>{title}</span>
             {column.getIsSorted() === "desc" ? (
-              <ArrowDown />
+              <ArrowDownIcon />
               // biome-ignore lint/nursery/noNestedTernary:
             ) : column.getIsSorted() === "asc" ? (
-              <ArrowUp />
+              <ArrowUpIcon />
             ) : (
-              <ChevronsUpDown />
+              <ChevronsUpDownIcon />
             )}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-            <ArrowUp className="h-3.5 w-3.5 text-muted-foreground/70" />
+            <ArrowUpIcon className="h-3.5 w-3.5 text-muted-foreground/70" />
             Aufsteigend sortieren
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-            <ArrowDown className="h-3.5 w-3.5 text-muted-foreground/70" />
+            <ArrowDownIcon className="h-3.5 w-3.5 text-muted-foreground/70" />
             Absteigend sortieren
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-            <EyeOff className="h-3.5 w-3.5 text-muted-foreground/70" />
+            <EyeOffIcon className="h-3.5 w-3.5 text-muted-foreground/70" />
             Spalte verstecken
           </DropdownMenuItem>
         </DropdownMenuContent>

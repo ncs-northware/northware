@@ -7,11 +7,11 @@ import * as React from "react";
 
 export function ThemeSwitch({
   className,
-  variant = "blank",
+  variant = "ghost",
   withDescriptionText = false,
 }: {
   className?: string;
-  variant?: "blank" | "outline";
+  variant?: "ghost" | "outline";
   withDescriptionText?: boolean;
 }) {
   const { setTheme, resolvedTheme } = useTheme();
