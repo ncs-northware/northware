@@ -15,7 +15,7 @@ const meta = {
     },
     variant: {
       control: "select",
-      options: ["default", "outline", "secondary", "link", "blank"],
+      options: ["default", "outline", "secondary", "link", "ghost"],
     },
     size: {
       control: "select",
@@ -63,13 +63,12 @@ export const LinkButton: Story = {
 };
 
 /**
- * Der `blank` Button rendert ein `<button>` element ohne wie ein Button auszusehen.
- * Dazu werden einzelne Standard-Stylings der Button Komponente zurückgesetzt.
+ * Der `ghost` Button ist recht unauffällig und für weniger auffällige AKtionen gedacht.
  */
 
-export const Blank: Story = {
+export const Ghost: Story = {
   args: {
-    variant: "blank",
+    variant: "ghost",
   },
 };
 

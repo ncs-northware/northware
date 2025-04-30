@@ -45,7 +45,7 @@ export const Dark: Story = {
 };
 
 /**
- * Der Property `variant` kann neben `blank` auch `outline` lauten.
+ * Der Property `variant` kann neben `ghost` auch `outline` lauten.
  * Dieses Property wird an den Button vererbt, sodass ein Button der Variante `outline` gezeigt wird.
  */
 

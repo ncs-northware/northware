@@ -49,12 +49,12 @@ const columns: ColumnDef<Payment>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+    cell: () => {
       return (
         <div className="text-right">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="blank" className="size-8 p-0">
+              <Button variant="ghost" className="size-8 p-0">
                 <span className="sr-only">Open Menu</span>
                 <MoreHorizontal className="size-4" />
               </Button>
