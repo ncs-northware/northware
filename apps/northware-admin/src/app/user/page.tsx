@@ -13,10 +13,12 @@ export default async function UserDashboard() {
   const userArray = (await getUsers()) || [];
   return (
     <Container service="admin">
-      <Headline level="h1">Benutzerverwaltung</Headline>
-      <Button variant="default">
-        <Link href="admin/user/create">Benutzer hinzufügen</Link>
-      </Button>
+      <div className="flex items-center justify-between">
+        <Headline level="h1">Benutzerverwaltung</Headline>
+        <Button variant="default">
+          <Link href="user/create">Benutzer hinzufügen</Link>
+        </Button>
+      </div>
       <DataTable columns={columns} data={userArray} withRowSelect={false} />
     </Container>
   );

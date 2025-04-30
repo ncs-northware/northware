@@ -45,12 +45,15 @@ export const columns: ColumnDef<UserRow>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex justify-end">
-          <Button variant="blank" asChild>
+          <Button variant="ghost" asChild>
             <Link href={`user/${row.original.id}`}>
               <EditIcon />
             </Link>
           </Button>
-          <Button variant="blank" className="text-danger">
+          <Button
+            variant="ghost"
+            className="text-danger hover:bg-danger/30 hover:text-danger"
+          >
             <TrashIcon />
           </Button>
         </div>
