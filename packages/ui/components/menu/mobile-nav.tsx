@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@northware/ui/components/panels/dialog";
-import { appTextColors, menuData } from "@northware/ui/lib/menu-data";
+import { menuData } from "@northware/ui/lib/menu-data";
 import { LogOutIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { navigationMenuButtonStyle } from "./navigation-menu";
@@ -36,7 +36,7 @@ export async function MobileNav({ service }: { service: ServiceType }) {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className={navigationMenuButtonStyle()} variant="blank">
+            <Button className={navigationMenuButtonStyle()} variant="ghost">
               <MenuIcon className="h-6 w-6" />
             </Button>
           </DialogTrigger>
@@ -117,10 +117,12 @@ async function MobileNavMeta({
         if (app.slug !== service) {
           return (
             <MobileNavLink
-              key={app.title}
+              key={app.slug}
               title={app.title}
-              href={app.href || "#"}
-              linkClasses={`${appTextColors.get(app.slug)} ${`hover:${appTextColors.get(app.slug)}`}`}
+              href={
+                process.env[`NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`] || "#"
+              }
+              linkClasses={app.color}
             />
           );
         }

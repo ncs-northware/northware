@@ -32,10 +32,3 @@ export async function menuData(service: ServiceType, userId?: string) {
   };
   return { topLevelItems, childItems };
 }
-
-export const appTextColors = new Map<ServiceType, string>([
-  ["cockpit", "text-cockpit"],
-  ["finance", "text-finance"],
-  ["trader", "text-trader"],
-  ["admin", "text-foreground"],
-]);

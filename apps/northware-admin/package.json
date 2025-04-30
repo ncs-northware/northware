@@ -1,0 +1,32 @@
+{
+  "name": "northware-admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack --port 40100",
+    "build": "next build",
+    "start": "next start",
+    "tsc-check": "tsc --noEmit",
+    "lint": "ultracite lint",
+    "format": "ultracite format"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@northware/auth": "workspace:*",
+    "@northware/database": "workspace:*",
+    "@northware/ui": "workspace:*",
+    "@tanstack/react-table": "^8.21.3",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "drizzle-orm": "^0.42.0",
+    "next": "15.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.56.0",
+    "typescript": "^5.8.3",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@northware/tsconfig": "workspace:*"
+  }
+}

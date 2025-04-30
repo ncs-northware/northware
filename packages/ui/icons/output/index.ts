@@ -1,3 +1,4 @@
+export { default as AdminIcon } from "./admin-icon";
 export { default as CockpitIcon } from "./cockpit-icon";
 export { default as FinanceIcon } from "./finance-icon";
 export { default as GithubIcon } from "./github-icon";

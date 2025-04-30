@@ -21,7 +21,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@northware/ui/components/menu/navigation-menu";
 import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
-import { appTextColors, menuData } from "@northware/ui/lib/menu-data";
+import { menuData } from "@northware/ui/lib/menu-data";
 import { cn } from "@northware/ui/lib/utils";
 import { UserIcon } from "lucide-react";
 import Link from "next/link";
@@ -111,16 +111,16 @@ async function MetaNav({
           {suiteAppsMeta.map((app) => {
             if (service !== app.slug) {
               return (
-                <NavigationMenuItem key={app.title}>
+                <NavigationMenuItem key={app.slug}>
                   <MainNavLink
                     controlActiveState={false}
                     title={app.title}
-                    href={app.href || "#"}
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      appTextColors.get(app.slug),
-                      `hover:${appTextColors.get(app.slug)}`
-                    )}
+                    href={
+                      process.env[
+                        `NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`
+                      ] || ""
+                    }
+                    className={cn(navigationMenuTriggerStyle(), app.color)}
                   />
                 </NavigationMenuItem>
               );
