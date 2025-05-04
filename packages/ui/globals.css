@@ -215,7 +215,7 @@
 
 @utility container {
   padding-top: 1.5rem;
-  margin: auto;
+  margin-inline: auto;
 }
 
 @layer base {
