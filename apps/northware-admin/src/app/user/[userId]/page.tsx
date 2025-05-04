@@ -2,7 +2,6 @@ import { RolesForm } from "@/components/update-user-form";
 import { getRoleList, getSingleUser } from "@/lib/user-actions";
 import { getUserRoles } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/base/headline";
-import { Container } from "@northware/ui/components/layouts/container";
 
 export default async function EditUserPage({
   params,
@@ -12,13 +11,13 @@ export default async function EditUserPage({
   const userRolesResponse = await getUserRoles(userId);
   const roleListResponse = await getRoleList();
   return (
-    <Container service="admin">
+    <>
       <Headline level="h2">Accounts von {user?.username}</Headline>
       <RolesForm
         rolesResponse={roleListResponse}
         userRolesResponse={userRolesResponse}
         userId={userId}
       />
-    </Container>
+    </>
   );
 }
