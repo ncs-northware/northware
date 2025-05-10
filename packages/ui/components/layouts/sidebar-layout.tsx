@@ -20,7 +20,7 @@ interface UserSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export type SidebarDataType = {
-  title: string;
+  title: string | undefined | null;
   items: {
     title: string;
     url: string;
