@@ -160,6 +160,8 @@ function LoginErrorAlert({ code, message }: { code: string; message: string }) {
         return "Bitte geben Sie eine gültige E-Mail-Adresse an.";
       case "form_password_incorrect":
         return "Das Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.";
+      case "form_password_pwned":
+        return "Sie nutzen ein kompromitiertes Passwort. Aus Sicherheitsgründen können Sie sich erst wieder einloggen, wenn Sie ein sicheres Passwort verwenden. Bitten wenden Sie sich an den Support.";
 
       default:
         return `${message} (${code})`;
