@@ -1,6 +1,9 @@
 "use server";
 
-import type { TCreateUserFormSchema } from "@/lib/user-schema";
+import type {
+  TCreateUserFormSchema,
+  TUpdateUserFormSchema,
+} from "@/lib/user-schema";
 import { clerkClient } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
 import { rolesTable, rolesToAccounts } from "@northware/database/schema";
@@ -16,6 +19,67 @@ interface ClerkError {
   }>;
 }
 
+function handleClerkError(typesafeError: ClerkError) {
+  const errorMessages: string[] = [];
+  if (typesafeError.errors) {
+    typesafeError.errors.map((error) => {
+      switch (error.code) {
+        case "form_password_length_too_short":
+          errorMessages.push(
+            "Das Passwort muss mindestens 8 Zeichen lang sein."
+          );
+          break;
+        case "form_password_size_in_bytes_exceeded":
+          errorMessages.push("Das Passwort darf maximal 72 Zeichen lang sein.");
+          break;
+        case "form_password_pwned":
+          errorMessages.push(
+            "Dies ist ein kompromitiertes Passwort. Bitte nutzen Sie ein anderes Passwort."
+          );
+          break;
+        case "form_username_invalid_length":
+          errorMessages.push(
+            "Der Benutzername muss zwischen 4 und 64 Zeichen lang sein."
+          );
+          break;
+        case "form_param_format_invalid":
+          errorMessages.push("Bitte geben Sie eine gültige E-Mail Adresse an.");
+          break;
+        case "form_identifier_exists":
+          switch (error.meta.paramName) {
+            case "email_address":
+              errorMessages.push(
+                "Diese E-Mail Adresse ist bereits registriert."
+              );
+              break;
+            case "username":
+              errorMessages.push("Dieser Benutzername ist bereits vergeben.");
+              break;
+            default:
+              errorMessages.push(
+                "Der Username oder die E-Mail-Adresse ist bereits vergeben."
+              );
+              break;
+          }
+          break;
+        default:
+          errorMessages.push(
+            `Es ist ein Fehler aufgetreten: ${error.message} (Fehlercode: ${error.code})` ||
+              "Es ist ein unbekannter Fehler bei der Kommunikation mit dem Server aufgetreten."
+          );
+          break;
+      }
+    });
+  } else {
+    errorMessages.push(
+      "Es ist ein unbekannter Fehler beim Aktualisieren des Nutzers aufgetreten."
+    );
+  }
+  if (errorMessages.length > 0) {
+    throw new Error(JSON.stringify(errorMessages));
+  }
+}
+
 export async function getUsers() {
   try {
     const client = await clerkClient();
@@ -24,11 +88,33 @@ export async function getUsers() {
       id: user.id,
       fullName: user.fullName,
       email: user.emailAddresses[0].emailAddress,
+      // FIXME: show primary emailAddress
       username: user.username,
     }));
     return users;
   } catch (error) {
     return [];
+  }
+}
+
+export async function getSingleUser(id: string) {
+  try {
+    const client = await clerkClient();
+    const response = await client.users.getUser(id);
+    const user_emailAddresses = response.emailAddresses.map((email) => {
+      return { id: email.id, emailAddress: email.emailAddress };
+    });
+    return {
+      id: response.id,
+      firstName: response.firstName,
+      lastName: response.lastName,
+      fullName: response.fullName,
+      username: response.username,
+      emailAddresses: user_emailAddresses,
+      primaryEmaiAddressId: response.primaryEmailAddressId,
+    };
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -45,81 +131,46 @@ export async function createUser(formData: TCreateUserFormSchema) {
     });
     revalidatePath("/admin");
   } catch (error) {
-    const errorMessages: string[] = [];
     const typesafeError = error as ClerkError;
-    if (typesafeError.errors) {
-      typesafeError.errors.map((error) => {
-        switch (error.code) {
-          case "form_password_length_too_short":
-            errorMessages.push(
-              "Das Passwort muss mindestens 8 Zeichen lang sein."
-            );
-            break;
-          case "form_password_size_in_bytes_exceeded":
-            errorMessages.push(
-              "Das Passwort darf maximal 72 Zeichen lang sein."
-            );
-            break;
-          case "form_password_pwned":
-            errorMessages.push(
-              "Dies ist ein kompromitiertes Passwort. Bitte nutzen Sie ein anderes Passwort."
-            );
-            break;
-          case "form_username_invalid_length":
-            errorMessages.push(
-              "Der Benutzername muss zwischen 4 und 64 Zeichen lang sein."
-            );
-            break;
-          case "form_param_format_invalid":
-            errorMessages.push(
-              "Bitte geben Sie eine gültige E-Mail Adresse an."
-            );
-            break;
-          case "form_identifier_exists":
-            switch (error.meta.paramName) {
-              case "email_address":
-                errorMessages.push(
-                  "Diese E-Mail Adresse ist bereits registriert."
-                );
-                break;
-              case "username":
-                errorMessages.push("Dieser Benutzername ist bereits vergeben.");
-                break;
-              default:
-                errorMessages.push(
-                  "Der Username oder die E-Mail-Adresse ist bereits vergeben."
-                );
-                break;
-            }
-            break;
-          default:
-            errorMessages.push(
-              `Es ist ein Fehler aufgetreten: ${error.message} (Fehlercode: ${error.code})` ||
-                "Es ist ein unbekannter Fehler bei der Kommunikation mit dem Server aufgetreten."
-            );
-            break;
-        }
+    handleClerkError(typesafeError);
+  }
+}
+
+export async function updateUser(
+  id: string | undefined,
+  formData: TUpdateUserFormSchema
+) {
+  if (typeof id === "undefined") {
+    new Error(
+      "Beim Aufruf der Funktion wurde nicht angegeben, welche Id der User hat."
+    );
+  } else {
+    const { username, firstName, lastName } = formData;
+
+    try {
+      const client = await clerkClient();
+      await client.users.updateUser(id, {
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
       });
-    } else {
-      errorMessages.push(
-        "Es ist ein unbekannter Fehler beim Anlegen des Nutzers aufgetreten."
-      );
-    }
-    if (errorMessages.length > 0) {
-      throw new Error(JSON.stringify(errorMessages));
+      revalidatePath("/user");
+    } catch (error) {
+      const typesafeError = error as ClerkError;
+      handleClerkError(typesafeError);
     }
   }
 }
 
-export async function getSingleUser(id: string) {
-  try {
-    const client = await clerkClient();
-    const response = await client.users.getUser(id);
-    return response;
-  } catch (error) {
-    console.error(error);
-  }
-}
+export type TSingleUser = {
+  id: string;
+  username: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  fullName: string | null;
+  emailAddresses: { id: string; emailAddress: string }[];
+  primaryEmaiAddressId: string | null;
+};
 
 export async function deleteUser(id: string) {
   try {
