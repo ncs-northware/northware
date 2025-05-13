@@ -17,9 +17,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@northware/ui/components/panels/card";
-import { LoaderCircle, PencilIcon } from "lucide-react";
+import { EyeClosedIcon, EyeIcon, LoaderCircle, PencilIcon } from "lucide-react";
+import { useState } from "react";
 
 export function LoginForm({ service }: { service: ServiceType }) {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <main className="flex h-screen w-full flex-col items-center justify-center px-4">
       <SignIn.Root>
@@ -89,9 +92,23 @@ export function LoginForm({ service }: { service: ServiceType }) {
                         <Clerk.Label asChild>
                           <Label>Passwort</Label>
                         </Clerk.Label>
-                        <Clerk.Input type="password" asChild>
-                          <Input />
-                        </Clerk.Input>
+                        <div className="flex">
+                          <Clerk.Input
+                            asChild
+                            type={showPassword ? "text" : "password"}
+                          >
+                            <Input className="rounded-r-none border-r-0" />
+                          </Clerk.Input>
+                          <Button
+                            onClick={() => setShowPassword(!showPassword)}
+                            variant="ghost"
+                            size="icon"
+                            className="rounded-l-none border border-input bg-background dark:bg-input/30"
+                            type="button"
+                          >
+                            {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
+                          </Button>
+                        </div>
                         <Clerk.FieldError>
                           {({ message, code }) => (
                             <LoginErrorAlert code={code} message={message} />
