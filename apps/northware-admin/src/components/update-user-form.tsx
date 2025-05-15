@@ -5,6 +5,7 @@ import {
   changePassword,
   createEmailAddress,
   deleteEmailAddress,
+  deleteUser,
   type getSingleUser,
   updateEmailAddress,
   updateRoles,
@@ -63,6 +64,7 @@ import {
   BadgeCheckIcon,
   EllipsisIcon,
   MailIcon,
+  TrashIcon,
   TriangleAlertIcon,
 } from "@northware/ui/icons/lucide";
 import { useRouter } from "next/navigation";
@@ -579,6 +581,35 @@ export function EditPasswordFormDialog({ id }: { id?: string }) {
         </DialogHeader>
       </DialogContent>
     </Dialog>
+  );
+}
+
+export function UserDeleteButton({ userId }: { userId: string }) {
+  const [errors, setErrors] = useState<string[]>([]);
+  async function submitUserDeletion() {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      await deleteUser(userId);
+      toast.success("Der Benutzer wurde gelöscht.");
+    } catch (err) {
+      if (err instanceof Error) {
+        // Parse die Fehlermeldungen aus dem Error-Objekt
+        const errorMessages = JSON.parse(err.message) as string[];
+        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
+      } else {
+        setErrors([
+          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
+        ]);
+      }
+      if (errors.length > 0) {
+        toast.error(errors);
+      }
+    }
+  }
+  return (
+    <Button variant="ghostDanger" onClick={() => submitUserDeletion()}>
+      <TrashIcon />
+    </Button>
   );
 }
 

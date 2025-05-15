@@ -177,11 +177,11 @@ export async function updateUser(formData: TUpdateUserFormSchema, id?: string) {
 export async function deleteUser(id: string) {
   try {
     const client = await clerkClient();
-    const response = await client.users.deleteUser(id);
-
-    console.info(response);
+    await client.users.deleteUser(id);
+    revalidatePath("/user");
   } catch (error) {
-    console.error(error);
+    const typesafeError = error as ClerkError;
+    handleClerkError(typesafeError);
   }
 }
 
