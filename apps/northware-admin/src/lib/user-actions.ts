@@ -103,13 +103,22 @@ export async function getSingleUser(id: string) {
   try {
     const client = await clerkClient();
     const response = await client.users.getUser(id);
-    const user_emailAddresses = response.emailAddresses.map((email) => {
-      return {
+    const user_emailAddresses = response.emailAddresses
+      .map((email) => ({
         id: email.id,
         emailAddress: email.emailAddress,
         verificationStatus: email.verification?.status,
-      };
-    });
+      }))
+      .sort((a, b) => {
+        if (a.id === response.primaryEmailAddressId) {
+          return -1; // 'a' kommt zuerst
+        }
+        if (b.id === response.primaryEmailAddressId) {
+          return 1; // 'b' kommt zuerst
+        }
+        // Alphabetische Sortierung der übrigen E-Mail-Adressen
+        return a.emailAddress.localeCompare(b.emailAddress);
+      });
     return {
       id: response.id,
       firstName: response.firstName,
@@ -117,7 +126,7 @@ export async function getSingleUser(id: string) {
       fullName: response.fullName,
       username: response.username,
       emailAddresses: user_emailAddresses,
-      primaryEmaiAddressId: response.primaryEmailAddressId,
+      primaryEmailAddressId: response.primaryEmailAddressId,
     };
   } catch (error) {
     console.error(error);
@@ -172,7 +181,7 @@ export type TSingleUser = {
   lastName: string | null;
   fullName: string | null;
   emailAddresses: { id: string; emailAddress: string }[];
-  primaryEmaiAddressId: string | null;
+  primaryEmailAddressId: string | null;
 };
 
 export async function deleteUser(id: string) {

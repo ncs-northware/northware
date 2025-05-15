@@ -23,7 +23,7 @@ export default async function EditUserPage({
       <UserEmailList
         userId={user?.id}
         data={user?.emailAddresses}
-        primaryEmailAddressId={user?.primaryEmaiAddressId}
+        primaryEmailAddressId={user?.primaryEmailAddressId}
       />
     </>
   );

@@ -171,7 +171,7 @@ export function UserEmailList({
   primaryEmailAddressId,
 }: {
   userId?: string;
-  data?: { id: string; emailAddress: string; verificationStatus: string }[];
+  data?: { id: string; emailAddress: string; verificationStatus?: string }[];
   primaryEmailAddressId?: string | null;
 }) {
   const [errors, setErrors] = useState<string[]>([]);
