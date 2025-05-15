@@ -2,10 +2,10 @@
 
 import {
   type TRoleListResponse,
-  type TSingleUser,
   changePassword,
   createEmailAddress,
   deleteEmailAddress,
+  type getSingleUser,
   updateEmailAddress,
   updateRoles,
   updateUser,
@@ -72,7 +72,9 @@ import { z } from "zod";
 
 // Clerk User Data
 
-export function EditUserForm({ user }: { user?: TSingleUser }) {
+export function EditUserForm({
+  user,
+}: { user?: Awaited<ReturnType<typeof getSingleUser>> }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<z.infer<typeof updateUserFromSchema>>({
     resolver: zodResolver(updateUserFromSchema),

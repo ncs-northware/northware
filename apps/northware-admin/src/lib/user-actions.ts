@@ -174,16 +174,6 @@ export async function updateUser(formData: TUpdateUserFormSchema, id?: string) {
   }
 }
 
-export type TSingleUser = {
-  id: string;
-  username: string | null;
-  firstName: string | null;
-  lastName: string | null;
-  fullName: string | null;
-  emailAddresses: { id: string; emailAddress: string }[];
-  primaryEmailAddressId: string | null;
-};
-
 export async function deleteUser(id: string) {
   try {
     const client = await clerkClient();
