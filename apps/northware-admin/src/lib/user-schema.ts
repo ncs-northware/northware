@@ -33,11 +33,37 @@ export const updateUserFromSchema = z.object({
     }),
 });
 
-export const NewEmailFormSchema = z.object({
-  email: z.string(),
-  setAsVerified: z.boolean().default(true).optional(),
-  setAsPrimary: z.boolean().default(false).optional(),
+export const createEMailAddressFormSchema = z.object({
+  emailAddress: z.string(),
+  verified: z.boolean().default(true).optional(),
+  primary: z.boolean().default(false).optional(),
 });
+
+export const changePasswordFormSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(8, { message: "Das Passwort muss mindestens 8 Zeichen lang sein." })
+      .max(72, { message: "Das Passwort darf maximal 72 Zeichen lang sein." }),
+    confirmPassword: z.string(),
+    signOutSessions: z.boolean(),
+    skipChecks: z.boolean(),
+  })
+  .superRefine(({ newPassword, confirmPassword }, ctx) => {
+    if (confirmPassword !== newPassword) {
+      ctx.addIssue({
+        path: ["confirmPassword"],
+        code: "custom",
+        message: "Die Passwörter stimmen nicht überein",
+      });
+    }
+  });
 
 export type TCreateUserFormSchema = z.infer<typeof createUserFormSchema>;
 export type TUpdateUserFormSchema = z.infer<typeof updateUserFromSchema>;
+export type TChangePasswordFormSchema = z.infer<
+  typeof changePasswordFormSchema
+>;
+export type TCreateEMailAddressFormSchema = z.infer<
+  typeof createEMailAddressFormSchema
+>;

@@ -1,6 +1,8 @@
 "use server";
 
 import type {
+  TChangePasswordFormSchema,
+  TCreateEMailAddressFormSchema,
   TCreateUserFormSchema,
   TUpdateUserFormSchema,
 } from "@/lib/user-schema";
@@ -102,8 +104,13 @@ export async function getSingleUser(id: string) {
     const client = await clerkClient();
     const response = await client.users.getUser(id);
     const user_emailAddresses = response.emailAddresses.map((email) => {
-      return { id: email.id, emailAddress: email.emailAddress };
+      return {
+        id: email.id,
+        emailAddress: email.emailAddress,
+        verificationStatus: email.verification?.status,
+      };
     });
+    console.log(user_emailAddresses[0].verificationStatus);
     return {
       id: response.id,
       firstName: response.firstName,
@@ -136,10 +143,7 @@ export async function createUser(formData: TCreateUserFormSchema) {
   }
 }
 
-export async function updateUser(
-  id: string | undefined,
-  formData: TUpdateUserFormSchema
-) {
+export async function updateUser(formData: TUpdateUserFormSchema, id?: string) {
   if (typeof id === "undefined") {
     new Error(
       "Beim Aufruf der Funktion wurde nicht angegeben, welche Id der User hat."
@@ -180,6 +184,58 @@ export async function deleteUser(id: string) {
     console.info(response);
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function createEMailAddress(
+  formData: TCreateEMailAddressFormSchema,
+  userId?: string
+) {
+  if (typeof userId === "undefined") {
+    new Error(
+      "Beim Aufruf der Funktion wurde nicht angegeben, welche Id der User hat."
+    );
+  } else {
+    const { emailAddress, verified, primary } = formData;
+    try {
+      const client = await clerkClient();
+      await client.emailAddresses.createEmailAddress({
+        userId: userId,
+        emailAddress: emailAddress,
+        verified: verified,
+        primary: primary,
+      });
+      revalidatePath("/user");
+    } catch (error) {
+      const typesafeError = error as ClerkError;
+      handleClerkError(typesafeError);
+    }
+  }
+}
+
+export async function changePassword(
+  id: string | undefined,
+  formData: TChangePasswordFormSchema
+) {
+  if (typeof id === "undefined") {
+    new Error(
+      "Beim Aufruf der Funktion wurde nicht angegeben, welche ID der User hat."
+    );
+  } else if (formData.newPassword === formData.confirmPassword) {
+    try {
+      const client = await clerkClient();
+      await client.users.updateUser(id, {
+        password: formData.newPassword,
+        skipPasswordChecks: formData.skipChecks,
+        signOutOfOtherSessions: formData.signOutSessions,
+      });
+      revalidatePath("/user");
+    } catch (error) {
+      const typesafeError = error as ClerkError;
+      handleClerkError(typesafeError);
+    }
+  } else {
+    new Error("Die eingegebenen Passwörter stimmen nicht überein.");
   }
 }
 

@@ -3,12 +3,16 @@
 import {
   type TRoleListResponse,
   type TSingleUser,
+  changePassword,
+  createEMailAddress,
   updateRoles,
   updateUser,
 } from "@/lib/user-actions";
 import {
-  NewEmailFormSchema,
+  type TChangePasswordFormSchema,
   type TUpdateUserFormSchema,
+  changePasswordFormSchema,
+  createEMailAddressFormSchema,
   updateUserFromSchema,
 } from "@/lib/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +28,7 @@ import {
   FormMessage,
 } from "@northware/ui/components/form-parts/form";
 import { Input } from "@northware/ui/components/form-parts/input";
+import { PasswordInput } from "@northware/ui/components/form-parts/password-input";
 import { Alert } from "@northware/ui/components/panels/alert";
 import {
   Dialog,
@@ -32,17 +37,417 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@northware/ui/components/panels/dialog";
+import { toast } from "@northware/ui/components/panels/sonner";
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
 } from "@northware/ui/components/panels/table";
-import { MailIcon } from "@northware/ui/icons/lucide";
+import { BadgeCheckIcon, MailIcon } from "@northware/ui/icons/lucide";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+
+// Clerk User Data
+
+export function EditUserForm({ user }: { user?: TSingleUser }) {
+  const [errors, setErrors] = useState<string[]>([]);
+  const form = useForm<z.infer<typeof updateUserFromSchema>>({
+    resolver: zodResolver(updateUserFromSchema),
+    defaultValues: {
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+      username: user?.username || "",
+    },
+  });
+
+  const onSubmit: SubmitHandler<TUpdateUserFormSchema> = async (data) => {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      await updateUser(data, user?.id);
+      toast.success("Die Daten des Benutzers wurden aktualisiert.");
+    } catch (err) {
+      if (err instanceof Error) {
+        // Parse die Fehlermeldungen aus dem Error-Objekt
+        const errorMessages = JSON.parse(err.message) as string[];
+        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
+      } else {
+        setErrors([
+          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
+        ]);
+      }
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mb-5 grid grid-cols-2 gap-4"
+      >
+        <FormField
+          control={form.control}
+          name="firstName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Vorname</FormLabel>
+              <FormControl>
+                <Input placeholder="Max" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nachname</FormLabel>
+              <FormControl>
+                <Input placeholder="Mustermann" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem className="col-span-2">
+              <FormLabel>Benutzername</FormLabel>
+              <FormControl>
+                <Input placeholder="mmuster" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {errors.length > 0 && (
+          <Alert variant="danger" className="col-span-2">
+            <ul className="w-max">
+              {errors.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </Alert>
+        )}
+
+        <Button variant="default" type="submit" className="col-span-2">
+          Speichern
+        </Button>
+      </form>
+    </Form>
+  );
+}
+
+export function UserEmailList({
+  userId,
+  data,
+  primaryEmailAddressId,
+}: {
+  userId?: string;
+  data?: { id: string; emailAddress: string; verificationStatus?: string }[];
+  primaryEmailAddressId?: string | null;
+}) {
+  return (
+    <>
+      <Table className="mb-2">
+        <TableBody>
+          {data?.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <MailIcon className="size-4" />
+                  <span>{row.emailAddress}</span>
+                  {row.verificationStatus === "verified" && (
+                    <BadgeCheckIcon className="size-4 text-success" />
+                  )}
+                  {primaryEmailAddressId === row.id && (
+                    <Badge
+                      variant="secondary"
+                      className="bg-success text-success-foreground"
+                    >
+                      Primär-Adresse
+                    </Badge>
+                  )}
+                </div>
+              </TableCell>
+              <TableCell className="text-right">
+                {primaryEmailAddressId !== row.id && (
+                  <Button variant="ghost" size="sm">
+                    Als primär kennzeichnen
+                  </Button>
+                )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-danger hover:bg-danger/20 hover:text-danger"
+                >
+                  E-Mail Adresse löschen
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <CreateEmailFormDialog userId={userId} />
+    </>
+  );
+}
+
+function CreateEmailFormDialog({ userId }: { userId?: string }) {
+  const [errors, setErrors] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+  const form = useForm<z.infer<typeof createEMailAddressFormSchema>>({
+    resolver: zodResolver(createEMailAddressFormSchema),
+    defaultValues: {
+      emailAddress: "",
+      verified: true,
+      primary: false,
+    },
+  });
+
+  async function onSubmit(
+    values: z.infer<typeof createEMailAddressFormSchema>
+  ) {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      await createEMailAddress(values, userId);
+      setOpen(false);
+      toast.success("Die E-Mail Adresse wurde hinzugefügt.");
+    } catch (err) {
+      if (err instanceof Error) {
+        // Parse die Fehlermeldungen aus dem Error-Objekt
+        const errorMessages = JSON.parse(err.message) as string[];
+        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
+      } else {
+        setErrors([
+          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
+        ]);
+      }
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm">
+          E-Mail Adresse hinzufügen
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Neue E-Mail Adresse hinzufügen</DialogTitle>
+          <div>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="grid gap-4 py-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="emailAddress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-Mail Adresse</FormLabel>
+                      <FormControl>
+                        <Input placeholder="kunde@northware.de" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="primary"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Als primär kennzeichnen</FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="verified"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Als bestätigt kennzeichnen</FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                {errors.length > 0 && (
+                  <Alert variant="danger">
+                    <ul className="w-max">
+                      {errors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </Alert>
+                )}
+                <Button type="submit" variant="default">
+                  E-Mail Adresse hinzufügen
+                </Button>
+              </form>
+            </Form>
+          </div>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export function EditPasswordFormDialog({ id }: { id?: string }) {
+  const [errors, setErrors] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+
+  const form = useForm<z.infer<typeof changePasswordFormSchema>>({
+    resolver: zodResolver(changePasswordFormSchema),
+    defaultValues: {
+      newPassword: "",
+      confirmPassword: "",
+      signOutSessions: false,
+      skipChecks: false,
+    },
+  });
+
+  const onSubmit: SubmitHandler<TChangePasswordFormSchema> = async (data) => {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      await changePassword(id, data);
+      setOpen(false);
+      toast.success("Das Passwort wurde gespeichert.");
+    } catch (err) {
+      if (err instanceof Error) {
+        // Parse die Fehlermeldungen aus dem Error-Objekt
+        const errorMessages = JSON.parse(err.message) as string[];
+        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
+      } else {
+        setErrors([
+          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
+        ]);
+      }
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm">
+          Passwort ändern
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Passwort ändern</DialogTitle>
+          <div>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="grid gap-4 py-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="newPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Neues Passwort</FormLabel>
+                      <FormControl>
+                        <PasswordInput {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Passwort bestätigen</FormLabel>
+                      <FormControl>
+                        <PasswordInput {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="signOutSessions"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Von allen Sitzungen abmelden</FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="skipChecks"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Passwort-Prüfungen überspringen</FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                {errors.length > 0 && (
+                  <Alert variant="danger">
+                    <ul className="w-max">
+                      {errors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </Alert>
+                )}
+                <Button type="submit" variant="default">
+                  Passwort ändern
+                </Button>
+              </form>
+            </Form>
+          </div>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// User Roles
 
 type RolesFormProps = {
   rolesResponse: TRoleListResponse;
@@ -129,240 +534,5 @@ export function RolesForm({
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-  );
-}
-
-export function EditUserForm({ user }: { user?: TSingleUser }) {
-  const [errors, setErrors] = useState<string[]>([]);
-  const form = useForm<z.infer<typeof updateUserFromSchema>>({
-    resolver: zodResolver(updateUserFromSchema),
-    defaultValues: {
-      firstName: user?.firstName || "",
-      lastName: user?.lastName || "",
-      username: user?.username || "",
-    },
-  });
-  const router = useRouter();
-
-  const onSubmit: SubmitHandler<TUpdateUserFormSchema> = async (data) => {
-    setErrors([]); // Fehler zurücksetzen
-    try {
-      await updateUser(user?.id, data);
-      router.push("/user");
-    } catch (err) {
-      if (err instanceof Error) {
-        // Parse die Fehlermeldungen aus dem Error-Objekt
-        const errorMessages = JSON.parse(err.message) as string[];
-        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
-      } else {
-        setErrors([
-          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
-        ]);
-      }
-    }
-  };
-
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mb-5 grid grid-cols-2 gap-4"
-      >
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Vorname</FormLabel>
-              <FormControl>
-                <Input placeholder="Max" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nachname</FormLabel>
-              <FormControl>
-                <Input placeholder="Mustermann" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem className="col-span-2">
-              <FormLabel>Benutzername</FormLabel>
-              <FormControl>
-                <Input placeholder="mmuster" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {errors.length > 0 && (
-          <Alert variant="danger" className="col-span-2">
-            <ul className="w-max">
-              {errors.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </Alert>
-        )}
-
-        <Button variant="default" type="submit" className="col-span-2">
-          Speichern
-        </Button>
-      </form>
-    </Form>
-  );
-}
-
-export function UserEmailList({
-  data,
-  primaryEmailAddressId,
-}: {
-  data?: { id: string; emailAddress: string }[];
-  primaryEmailAddressId?: string | null;
-}) {
-  return (
-    <>
-      <Table className="mb-2">
-        <TableBody>
-          {data?.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>
-                <div className="flex items-center gap-2">
-                  <MailIcon className="size-4" />
-                  <span>{row.emailAddress}</span>
-                  {primaryEmailAddressId === row.id && (
-                    <Badge
-                      variant="secondary"
-                      className="bg-success text-success-foreground"
-                    >
-                      Primär-Adresse
-                    </Badge>
-                  )}
-                </div>
-              </TableCell>
-              <TableCell className="text-right">
-                {primaryEmailAddressId !== row.id && (
-                  <Button variant="ghost" size="sm">
-                    Als primär kennzeichnen
-                  </Button>
-                )}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-danger hover:bg-danger/20 hover:text-danger"
-                >
-                  E-Mail Adresse löschen
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <NewEmailFormDialog />
-    </>
-  );
-}
-
-function NewEmailFormDialog() {
-  const form = useForm<z.infer<typeof NewEmailFormSchema>>({
-    resolver: zodResolver(NewEmailFormSchema),
-    defaultValues: {
-      email: "",
-      setAsVerified: true,
-      setAsPrimary: false,
-    },
-  });
-
-  function onSubmit(values: z.infer<typeof NewEmailFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
-
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          E-Mail Adresse hinzufügen
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Neue E-Mail Adresse hinzufügen</DialogTitle>
-          <div>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="grid gap-4 py-4"
-              >
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>E-Mail Adresse</FormLabel>
-                      <FormControl>
-                        <Input placeholder="kunde@northware.de" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="setAsPrimary"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Als primär kennzeichnen</FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="setAsVerified"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Als bestätigt kennzeichnen</FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" variant="default">
-                  E-Mail Adresse hinzufügen
-                </Button>
-              </form>
-            </Form>
-          </div>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
   );
 }
