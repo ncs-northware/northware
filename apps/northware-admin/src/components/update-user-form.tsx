@@ -5,6 +5,7 @@ import {
   type TSingleUser,
   changePassword,
   createEmailAddress,
+  deleteEmailAddress,
   updateEmailAddress,
   updateRoles,
   updateUser,
@@ -219,6 +220,24 @@ export function UserEmailList({
     }
   };
 
+  const submitEmailDeletion = async (addressId: string) => {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      await deleteEmailAddress(addressId);
+      toast.success("Die E-Mail Adresse wurde gelöscht.");
+    } catch (err) {
+      if (err instanceof Error) {
+        // Parse die Fehlermeldungen aus dem Error-Objekt
+        const errorMessages = JSON.parse(err.message) as string[];
+        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
+      } else {
+        setErrors([
+          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
+        ]);
+      }
+    }
+  };
+
   if (errors.length > 0) {
     toast.error(errors);
   }
@@ -296,7 +315,10 @@ export function UserEmailList({
                       )
                     )}
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive">
+                    <DropdownMenuItem
+                      variant="destructive"
+                      onClick={() => submitEmailDeletion(row.id)}
+                    >
                       E-Mail Adresse löschen
                     </DropdownMenuItem>
                   </DropdownMenuContent>

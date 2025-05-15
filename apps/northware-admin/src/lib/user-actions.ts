@@ -236,6 +236,17 @@ export async function updateEmailAddress(
   }
 }
 
+export async function deleteEmailAddress(addressId: string) {
+  try {
+    const client = await clerkClient();
+    await client.emailAddresses.deleteEmailAddress(addressId);
+    revalidatePath("/user");
+  } catch (error) {
+    const typesafeError = error as ClerkError;
+    handleClerkError(typesafeError);
+  }
+}
+
 export async function changePassword(
   id: string | undefined,
   formData: TChangePasswordFormSchema
