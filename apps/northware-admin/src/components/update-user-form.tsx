@@ -4,7 +4,8 @@ import {
   type TRoleListResponse,
   type TSingleUser,
   changePassword,
-  createEMailAddress,
+  createEmailAddress,
+  updateEmailAddress,
   updateRoles,
   updateUser,
 } from "@/lib/user-actions";
@@ -29,6 +30,13 @@ import {
 } from "@northware/ui/components/form-parts/form";
 import { Input } from "@northware/ui/components/form-parts/input";
 import { PasswordInput } from "@northware/ui/components/form-parts/password-input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@northware/ui/components/menu/dropdown-menu";
 import { Alert } from "@northware/ui/components/panels/alert";
 import {
   Dialog,
@@ -44,7 +52,18 @@ import {
   TableCell,
   TableRow,
 } from "@northware/ui/components/panels/table";
-import { BadgeCheckIcon, MailIcon } from "@northware/ui/icons/lucide";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@northware/ui/components/panels/tooltip";
+import {
+  BadgeCheckIcon,
+  EllipsisIcon,
+  MailIcon,
+  TriangleAlertIcon,
+} from "@northware/ui/icons/lucide";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -151,9 +170,59 @@ export function UserEmailList({
   primaryEmailAddressId,
 }: {
   userId?: string;
-  data?: { id: string; emailAddress: string; verificationStatus?: string }[];
+  data?: { id: string; emailAddress: string; verificationStatus: string }[];
   primaryEmailAddressId?: string | null;
 }) {
+  const [errors, setErrors] = useState<string[]>([]);
+
+  const setPrimaryEmail = async (addressId: string) => {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      await updateEmailAddress(addressId, "primary");
+      toast.success("Die primäre E-Mail Adresse wurde aktualisiert.");
+    } catch (err) {
+      if (err instanceof Error) {
+        // Parse die Fehlermeldungen aus dem Error-Objekt
+        const errorMessages = JSON.parse(err.message) as string[];
+        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
+      } else {
+        setErrors([
+          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
+        ]);
+      }
+    }
+  };
+
+  const setEmailVerification = async (
+    addressId: string,
+    verification: boolean
+  ) => {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      await updateEmailAddress(addressId, "verification", verification);
+      toast.success(
+        verification
+          ? "Die E-Mail Adresse wurde als verifiziert gekennzeichnet."
+          : !verification &&
+              "Die E-Mail Adresse wurde als nicht verifiziert gekennzeichnet."
+      );
+    } catch (err) {
+      if (err instanceof Error) {
+        // Parse die Fehlermeldungen aus dem Error-Objekt
+        const errorMessages = JSON.parse(err.message) as string[];
+        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
+      } else {
+        setErrors([
+          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
+        ]);
+      }
+    }
+  };
+
+  if (errors.length > 0) {
+    toast.error(errors);
+  }
+
   return (
     <>
       <Table className="mb-2">
@@ -162,34 +231,76 @@ export function UserEmailList({
             <TableRow key={row.id}>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <MailIcon className="size-4" />
-                  <span>{row.emailAddress}</span>
-                  {row.verificationStatus === "verified" && (
-                    <BadgeCheckIcon className="size-4 text-success" />
-                  )}
-                  {primaryEmailAddressId === row.id && (
-                    <Badge
-                      variant="secondary"
-                      className="bg-success text-success-foreground"
-                    >
-                      Primär-Adresse
-                    </Badge>
-                  )}
+                  <TooltipProvider>
+                    <MailIcon className="size-4" />
+                    <span>{row.emailAddress}</span>
+                    {row.verificationStatus === "verified" ? (
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <BadgeCheckIcon className="size-4 text-success" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Die E-Mail Adresse ist verifiziert.</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ) : (
+                      row.verificationStatus !== "verified" && (
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <TriangleAlertIcon className="size-4 text-warning" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Die E-Mail Adresse ist nicht verifiziert.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )
+                    )}
+
+                    {primaryEmailAddressId === row.id && (
+                      <Badge
+                        variant="secondary"
+                        className="bg-success text-success-foreground"
+                      >
+                        Primär-Adresse
+                      </Badge>
+                    )}
+                  </TooltipProvider>
                 </div>
               </TableCell>
               <TableCell className="text-right">
-                {primaryEmailAddressId !== row.id && (
-                  <Button variant="ghost" size="sm">
-                    Als primär kennzeichnen
-                  </Button>
-                )}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-danger hover:bg-danger/20 hover:text-danger"
-                >
-                  E-Mail Adresse löschen
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <EllipsisIcon className="size-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {primaryEmailAddressId !== row.id && (
+                      <DropdownMenuItem onClick={() => setPrimaryEmail(row.id)}>
+                        Als primär kennzeichnen
+                      </DropdownMenuItem>
+                    )}
+                    {row.verificationStatus === "verified" ? (
+                      <DropdownMenuItem
+                        onClick={() => setEmailVerification(row.id, false)}
+                      >
+                        Als nicht verifiziert kennzeichnen
+                      </DropdownMenuItem>
+                    ) : (
+                      row.verificationStatus !== "verified" && (
+                        <DropdownMenuItem
+                          onClick={() => setEmailVerification(row.id, true)}
+                        >
+                          Als verifiziert kennzeichnen
+                        </DropdownMenuItem>
+                      )
+                    )}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant="destructive">
+                      E-Mail Adresse löschen
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </TableCell>
             </TableRow>
           ))}
@@ -217,7 +328,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
   ) {
     setErrors([]); // Fehler zurücksetzen
     try {
-      await createEMailAddress(values, userId);
+      await createEmailAddress(values, userId);
       setOpen(false);
       toast.success("Die E-Mail Adresse wurde hinzugefügt.");
     } catch (err) {
@@ -291,7 +402,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
-                        <FormLabel>Als bestätigt kennzeichnen</FormLabel>
+                        <FormLabel>Als verifiziert kennzeichnen</FormLabel>
                       </div>
                     </FormItem>
                   )}

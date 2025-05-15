@@ -110,7 +110,6 @@ export async function getSingleUser(id: string) {
         verificationStatus: email.verification?.status,
       };
     });
-    console.log(user_emailAddresses[0].verificationStatus);
     return {
       id: response.id,
       firstName: response.firstName,
@@ -187,7 +186,7 @@ export async function deleteUser(id: string) {
   }
 }
 
-export async function createEMailAddress(
+export async function createEmailAddress(
   formData: TCreateEMailAddressFormSchema,
   userId?: string
 ) {
@@ -210,6 +209,30 @@ export async function createEMailAddress(
       const typesafeError = error as ClerkError;
       handleClerkError(typesafeError);
     }
+  }
+}
+
+export async function updateEmailAddress(
+  addressId: string,
+  mode: "primary" | "verification",
+  verification?: boolean
+) {
+  try {
+    const client = await clerkClient();
+    if (mode === "primary") {
+      await client.emailAddresses.updateEmailAddress(addressId, {
+        primary: true,
+      });
+    }
+    if (mode === "verification") {
+      await client.emailAddresses.updateEmailAddress(addressId, {
+        verified: verification,
+      });
+    }
+    revalidatePath("/user");
+  } catch (error) {
+    const typesafeError = error as ClerkError;
+    handleClerkError(typesafeError);
   }
 }
 
