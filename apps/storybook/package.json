@@ -24,12 +24,12 @@
     "@storybook/nextjs": "8.6.12",
     "@storybook/react": "8.6.12",
     "@storybook/test": "8.6.12",
-    "@tailwindcss/postcss": "^4.1.4",
+    "@tailwindcss/postcss": "^4.1.7",
     "@types/node": "^22.15.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "storybook": "8.6.12",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3"
   }
 }
