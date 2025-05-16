@@ -54,6 +54,6 @@
     "@tailwindcss/postcss": "^4.1.7",
     "@types/react": "^19.1.2",
     "tailwindcss": "^4.1.7",
-    "tw-animate-css": "^1.2.8"
+    "tw-animate-css": "^1.3.0"
   }
 }
