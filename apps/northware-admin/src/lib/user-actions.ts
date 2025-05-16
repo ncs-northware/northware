@@ -89,13 +89,17 @@ export async function getUsers() {
     const response = await client.users.getUserList();
     const users = response.data
       .filter((user) => user.id !== loggedInUser?.id)
-      .map((user) => ({
-        id: user.id,
-        fullName: user.fullName,
-        email: user.emailAddresses[0].emailAddress,
-        // FIXME: show primary emailAddress
-        username: user.username,
-      }));
+      .map((user) => {
+        const primaryEmail = user.emailAddresses.find(
+          (email) => email.id === user.primaryEmailAddressId
+        )?.emailAddress;
+        return {
+          id: user.id,
+          fullName: user.fullName,
+          email: primaryEmail,
+          username: user.username,
+        };
+      });
     return users;
   } catch {
     return null;
@@ -132,6 +136,7 @@ export async function getSingleUser(id: string) {
       primaryEmailAddressId: response.primaryEmailAddressId,
     };
   } catch (error) {
+    // FIXME: Kann dieser Error in eine global-error Seite eingebaut werden?
     console.error(error);
   }
 }
