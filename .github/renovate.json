@@ -3,13 +3,11 @@
   "extends": ["config:recommended", "customManagers:biomeVersions"],
   "semanticCommits": "enabled",
   "labels": ["dependencies"],
-  "reviewers": ["onissen"],
   "rangeStrategy": "bump",
-  "schedule": ["* * * * 0,6"],
+  "schedule": ["* 0-3 1 * *"],
   "timezone": "Europe/Amsterdam",
   "vulnerabilityAlerts": {
     "labels": ["security", "dependencies"],
-    "reviewers": ["onissen"]
   },
   "dependencyDashboardLabels": ["dependencies", "github-management"],
   "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard",
@@ -18,6 +16,10 @@
       "description": "Disable Updates for Package Managers and Engines",
       "matchPackageNames": ["node", "npm", "pnpm", "yarn"],
       "enabled": false
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
     }
   ]
 }
