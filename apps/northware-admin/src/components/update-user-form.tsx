@@ -41,6 +41,17 @@ import {
 } from "@northware/ui/components/menu/dropdown-menu";
 import { Alert } from "@northware/ui/components/panels/alert";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@northware/ui/components/panels/alert-dialog";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -607,9 +618,36 @@ export function UserDeleteButton({ userId }: { userId: string }) {
     }
   }
   return (
-    <Button variant="ghostDanger" onClick={() => submitUserDeletion()}>
-      <TrashIcon />
-    </Button>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="ghostDanger" size="icon">
+          <TrashIcon className="size-4" />
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
+          <AlertDialogDescription>
+            <span>
+              Sind Sie sicher, dass der Benutzer gelöscht werden soll?
+            </span>
+            <br />
+            <span className="text-danger">
+              Diese Aktion kann nicht rückgängig gemacht werden.
+            </span>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Abbrechen</AlertDialogCancel>
+          <AlertDialogAction
+            variant="danger"
+            onClick={() => submitUserDeletion()}
+          >
+            Benutzer löschen
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
 
