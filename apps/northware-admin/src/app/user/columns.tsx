@@ -10,7 +10,7 @@ import Link from "next/link";
 export type UserRow = {
   id: string;
   fullName: string | null;
-  email: string;
+  email: string | undefined;
   username: string | null;
 };
 
