@@ -1,17 +1,11 @@
 "use client";
+
 import { UserDeleteButton } from "@/components/update-user-form";
 import { Button } from "@northware/ui/components/base/button";
 import { DataTableColumnHeader } from "@northware/ui/components/panels/data-table";
 import { EditIcon } from "@northware/ui/icons/lucide";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
-
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
 
 export type UserRow = {
   id: string;

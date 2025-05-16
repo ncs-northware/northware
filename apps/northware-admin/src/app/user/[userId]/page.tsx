@@ -15,7 +15,7 @@ export default async function EditUserPage({
   return (
     <>
       <div className="flex justify-between">
-        <Headline level="h1">Benutzerdaten</Headline>
+        <Headline level="h1">Persönliche Daten</Headline>
         <EditPasswordFormDialog id={user?.id} />
       </div>
       <EditUserForm user={user} />

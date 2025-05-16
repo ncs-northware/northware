@@ -12,6 +12,8 @@ import {
   BreadcrumbSeparator,
 } from "@northware/ui/components/menu/breadcrumb";
 
+export const metadata = { title: "Benutzerverwaltung" };
+
 export default async function UserLayout({
   children,
   params,
