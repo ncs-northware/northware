@@ -6,7 +6,7 @@ import type {
   TCreateUserFormSchema,
   TUpdateUserFormSchema,
 } from "@/lib/user-schema";
-import { clerkClient } from "@northware/auth/server";
+import { clerkClient, currentUser } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
 import { rolesTable, rolesToAccounts } from "@northware/database/schema";
 import { and, eq, inArray } from "drizzle-orm";
@@ -84,18 +84,21 @@ function handleClerkError(typesafeError: ClerkError) {
 
 export async function getUsers() {
   try {
+    const loggedInUser = await currentUser();
     const client = await clerkClient();
     const response = await client.users.getUserList();
-    const users = response.data.map((user) => ({
-      id: user.id,
-      fullName: user.fullName,
-      email: user.emailAddresses[0].emailAddress,
-      // FIXME: show primary emailAddress
-      username: user.username,
-    }));
+    const users = response.data
+      .filter((user) => user.id !== loggedInUser?.id)
+      .map((user) => ({
+        id: user.id,
+        fullName: user.fullName,
+        email: user.emailAddresses[0].emailAddress,
+        // FIXME: show primary emailAddress
+        username: user.username,
+      }));
     return users;
-  } catch (error) {
-    return [];
+  } catch {
+    return null;
   }
 }
 
