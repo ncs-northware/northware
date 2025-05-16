@@ -18,6 +18,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         ghostDanger:
           "text-danger hover:bg-danger/10 focus:bg-danger/10 focus:text-danger dark:focus:bg-danger/20 dark:hover:bg-danger/20",
+        danger: "bg-danger text-danger-foreground shadow-xs hover:bg-danger/90",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
