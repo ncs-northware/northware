@@ -1,13 +1,13 @@
 import { getUsers } from "@/lib/user-actions";
-import { Button } from "@northware/ui/components/base/button";
-import { Headline } from "@northware/ui/components/base/headline";
-import { Container } from "@northware/ui/components/layouts/container";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@northware/ui/components/panels/alert";
-import { DataTable } from "@northware/ui/components/panels/data-table";
+} from "@northware/ui/components/alert";
+import { Button } from "@northware/ui/components/button";
+import { Container } from "@northware/ui/components/container";
+import { DataTable } from "@northware/ui/components/data-table";
+import { Headline } from "@northware/ui/components/headline";
 import { LightbulbIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 import { columns } from "./columns";

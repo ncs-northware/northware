@@ -4,7 +4,7 @@ import {
   UserEmailList,
 } from "@/components/update-user-form";
 import { getSingleUser } from "@/lib/user-actions";
-import { Headline } from "@northware/ui/components/base/headline";
+import { Headline } from "@northware/ui/components/headline";
 
 export default async function EditUserPage({
   params,

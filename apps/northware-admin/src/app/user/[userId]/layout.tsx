@@ -1,16 +1,16 @@
 import { getSingleUser } from "@/lib/user-actions";
 import {
-  type SidebarDataType,
-  SidebarLayout,
-} from "@northware/ui/components/layouts/sidebar-layout";
-import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@northware/ui/components/menu/breadcrumb";
+} from "@northware/ui/components/breadcrumb";
+import {
+  type SidebarDataType,
+  SidebarLayout,
+} from "@northware/ui/components/sidebar-layout";
 
 export const metadata = { title: "Benutzerverwaltung" };
 
