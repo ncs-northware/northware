@@ -9,9 +9,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-} from "@northware/ui/components/layouts/sidebar";
-import SidebarTriggerMobile from "@northware/ui/components/layouts/sidebar-trigger-mobile";
-import { SiteHeader } from "@northware/ui/components/menu/site-header";
+} from "@northware/ui/components/sidebar";
+import SidebarTriggerMobile from "@northware/ui/components/sidebar-trigger-mobile";
+import { SiteHeader } from "@northware/ui/components/site-header";
 import { cn } from "@northware/ui/lib/utils";
 import type * as React from "react";
 

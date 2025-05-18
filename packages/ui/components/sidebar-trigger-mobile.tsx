@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@northware/ui/components/base/button";
-import { useSidebar } from "@northware/ui/components/layouts/sidebar";
+import { Button } from "@northware/ui/components/button";
+import { useSidebar } from "@northware/ui/components/sidebar";
 import { PanelLeftIcon } from "lucide-react";
 
 export default function SidebarTriggerMobile() {

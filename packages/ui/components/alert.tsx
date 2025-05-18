@@ -1,7 +1,5 @@
-import { type VariantProps, cva } from "class-variance-authority";
-import type * as React from "react";
-
 import { cn } from "@northware/ui/lib/utils";
+import { type VariantProps, cva } from "class-variance-authority";
 import {
   CircleAlertIcon,
   CircleCheckIcon,

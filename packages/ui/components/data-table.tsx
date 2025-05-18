@@ -12,16 +12,8 @@ import {
   EyeOffIcon,
 } from "lucide-react";
 
-import { Button } from "@northware/ui/components/base/button";
-import { Checkbox } from "@northware/ui/components/form-parts/checkbox";
-import { Input } from "@northware/ui/components/form-parts/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@northware/ui/components/form-parts/select";
+import { Button } from "@northware/ui/components/button";
+import { Checkbox } from "@northware/ui/components/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -29,7 +21,15 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/menu/dropdown-menu";
+} from "@northware/ui/components/dropdown-menu";
+import { Input } from "@northware/ui/components/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@northware/ui/components/select";
 import {
   Table,
   TableBody,
@@ -37,7 +37,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@northware/ui/components/panels/table";
+} from "@northware/ui/components/table";
 import { cn } from "@northware/ui/lib/utils";
 import {
   type Column,

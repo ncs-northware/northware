@@ -1,22 +1,22 @@
 import { SignOutButton } from "@northware/auth/client";
 import { type User, currentUser } from "@northware/auth/server";
 import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
-import { Brand } from "@northware/ui/components/base/brand";
-import { Button } from "@northware/ui/components/base/button";
-import { MobileNavLink } from "@northware/ui/components/menu/nav-links";
-import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@northware/ui/components/panels/accordion";
+} from "@northware/ui/components/accordion";
+import { Brand } from "@northware/ui/components/brand";
+import { Button } from "@northware/ui/components/button";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/panels/dialog";
+} from "@northware/ui/components/dialog";
+import { MobileNavLink } from "@northware/ui/components/nav-links";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import { menuData } from "@northware/ui/lib/menu-data";
 import { LogOutIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";

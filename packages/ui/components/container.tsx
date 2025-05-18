@@ -1,5 +1,5 @@
 import type { ServiceType } from "@northware/service-config";
-import { SiteHeader } from "@northware/ui/components/menu/site-header";
+import { SiteHeader } from "@northware/ui/components/site-header";
 import { cn } from "@northware/ui/lib/utils";
 import type { ReactNode } from "react";
 

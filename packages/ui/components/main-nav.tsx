@@ -1,7 +1,7 @@
 import { SignOutButton } from "@northware/auth/client";
 import { type User, currentUser } from "@northware/auth/server";
 import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
-import { Brand } from "@northware/ui/components/base/brand";
+import { Brand } from "@northware/ui/components/brand";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,8 +9,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/menu/dropdown-menu";
-import { MainNavLink } from "@northware/ui/components/menu/nav-links";
+} from "@northware/ui/components/dropdown-menu";
+import { MainNavLink } from "@northware/ui/components/nav-links";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,8 +19,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuButtonStyle,
   navigationMenuTriggerStyle,
-} from "@northware/ui/components/menu/navigation-menu";
-import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
+} from "@northware/ui/components/navigation-menu";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import { menuData } from "@northware/ui/lib/menu-data";
 import { cn } from "@northware/ui/lib/utils";
 import { UserIcon } from "lucide-react";

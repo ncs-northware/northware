@@ -3,20 +3,20 @@
 import * as Clerk from "@clerk/elements/common";
 import * as SignIn from "@clerk/elements/sign-in";
 import type { ServiceType } from "@northware/service-config";
-import { Brand } from "@northware/ui/components/base/brand";
-import { Button } from "@northware/ui/components/base/button";
-import { Input } from "@northware/ui/components/form-parts/input";
-import { Label } from "@northware/ui/components/form-parts/label";
-import { navigationMenuButtonStyle } from "@northware/ui/components/menu/navigation-menu";
-import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
-import { Alert, AlertDescription } from "@northware/ui/components/panels/alert";
+import { Alert, AlertDescription } from "@northware/ui/components/alert";
+import { Brand } from "@northware/ui/components/brand";
+import { Button } from "@northware/ui/components/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@northware/ui/components/panels/card";
+} from "@northware/ui/components/card";
+import { Input } from "@northware/ui/components/input";
+import { Label } from "@northware/ui/components/label";
+import { navigationMenuButtonStyle } from "@northware/ui/components/navigation-menu";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import { EyeClosedIcon, EyeIcon, LoaderCircle, PencilIcon } from "lucide-react";
 import { useState } from "react";
 

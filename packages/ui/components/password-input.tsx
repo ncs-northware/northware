@@ -1,5 +1,5 @@
-import { Button } from "@northware/ui/components/base/button";
-import { Input } from "@northware/ui/components/form-parts/input";
+import { Button } from "@northware/ui/components/button";
+import { Input } from "@northware/ui/components/input";
 import { cn } from "@northware/ui/lib/utils";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";

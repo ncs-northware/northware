@@ -1,6 +1,6 @@
 import { AuthProvider } from "@northware/auth/client";
-import { Toaster } from "@northware/ui/components/panels/sonner";
-import { ThemeProvider } from "@northware/ui/components/providers/theme-provider";
+import { Toaster } from "@northware/ui/components/sonner";
+import { ThemeProvider } from "@northware/ui/components/theme-provider";
 import type { ThemeProviderProps } from "next-themes";
 
 type GeneralProviderProperties = ThemeProviderProps;
