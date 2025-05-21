@@ -1,6 +1,6 @@
 import { SignOutButton } from "@northware/auth/client";
 import { type User, currentUser } from "@northware/auth/server";
-import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
+import { type ServiceType, suiteApps } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/brand";
 import {
   DropdownMenu,
@@ -107,7 +107,7 @@ async function MetaNav({
     <>
       <NavigationMenu className="flex justify-between py-2">
         <NavigationMenuList>
-          {suiteAppsMeta.map((app) => {
+          {suiteApps.map((app) => {
             if (service !== app.slug) {
               return (
                 <NavigationMenuItem key={app.slug}>

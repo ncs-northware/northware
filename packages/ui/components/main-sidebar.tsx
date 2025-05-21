@@ -1,5 +1,5 @@
 import { currentUser } from "@northware/auth/server";
-import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
+import { type ServiceType, suiteApps } from "@northware/service-config";
 import { AppSwitch, type MenuApps } from "@northware/ui/components/app-switch";
 import { NavMain } from "@northware/ui/components/nav-main";
 import { NavUser } from "@northware/ui/components/nav-user";
@@ -19,7 +19,7 @@ interface MainSidebarType extends React.ComponentProps<typeof Sidebar> {
 export async function MainSidebar({ service, ...props }: MainSidebarType) {
   const user = await currentUser();
   const menuItems = await menuData(service, user?.id);
-  const apps: MenuApps[] = suiteAppsMeta.map((app) => {
+  const apps: MenuApps[] = suiteApps.map((app) => {
     const envKey = `NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`;
     const url = process.env[envKey as keyof typeof process.env];
 

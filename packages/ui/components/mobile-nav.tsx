@@ -1,6 +1,6 @@
 import { SignOutButton } from "@northware/auth/client";
 import { type User, currentUser } from "@northware/auth/server";
-import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
+import { type ServiceType, suiteApps } from "@northware/service-config";
 import {
   Accordion,
   AccordionContent,
@@ -113,7 +113,7 @@ async function MobileNavMeta({
 }: { service: ServiceType; user: User | null }) {
   return (
     <ul className="grid gap-1 border-border/50 border-t py-4 dark:border-border/70">
-      {suiteAppsMeta.map((app) => {
+      {suiteApps.map((app) => {
         if (app.slug !== service) {
           return (
             <MobileNavLink
