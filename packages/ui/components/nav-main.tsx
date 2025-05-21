@@ -1,70 +1,82 @@
-"use client";
-
-import { ChevronRight, type LucideIcon } from "@northware/ui/icons/lucide";
-
 import {
   Collapsible,
   CollapsibleContent,
-  CollapsibleTrigger,
 } from "@northware/ui/components/collapsible";
 
 import {
   SidebarGroup,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-  SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@northware/ui/components/sidebar";
+import { MainSidebarMenuButton } from "./nav-links";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
+type MenuItem = {
+  itemId: string;
+  title: string;
+  href: string;
+  childOf: string | null;
+  permissionKey: string | null;
+};
+
+type MenuType = {
+  topLevelItems: MenuItem[];
+  childItems: (parent: string) => MenuItem[];
+};
+
+export function NavMain({ menuItems }: { menuItems: MenuType }) {
   return (
     <SidebarGroup>
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
-        ))}
+        <SidebarMenuItem>
+          <MainSidebarMenuButton href="/" title="Home" type="topLevel" />
+        </SidebarMenuItem>
+        {menuItems.topLevelItems.map((item) => {
+          const ItemChildren = menuItems.childItems(item.itemId);
+          if (ItemChildren.length === 0) {
+            // Top-Level-Element ohne Unterpunkte
+            return (
+              <SidebarMenuItem key={item.itemId}>
+                <MainSidebarMenuButton
+                  href={item.href}
+                  title={item.title}
+                  type="topLevel"
+                />
+              </SidebarMenuItem>
+            );
+          }
+
+          return (
+            // Top-Level-Element mit Unterpunkten
+            <Collapsible
+              key={item.itemId}
+              asChild
+              className="group/collapsible"
+            >
+              <SidebarMenuItem>
+                <MainSidebarMenuButton
+                  title={item.title}
+                  type="parent"
+                  href={item.href}
+                />
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {ItemChildren.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.itemId}>
+                        <MainSidebarMenuButton
+                          title={subItem.title}
+                          href={subItem.href}
+                          type="child"
+                        />
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          );
+        })}
       </SidebarMenu>
     </SidebarGroup>
   );

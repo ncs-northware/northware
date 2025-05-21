@@ -1,4 +1,5 @@
-"use client";
+import { currentUser } from "@northware/auth/server";
+import type { ServiceType } from "@northware/service-config";
 import { NavMain } from "@northware/ui/components/nav-main";
 import { NavUser } from "@northware/ui/components/nav-user";
 import {
@@ -9,89 +10,29 @@ import {
   SidebarRail,
 } from "@northware/ui/components/sidebar";
 import { TeamSwitcher } from "@northware/ui/components/team-switcher";
+import { menuData } from "@northware/ui/lib/menu-data";
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Home",
-      url: "/",
-    },
-    {
-      title: "Benutzerverwaltung",
-      url: "/users",
-      items: [
-        {
-          title: "Rollen",
-          url: "/users/roles",
-        },
-        {
-          title: "Berechtigungsschlüssel",
-          url: "/users/permission-keys",
-        },
-      ],
-    },
-    {
-      title: "HR Managment",
-      url: "#",
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-};
+interface MainSidebarType extends React.ComponentProps<typeof Sidebar> {
+  service: ServiceType;
+}
 
-export function MainSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
+export async function MainSidebar({ service, ...props }: MainSidebarType) {
+  const user = await currentUser();
+  const menuItems = await menuData(service, user?.id);
   return (
     <Sidebar {...props} variant="inset" collapsible="offcanvas">
       <SidebarHeader>
         <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain menuItems={menuItems} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser
+          fullName={user?.fullName}
+          emailAddress={user?.emailAddresses[0].emailAddress}
+          avatar={user?.imageUrl}
+        />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

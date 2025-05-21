@@ -26,7 +26,6 @@ import { cn } from "@northware/ui/lib/utils";
 import { UserIcon } from "lucide-react";
 import Link from "next/link";
 export async function MainNav({ service }: { service: ServiceType }) {
-  // TODO: Add NavMenu Rendering based on permissionKey
   const user = await currentUser();
   const menuItems = await menuData(service, user?.id);
   // Die Hauptnavigation incl. Branding auf Desktops
