@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
   type AnyPgColumn,
+  boolean,
   pgTable,
   serial,
   smallint,
@@ -14,6 +15,7 @@ export const mainNavTable = pgTable("MainNavTable", {
   title: varchar().notNull(),
   href: varchar().notNull(),
   app: varchar().notNull(),
+  mainInclude: boolean(),
   order: smallint(),
   childOf: varchar().references((): AnyPgColumn => mainNavTable.itemId),
   permissionKey: varchar().references(() => permissionsTable.permissionKey),
