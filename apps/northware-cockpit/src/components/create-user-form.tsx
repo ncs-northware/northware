@@ -4,7 +4,8 @@ import {
   createUserFormSchema,
 } from "@/lib/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@northware/ui/components/base/button";
+import { Alert } from "@northware/ui/components/alert";
+import { Button } from "@northware/ui/components/button";
 import {
   Form,
   FormControl,
@@ -12,9 +13,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form-parts/form";
-import { Input } from "@northware/ui/components/form-parts/input";
-import { Alert } from "@northware/ui/components/panels/alert";
+} from "@northware/ui/components/form";
+import { Input } from "@northware/ui/components/input";
 import { useRouter } from "next/navigation";
 
 import { useState } from "react";

@@ -1,5 +1,5 @@
 import "@northware/ui/css";
-import { GeneralProvider } from "@northware/ui/components/providers/general-provider";
+import { GeneralProvider } from "@northware/ui/components/general-provider";
 import { source_sans } from "@northware/ui/lib/fonts";
 
 export const metadata = {

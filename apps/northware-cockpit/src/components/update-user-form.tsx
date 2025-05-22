@@ -2,16 +2,16 @@
 
 import { type TRoleListResponse, updateRoles } from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@northware/ui/components/base/button";
-import { Checkbox } from "@northware/ui/components/form-parts/checkbox";
+import { Alert } from "@northware/ui/components/alert";
+import { Button } from "@northware/ui/components/button";
+import { Checkbox } from "@northware/ui/components/checkbox";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@northware/ui/components/form-parts/form";
-import { Alert } from "@northware/ui/components/panels/alert";
+} from "@northware/ui/components/form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
