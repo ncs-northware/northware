@@ -1,4 +1,4 @@
-import { Label } from "@northware/ui/components/form-parts/label";
+import { Label } from "@northware/ui/components/label";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {

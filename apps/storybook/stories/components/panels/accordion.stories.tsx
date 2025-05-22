@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@northware/ui/components/panels/accordion";
+} from "@northware/ui/components/accordion";
 
 const meta = {
   title: "Components/Panels/Accordion",

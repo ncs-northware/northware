@@ -1,16 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "@northware/ui/components/base/button";
-import { Input } from "@northware/ui/components/form-parts/input";
-import { Label } from "@northware/ui/components/form-parts/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@northware/ui/components/form-parts/select";
-import { Switch } from "@northware/ui/components/form-parts/switch";
+import { Button } from "@northware/ui/components/button";
 import {
   Card,
   CardContent,
@@ -18,7 +8,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@northware/ui/components/panels/card";
+} from "@northware/ui/components/card";
+import { Input } from "@northware/ui/components/input";
+import { Label } from "@northware/ui/components/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@northware/ui/components/select";
+import { Switch } from "@northware/ui/components/switch";
 import { BellRing, Check } from "@northware/ui/icons/lucide";
 
 const notifications = [

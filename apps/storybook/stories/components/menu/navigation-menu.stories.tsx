@@ -8,7 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@northware/ui/components/menu/navigation-menu";
+} from "@northware/ui/components/navigation-menu";
 import Link from "next/link";
 
 /**

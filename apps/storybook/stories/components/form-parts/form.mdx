@@ -107,7 +107,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Button } from "@northware/ui/components/base/button"
+import { Button } from "@northware/ui/components/button"
 import {
   Form,
   FormControl,
@@ -116,8 +116,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form-parts/form"
-import { Input } from "@northware/ui/components/form-parts/input"
+} from "@northware/ui/components/form"
+import { Input } from "@northware/ui/components/input"
 
 const formSchema = z.object({
   email: z.string().email({message: "Bitte geben Sie eine gültige E-Mail Adresse an."}),

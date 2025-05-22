@@ -5,7 +5,7 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
-} from "@northware/ui/components/panels/alert";
+} from "@northware/ui/components/alert";
 import { Terminal } from "@northware/ui/icons/lucide";
 
 const meta = {

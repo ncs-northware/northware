@@ -7,7 +7,7 @@ import {
 } from "@northware/ui/icons/lucide";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "@northware/ui/components/base/button";
+import { Button } from "@northware/ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -24,7 +24,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@northware/ui/components/menu/dropdown-menu";
+} from "@northware/ui/components/dropdown-menu";
 
 /**
  * Displays a menu to the user — such as a set of actions or functions —

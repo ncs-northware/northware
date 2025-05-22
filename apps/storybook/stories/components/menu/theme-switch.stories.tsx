@@ -1,5 +1,5 @@
-import { navigationMenuButtonStyle } from "@northware/ui/components/menu/navigation-menu";
-import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
+import { navigationMenuButtonStyle } from "@northware/ui/components/navigation-menu";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {

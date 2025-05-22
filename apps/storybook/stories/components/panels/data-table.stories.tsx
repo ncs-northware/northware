@@ -1,4 +1,9 @@
-import { Button } from "@northware/ui/components/base/button";
+import { Button } from "@northware/ui/components/button";
+import {
+  DataTable,
+  DataTableColumnHeader,
+  type DataTableProps,
+} from "@northware/ui/components/data-table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,12 +11,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/menu/dropdown-menu";
-import {
-  DataTable,
-  DataTableColumnHeader,
-  type DataTableProps,
-} from "@northware/ui/components/panels/data-table";
+} from "@northware/ui/components/dropdown-menu";
 import { MoreHorizontal } from "@northware/ui/icons/lucide";
 import type { Meta, StoryFn } from "@storybook/react";
 import type { ColumnDef } from "@tanstack/react-table";

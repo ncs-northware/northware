@@ -1,5 +1,5 @@
-import { Label } from "@northware/ui/components/form-parts/label";
-import { Switch } from "@northware/ui/components/form-parts/switch";
+import { Label } from "@northware/ui/components/label";
+import { Switch } from "@northware/ui/components/switch";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {

@@ -1,4 +1,4 @@
-import { BrandIcon } from "@northware/ui/components/base/brand";
+import { BrandIcon } from "@northware/ui/components/brand";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
