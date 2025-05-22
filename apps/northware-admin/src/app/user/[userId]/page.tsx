@@ -4,7 +4,8 @@ import {
   UserEmailList,
 } from "@/components/update-user-form";
 import { getSingleUser } from "@/lib/user-actions";
-import { Headline } from "@northware/ui/components/base/headline";
+import { Headline } from "@northware/ui/components/headline";
+import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 
 export default async function EditUserPage({
   params,
@@ -13,7 +14,7 @@ export default async function EditUserPage({
   const user = await getSingleUser(userId);
 
   return (
-    <>
+    <SidebarLayout service="admin">
       <div className="flex justify-between">
         <Headline level="h1">Persönliche Daten</Headline>
         <EditPasswordFormDialog id={user?.id} />
@@ -25,6 +26,6 @@ export default async function EditUserPage({
         data={user?.emailAddresses}
         primaryEmailAddressId={user?.primaryEmailAddressId}
       />
-    </>
+    </SidebarLayout>
   );
 }

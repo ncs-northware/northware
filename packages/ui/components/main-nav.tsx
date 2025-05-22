@@ -1,7 +1,7 @@
 import { SignOutButton } from "@northware/auth/client";
 import { type User, currentUser } from "@northware/auth/server";
-import { type ServiceType, suiteAppsMeta } from "@northware/service-config";
-import { Brand } from "@northware/ui/components/base/brand";
+import { type ServiceType, suiteApps } from "@northware/service-config";
+import { Brand } from "@northware/ui/components/brand";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,8 +9,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/menu/dropdown-menu";
-import { MainNavLink } from "@northware/ui/components/menu/nav-links";
+} from "@northware/ui/components/dropdown-menu";
+import { MainNavLink } from "@northware/ui/components/nav-links";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,14 +19,13 @@ import {
   NavigationMenuTrigger,
   navigationMenuButtonStyle,
   navigationMenuTriggerStyle,
-} from "@northware/ui/components/menu/navigation-menu";
-import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch";
+} from "@northware/ui/components/navigation-menu";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import { menuData } from "@northware/ui/lib/menu-data";
 import { cn } from "@northware/ui/lib/utils";
 import { UserIcon } from "lucide-react";
 import Link from "next/link";
 export async function MainNav({ service }: { service: ServiceType }) {
-  // TODO: Add NavMenu Rendering based on permissionKey
   const user = await currentUser();
   const menuItems = await menuData(service, user?.id);
   // Die Hauptnavigation incl. Branding auf Desktops
@@ -108,7 +107,7 @@ async function MetaNav({
     <>
       <NavigationMenu className="flex justify-between py-2">
         <NavigationMenuList>
-          {suiteAppsMeta.map((app) => {
+          {suiteApps.map((app) => {
             if (service !== app.slug) {
               return (
                 <NavigationMenuItem key={app.slug}>

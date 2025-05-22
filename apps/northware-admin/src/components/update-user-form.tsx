@@ -19,9 +19,10 @@ import {
   updateUserFromSchema,
 } from "@/lib/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Badge } from "@northware/ui/components/base/badge";
-import { Button } from "@northware/ui/components/base/button";
-import { Checkbox } from "@northware/ui/components/form-parts/checkbox";
+import { Badge } from "@northware/ui/components/badge";
+import { Button } from "@northware/ui/components/button";
+import { Checkbox } from "@northware/ui/components/checkbox";
+
 import {
   Form,
   FormControl,
@@ -29,17 +30,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form-parts/form";
-import { Input } from "@northware/ui/components/form-parts/input";
-import { PasswordInput } from "@northware/ui/components/form-parts/password-input";
+} from "@northware/ui/components/form";
+
+import { Input } from "@northware/ui/components/input";
+import { PasswordInput } from "@northware/ui/components/password-input";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/menu/dropdown-menu";
-import { Alert } from "@northware/ui/components/panels/alert";
+} from "@northware/ui/components/dropdown-menu";
+
+import { Alert } from "@northware/ui/components/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -50,27 +54,32 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@northware/ui/components/panels/alert-dialog";
+} from "@northware/ui/components/alert-dialog";
+
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/panels/dialog";
-import { toast } from "@northware/ui/components/panels/sonner";
+} from "@northware/ui/components/dialog";
+
+import { toast } from "@northware/ui/components/sonner";
+
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
-} from "@northware/ui/components/panels/table";
+} from "@northware/ui/components/table";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@northware/ui/components/panels/tooltip";
+} from "@northware/ui/components/tooltip";
+
 import {
   BadgeCheckIcon,
   EllipsisIcon,
@@ -78,6 +87,7 @@ import {
   TrashIcon,
   TriangleAlertIcon,
 } from "@northware/ui/icons/lucide";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";

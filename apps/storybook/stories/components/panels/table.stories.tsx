@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@northware/ui/components/panels/table";
+} from "@northware/ui/components/table";
 
 const invoices = [
   {

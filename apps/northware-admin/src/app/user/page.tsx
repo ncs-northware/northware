@@ -1,13 +1,13 @@
 import { getUsers } from "@/lib/user-actions";
-import { Button } from "@northware/ui/components/base/button";
-import { Headline } from "@northware/ui/components/base/headline";
-import { Container } from "@northware/ui/components/layouts/container";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@northware/ui/components/panels/alert";
-import { DataTable } from "@northware/ui/components/panels/data-table";
+} from "@northware/ui/components/alert";
+import { Button } from "@northware/ui/components/button";
+import { DataTable } from "@northware/ui/components/data-table";
+import { Headline } from "@northware/ui/components/headline";
+import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { LightbulbIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 import { columns } from "./columns";
@@ -17,7 +17,13 @@ export const metadata = { title: "Benutzerverwaltung" };
 export default async function UserDashboard() {
   const userArray = (await getUsers()) || [];
   return (
-    <Container service="admin">
+    <SidebarLayout
+      service="admin"
+      defaultOpen={false}
+      breadcrumbs={[
+        { label: "Benutzerverwaltung", href: "/user", active: true },
+      ]}
+    >
       <div className="flex items-center justify-between">
         <Headline level="h1">Benutzerverwaltung</Headline>
         <Button variant="default">
@@ -33,6 +39,6 @@ export default async function UserDashboard() {
           werden.
         </AlertDescription>
       </Alert>
-    </Container>
+    </SidebarLayout>
   );
 }

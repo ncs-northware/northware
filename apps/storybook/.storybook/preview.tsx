@@ -2,7 +2,7 @@ import type { Preview } from "@storybook/react";
 // biome-ignore lint/correctness/noUnusedImports: React has to be imported to use jsx in this file.
 import React from "react";
 import "@northware/ui/css";
-import { ThemeProvider } from "@northware/ui/components/providers/theme-provider";
+import { ThemeProvider } from "@northware/ui/components/theme-provider";
 import { source_sans } from "@northware/ui/lib/fonts";
 import { withThemeByClassName } from "@storybook/addon-themes";
 

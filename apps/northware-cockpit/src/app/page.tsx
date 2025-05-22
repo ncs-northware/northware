@@ -1,5 +1,5 @@
-import { Headline } from "@northware/ui/components/base/headline";
-import { Container } from "@northware/ui/components/layouts/container";
+import { Container } from "@northware/ui/components/container";
+import { Headline } from "@northware/ui/components/headline";
 export default function DashboardPage() {
   return (
     <Container service="cockpit">

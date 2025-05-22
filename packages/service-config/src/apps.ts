@@ -1,6 +1,6 @@
 import type { ServiceType } from "./types";
 
-export const suiteAppsMeta: {
+export const suiteApps: {
   title: string;
   slug: ServiceType;
   color: string;
@@ -10,21 +10,21 @@ export const suiteAppsMeta: {
   {
     title: "Northware Cockpit",
     slug: "cockpit",
-    color: "text-cockpit hover:text-cockpit",
+    color: "text-cockpit hover:text-cockpit focus:text-cockpit",
   },
   {
     title: "Northware Finance",
     slug: "finance",
-    color: "text-finance hover:text-finance",
+    color: "text-finance hover:text-finance focus:text-finance",
   },
   {
     title: "Northware Trader",
     slug: "trader",
-    color: "text-trader hover:text-trader",
+    color: "text-trader hover:text-trader focus:text-trader",
   },
   {
     title: "Northware Admin",
     slug: "admin",
-    color: "text-admin hover:text-admin",
+    color: "text-admin hover:text-admin focus:text-admin",
   },
 ];

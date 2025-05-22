@@ -1,4 +1,4 @@
-import { Button } from "@northware/ui/components/base/button";
+import { Button } from "@northware/ui/components/button";
 import { Loader2, Mail } from "@northware/ui/icons/lucide";
 import type { Meta, StoryObj } from "@storybook/react";
 import Link from "next/link";

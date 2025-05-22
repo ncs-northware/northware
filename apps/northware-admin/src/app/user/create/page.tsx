@@ -1,7 +1,7 @@
 import CreateUserForm from "@/components/create-user-form";
 import { createUser } from "@/lib/user-actions";
-import { Headline } from "@northware/ui/components/base/headline";
-import { Container } from "@northware/ui/components/layouts/container";
+import { Container } from "@northware/ui/components/container";
+import { Headline } from "@northware/ui/components/headline";
 
 export default function CreateUserPage() {
   return (

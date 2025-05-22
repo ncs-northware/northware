@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "@northware/ui/components/base/button";
-import { Input } from "@northware/ui/components/form-parts/input";
-import { Label } from "@northware/ui/components/form-parts/label";
+import { Button } from "@northware/ui/components/button";
 import {
   Dialog,
   DialogClose,
@@ -12,7 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/panels/dialog";
+} from "@northware/ui/components/dialog";
+import { Input } from "@northware/ui/components/input";
+import { Label } from "@northware/ui/components/label";
 
 const meta = {
   title: "Components/Panels/Dialog",

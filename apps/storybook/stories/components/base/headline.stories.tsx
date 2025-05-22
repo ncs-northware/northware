@@ -1,4 +1,4 @@
-import { Headline } from "@northware/ui/components/base/headline";
+import { Headline } from "@northware/ui/components/headline";
 import type { Meta, StoryObj } from "@storybook/react";
 
 /**

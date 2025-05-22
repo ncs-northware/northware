@@ -9,7 +9,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "@northware/ui/components/form-parts/select";
+} from "@northware/ui/components/select";
 
 const meta: Meta<typeof Select> = {
   title: "Components/Form Parts/Select",
