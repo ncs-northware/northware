@@ -1,82 +1,51 @@
 import type { ServiceType } from "@northware/service-config";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
+  AutoBreadcrumbs,
+  type BreadcrumbType,
+} from "@northware/ui/components/auto-breadcrumbs";
+import { MainSidebar } from "@northware/ui/components/main-sidebar";
+import { Separator } from "@northware/ui/components/separator";
+import {
+  SidebarInset,
   SidebarProvider,
+  SidebarTrigger,
 } from "@northware/ui/components/sidebar";
-import SidebarTriggerMobile from "@northware/ui/components/sidebar-trigger-mobile";
-import { SiteHeader } from "@northware/ui/components/site-header";
-import { cn } from "@northware/ui/lib/utils";
-import type * as React from "react";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
+import { buttonVariants } from "./button";
 
-interface UserSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  data: SidebarDataType;
-}
-
-export type SidebarDataType = {
-  title: string | undefined | null;
-  items: {
-    title: string;
-    url: string;
-  }[];
-}[];
-
-export function SidebarNav({
-  className: userSidebarClassName,
-  data,
-  ...props
-}: UserSidebarProps) {
-  return (
-    <Sidebar
-      className={cn("sticky h-[80vh] p-6", userSidebarClassName)}
-      variant={props.variant || "floating"}
-    >
-      <SidebarContent>
-        {/* We create a SidebarGroup for each parent. */}
-        {data.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={undefined}>
-                      <a href={item.url}>{item.title}</a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
-      </SidebarContent>
-    </Sidebar>
-  );
-}
+// TODO: Add: Entrypoint parameter, mit dem die Sidebar auch an einem anderen Punkt laut menuData starten kann
 
 export function SidebarLayout({
   children,
-  data,
   service,
-}: { children: React.ReactNode; data: SidebarDataType; service: ServiceType }) {
+  breadcrumbs,
+  defaultOpen = true,
+}: {
+  children: React.ReactNode;
+  service: ServiceType;
+  breadcrumbs?: BreadcrumbType[];
+  defaultOpen?: boolean;
+}) {
   return (
-    <>
-      <SiteHeader service={service} />
-      <SidebarProvider className="gap-10">
-        <SidebarNav data={data} />
-        <div className="flex-1">
-          <SidebarTriggerMobile />
-          <main className="container mx-3 flex flex-1 flex-col">
-            {children}
-          </main>
-        </div>
-      </SidebarProvider>
-    </>
+    <SidebarProvider defaultOpen={defaultOpen}>
+      <MainSidebar service={service} />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex w-full justify-between px-4">
+            <div className="flex items-center gap-2">
+              <SidebarTrigger
+                className={buttonVariants({ variant: "ghost", size: "icon" })}
+              />
+              {breadcrumbs && (
+                <Separator orientation="vertical" className="mr-2 h-4" />
+              )}
+              {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
+            </div>
+            <ThemeSwitch className="px-4" />
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-4">{children}</div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
