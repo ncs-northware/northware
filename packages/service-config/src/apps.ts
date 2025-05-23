@@ -22,9 +22,4 @@ export const suiteApps: {
     slug: "trader",
     color: "text-trader hover:text-trader focus:text-trader",
   },
-  {
-    title: "Northware Admin",
-    slug: "admin",
-    color: "text-admin hover:text-admin focus:text-admin",
-  },
 ];

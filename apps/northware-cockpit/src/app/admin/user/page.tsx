@@ -18,9 +18,10 @@ export default async function UserDashboard() {
   const userArray = (await getUsers()) || [];
   return (
     <SidebarLayout
-      service="admin"
+      service="cockpit"
       defaultOpen={false}
       breadcrumbs={[
+        { label: "Admin Panel", href: "/admin" },
         { label: "Benutzerverwaltung", href: "/user", active: true },
       ]}
     >

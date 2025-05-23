@@ -20,10 +20,6 @@ apps/northware-cockpit:
   - changed-files:
       - any-glob-to-any-file: apps/northware-cockpit/**
 
-apps/northware-admin:
-  - changed-files:
-      - any-glob-to-any-file: apps/northware-admin/**
-
 # Labels for packages/* changes
 
 packages/auth:

@@ -14,7 +14,7 @@ export default async function EditUserPage({
   const user = await getSingleUser(userId);
 
   return (
-    <SidebarLayout service="admin">
+    <SidebarLayout service="cockpit">
       <div className="flex justify-between">
         <Headline level="h1">Persönliche Daten</Headline>
         <EditPasswordFormDialog id={user?.id} />
