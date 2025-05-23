@@ -53,7 +53,7 @@ export function AppSwitch({
             {apps.map((app) => {
               return (
                 <DropdownMenuItem key={app.slug} className="gap-2 p-2">
-                  <Link href={app.url || ""}>
+                  <Link href={app.url || ""} target="_blank">
                     <Brand
                       service={app.slug}
                       className="gap-2 font-medium text-base"
