@@ -1,10 +1,5 @@
 import type { ServiceType } from "@northware/service-config";
-import {
-  AdminIcon,
-  CockpitIcon,
-  FinanceIcon,
-  TraderIcon,
-} from "@northware/ui/icons";
+import { CockpitIcon, FinanceIcon, TraderIcon } from "@northware/ui/icons";
 
 import { cn } from "@northware/ui/lib/utils";
 
@@ -20,7 +15,6 @@ export function Brand({
   service: ServiceType;
 }) {
   const brandColors = {
-    admin: "text-admin",
     cockpit: "text-cockpit",
     finance: "text-finance",
     trader: "text-trader",
@@ -30,8 +24,6 @@ export function Brand({
     switch (service) {
       case "cockpit":
         return "Cockpit";
-      case "admin":
-        return "Admin";
       case "finance":
         return "Finance";
       case "trader":
@@ -65,8 +57,6 @@ export function BrandIcon({
       return <FinanceIcon {...props} />;
     case "trader":
       return <TraderIcon {...props} />;
-    case "admin":
-      return <AdminIcon {...props} />;
 
     default:
       return "";
