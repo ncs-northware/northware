@@ -39,109 +39,60 @@ importers:
         specifier: 4.2.4
         version: 4.2.4
 
+  apps/cockpit:
+    dependencies:
+      '@hookform/resolvers':
+        specifier: ^5.0.1
+        version: 5.0.1(react-hook-form@7.56.3(react@19.1.0))
+      '@northware/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
+      '@northware/database':
+        specifier: workspace:*
+        version: link:../../packages/database
+      '@northware/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@tanstack/react-table':
+        specifier: ^8.21.3
+        version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@types/react':
+        specifier: ^19.1.4
+        version: 19.1.4
+      '@types/react-dom':
+        specifier: ^19.1.5
+        version: 19.1.5(@types/react@19.1.4)
+      drizzle-orm:
+        specifier: ^0.43.1
+        version: 0.43.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@1.0.0)(@types/pg@8.11.6)(gel@2.0.1)(postgres@3.4.5)
+      next:
+        specifier: 15.3.2
+        version: 15.3.2(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.80.6)
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+      react-dom:
+        specifier: ^19.1.0
+        version: 19.1.0(react@19.1.0)
+      react-hook-form:
+        specifier: ^7.56.3
+        version: 7.56.3(react@19.1.0)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      zod:
+        specifier: ^3.24.4
+        version: 3.24.4
+    devDependencies:
+      '@northware/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+
   apps/docs:
     devDependencies:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
-
-  apps/northware-admin:
-    dependencies:
-      '@hookform/resolvers':
-        specifier: ^5.0.1
-        version: 5.0.1(react-hook-form@7.56.3(react@19.1.0))
-      '@northware/auth':
-        specifier: workspace:*
-        version: link:../../packages/auth
-      '@northware/database':
-        specifier: workspace:*
-        version: link:../../packages/database
-      '@northware/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@tanstack/react-table':
-        specifier: ^8.21.3
-        version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@types/react':
-        specifier: ^19.1.4
-        version: 19.1.4
-      '@types/react-dom':
-        specifier: ^19.1.5
-        version: 19.1.5(@types/react@19.1.4)
-      drizzle-orm:
-        specifier: ^0.43.1
-        version: 0.43.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@1.0.0)(@types/pg@8.11.6)(gel@2.0.1)(postgres@3.4.5)
-      next:
-        specifier: 15.3.2
-        version: 15.3.2(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.80.6)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
-      react-hook-form:
-        specifier: ^7.56.3
-        version: 7.56.3(react@19.1.0)
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-      zod:
-        specifier: ^3.24.4
-        version: 3.24.4
-    devDependencies:
-      '@northware/tsconfig':
-        specifier: workspace:*
-        version: link:../../packages/tsconfig
-
-  apps/northware-cockpit:
-    dependencies:
-      '@hookform/resolvers':
-        specifier: ^5.0.1
-        version: 5.0.1(react-hook-form@7.56.3(react@19.1.0))
-      '@northware/auth':
-        specifier: workspace:*
-        version: link:../../packages/auth
-      '@northware/database':
-        specifier: workspace:*
-        version: link:../../packages/database
-      '@northware/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@tanstack/react-table':
-        specifier: ^8.21.3
-        version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@types/react':
-        specifier: ^19.1.4
-        version: 19.1.4
-      '@types/react-dom':
-        specifier: ^19.1.5
-        version: 19.1.5(@types/react@19.1.4)
-      drizzle-orm:
-        specifier: ^0.43.1
-        version: 0.43.1(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@1.0.0)(@types/pg@8.11.6)(gel@2.0.1)(postgres@3.4.5)
-      next:
-        specifier: 15.3.2
-        version: 15.3.2(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.80.6)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
-      react-hook-form:
-        specifier: ^7.56.3
-        version: 7.56.3(react@19.1.0)
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-      zod:
-        specifier: ^3.24.4
-        version: 3.24.4
-    devDependencies:
-      '@northware/tsconfig':
-        specifier: workspace:*
-        version: link:../../packages/tsconfig
 
   apps/storybook:
     dependencies:

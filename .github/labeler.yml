@@ -16,9 +16,9 @@ apps/storybook:
   - changed-files:
       - any-glob-to-any-file: apps/storybook/**
 
-apps/northware-cockpit:
+apps/cockpit:
   - changed-files:
-      - any-glob-to-any-file: apps/northware-cockpit/**
+      - any-glob-to-any-file: apps/cockpit/**
 
 # Labels for packages/* changes
 
