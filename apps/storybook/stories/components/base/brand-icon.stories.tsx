@@ -33,7 +33,3 @@ export const Finance: Story = {
 export const Trader: Story = {
   args: { service: "trader" },
 };
-
-export const Admin: Story = {
-  args: { service: "admin" },
-};
