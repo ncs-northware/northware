@@ -1,7 +1,11 @@
 import { currentUser } from "@northware/auth/server";
 import { type ServiceType, suiteApps } from "@northware/service-config";
 import { AppSwitch, type MenuApps } from "@northware/ui/components/app-switch";
-import { NavMain } from "@northware/ui/components/nav-main";
+import {
+  NavMain,
+  type SubMenuItem,
+  SubNav,
+} from "@northware/ui/components/nav-main";
 import { NavUser } from "@northware/ui/components/nav-user";
 import {
   Sidebar,
@@ -14,9 +18,18 @@ import { menuData } from "@northware/ui/lib/menu-data";
 
 interface MainSidebarType extends React.ComponentProps<typeof Sidebar> {
   service: ServiceType;
+  mainLabel?: string;
+  subLabel?: string;
+  subMenu?: SubMenuItem[];
 }
 
-export async function MainSidebar({ service, ...props }: MainSidebarType) {
+export async function MainSidebar({
+  service,
+  mainLabel,
+  subLabel,
+  subMenu,
+  ...props
+}: MainSidebarType) {
   const user = await currentUser();
   const menuItems = await menuData(service, user?.id);
   const apps: MenuApps[] = suiteApps.map((app) => {
@@ -35,7 +48,8 @@ export async function MainSidebar({ service, ...props }: MainSidebarType) {
         <AppSwitch service={service} apps={apps} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain menuItems={menuItems} />
+        {subMenu && <SubNav subLabel={subLabel} subMenu={subMenu} />}
+        <NavMain menuItems={menuItems} mainLabel={mainLabel} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser

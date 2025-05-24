@@ -3,7 +3,9 @@ import {
   AutoBreadcrumbs,
   type BreadcrumbType,
 } from "@northware/ui/components/auto-breadcrumbs";
+import { buttonVariants } from "@northware/ui/components/button";
 import { MainSidebar } from "@northware/ui/components/main-sidebar";
+import type { SubMenuItem } from "@northware/ui/components/nav-main";
 import { Separator } from "@northware/ui/components/separator";
 import {
   SidebarInset,
@@ -11,7 +13,6 @@ import {
   SidebarTrigger,
 } from "@northware/ui/components/sidebar";
 import { ThemeSwitch } from "@northware/ui/components/theme-switch";
-import { buttonVariants } from "./button";
 
 // TODO: Add: Entrypoint parameter, mit dem die Sidebar auch an einem anderen Punkt laut menuData starten kann
 
@@ -20,15 +21,26 @@ export function SidebarLayout({
   service,
   breadcrumbs,
   defaultOpen = true,
+  mainLabel,
+  subLabel,
+  subMenu,
 }: {
   children: React.ReactNode;
   service: ServiceType;
   breadcrumbs?: BreadcrumbType[];
   defaultOpen?: boolean;
+  mainLabel?: string;
+  subLabel?: string;
+  subMenu?: SubMenuItem[];
 }) {
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <MainSidebar service={service} />
+      <MainSidebar
+        service={service}
+        mainLabel={mainLabel}
+        subLabel={subLabel}
+        subMenu={subMenu}
+      />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex w-full justify-between px-4">
