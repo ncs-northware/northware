@@ -9,7 +9,8 @@
   },
   "exports": {
     "./connection": "./db-connect.ts",
-    "./schema": "./schema/index.ts"
+    "./schema": "./schema/index.ts",
+    "./neon-error-handling": "./neon-error-handling.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
