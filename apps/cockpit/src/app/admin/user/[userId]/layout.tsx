@@ -24,8 +24,12 @@ export default async function EditUserLayout({
       subMenu={[
         { title: "Persönliche Daten", href: `/admin/user/${userId}/#` },
         {
-          title: "Rollen und Berechtigungen",
+          title: "Rollen",
           href: `/admin/user/${userId}/roles`,
+        },
+        {
+          title: "Zusätzliche Berechtigungen",
+          href: `/admin/user/${userId}/permissions`,
         },
       ]}
     >

@@ -11,6 +11,7 @@ import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
 import {
   permissionsTable,
+  permissionsToAccounts,
   permissionsToRoles,
   rolesTable,
   rolesToAccounts,
@@ -345,8 +346,35 @@ export async function getRoleList(): Promise<TRoleListResponse> {
         });
       }
     }
-    console.log(result);
     return { success: true, roleList: Object.values(result) };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error : new Error("Unknown Error"),
+    };
+  }
+}
+
+// Typdefinition für result
+type PermissionType = {
+  permissionKey: string;
+  permissionName: string | null;
+};
+
+export type TPermissionListResponse =
+  | { success: true; permissionList: PermissionType[] }
+  | { success: false; error: Error };
+
+export async function getPermissionList(): Promise<TPermissionListResponse> {
+  try {
+    const response = await db
+      .select({
+        permissionKey: permissionsTable.permissionKey,
+        permissionName: permissionsTable.permissionName,
+      })
+      .from(permissionsTable);
+
+    return { success: true, permissionList: response };
   } catch (error) {
     return {
       success: false,
@@ -402,6 +430,65 @@ export async function updateRoles({
           and(
             inArray(rolesToAccounts.roleKey, rolesToRemove),
             eq(rolesToAccounts.accountUserId, userId)
+          )
+        );
+    }
+    revalidatePath("admin/user");
+  } catch (error) {
+    handleNeonError(error);
+  }
+}
+
+type UpdatePermissionsParams = {
+  data: { [x: string]: boolean | undefined };
+  extraPermissionsResponse: (string | null)[];
+  userId: string;
+};
+
+export async function updatePermissions({
+  data,
+  extraPermissionsResponse,
+  userId,
+}: UpdatePermissionsParams) {
+  // filtert aus den übergebenen Formulardaten die permissionKeys der aktiven Switches heraus
+  const selectedPermissions = Object.entries(data)
+    .filter(([_, value]) => value) // Nur ausgewählte Berechtigungen (value === true)
+    .map(([permissionKey]) => permissionKey); // Extrahiere die permissionKeys
+
+  // enthält permissionKeys, die in selecctedPermissions aber nicht in extraPermissionsResponse enthalten sind
+  const permissionsToAdd = selectedPermissions.filter(
+    (selectedPermission) =>
+      !extraPermissionsResponse.includes(selectedPermission)
+  );
+  // enthält permissionKeys, die in extraPermissionsResponse aber nicht in selectedPermissions enthalten sind
+  const permissionsToRemove = extraPermissionsResponse
+    .filter(
+      (extraPermission): extraPermission is string => extraPermission !== null
+    )
+    .filter((userRole) => !selectedPermissions.includes(userRole));
+
+  const insertPermissions = new Array();
+  permissionsToAdd.forEach((permission, i) => {
+    insertPermissions[i] = { permissionKey: permission, accountUserId: userId };
+  });
+
+  try {
+    // fügt neue Berechtigungen (insertPermissions) in die Datenbank Tabelle PermissionsToAccounts ein
+    if (insertPermissions.length > 0) {
+      await db
+        .insert(permissionsToAccounts)
+        .values(insertPermissions)
+        .onConflictDoNothing();
+    }
+
+    // entfernt Berechtigungen (permissionsToRemove) aus der Datenbank Tabelle PermissionsToAccounts
+    if (permissionsToRemove.length > 0) {
+      await db
+        .delete(permissionsToAccounts)
+        .where(
+          and(
+            inArray(permissionsToAccounts.permissionKey, permissionsToRemove),
+            eq(permissionsToAccounts.accountUserId, userId)
           )
         );
     }

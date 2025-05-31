@@ -6,6 +6,8 @@ import {
 } from "@northware/database/schema";
 import { eq } from "drizzle-orm";
 export async function getUserPermissions(clerkUserId?: string) {
+  /* Diese Funktion gibt alle permissionKeys eines Benutzers aus Rollen (rolesToAccounts und PermissionsToRoles) und aus 
+  zusätzlichen Berechtigungen (PermissionsToAccounts) zurück. */
   const user = clerkUserId || "";
   const rawRoles = await db
     .select({
@@ -41,6 +43,7 @@ export async function getUserPermissions(clerkUserId?: string) {
 export async function getUserRoles(
   clerkUserId: string
 ): Promise<(string | null)[]> {
+  /* Diese Funktion gibt die roleKeys eines Benutzers aus rolesToAccounts zurück */
   const rawRoles = await db
     .select({
       accountRole: rolesToAccounts.roleKey,
@@ -51,4 +54,21 @@ export async function getUserRoles(
   const userRoles = [...new Set(rawRoles.map((role) => role.accountRole))];
 
   return userRoles;
+}
+
+export async function getExtraPermissions(clerkUserId: string) {
+  /* Diese Funktion gibt nur die permissionKeys eines Benutzers aus PermissionsToAccounts zurück. 
+  Die permissions des Benutzers aus Rollen sind nicht enthalten. */
+
+  const rawAccountPermissions = await db
+    .select({ accountPermission: permissionsToAccounts.permissionKey })
+    .from(permissionsToAccounts)
+    .where(eq(permissionsToAccounts.accountUserId, clerkUserId || ""));
+
+  const extraPermissions = [
+    ...new Set(
+      rawAccountPermissions.map((permission) => permission.accountPermission)
+    ),
+  ];
+  return extraPermissions;
 }

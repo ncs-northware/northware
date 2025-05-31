@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  type TPermissionListResponse,
   type TRoleListResponse,
   changePassword,
   createEmailAddress,
@@ -8,6 +9,7 @@ import {
   deleteUser,
   type getSingleUser,
   updateEmailAddress,
+  updatePermissions,
   updateRoles,
   updateUser,
 } from "@/lib/user-actions";
@@ -675,7 +677,7 @@ type RolesFormProps = {
   userId: string;
 };
 
-export function RolesForm({
+export function UpdateRolesForm({
   rolesResponse,
   userRolesResponse,
   userId,
@@ -780,7 +782,103 @@ export function RolesForm({
             <p>{error}</p>
           </Alert>
         )}
-        <Button type="submit">Rollen aktualisieren</Button>
+        <Button type="submit" className="w-full">
+          Rollen aktualisieren
+        </Button>
+      </form>
+    </Form>
+  );
+}
+
+type PermissionsFormProps = {
+  permissionsResponse: TPermissionListResponse;
+  extraPermissionsResponse: (string | null)[];
+  userId: string;
+};
+
+export function UpdateUserPermissionsForm({
+  permissionsResponse,
+  extraPermissionsResponse,
+  userId,
+}: PermissionsFormProps) {
+  const [error, setError] = useState<string | null>(null);
+
+  if (!permissionsResponse.success) {
+    // globalError
+    return <div>Fehler: {permissionsResponse.error.message}</div>;
+  }
+
+  const FormSchema = z.object(
+    permissionsResponse.permissionList.reduce(
+      (acc, permission) => {
+        acc[permission.permissionKey] = z.boolean().default(false).optional();
+        return acc;
+      },
+      {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
+    )
+  );
+  const defaultValues = permissionsResponse.permissionList.reduce(
+    (acc, permission) => {
+      acc[permission.permissionKey] =
+        extraPermissionsResponse.includes(permission.permissionKey) || false;
+      return acc;
+    },
+    {} as Record<string, boolean>
+  );
+
+  // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues,
+  });
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      await updatePermissions({ data, extraPermissionsResponse, userId });
+      toast.success("Die Berechtigungen des Benutzers wurden aktualisiert.");
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {permissionsResponse.permissionList.map((permission) => (
+          <FormField
+            key={permission.permissionKey}
+            control={form.control}
+            name={permission.permissionKey}
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
+                <FormLabel>
+                  <span>{permission.permissionName}</span>
+                  <Badge className="font-mono" variant="secondary">
+                    {permission.permissionKey}
+                  </Badge>
+                </FormLabel>
+
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        ))}
+
+        {error && (
+          <Alert variant="danger">
+            <p>{error}</p>
+          </Alert>
+        )}
+        <Button type="submit" className="w-full">
+          Zusätzliche Berechtigungen aktualisieren
+        </Button>
       </form>
     </Form>
   );
