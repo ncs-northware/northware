@@ -1,6 +1,5 @@
 import "@northware/ui/css";
 import { GeneralProvider } from "@northware/ui/components/general-provider";
-import { source_sans } from "@northware/ui/lib/fonts";
 
 export const metadata = {
   title: {
@@ -16,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html className="theme-cockpit" lang="de" suppressHydrationWarning>
-      <body className={`${source_sans.variable} font-sans`}>
+      <body>
         <GeneralProvider>{children}</GeneralProvider>
       </body>
     </html>
