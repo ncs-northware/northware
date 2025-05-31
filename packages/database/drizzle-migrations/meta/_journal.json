@@ -15,6 +15,27 @@
       "when": 1747948581693,
       "tag": "0002_whole_pixie",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1748722058398,
+      "tag": "0003_eminent_vindicator",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1748724710580,
+      "tag": "0004_wooden_cobalt_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1748725012960,
+      "tag": "0005_strong_matthew_murdock",
+      "breakpoints": true
     }
   ]
 }

@@ -23,16 +23,6 @@ export const rolesRelations = relations(rolesTable, ({ many }) => ({
   rolesToAccounts: many(rolesToAccounts),
 }));
 
-export const accountsTable = pgTable("AccountsTable", {
-  clerkUserId: varchar().notNull().primaryKey(),
-  clerkUserName: varchar(),
-});
-
-export const accountsRelations = relations(accountsTable, ({ many }) => ({
-  permissionsToAccounts: many(permissionsToAccounts),
-  rolesToAccounts: many(rolesToAccounts),
-}));
-
 export const permissionsToRoles = pgTable(
   "PermissionsToRoles",
   {
@@ -60,18 +50,13 @@ export const permissionsToRolesRelations = relations(
   })
 );
 
-export const permissionsToAccounts = pgTable(
-  "PermissionsToAccounts",
-  {
-    permissionKey: varchar()
-      .notNull()
-      .references(() => permissionsTable.permissionKey),
-    accountUserId: varchar()
-      .notNull()
-      .references(() => accountsTable.clerkUserId),
-  },
-  (t) => [primaryKey({ columns: [t.permissionKey, t.accountUserId] })]
-);
+export const permissionsToAccounts = pgTable("PermissionsToAccounts", {
+  recordId: serial().primaryKey().notNull(),
+  permissionKey: varchar()
+    .notNull()
+    .references(() => permissionsTable.permissionKey),
+  accountUserId: varchar().notNull(),
+});
 
 export const permissionsToAccountsRelations = relations(
   permissionsToAccounts,
@@ -80,25 +65,16 @@ export const permissionsToAccountsRelations = relations(
       fields: [permissionsToAccounts.permissionKey],
       references: [permissionsTable.permissionKey],
     }),
-    account: one(accountsTable, {
-      fields: [permissionsToAccounts.accountUserId],
-      references: [accountsTable.clerkUserId],
-    }),
   })
 );
 
-export const rolesToAccounts = pgTable(
-  "RolesToAccounts",
-  {
-    roleKey: varchar()
-      .notNull()
-      .references(() => rolesTable.roleKey),
-    accountUserId: varchar()
-      .notNull()
-      .references(() => accountsTable.clerkUserId),
-  },
-  (t) => [primaryKey({ columns: [t.roleKey, t.accountUserId] })]
-);
+export const rolesToAccounts = pgTable("RolesToAccounts", {
+  recordId: serial().primaryKey().notNull(),
+  roleKey: varchar()
+    .notNull()
+    .references(() => rolesTable.roleKey),
+  accountUserId: varchar().notNull(),
+});
 
 export const rolesToAccountsRelations = relations(
   rolesToAccounts,
@@ -106,10 +82,6 @@ export const rolesToAccountsRelations = relations(
     role: one(rolesTable, {
       fields: [rolesToAccounts.roleKey],
       references: [rolesTable.roleKey],
-    }),
-    account: one(accountsTable, {
-      fields: [rolesToAccounts.accountUserId],
-      references: [accountsTable.clerkUserId],
     }),
   })
 );
