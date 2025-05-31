@@ -26,6 +26,7 @@ import { Checkbox } from "@northware/ui/components/checkbox";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -80,15 +81,21 @@ import {
   TooltipTrigger,
 } from "@northware/ui/components/tooltip";
 
+import {} from "@northware/ui/components/accordion";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@northware/ui/components/collapsible";
+import { Switch } from "@northware/ui/components/switch";
 import {
   BadgeCheckIcon,
+  ChevronDownIcon,
   EllipsisIcon,
   MailIcon,
   TrashIcon,
   TriangleAlertIcon,
 } from "@northware/ui/icons/lucide";
-
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -674,10 +681,10 @@ export function RolesForm({
   userRolesResponse,
   userId,
 }: RolesFormProps) {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
   if (!rolesResponse.success) {
+    // globalError
     return <div>Fehler: {rolesResponse.error.message}</div>;
   }
 
@@ -690,7 +697,6 @@ export function RolesForm({
       {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
     )
   );
-
   const defaultValues = rolesResponse.roleList.reduce(
     (acc, role) => {
       acc[role.roleKey] = userRolesResponse.includes(role.roleKey) || false;
@@ -708,7 +714,7 @@ export function RolesForm({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await updateRoles({ data, userRolesResponse, userId });
-      router.push("/admin");
+      toast.success("Die Rollen des Benutzers wurden aktualisiert.");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -721,20 +727,52 @@ export function RolesForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {rolesResponse.roleList.map((role) => (
           <FormField
-            key={role.recordId}
+            key={role.roleKey}
             control={form.control}
             name={role.roleKey}
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
+                <Collapsible>
+                  <FormLabel>
+                    <span>{role.roleName}</span>
+                    <Badge className="font-mono" variant="secondary">
+                      {role.roleKey}
+                    </Badge>
+                    <CollapsibleTrigger asChild>
+                      <Button variant="ghost" size="icon" className="size-8">
+                        <ChevronDownIcon />
+                      </Button>
+                    </CollapsibleTrigger>
+                  </FormLabel>
+                  <CollapsibleContent>
+                    <FormDescription suppressHydrationWarning>
+                      <ul>
+                        {role.permissions.length > 0 ? (
+                          role.permissions.map((permission) => (
+                            <li key={permission.permissionKey} className="my-2">
+                              <span className="mr-2">
+                                {permission.permissionName}
+                              </span>
+                              <Badge variant="secondary" className="font-mono">
+                                {permission.permissionKey}
+                              </Badge>
+                            </li>
+                          ))
+                        ) : (
+                          <li className="my-2">
+                            Die Rolle enthält keine Berechtigungen.
+                          </li>
+                        )}
+                      </ul>
+                    </FormDescription>
+                  </CollapsibleContent>
+                </Collapsible>
                 <FormControl>
-                  <Checkbox
+                  <Switch
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>{role.roleName}</FormLabel>
-                </div>
               </FormItem>
             )}
           />
@@ -745,7 +783,7 @@ export function RolesForm({
             <p>{error}</p>
           </Alert>
         )}
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Rollen aktualisieren</Button>
       </form>
     </Form>
   );

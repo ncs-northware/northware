@@ -8,7 +8,12 @@ import type {
 } from "@/lib/user-schema";
 import { clerkClient, currentUser } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
-import { rolesTable, rolesToAccounts } from "@northware/database/schema";
+import {
+  permissionsTable,
+  permissionsToRoles,
+  rolesTable,
+  rolesToAccounts,
+} from "@northware/database/schema";
 import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
@@ -283,19 +288,64 @@ export async function changePassword(
 /******************* User Accounts ********************/
 
 export type TRoleList = {
-  recordId: number;
   roleKey: string;
-  roleName: string | null; // Optional, da varchar() ohne .notNull()
+  roleName: string | null;
+  permissionKey: string | null;
+  permissionName: string | null;
+};
+
+// Typdefinition für result
+type RoleWithPermissions = {
+  roleKey: string;
+  roleName: string | null;
+  permissions: Array<{
+    permissionKey: string | null;
+    permissionName: string | null;
+  }>;
 };
 
 export type TRoleListResponse =
-  | { success: true; roleList: TRoleList[] }
+  | { success: true; roleList: RoleWithPermissions[] }
   | { success: false; error: Error };
 
 export async function getRoleList(): Promise<TRoleListResponse> {
   try {
-    const response = await db.select().from(rolesTable);
-    return { success: true, roleList: response };
+    const response = await db
+      .select({
+        roleKey: rolesTable.roleKey,
+        roleName: rolesTable.roleName,
+        permissionKey: permissionsTable.permissionKey,
+        permissionName: permissionsTable.permissionName,
+      })
+      .from(rolesTable)
+      .leftJoin(
+        permissionsToRoles,
+        eq(rolesTable.roleKey, permissionsToRoles.roleKey)
+      )
+      .leftJoin(
+        permissionsTable,
+        eq(permissionsToRoles.permissionKey, permissionsTable.permissionKey)
+      );
+
+    const result: Record<string, RoleWithPermissions> = {};
+    for (const item of response) {
+      if (!result[item.roleKey]) {
+        result[item.roleKey] = {
+          roleKey: item.roleKey,
+          roleName: item.roleName,
+          permissions: [],
+        };
+      }
+
+      if (item.permissionKey !== null) {
+        result[item.roleKey].permissions.push({
+          permissionKey: item.permissionKey,
+          permissionName: item.permissionName,
+        });
+      }
+    }
+    console.log(result);
+    return { success: true, roleList: Object.values(result) };
   } catch (error) {
     return {
       success: false,
@@ -315,23 +365,25 @@ export async function updateRoles({
   userRolesResponse,
   userId,
 }: UpdateRolesParams) {
+  console.log(userRolesResponse);
+
+  const selectedRoles = Object.entries(data)
+    .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
+    .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
+
+  const rolesToAdd = selectedRoles.filter(
+    (selectedRole) => !userRolesResponse.includes(selectedRole)
+  );
+  const rolesToRemove = userRolesResponse
+    .filter((userRole): userRole is string => userRole !== null)
+    .filter((userRole) => !selectedRoles.includes(userRole));
+
+  const insertRoles = new Array();
+  rolesToAdd.forEach((role, i) => {
+    insertRoles[i] = { roleKey: role, accountUserId: userId };
+  });
+
   try {
-    const selectedRoles = Object.entries(data)
-      .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
-      .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
-
-    const rolesToAdd = selectedRoles.filter(
-      (selectedRole) => !userRolesResponse.includes(selectedRole)
-    );
-    const rolesToRemove = userRolesResponse
-      .filter((userRole): userRole is string => userRole !== null)
-      .filter((userRole) => !selectedRoles.includes(userRole));
-
-    const insertRoles = new Array();
-    rolesToAdd.forEach((role, i) => {
-      insertRoles[i] = { roleKey: role, accountUserId: userId };
-    });
-
     if (insertRoles.length > 0) {
       await db
         .insert(rolesToAccounts)
@@ -348,8 +400,8 @@ export async function updateRoles({
           )
         );
     }
-    revalidatePath("/admin");
+    revalidatePath("admin/user");
   } catch (error) {
-    return error;
+    throw error;
   }
 }
