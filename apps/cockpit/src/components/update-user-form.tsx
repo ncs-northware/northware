@@ -26,7 +26,6 @@ import { Checkbox } from "@northware/ui/components/checkbox";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -745,26 +744,24 @@ export function RolesForm({
                     </CollapsibleTrigger>
                   </FormLabel>
                   <CollapsibleContent>
-                    <FormDescription suppressHydrationWarning>
-                      <ul>
-                        {role.permissions.length > 0 ? (
-                          role.permissions.map((permission) => (
-                            <li key={permission.permissionKey} className="my-2">
-                              <span className="mr-2">
-                                {permission.permissionName}
-                              </span>
-                              <Badge variant="secondary" className="font-mono">
-                                {permission.permissionKey}
-                              </Badge>
-                            </li>
-                          ))
-                        ) : (
-                          <li className="my-2">
-                            Die Rolle enthält keine Berechtigungen.
+                    <ul className="text-muted-foreground text-sm">
+                      {role.permissions.length > 0 ? (
+                        role.permissions.map((permission) => (
+                          <li key={permission.permissionKey} className="my-2">
+                            <span className="mr-2">
+                              {permission.permissionName}
+                            </span>
+                            <Badge variant="secondary" className="font-mono">
+                              {permission.permissionKey}
+                            </Badge>
                           </li>
-                        )}
-                      </ul>
-                    </FormDescription>
+                        ))
+                      ) : (
+                        <li className="my-2">
+                          Die Rolle enthält keine Berechtigungen.
+                        </li>
+                      )}
+                    </ul>
                   </CollapsibleContent>
                 </Collapsible>
                 <FormControl>

@@ -8,6 +8,7 @@ import type {
 } from "@/lib/user-schema";
 import { clerkClient, currentUser } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
+import { handleNeonError } from "@northware/database/neon-error-handling";
 import {
   permissionsTable,
   permissionsToRoles,
@@ -365,15 +366,16 @@ export async function updateRoles({
   userRolesResponse,
   userId,
 }: UpdateRolesParams) {
-  console.log(userRolesResponse);
-
+  // filtert aus den übergebenen Formulardaten die roleKeys der aktiven Switches heraus
   const selectedRoles = Object.entries(data)
     .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
     .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
 
+  // enthält roleKeys, die in selecctedRoles aber nicht in userRolesResponse enthalten sind
   const rolesToAdd = selectedRoles.filter(
     (selectedRole) => !userRolesResponse.includes(selectedRole)
   );
+  // enthält roleKeys, die in userRolesRespnse aber nicht in selectedRoles enthalten sind
   const rolesToRemove = userRolesResponse
     .filter((userRole): userRole is string => userRole !== null)
     .filter((userRole) => !selectedRoles.includes(userRole));
@@ -384,12 +386,15 @@ export async function updateRoles({
   });
 
   try {
+    // fügt neue Rollen (insertRoles) in die Datenbank Tabelle RolesToAcconts ein
     if (insertRoles.length > 0) {
       await db
         .insert(rolesToAccounts)
         .values(insertRoles)
         .onConflictDoNothing();
     }
+
+    // entfernt Rollen (rolesToRemove) aus der Datenbank Tabelle RolesToAccounts
     if (rolesToRemove.length > 0) {
       await db
         .delete(rolesToAccounts)
@@ -402,6 +407,6 @@ export async function updateRoles({
     }
     revalidatePath("admin/user");
   } catch (error) {
-    throw error;
+    handleNeonError(error);
   }
 }
