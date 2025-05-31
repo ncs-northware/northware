@@ -1,6 +1,5 @@
 import { db } from "@northware/database/connection";
 import {
-  accountsTable,
   permissionsToAccounts,
   permissionsToRoles,
   rolesToAccounts,
@@ -12,25 +11,17 @@ export async function getUserPermissions(clerkUserId?: string) {
     .select({
       rolePermission: permissionsToRoles.permissionKey,
     })
-    .from(accountsTable)
-    .innerJoin(
-      rolesToAccounts,
-      eq(accountsTable.clerkUserId, rolesToAccounts.accountUserId)
-    )
+    .from(rolesToAccounts)
     .innerJoin(
       permissionsToRoles,
       eq(rolesToAccounts.roleKey, permissionsToRoles.roleKey)
     )
-    .where(eq(accountsTable.clerkUserId, user));
+    .where(eq(rolesToAccounts.accountUserId, user));
 
   const rawAccountPermissions = await db
     .select({ accountPermission: permissionsToAccounts.permissionKey })
-    .from(accountsTable)
-    .innerJoin(
-      permissionsToAccounts,
-      eq(accountsTable.clerkUserId, permissionsToAccounts.accountUserId)
-    )
-    .where(eq(accountsTable.clerkUserId, user));
+    .from(permissionsToAccounts)
+    .where(eq(permissionsToAccounts.accountUserId, user));
 
   const userPermissions = [
     ...new Set(
@@ -54,16 +45,8 @@ export async function getUserRoles(
     .select({
       accountRole: rolesToAccounts.roleKey,
     })
-    .from(accountsTable)
-    .leftJoin(
-      rolesToAccounts,
-      eq(accountsTable.clerkUserId, rolesToAccounts.accountUserId)
-    )
-    .leftJoin(
-      permissionsToRoles,
-      eq(rolesToAccounts.roleKey, permissionsToRoles.roleKey)
-    )
-    .where(eq(accountsTable.clerkUserId, clerkUserId || ""));
+    .from(rolesToAccounts)
+    .where(eq(rolesToAccounts.accountUserId, clerkUserId || ""));
 
   const userRoles = [...new Set(rawRoles.map((role) => role.accountRole))];
 
