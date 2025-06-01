@@ -9,10 +9,16 @@ export function MainSidebarMenuButton({
   href,
   title,
   type,
-}: { href: string; title: string; type: "topLevel" | "parent" | "child" }) {
+  exactMatch = false,
+}: {
+  href: string;
+  title: string;
+  type: "topLevel" | "parent" | "child";
+  exactMatch?: boolean;
+}) {
   const pathname = usePathname();
   const isActive = () => {
-    if (href === "/") {
+    if (href === "/" || exactMatch) {
       return pathname === href;
     }
     return pathname.startsWith(href);
