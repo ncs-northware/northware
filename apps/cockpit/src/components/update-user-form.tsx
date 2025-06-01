@@ -45,7 +45,7 @@ import {
   DropdownMenuTrigger,
 } from "@northware/ui/components/dropdown-menu";
 
-import { Alert } from "@northware/ui/components/alert";
+import { Alert, AlertDescription } from "@northware/ui/components/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -182,11 +182,13 @@ export function EditUserForm({
 
         {errors.length > 0 && (
           <Alert variant="danger" className="col-span-2">
-            <ul className="w-max">
-              {errors.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
+            <AlertDescription>
+              <ul className="w-max">
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </AlertDescription>
           </Alert>
         )}
 
@@ -464,11 +466,13 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                 />
                 {errors.length > 0 && (
                   <Alert variant="danger">
-                    <ul className="w-max">
-                      {errors.map((error, index) => (
-                        <li key={index}>{error}</li>
-                      ))}
-                    </ul>
+                    <AlertDescription>
+                      <ul className="w-max">
+                        {errors.map((error, index) => (
+                          <li key={index}>{error}</li>
+                        ))}
+                      </ul>
+                    </AlertDescription>
                   </Alert>
                 )}
                 <Button type="submit" variant="default">
@@ -594,11 +598,13 @@ export function EditPasswordFormDialog({ id }: { id?: string }) {
                 />
                 {errors.length > 0 && (
                   <Alert variant="danger">
-                    <ul className="w-max">
-                      {errors.map((error, index) => (
-                        <li key={index}>{error}</li>
-                      ))}
-                    </ul>
+                    <AlertDescription>
+                      <ul className="w-max">
+                        {errors.map((error, index) => (
+                          <li key={index}>{error}</li>
+                        ))}
+                      </ul>
+                    </AlertDescription>
                   </Alert>
                 )}
                 <Button type="submit" variant="default">
@@ -779,7 +785,7 @@ export function UpdateRolesForm({
 
         {error && (
           <Alert variant="danger">
-            <p>{error}</p>
+            <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
         <Button type="submit" className="w-full">
@@ -873,7 +879,9 @@ export function UpdateUserPermissionsForm({
 
         {error && (
           <Alert variant="danger">
-            <p>{error}</p>
+            <AlertDescription>
+              <p>{error}</p>
+            </AlertDescription>
           </Alert>
         )}
         <Button type="submit" className="w-full">
