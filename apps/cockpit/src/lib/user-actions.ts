@@ -297,7 +297,8 @@ export type TRoleList = {
 };
 
 // Typdefinition für result
-type RoleWithPermissions = {
+export type RoleWithPermissions = {
+  recordId: number;
   roleKey: string;
   roleName: string | null;
   permissions: Array<{
@@ -314,6 +315,7 @@ export async function getRoleList(): Promise<TRoleListResponse> {
   try {
     const response = await db
       .select({
+        recordId: rolesTable.recordId,
         roleKey: rolesTable.roleKey,
         roleName: rolesTable.roleName,
         permissionKey: permissionsTable.permissionKey,
@@ -333,6 +335,7 @@ export async function getRoleList(): Promise<TRoleListResponse> {
     for (const item of response) {
       if (!result[item.roleKey]) {
         result[item.roleKey] = {
+          recordId: item.recordId,
           roleKey: item.roleKey,
           roleName: item.roleName,
           permissions: [],
