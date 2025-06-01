@@ -1,6 +1,6 @@
 "use client";
 
-import { UserDeleteButton } from "@/components/update-user-form";
+import { UserDeleteButton } from "@/components/user-forms";
 import { Button } from "@northware/ui/components/button";
 import { DataTableColumnHeader } from "@northware/ui/components/data-table";
 import { EditIcon } from "@northware/ui/icons/lucide";
@@ -40,10 +40,12 @@ export const columns: ColumnDef<UserRow>[] = [
       return (
         <div className="flex justify-end">
           <Button variant="ghost" asChild>
+            {/* TODO: Nur mit Berechtigung update User */}
             <Link href={`user/${row.original.id}`}>
               <EditIcon />
             </Link>
           </Button>
+          {/* Nur mit Berechtigung delete User  */}
           <UserDeleteButton userId={row.original.id} />
         </div>
       );

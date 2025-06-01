@@ -1,4 +1,4 @@
-import { UpdateUserPermissionsForm } from "@/components/update-user-form";
+import { UpdateUserPermissionsForm } from "@/components/user-forms";
 import { getPermissionList } from "@/lib/user-actions";
 import { getExtraPermissions } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/headline";
@@ -21,6 +21,7 @@ export default async function UpdatePermissionsPage({
         userId={userId}
         extraPermissionsResponse={extraPermissions}
       />
+      {/* TODO: Dialogs für PermissionKeys bearbeiten und erstellen, Berechtigungen gruppieren?, Berechtigungen in einem grid darstellen? */}
     </>
   );
 }

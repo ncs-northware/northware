@@ -2,7 +2,7 @@ import {
   EditPasswordFormDialog,
   EditUserForm,
   UserEmailList,
-} from "@/components/update-user-form";
+} from "@/components/user-forms";
 import { getSingleUser } from "@/lib/user-actions";
 import { Headline } from "@northware/ui/components/headline";
 

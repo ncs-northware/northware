@@ -22,7 +22,11 @@ export default async function EditUserLayout({
       mainLabel="Hauptnavigation"
       subLabel={user?.fullName || "Benutzer"}
       subMenu={[
-        { title: "Persönliche Daten", href: `/admin/user/${userId}/#` },
+        {
+          title: "Persönliche Daten",
+          href: `/admin/user/${userId}`,
+          exactMatch: true,
+        },
         {
           title: "Rollen",
           href: `/admin/user/${userId}/roles`,

@@ -1,4 +1,4 @@
-import { UpdateRolesForm } from "@/components/update-user-form";
+import { UpdateRolesForm } from "@/components/user-forms";
 import { getRoleList } from "@/lib/user-actions";
 import { getUserRoles } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/headline";
@@ -23,6 +23,7 @@ export default async function EditUserRolesPage({
         userId={userId}
         userRolesResponse={userRoles}
       />
+      {/* TODO: Dialogs für Rollen bearbeiten und erstellen, Rollen gruppieren?, Rollen in einem grid darstellen? */}
     </>
   );
 }
