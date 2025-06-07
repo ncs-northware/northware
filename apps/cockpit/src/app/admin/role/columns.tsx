@@ -31,7 +31,7 @@ export const columns: ColumnDef<RoleWithPermissions>[] = [
         <div className="flex justify-end">
           <Button variant="ghost" asChild>
             {/* TODO: Nur mit Berechtigung update User */}
-            <Link href={`role/${row.original.roleKey}`}>
+            <Link href={`role/${row.original.recordId}`}>
               <EditIcon />
             </Link>
           </Button>

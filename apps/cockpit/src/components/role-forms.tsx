@@ -194,7 +194,7 @@ export function RolePermissionsForm({
   permissionsResponse,
   rolePermissions,
 }: {
-  roleKey: string;
+  roleKey?: string;
   permissionsResponse: TPermissionListResponse;
   rolePermissions: string[];
 }) {

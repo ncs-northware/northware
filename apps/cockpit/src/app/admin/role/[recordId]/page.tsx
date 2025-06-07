@@ -6,9 +6,9 @@ import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 
 export default async function UpdateRole({
   params,
-}: { params: Promise<{ roleKey: string }> }) {
-  const { roleKey } = await params;
-  const details = await getRole(roleKey);
+}: { params: Promise<{ recordId: number }> }) {
+  const { recordId } = await params;
+  const details = await getRole(recordId);
   const permissionsList = await getPermissionList();
   return (
     <SidebarLayout
@@ -18,7 +18,7 @@ export default async function UpdateRole({
         { label: "Rollenverwaltung", href: "/admin/role" },
         {
           label: details?.role.roleName || "Rolle",
-          href: `/admin/role/${roleKey}`,
+          href: `/admin/role/${recordId}`,
         },
       ]}
     >
@@ -29,7 +29,7 @@ export default async function UpdateRole({
         Rollenberechtigungen
       </Headline>
       <RolePermissionsForm
-        roleKey={roleKey}
+        roleKey={details?.role.roleKey}
         permissionsResponse={permissionsList}
         rolePermissions={details?.permissions || []}
       />

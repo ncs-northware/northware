@@ -7,7 +7,7 @@ import { permissionsToRoles, rolesTable } from "@northware/database/schema";
 import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-export async function getRole(roleKey: string) {
+export async function getRole(recordId: number) {
   try {
     const roleResponse = await db
       .select({
@@ -17,12 +17,12 @@ export async function getRole(roleKey: string) {
       })
       .from(rolesTable)
       .limit(1)
-      .where(eq(rolesTable.roleKey, roleKey));
+      .where(eq(rolesTable.recordId, recordId));
 
     const permissionsResponse = await db
       .select({ permissionKey: permissionsToRoles.permissionKey })
       .from(permissionsToRoles)
-      .where(eq(permissionsToRoles.roleKey, roleKey));
+      .where(eq(permissionsToRoles.roleKey, roleResponse[0].roleKey));
 
     const permissions = [
       ...new Set(
@@ -58,7 +58,7 @@ export async function updateRolePermissions({
 }: {
   data: { [x: string]: boolean | undefined };
   rolePermissions: string[];
-  roleKey: string;
+  roleKey?: string;
 }) {
   // filtert aus den übergebenen Formulardaten die permissionKeys der aktiven Switches heraus
   const selectedPermissions = Object.entries(data)
@@ -94,7 +94,7 @@ export async function updateRolePermissions({
         .where(
           and(
             inArray(permissionsToRoles.permissionKey, permissionsToRemove),
-            eq(permissionsToRoles.roleKey, roleKey)
+            eq(permissionsToRoles.roleKey, roleKey || "")
           )
         );
     }
