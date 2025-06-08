@@ -18,6 +18,7 @@ import {
 } from "@northware/database/schema";
 import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { cache } from "react";
 
 /****************** Clerk User **********************/
 interface ClerkError {
@@ -113,7 +114,7 @@ export async function getUsers() {
   }
 }
 
-export async function getSingleUser(id: string) {
+export const getSingleUser = cache(async (id: string) => {
   try {
     const client = await clerkClient();
     const response = await client.users.getUser(id);
@@ -146,7 +147,7 @@ export async function getSingleUser(id: string) {
     // FIXME: Kann dieser Error in eine global-error Seite eingebaut werden?
     console.error(error);
   }
-}
+});
 
 export async function createUser(formData: TCreateUserFormSchema) {
   const { firstName, lastName, username, emailAddress, password } = formData;
