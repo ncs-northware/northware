@@ -7,6 +7,7 @@ import { permissionsToRoles, rolesTable } from "@northware/database/schema";
 import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
+import type { CreateRoleFormData } from "./role-schema";
 
 export const getRole = cache(async (recordId: number) => {
   try {
@@ -46,6 +47,34 @@ export const getRole = cache(async (recordId: number) => {
     return null;
   }
 });
+
+export async function createRole(data: CreateRoleFormData) {
+  const enabledPermissions = Object.entries(data)
+    .filter(([key, value]) => typeof value === "boolean" && value === true)
+    .map(([key]) => key);
+
+  const insertPermissions = new Array();
+  enabledPermissions.forEach((permission, i) => {
+    insertPermissions[i] = {
+      permissionKey: permission,
+      roleKey: data.roleKey,
+    };
+  });
+  try {
+    await db
+      .insert(rolesTable)
+      .values({ roleKey: data.roleKey, roleName: data.roleName });
+
+    if (insertPermissions.length > 0) {
+      await db
+        .insert(permissionsToRoles)
+        .values(insertPermissions)
+        .onConflictDoNothing();
+    }
+  } catch (error) {
+    handleNeonError(error);
+  }
+}
 
 export async function updateRoleDetails(data: TRoleDetailFormSchema) {
   try {
