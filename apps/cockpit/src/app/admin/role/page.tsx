@@ -4,6 +4,8 @@ import { Headline } from "@northware/ui/components/headline";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { columns } from "./columns";
 
+export const metadata = { title: "Rollenverwaltung" };
+
 export default async function RoleDashboard() {
   const roleList = (await getRoleList()) || [];
   if (!roleList.success) {

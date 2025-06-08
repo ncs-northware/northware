@@ -6,8 +6,9 @@ import { handleNeonError } from "@northware/database/neon-error-handling";
 import { permissionsToRoles, rolesTable } from "@northware/database/schema";
 import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { cache } from "react";
 
-export async function getRole(recordId: number) {
+export const getRole = cache(async (recordId: number) => {
   try {
     const roleResponse = await db
       .select({
@@ -37,7 +38,7 @@ export async function getRole(recordId: number) {
   } catch (error) {
     console.error(error);
   }
-}
+});
 
 export async function updateRoleDetails(data: TRoleDetailFormSchema) {
   try {

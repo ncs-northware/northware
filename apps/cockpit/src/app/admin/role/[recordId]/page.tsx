@@ -4,6 +4,14 @@ import { getPermissionList } from "@/lib/user-actions";
 import { Headline } from "@northware/ui/components/headline";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 
+export async function generateMetadata({
+  params,
+}: { params: Promise<{ recordId: number }> }) {
+  const { recordId } = await params;
+  const details = await getRole(recordId);
+  return { title: details?.role.roleName };
+}
+
 export default async function UpdateRole({
   params,
 }: { params: Promise<{ recordId: number }> }) {
