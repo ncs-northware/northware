@@ -32,16 +32,21 @@ import { Input } from "@northware/ui/components/input";
 import { toast } from "@northware/ui/components/sonner";
 import { Switch } from "@northware/ui/components/switch";
 import { TrashIcon } from "@northware/ui/icons/lucide";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
-export function RoleDeleteButton({ recordId }: { recordId: number }) {
+export function RoleDeleteButton({
+  recordId,
+  mode = "list",
+}: { recordId: number; mode?: "list" | "page" }) {
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   async function submitRoleDeletion() {
     try {
       await deleteRole(recordId);
-      toast.success("Die Rolle wurde gelöscht.");
+      router.push("/admin/role");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -55,11 +60,21 @@ export function RoleDeleteButton({ recordId }: { recordId: number }) {
   }
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="ghostDanger" size="icon">
-          <TrashIcon className="size-4" />
-        </Button>
-      </AlertDialogTrigger>
+      {mode === "list" && (
+        <AlertDialogTrigger asChild>
+          <Button variant="ghostDanger" size="icon">
+            <TrashIcon className="size-4" />
+          </Button>
+        </AlertDialogTrigger>
+      )}
+      {mode === "page" && (
+        <AlertDialogTrigger asChild>
+          <Button variant="danger">
+            <TrashIcon className="size-4" />
+            <span>Rolle löschen</span>
+          </Button>
+        </AlertDialogTrigger>
+      )}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Rolle löschen</AlertDialogTitle>

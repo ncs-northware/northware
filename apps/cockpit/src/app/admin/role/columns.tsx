@@ -35,7 +35,7 @@ export const columns: ColumnDef<RoleWithPermissions>[] = [
               <EditIcon />
             </Link>
           </Button>
-          <RoleDeleteButton recordId={row.original.recordId} />
+          <RoleDeleteButton recordId={row.original.recordId} mode="list" />
         </div>
       );
     },

@@ -20,10 +20,16 @@ export const getRole = cache(async (recordId: number) => {
       .limit(1)
       .where(eq(rolesTable.recordId, recordId));
 
+    if (roleResponse.length === 0) {
+      return null; // Gebe null zurück, wenn keine Rolle gefunden wurde
+    }
+
+    const role = roleResponse[0];
+
     const permissionsResponse = await db
       .select({ permissionKey: permissionsToRoles.permissionKey })
       .from(permissionsToRoles)
-      .where(eq(permissionsToRoles.roleKey, roleResponse[0].roleKey));
+      .where(eq(permissionsToRoles.roleKey, role.roleKey));
 
     const permissions = [
       ...new Set(
@@ -37,6 +43,7 @@ export const getRole = cache(async (recordId: number) => {
     };
   } catch (error) {
     console.error(error);
+    return null;
   }
 });
 
@@ -108,7 +115,6 @@ export async function updateRolePermissions({
 export async function deleteRole(recordId: number) {
   try {
     await db.delete(rolesTable).where(eq(rolesTable.recordId, recordId));
-    revalidatePath("/admin/role");
   } catch (error) {
     handleNeonError(error);
   }
