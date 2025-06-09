@@ -85,8 +85,11 @@ export function CreateRoleForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mb-5 grid grid-cols-2 gap-4">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
+        <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="roleKey"
@@ -114,34 +117,37 @@ export function CreateRoleForm({
             )}
           />
         </div>
-        {permissionsResponse.permissionList.map((permission) => (
-          <FormField
-            key={permission.permissionKey}
-            control={form.control}
-            name={
-              permission.permissionKey as keyof z.infer<
-                typeof CreateRoleFormSchema
-              >
-            }
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
-                <FormLabel>
-                  <span>{permission.permissionName}</span>
-                  <Badge className="font-mono" variant="secondary">
-                    {permission.permissionKey}
-                  </Badge>
-                </FormLabel>
 
-                <FormControl>
-                  <Switch
-                    checked={Boolean(field.value)}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ))}
+        <div className="grid grid-cols-2 gap-4">
+          {permissionsResponse.permissionList.map((permission) => (
+            <FormField
+              key={permission.permissionKey}
+              control={form.control}
+              name={
+                permission.permissionKey as keyof z.infer<
+                  typeof CreateRoleFormSchema
+                >
+              }
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
+                  <FormLabel>
+                    <span>{permission.permissionName}</span>
+                    <Badge className="font-mono" variant="secondary">
+                      {permission.permissionKey}
+                    </Badge>
+                  </FormLabel>
+
+                  <FormControl>
+                    <Switch
+                      checked={Boolean(field.value)}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          ))}
+        </div>
 
         {error && (
           <Alert variant="danger">
@@ -201,7 +207,7 @@ export function RoleDetailForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mb-5 grid grid-cols-3 gap-4">
+        <div className="mb-5 grid grid-cols-5 gap-4">
           <FormField
             control={form.control}
             name="recordId"
@@ -219,7 +225,7 @@ export function RoleDetailForm({
             control={form.control}
             name="roleKey"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="col-span-2">
                 <FormLabel>Schlüsselbezeichnung</FormLabel>
                 <FormControl>
                   <Input {...field} />
@@ -232,7 +238,7 @@ export function RoleDetailForm({
             control={form.control}
             name="roleName"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="col-span-2">
                 <FormLabel>Rollenbezeichnung</FormLabel>
                 <FormControl>
                   <Input {...field} />
