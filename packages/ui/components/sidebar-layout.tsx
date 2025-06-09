@@ -205,6 +205,7 @@ function NavMain({
 type SubMenuItem = {
   title: string;
   href: string;
+  exactMatch?: boolean;
 };
 
 function SubNav({
@@ -216,16 +217,16 @@ function SubNav({
       <SidebarGroupLabel>{subLabel || "Seitennavigation"}</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          <SidebarMenuItem>
-            {subMenu.map((item) => (
+          {subMenu.map((item) => (
+            <SidebarMenuItem key={item.title}>
               <MainSidebarMenuButton
-                key={item.title}
                 href={item.href}
                 title={item.title}
                 type="topLevel"
+                exactMatch={item.exactMatch}
               />
-            ))}
-          </SidebarMenuItem>
+            </SidebarMenuItem>
+          ))}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

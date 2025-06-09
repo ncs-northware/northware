@@ -22,11 +22,12 @@ export default async function UserDashboard() {
       defaultOpen={false}
       breadcrumbs={[
         { label: "Admin Panel", href: "/admin" },
-        { label: "Benutzerverwaltung", href: "/user", active: true },
+        { label: "Benutzerverwaltung", href: "/admin/user", active: true },
       ]}
     >
       <div className="flex items-center justify-between">
         <Headline level="h1">Benutzerverwaltung</Headline>
+        {/* TODO Nur mit Berechtigung create User */}
         <Button variant="default">
           <Link href="user/create">Benutzer hinzufügen</Link>
         </Button>

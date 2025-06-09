@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  type TPermissionListResponse,
   type TRoleListResponse,
   changePassword,
   createEmailAddress,
@@ -8,6 +9,7 @@ import {
   deleteUser,
   type getSingleUser,
   updateEmailAddress,
+  updatePermissions,
   updateRoles,
   updateUser,
 } from "@/lib/user-actions";
@@ -43,7 +45,7 @@ import {
   DropdownMenuTrigger,
 } from "@northware/ui/components/dropdown-menu";
 
-import { Alert } from "@northware/ui/components/alert";
+import { Alert, AlertDescription } from "@northware/ui/components/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -80,15 +82,21 @@ import {
   TooltipTrigger,
 } from "@northware/ui/components/tooltip";
 
+import {} from "@northware/ui/components/accordion";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@northware/ui/components/collapsible";
+import { Switch } from "@northware/ui/components/switch";
 import {
   BadgeCheckIcon,
+  ChevronDownIcon,
   EllipsisIcon,
   MailIcon,
   TrashIcon,
   TriangleAlertIcon,
 } from "@northware/ui/icons/lucide";
-
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -174,11 +182,13 @@ export function EditUserForm({
 
         {errors.length > 0 && (
           <Alert variant="danger" className="col-span-2">
-            <ul className="w-max">
-              {errors.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
+            <AlertDescription>
+              <ul className="w-max">
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </AlertDescription>
           </Alert>
         )}
 
@@ -456,11 +466,13 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                 />
                 {errors.length > 0 && (
                   <Alert variant="danger">
-                    <ul className="w-max">
-                      {errors.map((error, index) => (
-                        <li key={index}>{error}</li>
-                      ))}
-                    </ul>
+                    <AlertDescription>
+                      <ul className="w-max">
+                        {errors.map((error, index) => (
+                          <li key={index}>{error}</li>
+                        ))}
+                      </ul>
+                    </AlertDescription>
                   </Alert>
                 )}
                 <Button type="submit" variant="default">
@@ -586,11 +598,13 @@ export function EditPasswordFormDialog({ id }: { id?: string }) {
                 />
                 {errors.length > 0 && (
                   <Alert variant="danger">
-                    <ul className="w-max">
-                      {errors.map((error, index) => (
-                        <li key={index}>{error}</li>
-                      ))}
-                    </ul>
+                    <AlertDescription>
+                      <ul className="w-max">
+                        {errors.map((error, index) => (
+                          <li key={index}>{error}</li>
+                        ))}
+                      </ul>
+                    </AlertDescription>
                   </Alert>
                 )}
                 <Button type="submit" variant="default">
@@ -669,15 +683,15 @@ type RolesFormProps = {
   userId: string;
 };
 
-export function RolesForm({
+export function UpdateRolesForm({
   rolesResponse,
   userRolesResponse,
   userId,
 }: RolesFormProps) {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
   if (!rolesResponse.success) {
+    // globalError
     return <div>Fehler: {rolesResponse.error.message}</div>;
   }
 
@@ -690,7 +704,6 @@ export function RolesForm({
       {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
     )
   );
-
   const defaultValues = rolesResponse.roleList.reduce(
     (acc, role) => {
       acc[role.roleKey] = userRolesResponse.includes(role.roleKey) || false;
@@ -708,7 +721,7 @@ export function RolesForm({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await updateRoles({ data, userRolesResponse, userId });
-      router.push("/admin");
+      toast.success("Die Rollen des Benutzers wurden aktualisiert.");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -721,20 +734,50 @@ export function RolesForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {rolesResponse.roleList.map((role) => (
           <FormField
-            key={role.recordId}
+            key={role.roleKey}
             control={form.control}
             name={role.roleKey}
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
+                <Collapsible>
+                  <FormLabel>
+                    <span>{role.roleName}</span>
+                    <Badge className="font-mono" variant="secondary">
+                      {role.roleKey}
+                    </Badge>
+                    <CollapsibleTrigger asChild>
+                      <Button variant="ghost" size="icon" className="size-8">
+                        <ChevronDownIcon />
+                      </Button>
+                    </CollapsibleTrigger>
+                  </FormLabel>
+                  <CollapsibleContent>
+                    <ul className="text-muted-foreground text-sm">
+                      {role.permissions.length > 0 ? (
+                        role.permissions.map((permission) => (
+                          <li key={permission.permissionKey} className="my-2">
+                            <span className="mr-2">
+                              {permission.permissionName}
+                            </span>
+                            <Badge variant="secondary" className="font-mono">
+                              {permission.permissionKey}
+                            </Badge>
+                          </li>
+                        ))
+                      ) : (
+                        <li className="my-2">
+                          Die Rolle enthält keine Berechtigungen.
+                        </li>
+                      )}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
                 <FormControl>
-                  <Checkbox
+                  <Switch
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>{role.roleName}</FormLabel>
-                </div>
               </FormItem>
             )}
           />
@@ -742,10 +785,108 @@ export function RolesForm({
 
         {error && (
           <Alert variant="danger">
-            <p>{error}</p>
+            <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="w-full">
+          Rollen aktualisieren
+        </Button>
+      </form>
+    </Form>
+  );
+}
+
+type PermissionsFormProps = {
+  permissionsResponse: TPermissionListResponse;
+  extraPermissionsResponse: (string | null)[];
+  userId: string;
+};
+
+export function UpdateUserPermissionsForm({
+  permissionsResponse,
+  extraPermissionsResponse,
+  userId,
+}: PermissionsFormProps) {
+  const [error, setError] = useState<string | null>(null);
+
+  if (!permissionsResponse.success) {
+    // globalError
+    return <div>Fehler: {permissionsResponse.error.message}</div>;
+  }
+
+  const FormSchema = z.object(
+    permissionsResponse.permissionList.reduce(
+      (acc, permission) => {
+        acc[permission.permissionKey] = z.boolean().default(false).optional();
+        return acc;
+      },
+      {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
+    )
+  );
+  const defaultValues = permissionsResponse.permissionList.reduce(
+    (acc, permission) => {
+      acc[permission.permissionKey] =
+        extraPermissionsResponse.includes(permission.permissionKey) || false;
+      return acc;
+    },
+    {} as Record<string, boolean>
+  );
+
+  // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues,
+  });
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      await updatePermissions({ data, extraPermissionsResponse, userId });
+      toast.success("Die Berechtigungen des Benutzers wurden aktualisiert.");
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        {permissionsResponse.permissionList.map((permission) => (
+          <FormField
+            key={permission.permissionKey}
+            control={form.control}
+            name={permission.permissionKey}
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
+                <FormLabel>
+                  <span>{permission.permissionName}</span>
+                  <Badge className="font-mono" variant="secondary">
+                    {permission.permissionKey}
+                  </Badge>
+                </FormLabel>
+
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        ))}
+
+        {error && (
+          <Alert variant="danger">
+            <AlertDescription>
+              <p>{error}</p>
+            </AlertDescription>
+          </Alert>
+        )}
+        <Button type="submit" className="w-full">
+          Zusätzliche Berechtigungen aktualisieren
+        </Button>
       </form>
     </Form>
   );

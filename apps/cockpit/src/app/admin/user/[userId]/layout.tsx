@@ -1,6 +1,14 @@
 import { getSingleUser } from "@/lib/user-actions";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 
+export async function generateMetadata({
+  params,
+}: { params: Promise<{ userId: string }> }) {
+  const { userId } = await params;
+  const user = await getSingleUser(userId);
+  return { title: user?.fullName };
+}
+
 export default async function EditUserLayout({
   params,
   children,
@@ -22,8 +30,19 @@ export default async function EditUserLayout({
       mainLabel="Hauptnavigation"
       subLabel={user?.fullName || "Benutzer"}
       subMenu={[
-        { title: "Persönliche Daten", href: `/admin/user/${userId}/#` },
-        { title: "Rollen", href: `/admin/user/${userId}/roles` },
+        {
+          title: "Persönliche Daten",
+          href: `/admin/user/${userId}`,
+          exactMatch: true,
+        },
+        {
+          title: "Rollen",
+          href: `/admin/user/${userId}/roles`,
+        },
+        {
+          title: "Zusätzliche Berechtigungen",
+          href: `/admin/user/${userId}/permissions`,
+        },
       ]}
     >
       {children}
