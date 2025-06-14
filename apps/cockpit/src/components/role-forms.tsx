@@ -46,7 +46,7 @@ import { toast } from "@northware/ui/components/sonner";
 import { Switch } from "@northware/ui/components/switch";
 import { TrashIcon } from "@northware/ui/icons/lucide";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
 export function CreateRoleForm({
@@ -365,9 +365,13 @@ export function RoleDeleteButton({
       setErrors(parseErrorMessages(err));
     }
   }
-  if (errors) {
-    toast.error(errors);
-  }
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors.join("\n"));
+    }
+  }, [errors]);
+
   return (
     <AlertDialog>
       {mode === "list" && (
