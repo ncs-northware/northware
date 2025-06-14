@@ -20,6 +20,7 @@ import {
   getDefaultRBACValues,
   parseErrorMessages,
 } from "@/lib/rbac-utils";
+import { updateUserRoles } from "@/lib/role-actions";
 import {
   changePassword,
   createEmailAddress,
@@ -28,7 +29,6 @@ import {
   type getSingleUser,
   updateEmailAddress,
   updatePermissions,
-  updateRoles,
   updateUser,
 } from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -100,7 +100,6 @@ import {
 } from "@northware/ui/icons/lucide";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-
 // Clerk User Data
 
 export function EditUserForm({
@@ -653,7 +652,7 @@ export function UpdateRolesForm({
 
   async function onSubmit(data: TUpdateRoleSchema) {
     try {
-      await updateRoles({ data, userRolesResponse, userId });
+      await updateUserRoles({ data, userRolesResponse, userId });
       toast.success("Die Rollen des Benutzers wurden aktualisiert.");
     } catch (err) {
       setErrors(parseErrorMessages(err));

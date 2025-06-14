@@ -8,10 +8,7 @@ import type {
 } from "@/lib/rbac-schema";
 import type {
   TPermissionListResponse,
-  TRoleListResponse,
-  TRoleWithPermissions,
   TUpdatePermissionsParams,
-  TUpdateRolesParams,
 } from "@/lib/rbac-types";
 import { clerkClient, currentUser } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
@@ -19,9 +16,6 @@ import { handleNeonError } from "@northware/database/neon-error-handling";
 import {
   permissionsTable,
   permissionsToAccounts,
-  permissionsToRoles,
-  rolesTable,
-  rolesToAccounts,
 } from "@northware/database/schema";
 import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -97,7 +91,7 @@ function handleClerkError(typesafeError: ClerkError) {
   }
 }
 
-export async function getUsers() {
+export async function getUserList() {
   try {
     const loggedInUser = await currentUser();
     const client = await clerkClient();
@@ -295,55 +289,6 @@ export async function changePassword(
   }
 }
 
-/******************* User Accounts ********************/
-
-export async function getRoleList(): Promise<TRoleListResponse> {
-  try {
-    const response = await db
-      .select({
-        recordId: rolesTable.recordId,
-        roleKey: rolesTable.roleKey,
-        roleName: rolesTable.roleName,
-        permissionKey: permissionsTable.permissionKey,
-        permissionName: permissionsTable.permissionName,
-      })
-      .from(rolesTable)
-      .leftJoin(
-        permissionsToRoles,
-        eq(rolesTable.roleKey, permissionsToRoles.roleKey)
-      )
-      .leftJoin(
-        permissionsTable,
-        eq(permissionsToRoles.permissionKey, permissionsTable.permissionKey)
-      );
-
-    const result: Record<string, TRoleWithPermissions> = {};
-    for (const item of response) {
-      if (!result[item.roleKey]) {
-        result[item.roleKey] = {
-          recordId: item.recordId,
-          roleKey: item.roleKey,
-          roleName: item.roleName,
-          permissions: [],
-        };
-      }
-
-      if (item.permissionKey !== null) {
-        result[item.roleKey].permissions.push({
-          permissionKey: item.permissionKey,
-          permissionName: item.permissionName,
-        });
-      }
-    }
-    return { success: true, roleList: Object.values(result) };
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error : new Error("Unknown Error"),
-    };
-  }
-}
-
 export async function getPermissionList(): Promise<TPermissionListResponse> {
   try {
     const response = await db
@@ -359,56 +304,6 @@ export async function getPermissionList(): Promise<TPermissionListResponse> {
       success: false,
       error: error instanceof Error ? error : new Error("Unknown Error"),
     };
-  }
-}
-
-export async function updateRoles({
-  data,
-  userRolesResponse,
-  userId,
-}: TUpdateRolesParams) {
-  // filtert aus den übergebenen Formulardaten die roleKeys der aktiven Switches heraus
-  const selectedRoles = Object.entries(data)
-    .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
-    .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
-
-  // enthält roleKeys, die in selecctedRoles aber nicht in userRolesResponse enthalten sind
-  const rolesToAdd = selectedRoles.filter(
-    (selectedRole) => !userRolesResponse.includes(selectedRole)
-  );
-  // enthält roleKeys, die in userRolesRespnse aber nicht in selectedRoles enthalten sind
-  const rolesToRemove = userRolesResponse
-    .filter((userRole): userRole is string => userRole !== null)
-    .filter((userRole) => !selectedRoles.includes(userRole));
-
-  const insertRoles = new Array();
-  rolesToAdd.forEach((role, i) => {
-    insertRoles[i] = { roleKey: role, accountUserId: userId };
-  });
-
-  try {
-    // fügt neue Rollen (insertRoles) in die Datenbank Tabelle RolesToAcconts ein
-    if (insertRoles.length > 0) {
-      await db
-        .insert(rolesToAccounts)
-        .values(insertRoles)
-        .onConflictDoNothing();
-    }
-
-    // entfernt Rollen (rolesToRemove) aus der Datenbank Tabelle RolesToAccounts
-    if (rolesToRemove.length > 0) {
-      await db
-        .delete(rolesToAccounts)
-        .where(
-          and(
-            inArray(rolesToAccounts.roleKey, rolesToRemove),
-            eq(rolesToAccounts.accountUserId, userId)
-          )
-        );
-    }
-    revalidatePath("admin/user");
-  } catch (error) {
-    handleNeonError(error);
   }
 }
 

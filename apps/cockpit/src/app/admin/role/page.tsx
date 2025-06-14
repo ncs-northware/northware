@@ -1,4 +1,4 @@
-import { getRoleList } from "@/lib/user-actions";
+import { getRoleList } from "@/lib/role-actions";
 import { Button } from "@northware/ui/components/button";
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
