@@ -1,13 +1,13 @@
 "use server";
 
-import type { TRoleDetailFormSchema } from "@/components/role-forms";
+import type { TRoleDetailFormSchema } from "@/lib/rbac-schema";
+import type { TCreateRoleFormData } from "@/lib/rbac-utils";
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
 import { permissionsToRoles, rolesTable } from "@northware/database/schema";
 import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
-import type { CreateRoleFormData } from "./role-schema";
 
 export const getRole = cache(async (recordId: number) => {
   try {
@@ -48,7 +48,7 @@ export const getRole = cache(async (recordId: number) => {
   }
 });
 
-export async function createRole(data: CreateRoleFormData) {
+export async function createRole(data: TCreateRoleFormData) {
   const enabledPermissions = Object.entries(data)
     .filter(([key, value]) => typeof value === "boolean" && value === true)
     .map(([key]) => key);

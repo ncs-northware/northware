@@ -1,8 +1,26 @@
 "use client";
 
 import {
-  type TPermissionListResponse,
-  type TRoleListResponse,
+  type TChangePasswordFormSchema,
+  type TCreateEMailAddressFormSchema,
+  type TUpdateUserFormSchema,
+  changePasswordFormSchema,
+  createEMailAddressFormSchema,
+  updateUserFromSchema,
+} from "@/lib/rbac-schema";
+import type {
+  TPermissionListResponse,
+  TRoleListResponse,
+} from "@/lib/rbac-types";
+import {
+  type TUpdatePermissionSchema,
+  type TUpdateRoleSchema,
+  generateUpdateUserPermissionsFormSchema,
+  generateUserUpdateRoleFormSchema,
+  getDefaultRBACValues,
+  parseErrorMessages,
+} from "@/lib/rbac-utils";
+import {
   changePassword,
   createEmailAddress,
   deleteEmailAddress,
@@ -13,38 +31,7 @@ import {
   updateRoles,
   updateUser,
 } from "@/lib/user-actions";
-import {
-  type TChangePasswordFormSchema,
-  type TUpdateUserFormSchema,
-  changePasswordFormSchema,
-  createEMailAddressFormSchema,
-  updateUserFromSchema,
-} from "@/lib/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Badge } from "@northware/ui/components/badge";
-import { Button } from "@northware/ui/components/button";
-import { Checkbox } from "@northware/ui/components/checkbox";
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@northware/ui/components/form";
-
-import { Input } from "@northware/ui/components/input";
-import { PasswordInput } from "@northware/ui/components/password-input";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@northware/ui/components/dropdown-menu";
-
 import { Alert, AlertDescription } from "@northware/ui/components/alert";
 import {
   AlertDialog,
@@ -57,7 +44,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@northware/ui/components/alert-dialog";
-
+import { Badge } from "@northware/ui/components/badge";
+import { Button } from "@northware/ui/components/button";
+import { Checkbox } from "@northware/ui/components/checkbox";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@northware/ui/components/collapsible";
 import {
   Dialog,
   DialogContent,
@@ -65,30 +59,37 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@northware/ui/components/dialog";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@northware/ui/components/dropdown-menu";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@northware/ui/components/form";
+import { Input } from "@northware/ui/components/input";
+import { PasswordInput } from "@northware/ui/components/password-input";
 import { toast } from "@northware/ui/components/sonner";
-
+import { Switch } from "@northware/ui/components/switch";
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
 } from "@northware/ui/components/table";
-
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@northware/ui/components/tooltip";
-
-import {} from "@northware/ui/components/accordion";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@northware/ui/components/collapsible";
-import { Switch } from "@northware/ui/components/switch";
 import {
   BadgeCheckIcon,
   ChevronDownIcon,
@@ -99,7 +100,6 @@ import {
 } from "@northware/ui/icons/lucide";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 
 // Clerk User Data
 
@@ -107,7 +107,7 @@ export function EditUserForm({
   user,
 }: { user?: Awaited<ReturnType<typeof getSingleUser>> }) {
   const [errors, setErrors] = useState<string[]>([]);
-  const form = useForm<z.infer<typeof updateUserFromSchema>>({
+  const form = useForm<TUpdateUserFormSchema>({
     resolver: zodResolver(updateUserFromSchema),
     defaultValues: {
       firstName: user?.firstName || "",
@@ -122,15 +122,7 @@ export function EditUserForm({
       await updateUser(data, user?.id);
       toast.success("Die Daten des Benutzers wurden aktualisiert.");
     } catch (err) {
-      if (err instanceof Error) {
-        // Parse die Fehlermeldungen aus dem Error-Objekt
-        const errorMessages = JSON.parse(err.message) as string[];
-        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
-      } else {
-        setErrors([
-          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
-        ]);
-      }
+      setErrors(parseErrorMessages(err));
     }
   };
 
@@ -217,15 +209,7 @@ export function UserEmailList({
       await updateEmailAddress(addressId, "primary");
       toast.success("Die primäre E-Mail Adresse wurde aktualisiert.");
     } catch (err) {
-      if (err instanceof Error) {
-        // Parse die Fehlermeldungen aus dem Error-Objekt
-        const errorMessages = JSON.parse(err.message) as string[];
-        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
-      } else {
-        setErrors([
-          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
-        ]);
-      }
+      setErrors(parseErrorMessages(err));
     }
   };
 
@@ -243,15 +227,7 @@ export function UserEmailList({
               "Die E-Mail Adresse wurde als nicht verifiziert gekennzeichnet."
       );
     } catch (err) {
-      if (err instanceof Error) {
-        // Parse die Fehlermeldungen aus dem Error-Objekt
-        const errorMessages = JSON.parse(err.message) as string[];
-        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
-      } else {
-        setErrors([
-          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
-        ]);
-      }
+      setErrors(parseErrorMessages(err));
     }
   };
 
@@ -261,15 +237,7 @@ export function UserEmailList({
       await deleteEmailAddress(addressId);
       toast.success("Die E-Mail Adresse wurde gelöscht.");
     } catch (err) {
-      if (err instanceof Error) {
-        // Parse die Fehlermeldungen aus dem Error-Objekt
-        const errorMessages = JSON.parse(err.message) as string[];
-        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
-      } else {
-        setErrors([
-          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
-        ]);
-      }
+      setErrors(parseErrorMessages(err));
     }
   };
 
@@ -371,7 +339,7 @@ export function UserEmailList({
 function CreateEmailFormDialog({ userId }: { userId?: string }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
-  const form = useForm<z.infer<typeof createEMailAddressFormSchema>>({
+  const form = useForm<TCreateEMailAddressFormSchema>({
     resolver: zodResolver(createEMailAddressFormSchema),
     defaultValues: {
       emailAddress: "",
@@ -380,24 +348,14 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
     },
   });
 
-  async function onSubmit(
-    values: z.infer<typeof createEMailAddressFormSchema>
-  ) {
+  async function onSubmit(values: TCreateEMailAddressFormSchema) {
     setErrors([]); // Fehler zurücksetzen
     try {
       await createEmailAddress(values, userId);
       setOpen(false);
       toast.success("Die E-Mail Adresse wurde hinzugefügt.");
     } catch (err) {
-      if (err instanceof Error) {
-        // Parse die Fehlermeldungen aus dem Error-Objekt
-        const errorMessages = JSON.parse(err.message) as string[];
-        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
-      } else {
-        setErrors([
-          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
-        ]);
-      }
+      setErrors(parseErrorMessages(err));
     }
   }
 
@@ -491,7 +449,7 @@ export function EditPasswordFormDialog({ id }: { id?: string }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof changePasswordFormSchema>>({
+  const form = useForm<TChangePasswordFormSchema>({
     resolver: zodResolver(changePasswordFormSchema),
     defaultValues: {
       newPassword: "",
@@ -508,15 +466,7 @@ export function EditPasswordFormDialog({ id }: { id?: string }) {
       setOpen(false);
       toast.success("Das Passwort wurde gespeichert.");
     } catch (err) {
-      if (err instanceof Error) {
-        // Parse die Fehlermeldungen aus dem Error-Objekt
-        const errorMessages = JSON.parse(err.message) as string[];
-        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
-      } else {
-        setErrors([
-          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
-        ]);
-      }
+      setErrors(parseErrorMessages(err));
     }
   };
 
@@ -627,15 +577,7 @@ export function UserDeleteButton({ userId }: { userId: string }) {
       await deleteUser(userId);
       toast.success("Der Benutzer wurde gelöscht.");
     } catch (err) {
-      if (err instanceof Error) {
-        // Parse die Fehlermeldungen aus dem Error-Objekt
-        const errorMessages = JSON.parse(err.message) as string[];
-        setErrors(errorMessages); // Setze die Fehlermeldungen im Zustand
-      } else {
-        setErrors([
-          "Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten.",
-        ]);
-      }
+      setErrors(parseErrorMessages(err));
       if (errors.length > 0) {
         toast.error(errors);
       }
@@ -688,44 +630,33 @@ export function UpdateRolesForm({
   userRolesResponse,
   userId,
 }: RolesFormProps) {
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
 
   if (!rolesResponse.success) {
     // globalError
     return <div>Fehler: {rolesResponse.error.message}</div>;
   }
 
-  const FormSchema = z.object(
-    rolesResponse.roleList.reduce(
-      (acc, role) => {
-        acc[role.roleKey] = z.boolean().default(false).optional();
-        return acc;
-      },
-      {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
-    )
-  );
-  const defaultValues = rolesResponse.roleList.reduce(
-    (acc, role) => {
-      acc[role.roleKey] = userRolesResponse.includes(role.roleKey) || false;
-      return acc;
-    },
-    {} as Record<string, boolean>
+  const defaultValues = getDefaultRBACValues(
+    rolesResponse.roleList,
+    "roleKey",
+    userRolesResponse
   );
 
-  // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
+  const form = useForm<TUpdateRoleSchema>({
+    resolver: zodResolver(
+      generateUserUpdateRoleFormSchema(rolesResponse.roleList)
+    ),
     defaultValues,
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: TUpdateRoleSchema) {
     try {
       await updateRoles({ data, userRolesResponse, userId });
       toast.success("Die Rollen des Benutzers wurden aktualisiert.");
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
     }
   }
 
@@ -783,9 +714,15 @@ export function UpdateRolesForm({
           />
         ))}
 
-        {error && (
+        {errors.length > 0 && (
           <Alert variant="danger">
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription>
+              <ul>
+                {errors.map((err, idx) => (
+                  <li key={idx}>{err}</li>
+                ))}
+              </ul>
+            </AlertDescription>
           </Alert>
         )}
         <Button type="submit" className="w-full">
@@ -807,45 +744,35 @@ export function UpdateUserPermissionsForm({
   extraPermissionsResponse,
   userId,
 }: PermissionsFormProps) {
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
 
   if (!permissionsResponse.success) {
     // globalError
     return <div>Fehler: {permissionsResponse.error.message}</div>;
   }
 
-  const FormSchema = z.object(
-    permissionsResponse.permissionList.reduce(
-      (acc, permission) => {
-        acc[permission.permissionKey] = z.boolean().default(false).optional();
-        return acc;
-      },
-      {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
-    )
-  );
-  const defaultValues = permissionsResponse.permissionList.reduce(
-    (acc, permission) => {
-      acc[permission.permissionKey] =
-        extraPermissionsResponse.includes(permission.permissionKey) || false;
-      return acc;
-    },
-    {} as Record<string, boolean>
+  const defaultValues = getDefaultRBACValues(
+    permissionsResponse.permissionList,
+    "permissionKey",
+    extraPermissionsResponse
   );
 
   // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<TUpdatePermissionSchema>({
+    resolver: zodResolver(
+      generateUpdateUserPermissionsFormSchema(
+        permissionsResponse.permissionList
+      )
+    ),
     defaultValues,
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: TUpdatePermissionSchema) {
     try {
       await updatePermissions({ data, extraPermissionsResponse, userId });
       toast.success("Die Berechtigungen des Benutzers wurden aktualisiert.");
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
     }
   }
 
@@ -877,10 +804,14 @@ export function UpdateUserPermissionsForm({
           />
         ))}
 
-        {error && (
+        {errors.length > 0 && (
           <Alert variant="danger">
             <AlertDescription>
-              <p>{error}</p>
+              <ul>
+                {errors.map((err, idx) => (
+                  <li key={idx}>{err}</li>
+                ))}
+              </ul>
             </AlertDescription>
           </Alert>
         )}

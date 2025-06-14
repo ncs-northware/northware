@@ -1,13 +1,24 @@
 "use client";
 
 import {
+  RoleDetailFormSchema,
+  type TRoleDetailFormSchema,
+} from "@/lib/rbac-schema";
+import type { TPermissionListResponse } from "@/lib/rbac-types";
+import {
+  type TCreateRoleFormData,
+  type TUpdatePermissionSchema,
+  generateCreateRoleFormSchema,
+  generateUpdateUserPermissionsFormSchema,
+  getDefaultRBACValues,
+  parseErrorMessages,
+} from "@/lib/rbac-utils";
+import {
   createRole,
   deleteRole,
   updateRoleDetails,
   updateRolePermissions,
 } from "@/lib/role-actions";
-import { generateCreateRoleFormSchema } from "@/lib/role-schema";
-import type { TPermissionListResponse } from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@northware/ui/components/alert";
 import {
@@ -37,13 +48,12 @@ import { TrashIcon } from "@northware/ui/icons/lucide";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 
 export function CreateRoleForm({
   permissionsResponse,
 }: { permissionsResponse: TPermissionListResponse }) {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
   if (!permissionsResponse.success) {
     return permissionsResponse.error.message;
   }
@@ -57,12 +67,9 @@ export function CreateRoleForm({
     {} as Record<string, boolean>
   );
 
-  const CreateRoleFormSchema =
-    generateCreateRoleFormSchema(permissionsResponse);
-
   // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
-  const form = useForm<z.infer<typeof CreateRoleFormSchema>>({
-    resolver: zodResolver(CreateRoleFormSchema),
+  const form = useForm<TCreateRoleFormData>({
+    resolver: zodResolver(generateCreateRoleFormSchema(permissionsResponse)),
     defaultValues: {
       roleKey: "",
       roleName: "",
@@ -70,16 +77,12 @@ export function CreateRoleForm({
     },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof CreateRoleFormSchema>> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<TCreateRoleFormData> = async (data) => {
     try {
       await createRole(data);
       router.push("/admin/role");
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
     }
   };
 
@@ -123,11 +126,7 @@ export function CreateRoleForm({
             <FormField
               key={permission.permissionKey}
               control={form.control}
-              name={
-                permission.permissionKey as keyof z.infer<
-                  typeof CreateRoleFormSchema
-                >
-              }
+              name={permission.permissionKey as keyof TCreateRoleFormData}
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
                   <FormLabel>
@@ -149,10 +148,14 @@ export function CreateRoleForm({
           ))}
         </div>
 
-        {error && (
+        {errors.length > 0 && (
           <Alert variant="danger">
             <AlertDescription>
-              <p>{error}</p>
+              <ul>
+                {errors.map((err, idx) => (
+                  <li key={idx}>{err}</li>
+                ))}
+              </ul>
             </AlertDescription>
           </Alert>
         )}
@@ -171,20 +174,12 @@ type TRoleDetails = {
   roleName: string | null;
 };
 
-const RoleDetailFormSchema = z.object({
-  recordId: z.number(),
-  roleKey: z.string(),
-  roleName: z.string(),
-});
-
-export type TRoleDetailFormSchema = z.infer<typeof RoleDetailFormSchema>;
-
 export function RoleDetailForm({
   roleDetails,
 }: { roleDetails?: TRoleDetails }) {
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const form = useForm<z.infer<typeof RoleDetailFormSchema>>({
+  const form = useForm<TRoleDetailFormSchema>({
     resolver: zodResolver(RoleDetailFormSchema),
     defaultValues: {
       recordId: roleDetails?.recordId,
@@ -192,16 +187,12 @@ export function RoleDetailForm({
       roleName: roleDetails?.roleName || "",
     },
   });
-  const onSubmit: SubmitHandler<z.infer<typeof RoleDetailFormSchema>> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<TRoleDetailFormSchema> = async (data) => {
     try {
       await updateRoleDetails(data);
       toast.success("Die Rollendetails wurden aktualisiert.");
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
     }
   };
   return (
@@ -249,10 +240,14 @@ export function RoleDetailForm({
           />
         </div>
 
-        {error && (
+        {errors.length > 0 && (
           <Alert variant="danger">
             <AlertDescription>
-              <p>{error}</p>
+              <ul>
+                {errors.map((err, idx) => (
+                  <li key={idx}>{err}</li>
+                ))}
+              </ul>
             </AlertDescription>
           </Alert>
         )}
@@ -274,45 +269,35 @@ export function RolePermissionsForm({
   permissionsResponse: TPermissionListResponse;
   rolePermissions: string[];
 }) {
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
 
   if (!permissionsResponse.success) {
     // globalError
     return <div>Fehler: {permissionsResponse.error.message}</div>;
   }
 
-  const FormSchema = z.object(
-    permissionsResponse.permissionList.reduce(
-      (acc, permission) => {
-        acc[permission.permissionKey] = z.boolean().default(false).optional();
-        return acc;
-      },
-      {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
-    )
-  );
-  const defaultValues = permissionsResponse.permissionList.reduce(
-    (acc, permission) => {
-      acc[permission.permissionKey] =
-        rolePermissions.includes(permission.permissionKey) || false;
-      return acc;
-    },
-    {} as Record<string, boolean>
+  const defaultValues = getDefaultRBACValues(
+    permissionsResponse.permissionList,
+    "permissionKey",
+    rolePermissions
   );
 
   // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<TUpdatePermissionSchema>({
+    resolver: zodResolver(
+      generateUpdateUserPermissionsFormSchema(
+        permissionsResponse.permissionList
+      )
+    ),
     defaultValues,
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: TUpdatePermissionSchema) {
     try {
       await updateRolePermissions({ data, rolePermissions, roleKey });
       toast.success("Die Rollenberechtigungen wurden aktualisiert.");
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
     }
   }
 
@@ -346,13 +331,18 @@ export function RolePermissionsForm({
           ))}
         </div>
 
-        {error && (
+        {errors.length > 0 && (
           <Alert variant="danger">
             <AlertDescription>
-              <p>{error}</p>
+              <ul>
+                {errors.map((err, idx) => (
+                  <li key={idx}>{err}</li>
+                ))}
+              </ul>
             </AlertDescription>
           </Alert>
         )}
+
         <Button type="submit" className="w-full">
           Rollenberechtigungen aktualisieren
         </Button>
@@ -366,21 +356,17 @@ export function RoleDeleteButton({
   mode = "list",
 }: { recordId: number; mode?: "list" | "page" }) {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
   async function submitRoleDeletion() {
     try {
       await deleteRole(recordId);
       router.push("/admin/role");
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("Es ist ein unbekannter Fehler aufgetreten.");
-      }
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
     }
   }
-  if (error) {
-    toast.error(error);
+  if (errors) {
+    toast.error(errors);
   }
   return (
     <AlertDialog>

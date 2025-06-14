@@ -5,7 +5,14 @@ import type {
   TCreateEMailAddressFormSchema,
   TCreateUserFormSchema,
   TUpdateUserFormSchema,
-} from "@/lib/user-schema";
+} from "@/lib/rbac-schema";
+import type {
+  TPermissionListResponse,
+  TRoleListResponse,
+  TRoleWithPermissions,
+  TUpdatePermissionsParams,
+  TUpdateRolesParams,
+} from "@/lib/rbac-types";
 import { clerkClient, currentUser } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
@@ -290,28 +297,6 @@ export async function changePassword(
 
 /******************* User Accounts ********************/
 
-export type TRoleList = {
-  roleKey: string;
-  roleName: string | null;
-  permissionKey: string | null;
-  permissionName: string | null;
-};
-
-// Typdefinition für result
-export type RoleWithPermissions = {
-  recordId: number;
-  roleKey: string;
-  roleName: string | null;
-  permissions: Array<{
-    permissionKey: string | null;
-    permissionName: string | null;
-  }>;
-};
-
-export type TRoleListResponse =
-  | { success: true; roleList: RoleWithPermissions[] }
-  | { success: false; error: Error };
-
 export async function getRoleList(): Promise<TRoleListResponse> {
   try {
     const response = await db
@@ -332,7 +317,7 @@ export async function getRoleList(): Promise<TRoleListResponse> {
         eq(permissionsToRoles.permissionKey, permissionsTable.permissionKey)
       );
 
-    const result: Record<string, RoleWithPermissions> = {};
+    const result: Record<string, TRoleWithPermissions> = {};
     for (const item of response) {
       if (!result[item.roleKey]) {
         result[item.roleKey] = {
@@ -359,16 +344,6 @@ export async function getRoleList(): Promise<TRoleListResponse> {
   }
 }
 
-// Typdefinition für result
-type PermissionType = {
-  permissionKey: string;
-  permissionName: string | null;
-};
-
-export type TPermissionListResponse =
-  | { success: true; permissionList: PermissionType[] }
-  | { success: false; error: Error };
-
 export async function getPermissionList(): Promise<TPermissionListResponse> {
   try {
     const response = await db
@@ -387,17 +362,11 @@ export async function getPermissionList(): Promise<TPermissionListResponse> {
   }
 }
 
-type UpdateRolesParams = {
-  data: { [x: string]: boolean | undefined };
-  userRolesResponse: (string | null)[];
-  userId: string;
-};
-
 export async function updateRoles({
   data,
   userRolesResponse,
   userId,
-}: UpdateRolesParams) {
+}: TUpdateRolesParams) {
   // filtert aus den übergebenen Formulardaten die roleKeys der aktiven Switches heraus
   const selectedRoles = Object.entries(data)
     .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
@@ -443,17 +412,11 @@ export async function updateRoles({
   }
 }
 
-type UpdatePermissionsParams = {
-  data: { [x: string]: boolean | undefined };
-  extraPermissionsResponse: (string | null)[];
-  userId: string;
-};
-
 export async function updatePermissions({
   data,
   extraPermissionsResponse,
   userId,
-}: UpdatePermissionsParams) {
+}: TUpdatePermissionsParams) {
   // filtert aus den übergebenen Formulardaten die permissionKeys der aktiven Switches heraus
   const selectedPermissions = Object.entries(data)
     .filter(([_, value]) => value) // Nur ausgewählte Berechtigungen (value === true)
