@@ -1,4 +1,4 @@
-import { getUsers } from "@/lib/user-actions";
+import { getUserList } from "@/lib/user-actions";
 import {
   Alert,
   AlertDescription,
@@ -15,7 +15,7 @@ import { columns } from "./columns";
 export const metadata = { title: "Benutzerverwaltung" };
 
 export default async function UserDashboard() {
-  const userArray = (await getUsers()) || [];
+  const userArray = (await getUserList()) || [];
   return (
     <SidebarLayout
       service="cockpit"

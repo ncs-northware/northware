@@ -2,7 +2,7 @@
 import {
   type TCreateUserFormSchema,
   createUserFormSchema,
-} from "@/lib/user-schema";
+} from "@/lib/rbac-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert } from "@northware/ui/components/alert";
 import { Button } from "@northware/ui/components/button";

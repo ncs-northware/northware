@@ -1,14 +1,14 @@
 "use client";
 
 import { RoleDeleteButton } from "@/components/role-forms";
-import type { RoleWithPermissions } from "@/lib/user-actions";
+import type { TRoleWithPermissions } from "@/lib/rbac-types";
 import { Button } from "@northware/ui/components/button";
 import { DataTableColumnHeader } from "@northware/ui/components/data-table";
 import { EditIcon } from "@northware/ui/icons/lucide";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 
-export const columns: ColumnDef<RoleWithPermissions>[] = [
+export const columns: ColumnDef<TRoleWithPermissions>[] = [
   {
     accessorKey: "roleKey",
     header: ({ column }) => (
