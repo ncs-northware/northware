@@ -195,6 +195,7 @@ export async function deleteUser(id: string) {
     const client = await clerkClient();
     await client.users.deleteUser(id);
     revalidatePath("/user");
+    // TODO: Rollen und permissions löschen
   } catch (error) {
     const typesafeError = error as ClerkError;
     handleClerkError(typesafeError);
