@@ -1,5 +1,5 @@
 import { UpdateRolesForm } from "@/components/user-forms";
-import { getRoleList } from "@/lib/user-actions";
+import { getRoleList } from "@/lib/role-actions";
 import { getUserRoles } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/headline";
 

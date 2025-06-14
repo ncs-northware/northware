@@ -66,3 +66,11 @@ export const changePasswordFormSchema = z
 export type TChangePasswordFormSchema = z.infer<
   typeof changePasswordFormSchema
 >;
+
+export const RoleDetailFormSchema = z.object({
+  recordId: z.number(),
+  roleKey: z.string(),
+  roleName: z.string(),
+});
+
+export type TRoleDetailFormSchema = z.infer<typeof RoleDetailFormSchema>;

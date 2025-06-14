@@ -5,6 +5,7 @@ import {
   rolesToAccounts,
 } from "@northware/database/schema";
 import { eq } from "drizzle-orm";
+
 export async function getUserPermissions(clerkUserId?: string) {
   /* Diese Funktion gibt alle permissionKeys eines Benutzers aus Rollen (rolesToAccounts und PermissionsToRoles) und aus 
   zusätzlichen Berechtigungen (PermissionsToAccounts) zurück. */
