@@ -12,7 +12,7 @@ export default async function UpdatePermissionsPage({
   return (
     <>
       <Headline level="h1">Zusätzliche Berechtigungen des Benutzers</Headline>
-      <p className="mb-4 text-justify font-medium text-muted-foreground lg:w-1/2">
+      <p className="mb-4 text-justify font-medium text-muted-foreground">
         Dem einzelnen Benutzer können einzelne Berechtigungen zugewiesen werden,
         um die Rollen-Berechtigungen zu erweitern.
       </p>

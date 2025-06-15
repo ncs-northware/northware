@@ -38,7 +38,7 @@ export default async function UpdateRole({
         },
       ]}
     >
-      <div className="flex flex-row justify-between">
+      <div className="flex justify-between gap-4">
         <Headline level="h1">{details?.role.roleName}</Headline>
         <RoleDeleteButton recordId={recordId} mode="page" />
       </div>

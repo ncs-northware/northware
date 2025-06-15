@@ -12,7 +12,7 @@ export default async function EditUserRolesPage({
   return (
     <>
       <Headline level="h1">Rollen des Benutzers</Headline>
-      <p className="mb-4 text-justify font-medium text-muted-foreground lg:w-1/2">
+      <p className="mb-4 text-justify font-medium text-muted-foreground">
         Rollen sind Sammlungen von Rechten. Vergebe Rollen an einen Benutzer, um
         ihm diese Sammlung an Rechten zuzuweisen. Benutzer einer bestimmten
         Rolle erhalten alle enthaltenen Rechte. Es ist nicht möglich dem
