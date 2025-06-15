@@ -1,10 +1,17 @@
 "use client";
 
 import {
+  CreatePermissionDetailFormSchema,
+  PermissionDetailFormSchema,
   RoleDetailFormSchema,
+  type TCreatePermissionDetailFormSchema,
+  type TPermissionDetailFormSchema,
   type TRoleDetailFormSchema,
 } from "@/lib/rbac-schema";
-import type { TPermissionListResponse } from "@/lib/rbac-types";
+import type {
+  TPermissionListResponse,
+  TPermissionType,
+} from "@/lib/rbac-types";
 import {
   type TCreateRoleFormData,
   type TUpdatePermissionSchema,
@@ -14,8 +21,11 @@ import {
   parseErrorMessages,
 } from "@/lib/rbac-utils";
 import {
+  createPermDetails,
   createRole,
+  deletePermission,
   deleteRole,
+  updatePermDetails,
   updateRoleDetails,
   updateRolePermissions,
 } from "@/lib/role-actions";
@@ -34,6 +44,13 @@ import {
 import { Badge } from "@northware/ui/components/badge";
 import { Button } from "@northware/ui/components/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@northware/ui/components/dialog";
+import {
   Form,
   FormControl,
   FormField,
@@ -44,7 +61,7 @@ import {
 import { Input } from "@northware/ui/components/input";
 import { toast } from "@northware/ui/components/sonner";
 import { Switch } from "@northware/ui/components/switch";
-import { TrashIcon } from "@northware/ui/icons/lucide";
+import { EditIcon, TrashIcon } from "@northware/ui/icons/lucide";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -411,6 +428,249 @@ export function RoleDeleteButton({
             onClick={() => submitRoleDeletion()}
           >
             Rolle löschen
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+export function CreatePermissionDetails() {
+  const [open, setOpen] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  const form = useForm<TCreatePermissionDetailFormSchema>({
+    resolver: zodResolver(CreatePermissionDetailFormSchema),
+    defaultValues: {
+      permissionKey: "",
+      permissionName: "",
+    },
+  });
+  const onSubmit: SubmitHandler<TCreatePermissionDetailFormSchema> = async (
+    data
+  ) => {
+    try {
+      await createPermDetails(data);
+      setOpen(false);
+      toast.success("Es wurde ein neuer Berechtigungsschlüssel hinzugefügt.");
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
+    }
+  };
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>Berechtigungsschlüssel hinzufügen</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Berechtigungsschlüssel hinzufügen</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid gap-4">
+              <FormField
+                control={form.control}
+                name="permissionKey"
+                render={({ field }) => (
+                  <FormItem className="grid gap-3">
+                    <FormLabel>Berechtigungsschlüssel</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="permissionName"
+                render={({ field }) => (
+                  <FormItem className="grid gap-3">
+                    <FormLabel>Bezeichnung</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {errors.length > 0 && (
+                <Alert variant="danger">
+                  <AlertDescription>
+                    <ul>
+                      {errors.map((err, idx) => (
+                        <li key={idx}>{err}</li>
+                      ))}
+                    </ul>
+                  </AlertDescription>
+                </Alert>
+              )}
+              <Button type="submit">Berechtigungsschlüssel hinzufügen</Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export function UpdatePermissionDetails({
+  permissionDetails,
+}: { permissionDetails: TPermissionType }) {
+  const [open, setOpen] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  const form = useForm<TPermissionDetailFormSchema>({
+    resolver: zodResolver(PermissionDetailFormSchema),
+    defaultValues: {
+      recordId: permissionDetails.recordId,
+      permissionKey: permissionDetails.permissionKey,
+      permissionName: permissionDetails.permissionName || "",
+    },
+  });
+  const onSubmit: SubmitHandler<TPermissionDetailFormSchema> = async (data) => {
+    try {
+      await updatePermDetails(data);
+      setOpen(false);
+      toast.success("Der Berechtigungsschlüssel wurde aktualisiert.");
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="ghost" type="button">
+          <EditIcon />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Berechtigungsschlüssel bearbeiten</DialogTitle>
+        </DialogHeader>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid gap-4">
+              <FormField
+                control={form.control}
+                name="recordId"
+                render={({ field }) => (
+                  <FormItem className="grid gap-3">
+                    <FormLabel>ID</FormLabel>
+                    <FormControl>
+                      <Input disabled {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="permissionKey"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Berechtigungsschlüssel</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="permissionName"
+                render={({ field }) => (
+                  <FormItem className="grid gap-3">
+                    <FormLabel>Bezeichnung</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {errors.length > 0 && (
+                <Alert variant="danger">
+                  <AlertDescription>
+                    <ul>
+                      {errors.map((err, idx) => (
+                        <li key={idx}>{err}</li>
+                      ))}
+                    </ul>
+                  </AlertDescription>
+                </Alert>
+              )}
+              <Button type="submit">Speichern</Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export function PermissionDeleteButton({
+  recordId,
+  mode = "list",
+}: { recordId: number; mode?: "list" | "page" }) {
+  const router = useRouter();
+  const [errors, setErrors] = useState<string[]>([]);
+  async function submitPermDeletion() {
+    try {
+      await deletePermission(recordId);
+      router.push("/admin/permission");
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
+    }
+  }
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      toast.error(errors.join("\n"));
+    }
+  }, [errors]);
+
+  return (
+    <AlertDialog>
+      {mode === "list" && (
+        <AlertDialogTrigger asChild>
+          <Button variant="ghostDanger" size="icon">
+            <TrashIcon />
+          </Button>
+        </AlertDialogTrigger>
+      )}
+      {mode === "page" && (
+        <AlertDialogTrigger asChild>
+          <Button variant="danger">
+            <TrashIcon className="size-4" />
+            <span>Rolle löschen</span>
+          </Button>
+        </AlertDialogTrigger>
+      )}
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Berechtigungsschlüssel löschen</AlertDialogTitle>
+          <AlertDescription>
+            <span>
+              Soll der Berechtigungsschlüssel wirklich gelöscht werden? Alle
+              Benutzer und Rollen verlieren die entsprechende Berechtigung.
+            </span>
+            <br />
+            <span className="text-danger">
+              Diese Aktion kann nicht rückgängig gemacht werden.
+            </span>
+          </AlertDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Abbrechen</AlertDialogCancel>
+          <AlertDialogAction
+            variant="danger"
+            onClick={() => submitPermDeletion()}
+          >
+            Berechtigungsschlüssel löschen
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

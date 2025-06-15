@@ -13,6 +13,7 @@ export type TRoleListResponse =
   | { success: false; error: Error };
 
 export type TPermissionType = {
+  recordId: number;
   permissionKey: string;
   permissionName: string | null;
 };

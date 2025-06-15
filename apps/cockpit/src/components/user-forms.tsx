@@ -20,7 +20,7 @@ import {
   getDefaultRBACValues,
   parseErrorMessages,
 } from "@/lib/rbac-utils";
-import { updateUserRoles } from "@/lib/role-actions";
+import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
 import {
   changePassword,
   createEmailAddress,
@@ -28,7 +28,6 @@ import {
   deleteUser,
   type getSingleUser,
   updateEmailAddress,
-  updatePermissions,
   updateUser,
 } from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -768,7 +767,7 @@ export function UpdateUserPermissionsForm({
 
   async function onSubmit(data: TUpdatePermissionSchema) {
     try {
-      await updatePermissions({ data, extraPermissionsResponse, userId });
+      await updateUserPermissions({ data, extraPermissionsResponse, userId });
       toast.success("Die Berechtigungen des Benutzers wurden aktualisiert.");
     } catch (err) {
       setErrors(parseErrorMessages(err));

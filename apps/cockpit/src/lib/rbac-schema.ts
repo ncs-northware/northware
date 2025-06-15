@@ -63,6 +63,7 @@ export const changePasswordFormSchema = z
       });
     }
   });
+
 export type TChangePasswordFormSchema = z.infer<
   typeof changePasswordFormSchema
 >;
@@ -74,3 +75,22 @@ export const RoleDetailFormSchema = z.object({
 });
 
 export type TRoleDetailFormSchema = z.infer<typeof RoleDetailFormSchema>;
+
+export const PermissionDetailFormSchema = z.object({
+  recordId: z.number(),
+  permissionKey: z.string(),
+  permissionName: z.string(),
+});
+
+export type TPermissionDetailFormSchema = z.infer<
+  typeof PermissionDetailFormSchema
+>;
+
+export const CreatePermissionDetailFormSchema = z.object({
+  permissionKey: z.string(),
+  permissionName: z.string(),
+});
+
+export type TCreatePermissionDetailFormSchema = z.infer<
+  typeof CreatePermissionDetailFormSchema
+>;
