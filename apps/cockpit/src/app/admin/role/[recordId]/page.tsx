@@ -4,7 +4,7 @@ import {
   RolePermissionsForm,
 } from "@/components/role-forms";
 import { getRole } from "@/lib/role-actions";
-import { getPermissionList } from "@/lib/user-actions";
+import { getPermissionList } from "@/lib/role-actions";
 import { Headline } from "@northware/ui/components/headline";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { redirect } from "next/navigation";

@@ -1,5 +1,5 @@
 import { UpdateUserPermissionsForm } from "@/components/user-forms";
-import { getPermissionList } from "@/lib/user-actions";
+import { getPermissionList } from "@/lib/role-actions";
 import { getExtraPermissions } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/headline";
 
