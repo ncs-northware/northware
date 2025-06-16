@@ -59,6 +59,7 @@ export interface DataTableProps<TData, TValue> {
   data: TData[];
   filterPlaceholder?: string;
   withRowSelect?: boolean;
+  initialSorting?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -66,8 +67,11 @@ export function DataTable<TData, TValue>({
   data,
   filterPlaceholder = "Suche",
   withRowSelect = true,
+  initialSorting,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>(
+    initialSorting ? [{ id: initialSorting, desc: false }] : []
+  );
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
