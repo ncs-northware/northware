@@ -29,7 +29,6 @@ import {
   deleteUser,
   type getSingleUser,
   updateEmailAddress,
-  updatePermissions,
   updateUser,
 } from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";

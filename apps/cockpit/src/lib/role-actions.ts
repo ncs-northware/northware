@@ -50,7 +50,6 @@ export async function getRoleList(): Promise<TRoleListResponse> {
       )
       .orderBy(rolesTable.roleKey);
 
-
     const result: Record<string, TRoleWithPermissions> = {};
     for (const item of response) {
       if (!result[item.roleKey]) {
