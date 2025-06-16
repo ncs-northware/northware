@@ -78,7 +78,15 @@ export type TRoleDetailFormSchema = z.infer<typeof RoleDetailFormSchema>;
 
 export const PermissionDetailFormSchema = z.object({
   recordId: z.number(),
-  permissionKey: z.string(),
+  permissionKey: z.union([
+    z.literal("all-access"),
+    z
+      .string()
+      .regex(
+        /^(all|cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?\.(read|create|update|delete)$/,
+        "Ungültiges Format des Berechtigungssschlüssels. Erwartet wird app::feature:subfeature.permission"
+      ),
+  ]),
   permissionName: z.string(),
 });
 
@@ -87,7 +95,15 @@ export type TPermissionDetailFormSchema = z.infer<
 >;
 
 export const CreatePermissionDetailFormSchema = z.object({
-  permissionKey: z.string(),
+  permissionKey: z.union([
+    z.literal("all-access"),
+    z
+      .string()
+      .regex(
+        /^(cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?\.(read|create|update|delete)$/,
+        "Ungültiges Format des Berechtigungssschlüssels. Erwartet wird app::feature:subfeature.permission"
+      ),
+  ]),
   permissionName: z.string(),
 });
 

@@ -53,6 +53,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -475,8 +476,15 @@ export function CreatePermissionDetails() {
                   <FormItem className="grid gap-3">
                     <FormLabel>Berechtigungsschlüssel</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input
+                        {...field}
+                        placeholder="app::feature:subfeature.permission"
+                      />
                     </FormControl>
+                    <FormDescription>
+                      Der Berechtigungsschlüssel sollte folgendem Muster folgen:
+                      app::feature:subfeature.permission
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
