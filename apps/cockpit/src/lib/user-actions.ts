@@ -85,7 +85,7 @@ export async function getUserList() {
   try {
     const loggedInUser = await currentUser();
     const client = await clerkClient();
-    const response = await client.users.getUserList();
+    const response = await client.users.getUserList({ orderBy: "+first_name" });
     const users = response.data
       .filter((user) => user.id !== loggedInUser?.id)
       .map((user) => {

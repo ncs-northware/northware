@@ -15,7 +15,7 @@ import {
   rolesTable,
   rolesToAccounts,
 } from "@northware/database/schema";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray, ne } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 import type {
@@ -46,7 +46,8 @@ export async function getRoleList(): Promise<TRoleListResponse> {
       .leftJoin(
         permissionsTable,
         eq(permissionsToRoles.permissionKey, permissionsTable.permissionKey)
-      );
+      )
+      .orderBy(rolesTable.roleKey);
 
     const result: Record<string, TRoleWithPermissions> = {};
     for (const item of response) {
@@ -275,7 +276,9 @@ export async function getPermissionList(): Promise<TPermissionListResponse> {
         permissionKey: permissionsTable.permissionKey,
         permissionName: permissionsTable.permissionName,
       })
-      .from(permissionsTable);
+      .from(permissionsTable)
+      .where(ne(permissionsTable.permissionKey, "all-access"))
+      .orderBy(permissionsTable.permissionKey);
 
     return { success: true, permissionList: response };
   } catch (error) {
@@ -344,6 +347,7 @@ export async function deletePermission(recordId: number) {
     await db
       .delete(permissionsTable)
       .where(eq(permissionsTable.recordId, recordId));
+    revalidatePath("admin/permission");
   } catch (error) {
     handleNeonError(error);
   }
