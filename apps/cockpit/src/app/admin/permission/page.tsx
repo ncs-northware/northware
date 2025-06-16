@@ -43,6 +43,7 @@ export default async function PermissionDashboard() {
         columns={columns}
         data={permissionList.permissionList}
         withRowSelect={false}
+        initialSorting="permissionKey"
       />
     </SidebarLayout>
   );

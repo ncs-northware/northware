@@ -41,6 +41,7 @@ export default async function RoleDashboard() {
         columns={columns}
         data={roleList.roleList}
         withRowSelect={false}
+        initialSorting="roleKey"
       />
     </SidebarLayout>
   );

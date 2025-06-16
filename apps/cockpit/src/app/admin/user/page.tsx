@@ -39,7 +39,12 @@ export default async function UserDashboard() {
           <Link href="user/create">Benutzer hinzufügen</Link>
         </Button>
       </div>
-      <DataTable columns={columns} data={userArray} withRowSelect={false} />
+      <DataTable
+        columns={columns}
+        data={userArray}
+        withRowSelect={false}
+        initialSorting="fullName"
+      />
       <Alert>
         <LightbulbIcon className="size-4" />
         <AlertTitle>Tipp</AlertTitle>
