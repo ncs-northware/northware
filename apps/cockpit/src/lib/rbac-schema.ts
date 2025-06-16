@@ -110,3 +110,4 @@ export const CreatePermissionDetailFormSchema = z.object({
 export type TCreatePermissionDetailFormSchema = z.infer<
   typeof CreatePermissionDetailFormSchema
 >;
+

@@ -6,8 +6,18 @@ import type {
   TCreateUserFormSchema,
   TUpdateUserFormSchema,
 } from "@/lib/rbac-schema";
-import type {} from "@/lib/rbac-types";
+import type {
+  TPermissionListResponse,
+  TUpdatePermissionsParams,
+} from "@/lib/rbac-types";
 import { clerkClient, currentUser } from "@northware/auth/server";
+import { db } from "@northware/database/connection";
+import { handleNeonError } from "@northware/database/neon-error-handling";
+import {
+  permissionsTable,
+  permissionsToAccounts,
+} from "@northware/database/schema";
+import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 

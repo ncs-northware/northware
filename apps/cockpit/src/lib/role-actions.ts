@@ -5,6 +5,7 @@ import type {
   TPermissionDetailFormSchema,
   TRoleDetailFormSchema,
 } from "@/lib/rbac-schema";
+
 import type { TCreateRoleFormData } from "@/lib/rbac-utils";
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
@@ -48,6 +49,7 @@ export async function getRoleList(): Promise<TRoleListResponse> {
         eq(permissionsToRoles.permissionKey, permissionsTable.permissionKey)
       )
       .orderBy(rolesTable.roleKey);
+
 
     const result: Record<string, TRoleWithPermissions> = {};
     for (const item of response) {

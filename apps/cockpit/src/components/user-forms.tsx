@@ -20,6 +20,7 @@ import {
   getDefaultRBACValues,
   parseErrorMessages,
 } from "@/lib/rbac-utils";
+
 import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
 import {
   changePassword,
@@ -28,6 +29,7 @@ import {
   deleteUser,
   type getSingleUser,
   updateEmailAddress,
+  updatePermissions,
   updateUser,
 } from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
