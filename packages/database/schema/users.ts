@@ -30,10 +30,14 @@ export const permissionsToRoles = pgTable(
       .notNull()
       .references(() => permissionsTable.permissionKey, {
         onDelete: "cascade",
+        onUpdate: "cascade",
       }),
     roleKey: varchar()
       .notNull()
-      .references(() => rolesTable.roleKey, { onDelete: "cascade" }),
+      .references(() => rolesTable.roleKey, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
   },
   (t) => [primaryKey({ columns: [t.permissionKey, t.roleKey] })]
 );
@@ -56,7 +60,10 @@ export const permissionsToAccounts = pgTable("PermissionsToAccounts", {
   recordId: serial().primaryKey().notNull(),
   permissionKey: varchar()
     .notNull()
-    .references(() => permissionsTable.permissionKey),
+    .references(() => permissionsTable.permissionKey, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
   accountUserId: varchar().notNull(),
 });
 
@@ -74,7 +81,10 @@ export const rolesToAccounts = pgTable("RolesToAccounts", {
   recordId: serial().primaryKey().notNull(),
   roleKey: varchar()
     .notNull()
-    .references(() => rolesTable.roleKey, { onDelete: "cascade" }),
+    .references(() => rolesTable.roleKey, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
   accountUserId: varchar().notNull(),
 });
 

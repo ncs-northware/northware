@@ -14,8 +14,20 @@ export default async function EditUserPage({
 
   return (
     <>
-      <div className="flex justify-between">
-        <Headline level="h1">Persönliche Daten</Headline>
+      <div className="flex justify-between gap-4">
+        <div>
+          <Headline level="h1">Benutzerdaten</Headline>
+          <p className="mb-4 text-justify font-medium text-muted-foreground">
+            Ein Benutzerkonto ist eine digitale Identität, mit der sich eine
+            Person in den Northware Apps authentifizieren können.
+          </p>
+          <p className="mb-4 text-justify font-medium text-muted-foreground">
+            Jedes Benutzerkonto besteht aus einem Butzernamen und einem
+            Passwort. Die Benutzer sind mit einer E-Mail Adresse registriert und
+            es sind ebenfalls Vor- und Nachname bzw. öffentliche Bezeichnungen
+            der Benutzer gespeichert.
+          </p>
+        </div>
         <EditPasswordFormDialog id={user?.id} />
       </div>
       <EditUserForm user={user} />

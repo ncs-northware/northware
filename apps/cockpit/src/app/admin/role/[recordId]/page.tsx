@@ -4,7 +4,7 @@ import {
   RolePermissionsForm,
 } from "@/components/role-forms";
 import { getRole } from "@/lib/role-actions";
-import { getPermissionList } from "@/lib/user-actions";
+import { getPermissionList } from "@/lib/role-actions";
 import { Headline } from "@northware/ui/components/headline";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { redirect } from "next/navigation";
@@ -38,7 +38,7 @@ export default async function UpdateRole({
         },
       ]}
     >
-      <div className="flex flex-row justify-between">
+      <div className="flex justify-between gap-4">
         <Headline level="h1">{details?.role.roleName}</Headline>
         <RoleDeleteButton recordId={recordId} mode="page" />
       </div>

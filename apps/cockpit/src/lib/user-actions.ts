@@ -6,18 +6,7 @@ import type {
   TCreateUserFormSchema,
   TUpdateUserFormSchema,
 } from "@/lib/rbac-schema";
-import type {
-  TPermissionListResponse,
-  TUpdatePermissionsParams,
-} from "@/lib/rbac-types";
 import { clerkClient, currentUser } from "@northware/auth/server";
-import { db } from "@northware/database/connection";
-import { handleNeonError } from "@northware/database/neon-error-handling";
-import {
-  permissionsTable,
-  permissionsToAccounts,
-} from "@northware/database/schema";
-import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 
@@ -95,7 +84,7 @@ export async function getUserList() {
   try {
     const loggedInUser = await currentUser();
     const client = await clerkClient();
-    const response = await client.users.getUserList();
+    const response = await client.users.getUserList({ orderBy: "+first_name" });
     const users = response.data
       .filter((user) => user.id !== loggedInUser?.id)
       .map((user) => {
@@ -196,6 +185,7 @@ export async function deleteUser(id: string) {
     const client = await clerkClient();
     await client.users.deleteUser(id);
     revalidatePath("/user");
+    // TODO: Rollen und permissions löschen
   } catch (error) {
     const typesafeError = error as ClerkError;
     handleClerkError(typesafeError);
@@ -286,76 +276,5 @@ export async function changePassword(
     }
   } else {
     new Error("Die eingegebenen Passwörter stimmen nicht überein.");
-  }
-}
-
-export async function getPermissionList(): Promise<TPermissionListResponse> {
-  try {
-    const response = await db
-      .select({
-        permissionKey: permissionsTable.permissionKey,
-        permissionName: permissionsTable.permissionName,
-      })
-      .from(permissionsTable);
-
-    return { success: true, permissionList: response };
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error : new Error("Unknown Error"),
-    };
-  }
-}
-
-export async function updatePermissions({
-  data,
-  extraPermissionsResponse,
-  userId,
-}: TUpdatePermissionsParams) {
-  // filtert aus den übergebenen Formulardaten die permissionKeys der aktiven Switches heraus
-  const selectedPermissions = Object.entries(data)
-    .filter(([_, value]) => value) // Nur ausgewählte Berechtigungen (value === true)
-    .map(([permissionKey]) => permissionKey); // Extrahiere die permissionKeys
-
-  // enthält permissionKeys, die in selecctedPermissions aber nicht in extraPermissionsResponse enthalten sind
-  const permissionsToAdd = selectedPermissions.filter(
-    (selectedPermission) =>
-      !extraPermissionsResponse.includes(selectedPermission)
-  );
-  // enthält permissionKeys, die in extraPermissionsResponse aber nicht in selectedPermissions enthalten sind
-  const permissionsToRemove = extraPermissionsResponse
-    .filter(
-      (extraPermission): extraPermission is string => extraPermission !== null
-    )
-    .filter((userRole) => !selectedPermissions.includes(userRole));
-
-  const insertPermissions = new Array();
-  permissionsToAdd.forEach((permission, i) => {
-    insertPermissions[i] = { permissionKey: permission, accountUserId: userId };
-  });
-
-  try {
-    // fügt neue Berechtigungen (insertPermissions) in die Datenbank Tabelle PermissionsToAccounts ein
-    if (insertPermissions.length > 0) {
-      await db
-        .insert(permissionsToAccounts)
-        .values(insertPermissions)
-        .onConflictDoNothing();
-    }
-
-    // entfernt Berechtigungen (permissionsToRemove) aus der Datenbank Tabelle PermissionsToAccounts
-    if (permissionsToRemove.length > 0) {
-      await db
-        .delete(permissionsToAccounts)
-        .where(
-          and(
-            inArray(permissionsToAccounts.permissionKey, permissionsToRemove),
-            eq(permissionsToAccounts.accountUserId, userId)
-          )
-        );
-    }
-    revalidatePath("admin/user");
-  } catch (error) {
-    handleNeonError(error);
   }
 }

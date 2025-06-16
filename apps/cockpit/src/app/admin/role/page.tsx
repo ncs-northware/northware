@@ -23,8 +23,16 @@ export default async function RoleDashboard() {
         { label: "Rollenverwaltung", href: "/admin/roles", active: true },
       ]}
     >
-      <div className="flex flex-row justify-between">
-        <Headline level="h1">Rollenverwaltung</Headline>
+      <div className="flex justify-between gap-4">
+        <div>
+          <Headline level="h1">Rollenverwaltung</Headline>
+          <p className="mb-4 text-justify font-medium text-muted-foreground">
+            Rollen sind Sammlungen von Rechten. Vergebe Rollen an einen
+            Benutzer, um ihm diese Sammlung an Rechten zuzuweisen. Benutzer
+            einer bestimmten Rolle erhalten alle enthaltenen Rechte. Es ist
+            nicht möglich dem Benutzer ein Rollen-Recht zu entziehen.
+          </p>
+        </div>
         <Button asChild>
           <Link href="/admin/role/create">Rolle erstellen</Link>
         </Button>
@@ -33,6 +41,7 @@ export default async function RoleDashboard() {
         columns={columns}
         data={roleList.roleList}
         withRowSelect={false}
+        initialSorting="roleKey"
       />
     </SidebarLayout>
   );

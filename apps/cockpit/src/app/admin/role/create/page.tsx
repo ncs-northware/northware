@@ -1,5 +1,5 @@
 import { CreateRoleForm } from "@/components/role-forms";
-import { getPermissionList } from "@/lib/user-actions";
+import { getPermissionList } from "@/lib/role-actions";
 import { Headline } from "@northware/ui/components/headline";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 

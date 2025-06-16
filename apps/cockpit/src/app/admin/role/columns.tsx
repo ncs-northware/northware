@@ -29,7 +29,7 @@ export const columns: ColumnDef<TRoleWithPermissions>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex justify-end">
-          <Button variant="ghost" asChild>
+          <Button variant="ghost" size="icon" asChild>
             {/* TODO: Nur mit Berechtigung update User */}
             <Link href={`role/${row.original.recordId}`}>
               <EditIcon />
