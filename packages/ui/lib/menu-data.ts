@@ -18,7 +18,7 @@ export async function menuData(service: ServiceType, userId?: string) {
     .where(
       and(
         eq(mainNavTable.app, service),
-        userPermissions.includes("allAccess")
+        userPermissions.includes("all-access")
           ? undefined
           : inArray(mainNavTable.permissionKey, userPermissions)
       )
