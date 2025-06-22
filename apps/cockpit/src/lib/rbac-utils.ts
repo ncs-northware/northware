@@ -1,4 +1,3 @@
-import type { TPermissionListResponse } from "@/lib/rbac-types";
 import { z } from "zod";
 
 /******************** Form Schema Generator Utilities ******************************/
@@ -17,42 +16,18 @@ export type TUpdatePermissionSchema = z.infer<
   typeof UserUpdatePermissionsFormSchema
 >;
 
-export function generateCreateRoleFormSchema(
-  permissionsResponse: TPermissionListResponse
-) {
-  // Stellen Sie sicher, dass permissionsResponse.success true ist und permissionList existiert
-  if (!permissionsResponse.success || !permissionsResponse.permissionList) {
-    // Oder werfen Sie einen Fehler, je nach Anwendungsfall
-    return z.object({
-      roleKey: z.string(),
-      roleName: z.string(),
-    });
-  }
+export const CreateRoleFormSchema = z.object({
+  roleKey: z
+    .string()
+    .regex(
+      /^(all|cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?$/,
+      "Ungültiges Format des Rollenschlüssels. Erwartet wird app::rolestring:subrole"
+    ),
+  roleName: z.string(),
+  permissions: z.array(z.string()),
+});
 
-  const dynamicPermissionSchema = permissionsResponse.permissionList.reduce(
-    (acc, permission) => {
-      acc[permission.permissionKey] = z.boolean();
-      return acc;
-    },
-    {} as Record<string, z.ZodBoolean>
-  );
-
-  return z.object({
-    roleKey: z.string(),
-    roleName: z.string(),
-    ...dynamicPermissionSchema,
-  });
-}
-
-/**
- * Leitet den TypeScript-Typ für die Formulardaten ab.
- * Dieser Typ wird dynamisch generiert, daher ist es hier ein Hilfstyp.
- * Für den tatsächlichen Gebrauch in der Komponente oder API-Funktion,
- * verwenden Sie z.infer<ReturnType<typeof generateCreateRoleFormSchema>>.
- */
-export type TCreateRoleFormData = z.infer<
-  ReturnType<typeof generateCreateRoleFormSchema>
->;
+export type TCreateRoleFormData = z.infer<typeof CreateRoleFormSchema>;
 
 /***** Form Default Values *****************************************************/
 

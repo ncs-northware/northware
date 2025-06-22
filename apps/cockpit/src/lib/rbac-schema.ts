@@ -70,7 +70,12 @@ export type TChangePasswordFormSchema = z.infer<
 
 export const RoleDetailFormSchema = z.object({
   recordId: z.number(),
-  roleKey: z.string(),
+  roleKey: z
+    .string()
+    .regex(
+      /^(all|cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?$/,
+      "Ungültiges Format des Berechtigungssschlüssels. Erwartet wird app::rolestring:subrole"
+    ),
   roleName: z.string(),
 });
 

@@ -164,12 +164,8 @@ export const getRole = cache(async (recordId: number) => {
 });
 
 export async function createRole(data: TCreateRoleFormData) {
-  const enabledPermissions = Object.entries(data)
-    .filter(([key, value]) => typeof value === "boolean" && value === true)
-    .map(([key]) => key);
-
   const insertPermissions = new Array();
-  enabledPermissions.forEach((permission, i) => {
+  data.permissions.forEach((permission, i) => {
     insertPermissions[i] = {
       permissionKey: permission,
       roleKey: data.roleKey,
@@ -208,23 +204,18 @@ export async function updateRolePermissions({
   rolePermissions,
   roleKey,
 }: {
-  data: { [x: string]: boolean | undefined };
+  data: { permissions: string[] };
   rolePermissions: string[];
   roleKey?: string;
 }) {
-  // filtert aus den übergebenen Formulardaten die permissionKeys der aktiven Switches heraus
-  const selectedPermissions = Object.entries(data)
-    .filter(([_, value]) => value) // Nur ausgewählte Berechtigungen (value === true)
-    .map(([permissionKey]) => permissionKey); // Extrahiere die permissionKeys
-
   // enthält permissionKeys, die in selecctedPermissions aber nicht in extraPermissionsResponse enthalten sind
-  const permissionsToAdd = selectedPermissions.filter(
+  const permissionsToAdd = data.permissions.filter(
     (selectedPermission) => !rolePermissions.includes(selectedPermission)
   );
   // enthält permissionKeys, die in extraPermissionsResponse aber nicht in selectedPermissions enthalten sind
   const permissionsToRemove = rolePermissions
-    .filter((permission): permission is string => permission !== null)
-    .filter((perm) => !selectedPermissions.includes(perm));
+    .filter((permission) => permission !== null)
+    .filter((perm) => !data.permissions.includes(perm));
 
   const insertPermissions = new Array();
   permissionsToAdd.forEach((permission, i) => {
