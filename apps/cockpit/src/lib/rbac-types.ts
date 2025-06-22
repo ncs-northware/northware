@@ -29,7 +29,7 @@ export type TUpdateRolesParams = {
 };
 
 export type TUpdatePermissionsParams = {
-  data: { [x: string]: boolean | undefined };
-  extraPermissionsResponse: (string | null)[];
+  data: { permissions: string[] };
+  extraPermissionsResponse: (string | undefined)[];
   userId: string;
 };

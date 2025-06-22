@@ -1,7 +1,4 @@
-import type {
-  TPermissionListResponse,
-  TPermissionType,
-} from "@/lib/rbac-types";
+import type { TPermissionListResponse } from "@/lib/rbac-types";
 import { z } from "zod";
 
 /******************** Form Schema Generator Utilities ******************************/
@@ -12,22 +9,12 @@ export const UserUpdateRoleFormSchema = z.object({
 
 export type TUpdateRoleSchema = z.infer<typeof UserUpdateRoleFormSchema>;
 
-export function generateUpdateUserPermissionsFormSchema(
-  permissionList: TPermissionType[]
-) {
-  return z.object(
-    permissionList.reduce(
-      (acc, permission) => {
-        acc[permission.permissionKey] = z.boolean().default(false).optional();
-        return acc;
-      },
-      {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
-    )
-  );
-}
+export const UserUpdatePermissionsFormSchema = z.object({
+  permissions: z.array(z.string()),
+});
 
 export type TUpdatePermissionSchema = z.infer<
-  ReturnType<typeof generateUpdateUserPermissionsFormSchema>
+  typeof UserUpdatePermissionsFormSchema
 >;
 
 export function generateCreateRoleFormSchema(

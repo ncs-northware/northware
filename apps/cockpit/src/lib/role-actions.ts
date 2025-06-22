@@ -292,13 +292,8 @@ export async function updateUserPermissions({
   extraPermissionsResponse,
   userId,
 }: TUpdatePermissionsParams) {
-  // filtert aus den übergebenen Formulardaten die permissionKeys der aktiven Switches heraus
-  const selectedPermissions = Object.entries(data)
-    .filter(([_, value]) => value) // Nur ausgewählte Berechtigungen (value === true)
-    .map(([permissionKey]) => permissionKey); // Extrahiere die permissionKeys
-
   // enthält permissionKeys, die in selecctedPermissions aber nicht in extraPermissionsResponse enthalten sind
-  const permissionsToAdd = selectedPermissions.filter(
+  const permissionsToAdd = data.permissions.filter(
     (selectedPermission) =>
       !extraPermissionsResponse.includes(selectedPermission)
   );
@@ -307,7 +302,7 @@ export async function updateUserPermissions({
     .filter(
       (extraPermission): extraPermission is string => extraPermission !== null
     )
-    .filter((userRole) => !selectedPermissions.includes(userRole));
+    .filter((userRole) => !data.permissions.includes(userRole));
 
   const insertPermissions = new Array();
   permissionsToAdd.forEach((permission, i) => {
