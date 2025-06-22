@@ -15,8 +15,8 @@ import type {
 import {
   type TUpdatePermissionSchema,
   type TUpdateRoleSchema,
+  UserUpdateRoleFormSchema,
   generateUpdateUserPermissionsFormSchema,
-  generateUserUpdateRoleFormSchema,
   getDefaultRBACValues,
   parseErrorMessages,
 } from "@/lib/rbac-utils";
@@ -620,7 +620,7 @@ export function UserDeleteButton({ userId }: { userId: string }) {
 
 type RolesFormProps = {
   rolesResponse: TRoleListResponse;
-  userRolesResponse: (string | null)[];
+  userRolesResponse: (string | undefined)[];
   userId: string;
 };
 
@@ -630,24 +630,15 @@ export function UpdateRolesForm({
   userId,
 }: RolesFormProps) {
   const [errors, setErrors] = useState<string[]>([]);
-
   if (!rolesResponse.success) {
-    // globalError
-    return <div>Fehler: {rolesResponse.error.message}</div>;
+    return rolesResponse.error.message;
   }
-
-  const defaultValues = getDefaultRBACValues(
-    rolesResponse.roleList,
-    "roleKey",
-    userRolesResponse
-  );
-
   // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const form = useForm<TUpdateRoleSchema>({
-    resolver: zodResolver(
-      generateUserUpdateRoleFormSchema(rolesResponse.roleList)
-    ),
-    defaultValues,
+    resolver: zodResolver(UserUpdateRoleFormSchema),
+    defaultValues: {
+      roles: userRolesResponse,
+    },
   });
 
   async function onSubmit(data: TUpdateRoleSchema) {
@@ -661,58 +652,89 @@ export function UpdateRolesForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {rolesResponse.roleList.map((role) => (
-          <FormField
-            key={role.roleKey}
-            control={form.control}
-            name={role.roleKey}
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
-                <Collapsible>
-                  <FormLabel>
-                    <span>{role.roleName}</span>
-                    <Badge className="font-mono" variant="secondary">
-                      {role.roleKey}
-                    </Badge>
-                    <CollapsibleTrigger asChild>
-                      <Button variant="ghost" size="icon" className="size-8">
-                        <ChevronDownIcon />
-                      </Button>
-                    </CollapsibleTrigger>
-                  </FormLabel>
-                  <CollapsibleContent>
-                    <ul className="text-muted-foreground text-sm">
-                      {role.permissions.length > 0 ? (
-                        role.permissions.map((permission) => (
-                          <li key={permission.permissionKey} className="my-2">
-                            <span className="mr-2">
-                              {permission.permissionName}
-                            </span>
-                            <Badge variant="secondary" className="font-mono">
-                              {permission.permissionKey}
-                            </Badge>
-                          </li>
-                        ))
-                      ) : (
-                        <li className="my-2">
-                          Die Rolle enthält keine Berechtigungen.
-                        </li>
-                      )}
-                    </ul>
-                  </CollapsibleContent>
-                </Collapsible>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ))}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+        <FormField
+          control={form.control}
+          name="roles"
+          render={() => (
+            <FormItem className="grid-cols-2">
+              {rolesResponse.roleList.map((role) => (
+                <FormField
+                  key={role.roleKey}
+                  control={form.control}
+                  name="roles"
+                  render={({ field }) => (
+                    <FormItem key={role.roleKey} className="p-3">
+                      <Collapsible>
+                        <div className="flex flex-row items-center justify-between">
+                          <FormLabel>
+                            <span>{role.roleName}</span>
+                            <Badge variant="secondary">{role.roleKey}</Badge>
+                            <CollapsibleTrigger>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="size-8"
+                                type="button"
+                              >
+                                <ChevronDownIcon />
+                              </Button>
+                            </CollapsibleTrigger>
+                          </FormLabel>
 
+                          <FormControl>
+                            <Switch
+                              checked={field.value.includes(role.roleKey)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...field.value,
+                                      role.roleKey,
+                                    ])
+                                  : field.onChange(
+                                      field.value.filter(
+                                        (value) => value !== role.roleKey
+                                      )
+                                    );
+                              }}
+                            />
+                          </FormControl>
+                        </div>
+                        <CollapsibleContent>
+                          <ul className="text-muted-foreground text-sm">
+                            {role.permissions.length > 0 ? (
+                              role.permissions.map((permission) => (
+                                <li
+                                  key={permission.permissionKey}
+                                  className="my-2"
+                                >
+                                  <span className="mr-2">
+                                    {permission.permissionName}
+                                  </span>
+                                  <Badge
+                                    variant="secondary"
+                                    className="font-mono"
+                                  >
+                                    {permission.permissionKey}
+                                  </Badge>
+                                </li>
+                              ))
+                            ) : (
+                              <li className="my-2">
+                                Die Rolle enthält keine Berechtigungen.
+                              </li>
+                            )}
+                          </ul>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    </FormItem>
+                  )}
+                />
+              ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         {errors.length > 0 && (
           <Alert variant="danger">
             <AlertDescription>

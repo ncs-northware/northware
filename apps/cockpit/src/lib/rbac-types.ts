@@ -23,8 +23,8 @@ export type TPermissionListResponse =
   | { success: false; error: Error };
 
 export type TUpdateRolesParams = {
-  data: { [x: string]: boolean | undefined };
-  userRolesResponse: (string | null)[];
+  data: { roles: string[] };
+  userRolesResponse: (string | undefined)[];
   userId: string;
 };
 

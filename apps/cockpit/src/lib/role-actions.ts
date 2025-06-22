@@ -83,18 +83,15 @@ export async function updateUserRoles({
   userId,
 }: TUpdateRolesParams) {
   // filtert aus den übergebenen Formulardaten die roleKeys der aktiven Switches heraus
-  const selectedRoles = Object.entries(data)
-    .filter(([_, value]) => value) // Nur ausgewählte Rollen (value === true)
-    .map(([roleKey]) => roleKey); // Extrahiere die roleKeys
 
   // enthält roleKeys, die in selecctedRoles aber nicht in userRolesResponse enthalten sind
-  const rolesToAdd = selectedRoles.filter(
-    (selectedRole) => !userRolesResponse.includes(selectedRole)
+  const rolesToAdd = data.roles.filter(
+    (role) => !userRolesResponse.includes(role)
   );
   // enthält roleKeys, die in userRolesRespnse aber nicht in selectedRoles enthalten sind
   const rolesToRemove = userRolesResponse
-    .filter((userRole): userRole is string => userRole !== null)
-    .filter((userRole) => !selectedRoles.includes(userRole));
+    .filter((userrole) => userrole !== undefined)
+    .filter((userRole) => !data.roles.includes(userRole));
 
   const insertRoles = new Array();
   rolesToAdd.forEach((role, i) => {

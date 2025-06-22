@@ -1,29 +1,16 @@
 import type {
   TPermissionListResponse,
   TPermissionType,
-  TRoleWithPermissions,
 } from "@/lib/rbac-types";
 import { z } from "zod";
 
 /******************** Form Schema Generator Utilities ******************************/
 
-export function generateUserUpdateRoleFormSchema(
-  roleList: TRoleWithPermissions[]
-) {
-  return z.object(
-    roleList.reduce(
-      (acc, role) => {
-        acc[role.roleKey] = z.boolean().default(false).optional();
-        return acc;
-      },
-      {} as Record<string, z.ZodOptional<z.ZodDefault<z.ZodBoolean>>>
-    )
-  );
-}
+export const UserUpdateRoleFormSchema = z.object({
+  roles: z.array(z.string()),
+});
 
-export type TUpdateRoleSchema = z.infer<
-  ReturnType<typeof generateUserUpdateRoleFormSchema>
->;
+export type TUpdateRoleSchema = z.infer<typeof UserUpdateRoleFormSchema>;
 
 export function generateUpdateUserPermissionsFormSchema(
   permissionList: TPermissionType[]
