@@ -2,7 +2,7 @@ import { z } from "zod";
 
 /************** User Form Schema  **************************************************************/
 
-export const createUserFormSchema = z.object({
+export const CreateUserFormSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   emailAddress: z
@@ -21,9 +21,9 @@ export const createUserFormSchema = z.object({
     .min(8, { message: "Das Passwort muss mindestens 8 Zeichen lang sein." })
     .max(72, { message: "Das Passwort darf maximal 72 Zeichen lang sein." }),
 });
-export type TCreateUserFormSchema = z.infer<typeof createUserFormSchema>;
+export type TCreateUserFormSchema = z.infer<typeof CreateUserFormSchema>;
 
-export const updateUserFromSchema = z.object({
+export const UpdateUserFromSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   username: z
@@ -35,18 +35,18 @@ export const updateUserFromSchema = z.object({
       message: "Der Benutzername darf maximal 64 Zeichen lang sein.",
     }),
 });
-export type TUpdateUserFormSchema = z.infer<typeof updateUserFromSchema>;
+export type TUpdateUserFormSchema = z.infer<typeof UpdateUserFromSchema>;
 
-export const createEMailAddressFormSchema = z.object({
+export const CreateEMailAddressFormSchema = z.object({
   emailAddress: z.string(),
   verified: z.boolean().default(true).optional(),
   primary: z.boolean().default(false).optional(),
 });
 export type TCreateEMailAddressFormSchema = z.infer<
-  typeof createEMailAddressFormSchema
+  typeof CreateEMailAddressFormSchema
 >;
 
-export const changePasswordFormSchema = z
+export const UpdatePasswordFormSchema = z
   .object({
     newPassword: z
       .string()
@@ -66,17 +66,17 @@ export const changePasswordFormSchema = z
     }
   });
 
-export type TChangePasswordFormSchema = z.infer<
-  typeof changePasswordFormSchema
+export type TUpdatePasswordFormSchema = z.infer<
+  typeof UpdatePasswordFormSchema
 >;
 
 /******************** User Roles and Permissions ******************************/
 
-export const UserUpdateRoleFormSchema = z.object({
+export const UpdateUserRoleFormSchema = z.object({
   roles: z.array(z.string()),
 });
 
-export type TUpdateRoleSchema = z.infer<typeof UserUpdateRoleFormSchema>;
+export type TUpdateRoleSchema = z.infer<typeof UpdateUserRoleFormSchema>;
 
 export const UserUpdatePermissionsFormSchema = z.object({
   permissions: z.array(z.string()),

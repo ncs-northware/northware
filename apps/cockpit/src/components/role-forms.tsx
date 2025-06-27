@@ -202,7 +202,7 @@ type TRoleDetails = {
   roleName: string | null;
 };
 
-export function RoleDetailForm({
+export function UpdateRoleDetailForm({
   roleDetails,
 }: { roleDetails?: TRoleDetails }) {
   const [errors, setErrors] = useState<string[]>([]);

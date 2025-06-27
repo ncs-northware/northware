@@ -2,11 +2,17 @@
 
 import type {
   TCreatePermissionDetailFormSchema,
+  TCreateRoleFormData,
   TPermissionDetailFormSchema,
   TRoleDetailFormSchema,
 } from "@/lib/rbac-schema";
-
-import type { TCreateRoleFormData } from "@/lib/rbac-utils";
+import type {
+  TPermissionListResponse,
+  TRoleListResponse,
+  TRoleWithPermissions,
+  TUpdatePermissionsParams,
+  TUpdateRolesParams,
+} from "@/lib/rbac-types";
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
 import {
@@ -19,13 +25,6 @@ import {
 import { and, eq, inArray, ne } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
-import type {
-  TPermissionListResponse,
-  TRoleListResponse,
-  TRoleWithPermissions,
-  TUpdatePermissionsParams,
-  TUpdateRolesParams,
-} from "./rbac-types";
 
 /************ Role Management **************************************/
 

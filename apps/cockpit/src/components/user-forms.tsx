@@ -1,17 +1,17 @@
 "use client";
 
 import {
-  type TChangePasswordFormSchema,
+  CreateEMailAddressFormSchema,
   type TCreateEMailAddressFormSchema,
+  type TUpdatePasswordFormSchema,
   type TUpdatePermissionSchema,
   type TUpdateRoleSchema,
   type TUpdateUserFormSchema,
+  UpdatePasswordFormSchema,
+  UpdateUserFromSchema,
+  UpdateUserRoleFormSchema,
   UserUpdatePermissionsFormSchema,
-  UserUpdateRoleFormSchema,
-  changePasswordFormSchema,
-  createEMailAddressFormSchema,
   parseErrorMessages,
-  updateUserFromSchema,
 } from "@/lib/rbac-schema";
 import type {
   TPermissionListResponse,
@@ -19,12 +19,12 @@ import type {
 } from "@/lib/rbac-types";
 import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
 import {
-  changePassword,
   createEmailAddress,
   deleteEmailAddress,
   deleteUser,
   type getSingleUser,
   updateEmailAddress,
+  updatePassword,
   updateUser,
 } from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -96,14 +96,15 @@ import {
 } from "@northware/ui/icons/lucide";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-// Clerk User Data
 
-export function EditUserForm({
+/*********************** Clerk User Data **************************************/
+
+export function UpdateUserForm({
   user,
 }: { user?: Awaited<ReturnType<typeof getSingleUser>> }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TUpdateUserFormSchema>({
-    resolver: zodResolver(updateUserFromSchema),
+    resolver: zodResolver(UpdateUserFromSchema),
     defaultValues: {
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
@@ -335,7 +336,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const form = useForm<TCreateEMailAddressFormSchema>({
-    resolver: zodResolver(createEMailAddressFormSchema),
+    resolver: zodResolver(CreateEMailAddressFormSchema),
     defaultValues: {
       emailAddress: "",
       verified: true,
@@ -440,12 +441,12 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
   );
 }
 
-export function EditPasswordFormDialog({ id }: { id?: string }) {
+export function UpdatePasswordFormDialog({ id }: { id?: string }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
-  const form = useForm<TChangePasswordFormSchema>({
-    resolver: zodResolver(changePasswordFormSchema),
+  const form = useForm<TUpdatePasswordFormSchema>({
+    resolver: zodResolver(UpdatePasswordFormSchema),
     defaultValues: {
       newPassword: "",
       confirmPassword: "",
@@ -454,10 +455,10 @@ export function EditPasswordFormDialog({ id }: { id?: string }) {
     },
   });
 
-  const onSubmit: SubmitHandler<TChangePasswordFormSchema> = async (data) => {
+  const onSubmit: SubmitHandler<TUpdatePasswordFormSchema> = async (data) => {
     setErrors([]); // Fehler zurücksetzen
     try {
-      await changePassword(id, data);
+      await updatePassword(id, data);
       setOpen(false);
       toast.success("Das Passwort wurde gespeichert.");
     } catch (err) {
@@ -612,7 +613,7 @@ export function UserDeleteButton({ userId }: { userId: string }) {
   );
 }
 
-// User Roles
+/********************* User Roles *******************************************/
 
 type RolesFormProps = {
   rolesResponse: TRoleListResponse;
@@ -620,7 +621,7 @@ type RolesFormProps = {
   userId: string;
 };
 
-export function UpdateRolesForm({
+export function UpdateUserRolesForm({
   rolesResponse,
   userRolesResponse,
   userId,
@@ -631,7 +632,7 @@ export function UpdateRolesForm({
   }
   // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const form = useForm<TUpdateRoleSchema>({
-    resolver: zodResolver(UserUpdateRoleFormSchema),
+    resolver: zodResolver(UpdateUserRoleFormSchema),
     defaultValues: {
       roles: userRolesResponse,
     },

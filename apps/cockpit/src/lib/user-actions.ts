@@ -1,9 +1,9 @@
 "use server";
 
 import type {
-  TChangePasswordFormSchema,
   TCreateEMailAddressFormSchema,
   TCreateUserFormSchema,
+  TUpdatePasswordFormSchema,
   TUpdateUserFormSchema,
 } from "@/lib/rbac-schema";
 import { clerkClient, currentUser } from "@northware/auth/server";
@@ -253,9 +253,9 @@ export async function deleteEmailAddress(addressId: string) {
   }
 }
 
-export async function changePassword(
+export async function updatePassword(
   id: string | undefined,
-  formData: TChangePasswordFormSchema
+  formData: TUpdatePasswordFormSchema
 ) {
   if (typeof id === "undefined") {
     new Error(

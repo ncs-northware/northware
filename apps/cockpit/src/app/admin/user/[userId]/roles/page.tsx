@@ -1,4 +1,4 @@
-import { UpdateRolesForm } from "@/components/user-forms";
+import { UpdateUserRolesForm } from "@/components/user-forms";
 import { getRoleList } from "@/lib/role-actions";
 import { getUserRoles } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/headline";
@@ -18,7 +18,7 @@ export default async function Page({
         Rolle erhalten alle enthaltenen Rechte. Es ist nicht möglich dem
         Benutzer ein Rollen-Recht zu entziehen.
       </p>
-      <UpdateRolesForm
+      <UpdateUserRolesForm
         rolesResponse={roleList}
         userId={userId}
         userRolesResponse={userRoles}

@@ -1,7 +1,7 @@
 import {
   RoleDeleteButton,
-  RoleDetailForm,
   RolePermissionsForm,
+  UpdateRoleDetailForm,
 } from "@/components/role-forms";
 import { getRole } from "@/lib/role-actions";
 import { getPermissionList } from "@/lib/role-actions";
@@ -42,7 +42,7 @@ export default async function Page({
         <Headline level="h1">{details?.role.roleName}</Headline>
         <RoleDeleteButton recordId={recordId} mode="page" />
       </div>
-      <RoleDetailForm roleDetails={details?.role} />
+      <UpdateRoleDetailForm roleDetails={details?.role} />
 
       <Headline level="h2" className="mt-5">
         Rollenberechtigungen
