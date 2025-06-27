@@ -8,7 +8,7 @@ import { columns } from "./columns";
 
 export const metadata = { title: "Rollenverwaltung" };
 
-export default async function RoleDashboard() {
+export default async function Page() {
   const roleList = (await getRoleList()) || [];
   if (!roleList.success) {
     // globalError

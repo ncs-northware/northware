@@ -17,7 +17,7 @@ export async function generateMetadata({
   return { title: details?.role.roleName };
 }
 
-export default async function UpdateRole({
+export default async function Page({
   params,
 }: { params: Promise<{ recordId: number }> }) {
   const { recordId } = await params;

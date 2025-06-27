@@ -6,7 +6,7 @@ import {
 import { getSingleUser } from "@/lib/user-actions";
 import { Headline } from "@northware/ui/components/headline";
 
-export default async function EditUserPage({
+export default async function Page({
   params,
 }: { params: Promise<{ userId: string }> }) {
   const { userId } = await params;

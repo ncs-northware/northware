@@ -3,7 +3,7 @@ import { getRoleList } from "@/lib/role-actions";
 import { getUserRoles } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/headline";
 
-export default async function EditUserRolesPage({
+export default async function Page({
   params,
 }: { params: Promise<{ userId: string }> }) {
   const { userId } = await params;
