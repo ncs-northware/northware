@@ -3,7 +3,7 @@ import { createUser } from "@/lib/user-actions";
 import { Headline } from "@northware/ui/components/headline";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 
-export default function CreateUserPage() {
+export default function Page() {
   return (
     <SidebarLayout
       service="cockpit"

@@ -1,12 +1,12 @@
 import {
-  EditPasswordFormDialog,
-  EditUserForm,
+  UpdatePasswordFormDialog,
+  UpdateUserForm,
   UserEmailList,
 } from "@/components/user-forms";
 import { getSingleUser } from "@/lib/user-actions";
 import { Headline } from "@northware/ui/components/headline";
 
-export default async function EditUserPage({
+export default async function Page({
   params,
 }: { params: Promise<{ userId: string }> }) {
   const { userId } = await params;
@@ -28,9 +28,9 @@ export default async function EditUserPage({
             der Benutzer gespeichert.
           </p>
         </div>
-        <EditPasswordFormDialog id={user?.id} />
+        <UpdatePasswordFormDialog id={user?.id} />
       </div>
-      <EditUserForm user={user} />
+      <UpdateUserForm user={user} />
       <Headline level="h2">E-Mail Adressen</Headline>
       <UserEmailList
         userId={user?.id}

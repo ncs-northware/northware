@@ -1,34 +1,30 @@
 "use client";
 
 import {
-  type TChangePasswordFormSchema,
+  CreateEMailAddressFormSchema,
   type TCreateEMailAddressFormSchema,
+  type TUpdatePasswordFormSchema,
+  type TUpdatePermissionSchema,
+  type TUpdateRoleSchema,
   type TUpdateUserFormSchema,
-  changePasswordFormSchema,
-  createEMailAddressFormSchema,
-  updateUserFromSchema,
+  UpdatePasswordFormSchema,
+  UpdateUserFromSchema,
+  UpdateUserRoleFormSchema,
+  UserUpdatePermissionsFormSchema,
+  parseErrorMessages,
 } from "@/lib/rbac-schema";
 import type {
   TPermissionListResponse,
   TRoleListResponse,
 } from "@/lib/rbac-types";
-import {
-  type TUpdatePermissionSchema,
-  type TUpdateRoleSchema,
-  generateUpdateUserPermissionsFormSchema,
-  generateUserUpdateRoleFormSchema,
-  getDefaultRBACValues,
-  parseErrorMessages,
-} from "@/lib/rbac-utils";
-
 import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
 import {
-  changePassword,
   createEmailAddress,
   deleteEmailAddress,
   deleteUser,
   type getSingleUser,
   updateEmailAddress,
+  updatePassword,
   updateUser,
 } from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -100,14 +96,15 @@ import {
 } from "@northware/ui/icons/lucide";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-// Clerk User Data
 
-export function EditUserForm({
+/*********************** Clerk User Data **************************************/
+
+export function UpdateUserForm({
   user,
 }: { user?: Awaited<ReturnType<typeof getSingleUser>> }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TUpdateUserFormSchema>({
-    resolver: zodResolver(updateUserFromSchema),
+    resolver: zodResolver(UpdateUserFromSchema),
     defaultValues: {
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
@@ -339,7 +336,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const form = useForm<TCreateEMailAddressFormSchema>({
-    resolver: zodResolver(createEMailAddressFormSchema),
+    resolver: zodResolver(CreateEMailAddressFormSchema),
     defaultValues: {
       emailAddress: "",
       verified: true,
@@ -444,12 +441,12 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
   );
 }
 
-export function EditPasswordFormDialog({ id }: { id?: string }) {
+export function UpdatePasswordFormDialog({ id }: { id?: string }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
-  const form = useForm<TChangePasswordFormSchema>({
-    resolver: zodResolver(changePasswordFormSchema),
+  const form = useForm<TUpdatePasswordFormSchema>({
+    resolver: zodResolver(UpdatePasswordFormSchema),
     defaultValues: {
       newPassword: "",
       confirmPassword: "",
@@ -458,10 +455,10 @@ export function EditPasswordFormDialog({ id }: { id?: string }) {
     },
   });
 
-  const onSubmit: SubmitHandler<TChangePasswordFormSchema> = async (data) => {
+  const onSubmit: SubmitHandler<TUpdatePasswordFormSchema> = async (data) => {
     setErrors([]); // Fehler zurücksetzen
     try {
-      await changePassword(id, data);
+      await updatePassword(id, data);
       setOpen(false);
       toast.success("Das Passwort wurde gespeichert.");
     } catch (err) {
@@ -616,38 +613,29 @@ export function UserDeleteButton({ userId }: { userId: string }) {
   );
 }
 
-// User Roles
+/********************* User Roles *******************************************/
 
 type RolesFormProps = {
   rolesResponse: TRoleListResponse;
-  userRolesResponse: (string | null)[];
+  userRolesResponse: (string | undefined)[];
   userId: string;
 };
 
-export function UpdateRolesForm({
+export function UpdateUserRolesForm({
   rolesResponse,
   userRolesResponse,
   userId,
 }: RolesFormProps) {
   const [errors, setErrors] = useState<string[]>([]);
-
   if (!rolesResponse.success) {
-    // globalError
-    return <div>Fehler: {rolesResponse.error.message}</div>;
+    return rolesResponse.error.message;
   }
-
-  const defaultValues = getDefaultRBACValues(
-    rolesResponse.roleList,
-    "roleKey",
-    userRolesResponse
-  );
-
   // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const form = useForm<TUpdateRoleSchema>({
-    resolver: zodResolver(
-      generateUserUpdateRoleFormSchema(rolesResponse.roleList)
-    ),
-    defaultValues,
+    resolver: zodResolver(UpdateUserRoleFormSchema),
+    defaultValues: {
+      roles: userRolesResponse,
+    },
   });
 
   async function onSubmit(data: TUpdateRoleSchema) {
@@ -661,58 +649,89 @@ export function UpdateRolesForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {rolesResponse.roleList.map((role) => (
-          <FormField
-            key={role.roleKey}
-            control={form.control}
-            name={role.roleKey}
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
-                <Collapsible>
-                  <FormLabel>
-                    <span>{role.roleName}</span>
-                    <Badge className="font-mono" variant="secondary">
-                      {role.roleKey}
-                    </Badge>
-                    <CollapsibleTrigger asChild>
-                      <Button variant="ghost" size="icon" className="size-8">
-                        <ChevronDownIcon />
-                      </Button>
-                    </CollapsibleTrigger>
-                  </FormLabel>
-                  <CollapsibleContent>
-                    <ul className="text-muted-foreground text-sm">
-                      {role.permissions.length > 0 ? (
-                        role.permissions.map((permission) => (
-                          <li key={permission.permissionKey} className="my-2">
-                            <span className="mr-2">
-                              {permission.permissionName}
-                            </span>
-                            <Badge variant="secondary" className="font-mono">
-                              {permission.permissionKey}
-                            </Badge>
-                          </li>
-                        ))
-                      ) : (
-                        <li className="my-2">
-                          Die Rolle enthält keine Berechtigungen.
-                        </li>
-                      )}
-                    </ul>
-                  </CollapsibleContent>
-                </Collapsible>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ))}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+        <FormField
+          control={form.control}
+          name="roles"
+          render={() => (
+            <FormItem className="grid-cols-2">
+              {rolesResponse.roleList.map((role) => (
+                <FormField
+                  key={role.roleKey}
+                  control={form.control}
+                  name="roles"
+                  render={({ field }) => (
+                    <FormItem key={role.roleKey} className="p-3">
+                      <Collapsible>
+                        <div className="flex flex-row items-center justify-between">
+                          <FormLabel>
+                            <span>{role.roleName}</span>
+                            <Badge variant="secondary">{role.roleKey}</Badge>
+                            <CollapsibleTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="size-8"
+                                type="button"
+                              >
+                                <ChevronDownIcon />
+                              </Button>
+                            </CollapsibleTrigger>
+                          </FormLabel>
 
+                          <FormControl>
+                            <Switch
+                              checked={field.value.includes(role.roleKey)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...field.value,
+                                      role.roleKey,
+                                    ])
+                                  : field.onChange(
+                                      field.value.filter(
+                                        (value) => value !== role.roleKey
+                                      )
+                                    );
+                              }}
+                            />
+                          </FormControl>
+                        </div>
+                        <CollapsibleContent>
+                          <ul className="text-muted-foreground text-sm">
+                            {role.permissions.length > 0 ? (
+                              role.permissions.map((permission) => (
+                                <li
+                                  key={permission.permissionKey}
+                                  className="my-2"
+                                >
+                                  <span className="mr-2">
+                                    {permission.permissionName}
+                                  </span>
+                                  <Badge
+                                    variant="secondary"
+                                    className="font-mono"
+                                  >
+                                    {permission.permissionKey}
+                                  </Badge>
+                                </li>
+                              ))
+                            ) : (
+                              <li className="my-2">
+                                Die Rolle enthält keine Berechtigungen.
+                              </li>
+                            )}
+                          </ul>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    </FormItem>
+                  )}
+                />
+              ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         {errors.length > 0 && (
           <Alert variant="danger">
             <AlertDescription>
@@ -734,7 +753,7 @@ export function UpdateRolesForm({
 
 type PermissionsFormProps = {
   permissionsResponse: TPermissionListResponse;
-  extraPermissionsResponse: (string | null)[];
+  extraPermissionsResponse: (string | undefined)[];
   userId: string;
 };
 
@@ -746,24 +765,14 @@ export function UpdateUserPermissionsForm({
   const [errors, setErrors] = useState<string[]>([]);
 
   if (!permissionsResponse.success) {
-    // globalError
+    // TODO globalError
     return <div>Fehler: {permissionsResponse.error.message}</div>;
   }
 
-  const defaultValues = getDefaultRBACValues(
-    permissionsResponse.permissionList,
-    "permissionKey",
-    extraPermissionsResponse
-  );
-
   // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
   const form = useForm<TUpdatePermissionSchema>({
-    resolver: zodResolver(
-      generateUpdateUserPermissionsFormSchema(
-        permissionsResponse.permissionList
-      )
-    ),
-    defaultValues,
+    resolver: zodResolver(UserUpdatePermissionsFormSchema),
+    defaultValues: { permissions: extraPermissionsResponse },
   });
 
   async function onSubmit(data: TUpdatePermissionSchema) {
@@ -777,31 +786,50 @@ export function UpdateUserPermissionsForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {permissionsResponse.permissionList.map((permission) => (
-          <FormField
-            key={permission.permissionKey}
-            control={form.control}
-            name={permission.permissionKey}
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
-                <FormLabel>
-                  <span>{permission.permissionName}</span>
-                  <Badge className="font-mono" variant="secondary">
-                    {permission.permissionKey}
-                  </Badge>
-                </FormLabel>
-
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ))}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+        <FormField
+          control={form.control}
+          name="permissions"
+          render={() => (
+            <FormItem className="grid-cols-2">
+              {permissionsResponse.permissionList.map((perm) => (
+                <FormField
+                  key={perm.recordId}
+                  control={form.control}
+                  name="permissions"
+                  render={({ field }) => (
+                    <FormItem
+                      key={perm.recordId}
+                      className="flex flex-row items-center justify-between p-3"
+                    >
+                      <FormLabel>
+                        <span>{perm.permissionName}</span>
+                        <Badge variant="secondary">{perm.permissionKey}</Badge>
+                      </FormLabel>
+                      <FormControl>
+                        <Switch
+                          checked={field.value.includes(perm.permissionKey)}
+                          onCheckedChange={(checked) => {
+                            return checked
+                              ? field.onChange([
+                                  ...field.value,
+                                  perm.permissionKey,
+                                ])
+                              : field.onChange(
+                                  field.value.filter(
+                                    (value) => value !== perm.permissionKey
+                                  )
+                                );
+                          }}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </FormItem>
+          )}
+        />
 
         {errors.length > 0 && (
           <Alert variant="danger">

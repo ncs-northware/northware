@@ -2,25 +2,22 @@
 
 import {
   CreatePermissionDetailFormSchema,
+  CreateRoleFormSchema,
   PermissionDetailFormSchema,
   RoleDetailFormSchema,
   type TCreatePermissionDetailFormSchema,
+  type TCreateRoleFormData,
   type TPermissionDetailFormSchema,
   type TRoleDetailFormSchema,
+  type TUpdatePermissionSchema,
+  UserUpdatePermissionsFormSchema,
+  parseErrorMessages,
 } from "@/lib/rbac-schema";
 import type {
   TPermissionListResponse,
   TPermissionType,
 } from "@/lib/rbac-types";
 
-import {
-  type TCreateRoleFormData,
-  type TUpdatePermissionSchema,
-  generateCreateRoleFormSchema,
-  generateUpdateUserPermissionsFormSchema,
-  getDefaultRBACValues,
-  parseErrorMessages,
-} from "@/lib/rbac-utils";
 import {
   createPermDetails,
   createRole,
@@ -77,22 +74,13 @@ export function CreateRoleForm({
     return permissionsResponse.error.message;
   }
 
-  const defaultPermissionValues = permissionsResponse.permissionList.reduce(
-    (acc: Record<string, boolean>, permission) => {
-      // Setze den Standardwert für jede Berechtigung auf false
-      acc[permission.permissionKey] = false;
-      return acc;
-    },
-    {} as Record<string, boolean>
-  );
-
   // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const form = useForm<TCreateRoleFormData>({
-    resolver: zodResolver(generateCreateRoleFormSchema(permissionsResponse)),
+    resolver: zodResolver(CreateRoleFormSchema),
     defaultValues: {
       roleKey: "",
       roleName: "",
-      ...defaultPermissionValues,
+      permissions: [],
     },
   });
 
@@ -140,31 +128,52 @@ export function CreateRoleForm({
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          {permissionsResponse.permissionList.map((permission) => (
-            <FormField
-              key={permission.permissionKey}
-              control={form.control}
-              name={permission.permissionKey as keyof TCreateRoleFormData}
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
-                  <FormLabel>
-                    <span>{permission.permissionName}</span>
-                    <Badge className="font-mono" variant="secondary">
-                      {permission.permissionKey}
-                    </Badge>
-                  </FormLabel>
-
-                  <FormControl>
-                    <Switch
-                      checked={Boolean(field.value)}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          ))}
+        <div className="grid gap-4">
+          <FormField
+            control={form.control}
+            name="permissions"
+            render={() => (
+              <FormItem className="grid-cols-2">
+                {permissionsResponse.permissionList.map((perm) => (
+                  <FormField
+                    key={perm.recordId}
+                    control={form.control}
+                    name="permissions"
+                    render={({ field }) => (
+                      <FormItem
+                        key={perm.recordId}
+                        className="flex flex-row items-center justify-between p-3"
+                      >
+                        <FormLabel>
+                          <span>{perm.permissionName}</span>
+                          <Badge variant="secondary">
+                            {perm.permissionKey}
+                          </Badge>
+                        </FormLabel>
+                        <FormControl>
+                          <Switch
+                            checked={field.value.includes(perm.permissionKey)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([
+                                    ...field.value,
+                                    perm.permissionKey,
+                                  ])
+                                : field.onChange(
+                                    field.value.filter(
+                                      (value) => value !== perm.permissionKey
+                                    )
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                ))}
+              </FormItem>
+            )}
+          />
         </div>
 
         {errors.length > 0 && (
@@ -193,7 +202,7 @@ type TRoleDetails = {
   roleName: string | null;
 };
 
-export function RoleDetailForm({
+export function UpdateRoleDetailForm({
   roleDetails,
 }: { roleDetails?: TRoleDetails }) {
   const [errors, setErrors] = useState<string[]>([]);
@@ -291,24 +300,14 @@ export function RolePermissionsForm({
   const [errors, setErrors] = useState<string[]>([]);
 
   if (!permissionsResponse.success) {
-    // globalError
+    // TODO globalError
     return <div>Fehler: {permissionsResponse.error.message}</div>;
   }
 
-  const defaultValues = getDefaultRBACValues(
-    permissionsResponse.permissionList,
-    "permissionKey",
-    rolePermissions
-  );
-
   // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
   const form = useForm<TUpdatePermissionSchema>({
-    resolver: zodResolver(
-      generateUpdateUserPermissionsFormSchema(
-        permissionsResponse.permissionList
-      )
-    ),
-    defaultValues,
+    resolver: zodResolver(UserUpdatePermissionsFormSchema),
+    defaultValues: { permissions: rolePermissions },
   });
 
   async function onSubmit(data: TUpdatePermissionSchema) {
@@ -323,32 +322,49 @@ export function RolePermissionsForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          {permissionsResponse.permissionList.map((permission) => (
-            <FormField
-              key={permission.permissionKey}
-              control={form.control}
-              name={permission.permissionKey}
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start justify-between space-x-3 space-y-0">
-                  <FormLabel>
-                    <span>{permission.permissionName}</span>
-                    <Badge className="font-mono" variant="secondary">
-                      {permission.permissionKey}
-                    </Badge>
-                  </FormLabel>
-
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          ))}
-        </div>
+        <FormField
+          control={form.control}
+          name="permissions"
+          render={() => (
+            <FormItem className="grid-cols-2">
+              {permissionsResponse.permissionList.map((perm) => (
+                <FormField
+                  key={perm.recordId}
+                  control={form.control}
+                  name="permissions"
+                  render={({ field }) => (
+                    <FormItem
+                      key={perm.recordId}
+                      className="flex flex-row items-center justify-between p-3"
+                    >
+                      <FormLabel>
+                        <span>{perm.permissionName}</span>
+                        <Badge variant="secondary">{perm.permissionKey}</Badge>
+                      </FormLabel>
+                      <FormControl>
+                        <Switch
+                          checked={field.value.includes(perm.permissionKey)}
+                          onCheckedChange={(checked) => {
+                            return checked
+                              ? field.onChange([
+                                  ...field.value,
+                                  perm.permissionKey,
+                                ])
+                              : field.onChange(
+                                  field.value.filter(
+                                    (value) => value !== perm.permissionKey
+                                  )
+                                );
+                          }}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </FormItem>
+          )}
+        />
 
         {errors.length > 0 && (
           <Alert variant="danger">

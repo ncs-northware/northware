@@ -1,7 +1,7 @@
 import {
   RoleDeleteButton,
-  RoleDetailForm,
   RolePermissionsForm,
+  UpdateRoleDetailForm,
 } from "@/components/role-forms";
 import { getRole } from "@/lib/role-actions";
 import { getPermissionList } from "@/lib/role-actions";
@@ -17,7 +17,7 @@ export async function generateMetadata({
   return { title: details?.role.roleName };
 }
 
-export default async function UpdateRole({
+export default async function Page({
   params,
 }: { params: Promise<{ recordId: number }> }) {
   const { recordId } = await params;
@@ -42,7 +42,7 @@ export default async function UpdateRole({
         <Headline level="h1">{details?.role.roleName}</Headline>
         <RoleDeleteButton recordId={recordId} mode="page" />
       </div>
-      <RoleDetailForm roleDetails={details?.role} />
+      <UpdateRoleDetailForm roleDetails={details?.role} />
 
       <Headline level="h2" className="mt-5">
         Rollenberechtigungen

@@ -43,7 +43,7 @@ export async function getUserPermissions(clerkUserId?: string) {
 
 export async function getUserRoles(
   clerkUserId: string
-): Promise<(string | null)[]> {
+): Promise<(string | undefined)[]> {
   /* Diese Funktion gibt die roleKeys eines Benutzers aus rolesToAccounts zurück */
   const rawRoles = await db
     .select({

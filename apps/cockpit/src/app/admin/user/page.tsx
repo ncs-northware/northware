@@ -14,7 +14,7 @@ import { columns } from "./columns";
 
 export const metadata = { title: "Benutzerverwaltung" };
 
-export default async function UserDashboard() {
+export default async function Page() {
   const userArray = (await getUserList()) || [];
   return (
     <SidebarLayout

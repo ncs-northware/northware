@@ -7,10 +7,10 @@ import { columns } from "./columns";
 
 export const metadata = { title: "Berechtigungsschlüssel verwalten" };
 
-export default async function PermissionDashboard() {
+export default async function Page() {
   const permissionList = await getPermissionList();
   if (!permissionList.success) {
-    // globalError
+    // TODO: globalError
     return <div>Fehler: {permissionList.error.message}</div>;
   }
   return (

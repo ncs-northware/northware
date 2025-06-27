@@ -5,7 +5,7 @@ import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 
 export const metadata = { title: "Neue Rolle" };
 
-export default async function CreateRole() {
+export default async function Page() {
   const permissionList = await getPermissionList();
   return (
     <SidebarLayout
