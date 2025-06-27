@@ -1,7 +1,7 @@
 "use client";
 import {
+  CreateUserFormSchema,
   type TCreateUserFormSchema,
-  createUserFormSchema,
 } from "@/lib/rbac-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert } from "@northware/ui/components/alert";
@@ -24,7 +24,7 @@ export default function CreateUserForm({
 }: { createUser: SubmitHandler<TCreateUserFormSchema> }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TCreateUserFormSchema>({
-    resolver: zodResolver(createUserFormSchema),
+    resolver: zodResolver(CreateUserFormSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
