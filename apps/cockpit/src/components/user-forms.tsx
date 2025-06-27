@@ -3,23 +3,20 @@
 import {
   type TChangePasswordFormSchema,
   type TCreateEMailAddressFormSchema,
+  type TUpdatePermissionSchema,
+  type TUpdateRoleSchema,
   type TUpdateUserFormSchema,
+  UserUpdatePermissionsFormSchema,
+  UserUpdateRoleFormSchema,
   changePasswordFormSchema,
   createEMailAddressFormSchema,
+  parseErrorMessages,
   updateUserFromSchema,
 } from "@/lib/rbac-schema";
 import type {
   TPermissionListResponse,
   TRoleListResponse,
 } from "@/lib/rbac-types";
-import {
-  type TUpdatePermissionSchema,
-  type TUpdateRoleSchema,
-  UserUpdatePermissionsFormSchema,
-  UserUpdateRoleFormSchema,
-  parseErrorMessages,
-} from "@/lib/rbac-utils";
-
 import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
 import {
   changePassword,

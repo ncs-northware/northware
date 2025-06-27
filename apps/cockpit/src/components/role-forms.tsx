@@ -2,24 +2,22 @@
 
 import {
   CreatePermissionDetailFormSchema,
+  CreateRoleFormSchema,
   PermissionDetailFormSchema,
   RoleDetailFormSchema,
   type TCreatePermissionDetailFormSchema,
+  type TCreateRoleFormData,
   type TPermissionDetailFormSchema,
   type TRoleDetailFormSchema,
+  type TUpdatePermissionSchema,
+  UserUpdatePermissionsFormSchema,
+  parseErrorMessages,
 } from "@/lib/rbac-schema";
 import type {
   TPermissionListResponse,
   TPermissionType,
 } from "@/lib/rbac-types";
 
-import {
-  CreateRoleFormSchema,
-  type TCreateRoleFormData,
-  type TUpdatePermissionSchema,
-  UserUpdatePermissionsFormSchema,
-  parseErrorMessages,
-} from "@/lib/rbac-utils";
 import {
   createPermDetails,
   createRole,

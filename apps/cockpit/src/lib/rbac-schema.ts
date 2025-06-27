@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+/************** User Form Schema  **************************************************************/
+
 export const createUserFormSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
@@ -68,6 +70,37 @@ export type TChangePasswordFormSchema = z.infer<
   typeof changePasswordFormSchema
 >;
 
+/******************** User Roles and Permissions ******************************/
+
+export const UserUpdateRoleFormSchema = z.object({
+  roles: z.array(z.string()),
+});
+
+export type TUpdateRoleSchema = z.infer<typeof UserUpdateRoleFormSchema>;
+
+export const UserUpdatePermissionsFormSchema = z.object({
+  permissions: z.array(z.string()),
+});
+
+export type TUpdatePermissionSchema = z.infer<
+  typeof UserUpdatePermissionsFormSchema
+>;
+
+/************************** Role Managment Form Schema ****************************************************/
+
+export const CreateRoleFormSchema = z.object({
+  roleKey: z
+    .string()
+    .regex(
+      /^(all|cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?$/,
+      "Ungültiges Format des Rollenschlüssels. Erwartet wird app::rolestring:subrole"
+    ),
+  roleName: z.string(),
+  permissions: z.array(z.string()),
+});
+
+export type TCreateRoleFormData = z.infer<typeof CreateRoleFormSchema>;
+
 export const RoleDetailFormSchema = z.object({
   recordId: z.number(),
   roleKey: z
@@ -80,6 +113,8 @@ export const RoleDetailFormSchema = z.object({
 });
 
 export type TRoleDetailFormSchema = z.infer<typeof RoleDetailFormSchema>;
+
+/************************Permission Management Form Schema ******************************************/
 
 export const PermissionDetailFormSchema = z.object({
   recordId: z.number(),
@@ -94,10 +129,6 @@ export const PermissionDetailFormSchema = z.object({
   ]),
   permissionName: z.string(),
 });
-
-export type TPermissionDetailFormSchema = z.infer<
-  typeof PermissionDetailFormSchema
->;
 
 export const CreatePermissionDetailFormSchema = z.object({
   permissionKey: z.union([
@@ -115,3 +146,23 @@ export const CreatePermissionDetailFormSchema = z.object({
 export type TCreatePermissionDetailFormSchema = z.infer<
   typeof CreatePermissionDetailFormSchema
 >;
+
+export type TPermissionDetailFormSchema = z.infer<
+  typeof PermissionDetailFormSchema
+>;
+
+/**** Error Utilities *************************************************************/
+
+export function parseErrorMessages(err: unknown): string[] {
+  if (err instanceof Error) {
+    try {
+      // Versuche, die Fehlermeldung als JSON-Array zu parsen
+      return JSON.parse(err.message) as string[];
+    } catch {
+      // Wenn das Parsen fehlschlägt, gib die Error-Message als einzelnes Array zurück
+      return [err.message];
+    }
+  }
+  // Fallback für unbekannte Fehler
+  return ["Es ist ein unbekannter Fehler innerhalb des Programms aufgetreten."];
+}
