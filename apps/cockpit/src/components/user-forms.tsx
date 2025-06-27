@@ -765,7 +765,7 @@ export function UpdateUserPermissionsForm({
   const [errors, setErrors] = useState<string[]>([]);
 
   if (!permissionsResponse.success) {
-    // globalError
+    // TODO globalError
     return <div>Fehler: {permissionsResponse.error.message}</div>;
   }
 

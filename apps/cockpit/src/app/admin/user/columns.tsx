@@ -45,7 +45,7 @@ export const columns: ColumnDef<UserRow>[] = [
               <EditIcon />
             </Link>
           </Button>
-          {/* Nur mit Berechtigung delete User  */}
+          {/* TODO Nur mit Berechtigung delete User  */}
           <UserDeleteButton userId={row.original.id} />
         </div>
       );
