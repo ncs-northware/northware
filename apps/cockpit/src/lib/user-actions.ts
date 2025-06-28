@@ -7,6 +7,13 @@ import type {
   TUpdateUserFormSchema,
 } from "@/lib/rbac-schema";
 import { clerkClient, currentUser } from "@northware/auth/server";
+import { db } from "@northware/database/connection";
+import { handleNeonError } from "@northware/database/neon-error-handling";
+import {
+  permissionsToAccounts,
+  rolesToAccounts,
+} from "@northware/database/schema";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 
@@ -182,13 +189,21 @@ export async function updateUser(formData: TUpdateUserFormSchema, id?: string) {
 
 export async function deleteUser(id: string) {
   try {
+    // Rollen und zusätzliche Berechtigungen löschen
+    await db
+      .delete(rolesToAccounts)
+      .where(eq(rolesToAccounts.accountUserId, id));
+    await db
+      .delete(permissionsToAccounts)
+      .where(eq(permissionsToAccounts.accountUserId, id));
+
+    // Clerk Benutzer löschen
     const client = await clerkClient();
     await client.users.deleteUser(id);
-    revalidatePath("/user");
-    // TODO: Rollen und permissions löschen
   } catch (error) {
     const typesafeError = error as ClerkError;
     handleClerkError(typesafeError);
+    handleNeonError(error);
   }
 }
 

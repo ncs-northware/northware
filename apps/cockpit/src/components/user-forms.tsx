@@ -94,6 +94,7 @@ import {
   TrashIcon,
   TriangleAlertIcon,
 } from "@northware/ui/icons/lucide";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
@@ -565,12 +566,17 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
   );
 }
 
-export function UserDeleteButton({ userId }: { userId: string }) {
+export function UserDeleteButton({
+  userId,
+  mode = "list",
+}: { userId: string; mode?: "list" | "page" }) {
+  const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   async function submitUserDeletion() {
     setErrors([]); // Fehler zurücksetzen
     try {
       await deleteUser(userId);
+      router.push("/admin/user");
       toast.success("Der Benutzer wurde gelöscht.");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -582,8 +588,12 @@ export function UserDeleteButton({ userId }: { userId: string }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghostDanger" size="icon">
-          <TrashIcon className="size-4" />
+        <Button
+          variant={mode === "page" ? "danger" : "ghostDanger"}
+          size={mode === "page" ? "sm" : "icon"}
+        >
+          <TrashIcon />
+          {mode === "page" && <span>Benutzer löschen</span>}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
