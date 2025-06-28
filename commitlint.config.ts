@@ -9,7 +9,8 @@ const Configuration: UserConfig = {
       "always",
       ["chore", "docs", "feat", "fix", "revert"],
     ],
-    "scope-max-length": [RuleConfigSeverity.Warning, "always", 40],
+    "scope-max-length": [RuleConfigSeverity.Warning, "always", 10],
+    "subject-max-length": [RuleConfigSeverity.Warning, "always", 45],
   },
   ignores: [
     (commitMessage) => {
