@@ -22,7 +22,10 @@ export default async function EditUserLayout({
         { label: "Admin Panel", href: "/admin" },
         { label: "Benutzerverwaltung", href: "/admin/user" },
         {
-          label: user?.fullName || "Benutzer",
+          label:
+            user?.fullName ||
+            user?.emailAddresses[0].emailAddress ||
+            "Benutzer",
           href: `/admin/user/${userId}`,
           active: true,
         },

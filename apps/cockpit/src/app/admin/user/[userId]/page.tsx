@@ -1,6 +1,7 @@
 import {
   UpdatePasswordFormDialog,
   UpdateUserForm,
+  UserDeleteButton,
   UserEmailList,
 } from "@/components/user-forms";
 import { getSingleUser } from "@/lib/user-actions";
@@ -29,6 +30,7 @@ export default async function Page({
           </p>
         </div>
         <UpdatePasswordFormDialog id={user?.id} />
+        <UserDeleteButton userId={user?.id || ""} mode="page" />
       </div>
       <UpdateUserForm user={user} />
       <Headline level="h2">E-Mail Adressen</Headline>
