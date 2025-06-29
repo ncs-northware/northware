@@ -6,6 +6,7 @@ import { and, eq, inArray } from "drizzle-orm";
 
 export async function menuData(service: ServiceType, userId?: string) {
   const userPermissions = await getUserPermissions(userId);
+  // TODO: Berechtigungen für verschachtelte Navigationspunkte
   const result = await db
     .select({
       itemId: mainNavTable.itemId,
