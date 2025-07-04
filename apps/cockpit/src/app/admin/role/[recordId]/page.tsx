@@ -6,6 +6,10 @@ import {
 import { getRole } from "@/lib/role-actions";
 import { getPermissionList } from "@/lib/role-actions";
 import { Headline } from "@northware/ui/components/headline";
+import {
+  PermissionProvider,
+  userHasPermission,
+} from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { redirect } from "next/navigation";
 
@@ -38,20 +42,24 @@ export default async function Page({
         },
       ]}
     >
-      <div className="flex justify-between gap-4">
-        <Headline level="h1">{details?.role.roleName}</Headline>
-        <RoleDeleteButton recordId={recordId} mode="page" />
-      </div>
-      <UpdateRoleDetailForm roleDetails={details?.role} />
+      <PermissionProvider permissionKeys={["cockpit::role.update"]}>
+        <div className="flex justify-between gap-4">
+          <Headline level="h1">{details?.role.roleName}</Headline>
+          {(await userHasPermission(["cockpit::role.delete"])) && (
+            <RoleDeleteButton recordId={recordId} mode="page" />
+          )}
+        </div>
+        <UpdateRoleDetailForm roleDetails={details?.role} />
 
-      <Headline level="h2" className="mt-5">
-        Rollenberechtigungen
-      </Headline>
-      <RolePermissionsForm
-        roleKey={details?.role.roleKey}
-        permissionsResponse={permissionsList}
-        rolePermissions={details?.permissions || []}
-      />
+        <Headline level="h2" className="mt-5">
+          Rollenberechtigungen
+        </Headline>
+        <RolePermissionsForm
+          roleKey={details?.role.roleKey}
+          permissionsResponse={permissionsList}
+          rolePermissions={details?.permissions || []}
+        />
+      </PermissionProvider>
     </SidebarLayout>
   );
 }

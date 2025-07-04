@@ -6,6 +6,10 @@ import {
 } from "@/components/user-forms";
 import { getSingleUser } from "@/lib/user-actions";
 import { Headline } from "@northware/ui/components/headline";
+import {
+  PermissionProvider,
+  userHasPermission,
+} from "@northware/ui/components/permission-provider";
 
 export default async function Page({
   params,
@@ -14,7 +18,7 @@ export default async function Page({
   const user = await getSingleUser(userId);
 
   return (
-    <>
+    <PermissionProvider permissionKeys={["cockpit::user.update"]}>
       <div className="flex justify-between gap-4">
         <div>
           <Headline level="h1">Benutzerdaten</Headline>
@@ -30,7 +34,9 @@ export default async function Page({
           </p>
         </div>
         <UpdatePasswordFormDialog id={user?.id} />
-        <UserDeleteButton userId={user?.id || ""} mode="page" />
+        {(await userHasPermission(["cockpit::user.delete"])) && (
+          <UserDeleteButton userId={user?.id || ""} mode="page" />
+        )}
       </div>
       <UpdateUserForm user={user} />
       <Headline level="h2">E-Mail Adressen</Headline>
@@ -39,6 +45,6 @@ export default async function Page({
         data={user?.emailAddresses}
         primaryEmailAddressId={user?.primaryEmailAddressId}
       />
-    </>
+    </PermissionProvider>
   );
 }

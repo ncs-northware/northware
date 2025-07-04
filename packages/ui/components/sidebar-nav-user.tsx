@@ -76,7 +76,7 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                {/* TODO: Profilsite verlinken */}
+                {/* TODO: Profilsite verlinken #466 */}
                 <BadgeCheck />
                 Profil
               </DropdownMenuItem>

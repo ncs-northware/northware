@@ -17,10 +17,12 @@
     "@northware/database": "workspace:*",
     "@northware/service-config": "workspace:*",
     "drizzle-orm": "^0.43.1",
+    "react": "^19.1.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
+    "@types/react": "^19.1.4",
     "typescript": "^5.8.3"
   }
 }

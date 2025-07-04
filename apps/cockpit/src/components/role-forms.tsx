@@ -135,6 +135,7 @@ export function CreateRoleForm({
             render={() => (
               <FormItem className="grid-cols-2">
                 {permissionsResponse.permissionList.map((perm) => (
+                  // TODO: Gruppiert nach App
                   <FormField
                     key={perm.recordId}
                     control={form.control}
@@ -328,6 +329,7 @@ export function RolePermissionsForm({
           render={() => (
             <FormItem className="grid-cols-2">
               {permissionsResponse.permissionList.map((perm) => (
+                // TODO: Gruppiert nach App
                 <FormField
                   key={perm.recordId}
                   control={form.control}
@@ -475,6 +477,7 @@ export function CreatePermissionDetails() {
     }
   };
   return (
+    // TODO: Assistant um mehere Berechtigungen zu erstellen
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Berechtigungsschlüssel hinzufügen</Button>
