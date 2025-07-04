@@ -6,7 +6,6 @@ import {
 } from "@northware/database/schema";
 import { eq } from "drizzle-orm";
 import { cache } from "react";
-import { currentUser } from "./server";
 
 export const getUserPermissions = cache(async (clerkUserId?: string) => {
   /* Diese Funktion gibt alle permissionKeys eines Benutzers aus Rollen (rolesToAccounts und PermissionsToRoles) und aus 
@@ -42,12 +41,6 @@ export const getUserPermissions = cache(async (clerkUserId?: string) => {
 
   return userPermissions;
 });
-
-export async function userHasPermission(permissionKey: string) {
-  const user = await currentUser();
-  const permissions = await getUserPermissions(user?.id);
-  return permissions.includes(permissionKey);
-}
 
 export async function getUserRoles(
   clerkUserId: string

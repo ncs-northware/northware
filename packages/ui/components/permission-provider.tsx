@@ -1,9 +1,18 @@
-import { userHasPermission } from "@northware/auth/account";
+import { getUserPermissions } from "@northware/auth/account";
+import { currentUser } from "@northware/auth/server";
 import { Button } from "@northware/ui/components/button";
 import { Headline } from "@northware/ui/components/headline";
 import { ShieldXIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+
+export async function userHasPermission(permissionKey: string) {
+  const user = await currentUser();
+  const permissions = await getUserPermissions(user?.id);
+  return (
+    permissions.includes(permissionKey) || permissions.includes("all-access")
+  );
+}
 
 export async function PermissionProvider({
   children,
