@@ -40,12 +40,12 @@ export const columns: ColumnDef<UserRow>[] = [
       return (
         <div className="flex justify-end">
           <Button variant="ghost" asChild>
-            {/* TODO: Nur mit Berechtigung update User */}
+            {/* TODO: Nur mit Berechtigung update User aber nicht wenn User all-access hat */}
             <Link href={`user/${row.original.id}`}>
               <EditIcon />
             </Link>
           </Button>
-          {/* TODO Nur mit Berechtigung delete User  */}
+          {/* TODO Nur mit Berechtigung delete User aber nicht wenn User all-access hat */}
           <UserDeleteButton userId={row.original.id} />
         </div>
       );

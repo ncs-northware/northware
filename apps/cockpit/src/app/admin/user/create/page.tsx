@@ -5,6 +5,7 @@ import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 
 export default function Page() {
   return (
+    // TODO: User Onboarding Flow erstellen
     <SidebarLayout
       service="cockpit"
       breadcrumbs={[

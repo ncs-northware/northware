@@ -30,7 +30,7 @@ export const columns: ColumnDef<TRoleWithPermissions>[] = [
       return (
         <div className="flex justify-end">
           <Button variant="ghost" size="icon" asChild>
-            {/* TODO: Nur mit Berechtigung update User */}
+            {/* TODO: Nur mit Berechtigung update Role */}
             <Link href={`role/${row.original.recordId}`}>
               <EditIcon />
             </Link>
