@@ -18,7 +18,7 @@ export default async function Page({
   const user = await getSingleUser(userId);
 
   return (
-    <PermissionProvider permissionKey="cockpit::user.update">
+    <PermissionProvider permissionKeys={["cockpit::user.update"]}>
       <div className="flex justify-between gap-4">
         <div>
           <Headline level="h1">Benutzerdaten</Headline>
@@ -34,7 +34,7 @@ export default async function Page({
           </p>
         </div>
         <UpdatePasswordFormDialog id={user?.id} />
-        {(await userHasPermission("cockpit::user.delete")) && (
+        {(await userHasPermission(["cockpit::user.delete"])) && (
           <UserDeleteButton userId={user?.id || ""} mode="page" />
         )}
       </div>

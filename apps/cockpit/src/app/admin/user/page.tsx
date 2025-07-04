@@ -29,7 +29,7 @@ export default async function Page() {
         { label: "Benutzerverwaltung", href: "/admin/user", active: true },
       ]}
     >
-      <PermissionProvider permissionKey="cockpit::user.read">
+      <PermissionProvider permissionKeys={["cockpit::user.read"]}>
         <div className="flex justify-between gap-4">
           <div>
             <Headline level="h1">Benutzerverwaltung</Headline>
@@ -39,7 +39,7 @@ export default async function Page() {
             </p>
           </div>
 
-          {(await userHasPermission("cockpit::user.create")) && (
+          {(await userHasPermission(["cockpit::user.create"])) && (
             <Button variant="default">
               <Link href="user/create">Benutzer hinzufügen</Link>
             </Button>

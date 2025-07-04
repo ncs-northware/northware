@@ -11,7 +11,9 @@ export default async function Page({
   const roleList = await getRoleList();
   const userRoles = await getUserRoles(userId);
   return (
-    <PermissionProvider permissionKey="cockpit::user.update">
+    <PermissionProvider
+      permissionKeys={["cockpit::user.update", "cockpit::role.read"]}
+    >
       <Headline level="h1">Rollen des Benutzers</Headline>
       <p className="mb-4 text-justify font-medium text-muted-foreground">
         Rollen sind Sammlungen von Rechten. Vergebe Rollen an einen Benutzer, um

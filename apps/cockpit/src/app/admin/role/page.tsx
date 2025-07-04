@@ -26,7 +26,7 @@ export default async function Page() {
         { label: "Rollenverwaltung", href: "/admin/roles", active: true },
       ]}
     >
-      <PermissionProvider permissionKey="cockpit::role.read">
+      <PermissionProvider permissionKeys={["cockpit::role.read"]}>
         <div className="flex justify-between gap-4">
           <div>
             <Headline level="h1">Rollenverwaltung</Headline>
@@ -37,7 +37,7 @@ export default async function Page() {
               nicht möglich dem Benutzer ein Rollen-Recht zu entziehen.
             </p>
           </div>
-          {(await userHasPermission("cockpit::role.create")) && (
+          {(await userHasPermission(["cockpit::role.create"])) && (
             <Button asChild>
               <Link href="/admin/role/create">Rolle erstellen</Link>
             </Button>

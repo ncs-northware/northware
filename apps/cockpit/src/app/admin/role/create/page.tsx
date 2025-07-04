@@ -17,7 +17,7 @@ export default async function Page() {
         { label: "Neue Rolle", href: "/admin/role/create", active: true },
       ]}
     >
-      <PermissionProvider permissionKey="cockpit::role.create">
+      <PermissionProvider permissionKeys={["cockpit::role.create"]}>
         <Headline level="h1">Neue Rolle</Headline>
         <CreateRoleForm permissionsResponse={permissionList} />
       </PermissionProvider>

@@ -29,7 +29,7 @@ export default async function Page() {
         },
       ]}
     >
-      <PermissionProvider permissionKey="cockpit::permission.read">
+      <PermissionProvider permissionKeys={["cockpit::permission.read"]}>
         <div className="flex justify-between gap-4">
           <div>
             <Headline level="h1">Berechtigungsschlüssel verwalten</Headline>
@@ -42,7 +42,7 @@ export default async function Page() {
               werden.
             </p>
           </div>
-          {(await userHasPermission("cockpit::permission.create")) && (
+          {(await userHasPermission(["cockpit::permission.create"])) && (
             <CreatePermissionDetails />
           )}
         </div>

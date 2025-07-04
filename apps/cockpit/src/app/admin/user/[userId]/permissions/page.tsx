@@ -10,7 +10,9 @@ export default async function Page({
   const permissionList = await getPermissionList();
   const extraPermissions = await getExtraPermissions(userId);
   return (
-    <PermissionProvider permissionKey="cockpit::user.update">
+    <PermissionProvider
+      permissionKeys={["cockpit::user.update", "cockpit::permission:read"]}
+    >
       <Headline level="h1">Zusätzliche Berechtigungen des Benutzers</Headline>
       <p className="mb-4 text-justify font-medium text-muted-foreground">
         Dem einzelnen Benutzer können einzelne Berechtigungen zugewiesen werden,

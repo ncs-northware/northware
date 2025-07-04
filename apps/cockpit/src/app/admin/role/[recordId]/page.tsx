@@ -42,10 +42,10 @@ export default async function Page({
         },
       ]}
     >
-      <PermissionProvider permissionKey="cockpit::role.update">
+      <PermissionProvider permissionKeys={["cockpit::role.update"]}>
         <div className="flex justify-between gap-4">
           <Headline level="h1">{details?.role.roleName}</Headline>
-          {(await userHasPermission("cockpit::role.delete")) && (
+          {(await userHasPermission(["cockpit::role.delete"])) && (
             <RoleDeleteButton recordId={recordId} mode="page" />
           )}
         </div>
