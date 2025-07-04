@@ -7,6 +7,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 export async function userHasPermission(permissionKey: string) {
+  // TODO: Abfrage über mehrere Berechtigungsschlüssel, auch im PermissionProvider
+  // TODO: Wie kann mit Client Komponenten umgegangen werden
   const user = await currentUser();
   const permissions = await getUserPermissions(user?.id);
   return (

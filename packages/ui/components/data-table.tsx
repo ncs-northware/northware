@@ -62,6 +62,8 @@ export interface DataTableProps<TData, TValue> {
   initialSorting?: string;
 }
 
+// TODO: Rethink DataTable responsive and on individual page level #464
+
 export function DataTable<TData, TValue>({
   columns,
   data,
