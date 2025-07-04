@@ -6,21 +6,24 @@ import { ShieldXIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-export async function userHasPermission(permissionKey: string) {
-  // TODO: Abfrage über mehrere Berechtigungsschlüssel, auch im PermissionProvider
-  // TODO: Wie kann mit Client Komponenten umgegangen werden
+export async function userHasPermission(permissionKeys: string[]) {
   const user = await currentUser();
   const permissions = await getUserPermissions(user?.id);
-  return (
-    permissions.includes(permissionKey) || permissions.includes("all-access")
-  );
+
+  // Wenn der Benutzer "all-access" hat, sind alle Berechtigungen erfüllt
+  if (permissions.includes("all-access")) {
+    return true;
+  }
+
+  // Überprüfen, ob jede erforderliche Berechtigung im 'permissions'-Array enthalten ist
+  return permissionKeys.every((key) => permissions.includes(key));
 }
 
 export async function PermissionProvider({
   children,
-  permissionKey,
-}: { children: ReactNode; permissionKey: string }) {
-  if (await userHasPermission(permissionKey)) {
+  permissionKeys,
+}: { children: ReactNode; permissionKeys: string[] }) {
+  if (await userHasPermission(permissionKeys)) {
     return children;
   }
   return (
