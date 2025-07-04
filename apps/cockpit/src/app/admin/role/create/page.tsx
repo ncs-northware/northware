@@ -1,6 +1,7 @@
 import { CreateRoleForm } from "@/components/role-forms";
 import { getPermissionList } from "@/lib/role-actions";
 import { Headline } from "@northware/ui/components/headline";
+import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 
 export const metadata = { title: "Neue Rolle" };
@@ -16,8 +17,10 @@ export default async function Page() {
         { label: "Neue Rolle", href: "/admin/role/create", active: true },
       ]}
     >
-      <Headline level="h1">Neue Rolle</Headline>
-      <CreateRoleForm permissionsResponse={permissionList} />
+      <PermissionProvider permissionKey="cockpit::role.create">
+        <Headline level="h1">Neue Rolle</Headline>
+        <CreateRoleForm permissionsResponse={permissionList} />
+      </PermissionProvider>
     </SidebarLayout>
   );
 }

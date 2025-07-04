@@ -2,6 +2,7 @@ import { UpdateUserRolesForm } from "@/components/user-forms";
 import { getRoleList } from "@/lib/role-actions";
 import { getUserRoles } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/headline";
+import { PermissionProvider } from "@northware/ui/components/permission-provider";
 
 export default async function Page({
   params,
@@ -10,7 +11,7 @@ export default async function Page({
   const roleList = await getRoleList();
   const userRoles = await getUserRoles(userId);
   return (
-    <>
+    <PermissionProvider permissionKey="cockpit::user.update">
       <Headline level="h1">Rollen des Benutzers</Headline>
       <p className="mb-4 text-justify font-medium text-muted-foreground">
         Rollen sind Sammlungen von Rechten. Vergebe Rollen an einen Benutzer, um
@@ -24,6 +25,6 @@ export default async function Page({
         userRolesResponse={userRoles}
       />
       {/* TODO: Dialogs für Rollen bearbeiten und erstellen, Rollen gruppieren?, Rollen in einem grid darstellen? */}
-    </>
+    </PermissionProvider>
   );
 }

@@ -7,7 +7,10 @@ import {
 import { Button } from "@northware/ui/components/button";
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
-import { PermissionProvider } from "@northware/ui/components/permission-provider";
+import {
+  PermissionProvider,
+  userHasPermission,
+} from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { LightbulbIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
@@ -36,10 +39,11 @@ export default async function Page() {
             </p>
           </div>
 
-          {/* TODO Nur mit Berechtigung create User */}
-          <Button variant="default">
-            <Link href="user/create">Benutzer hinzufügen</Link>
-          </Button>
+          {(await userHasPermission("cockpit::user.create")) && (
+            <Button variant="default">
+              <Link href="user/create">Benutzer hinzufügen</Link>
+            </Button>
+          )}
         </div>
         <DataTable
           columns={columns}
