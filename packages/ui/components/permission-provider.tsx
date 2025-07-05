@@ -1,6 +1,6 @@
 import { getUserPermissions } from "@northware/auth/account";
 import { currentUser } from "@northware/auth/server";
-import { type ServiceType, suiteApps } from "@northware/service-config";
+import type { ServiceType } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/brand";
 import { Button } from "@northware/ui/components/button";
 import { Card, CardContent } from "@northware/ui/components/card";
@@ -9,6 +9,7 @@ import { ShieldXIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Alert, AlertDescription, AlertIcon } from "./alert";
+import type { MenuApps } from "./app-switch";
 
 export async function userHasPermission(permissionKeys: string[]) {
   const user = await currentUser();
@@ -54,26 +55,14 @@ export async function PermissionProvider({
 export async function AppPermissionProvider({
   children,
   service,
-}: { children: ReactNode; service: ServiceType }) {
+  apps,
+}: { children: ReactNode; service: ServiceType; apps: MenuApps[] }) {
   const permissionKey = `${service}::app.read`;
   if (await userHasPermission([permissionKey])) {
     return children;
   }
 
-  const sidebarApps = await Promise.all(
-    suiteApps.map(async (app) => {
-      const envKey = `NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`;
-      const url = process.env[envKey as keyof typeof process.env];
-
-      return {
-        slug: app.slug,
-        url: url,
-        allowed: await userHasPermission([`${app.slug}::app.read`]),
-      };
-    })
-  );
-
-  const hasAllowedApps = sidebarApps.some((app) => app.allowed);
+  const hasAllowedApps = apps.some((app) => app.allowed);
 
   return (
     <div className="flex h-svh flex-col items-center justify-center gap-8">
@@ -85,7 +74,7 @@ export async function AppPermissionProvider({
       </div>
       <div className="flex gap-8">
         {hasAllowedApps ? (
-          sidebarApps.map(
+          apps.map(
             (app) =>
               app.allowed && (
                 <Link key={app.slug} href={app.url || ""}>
