@@ -31,7 +31,7 @@ export function LoginForm({ service }: { service: ServiceType }) {
           {(isGlobalLoading) => (
             <>
               <SignIn.Step name="start" className="w-full max-w-sm">
-                <Card>
+                <Card className="bg-background">
                   <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                   </CardHeader>

@@ -10,6 +10,10 @@ import {
   Collapsible,
   CollapsibleContent,
 } from "@northware/ui/components/collapsible";
+import {
+  AppPermissionProvider,
+  userHasPermission,
+} from "@northware/ui/components/permission-provider";
 import { Separator } from "@northware/ui/components/separator";
 import {
   Sidebar,
@@ -33,7 +37,7 @@ import { NavUser } from "@northware/ui/components/sidebar-nav-user";
 import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import { menuData } from "@northware/ui/lib/menu-data";
 
-export function SidebarLayout({
+export async function SidebarLayout({
   children,
   service,
   breadcrumbs,
@@ -50,32 +54,47 @@ export function SidebarLayout({
   subLabel?: string;
   subMenu?: SubMenuItem[];
 }) {
+  const apps = await Promise.all(
+    suiteApps.map(async (app) => {
+      const envKey = `NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`;
+      const url = process.env[envKey as keyof typeof process.env];
+
+      return {
+        slug: app.slug,
+        url: url,
+        allowed: await userHasPermission([`${app.slug}::app.read`]),
+      };
+    })
+  );
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
-      <MainSidebar
-        service={service}
-        mainLabel={mainLabel}
-        subLabel={subLabel}
-        subMenu={subMenu}
-      />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex w-full justify-between px-4">
-            <div className="flex items-center gap-2">
-              <SidebarTrigger
-                className={buttonVariants({ variant: "ghost", size: "icon" })}
-              />
-              {breadcrumbs && (
-                <Separator orientation="vertical" className="mr-2 h-4" />
-              )}
-              {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
+    <AppPermissionProvider service={service} apps={apps}>
+      <SidebarProvider defaultOpen={defaultOpen}>
+        <MainSidebar
+          service={service}
+          mainLabel={mainLabel}
+          subLabel={subLabel}
+          subMenu={subMenu}
+          apps={apps}
+        />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <div className="flex w-full justify-between px-4">
+              <div className="flex items-center gap-2">
+                <SidebarTrigger
+                  className={buttonVariants({ variant: "ghost", size: "icon" })}
+                />
+                {breadcrumbs && (
+                  <Separator orientation="vertical" className="mr-2 h-4" />
+                )}
+                {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
+              </div>
+              <ThemeSwitch className="px-4" />
             </div>
-            <ThemeSwitch className="px-4" />
-          </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-4">{children}</div>
-      </SidebarInset>
-    </SidebarProvider>
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-4">{children}</div>
+        </SidebarInset>
+      </SidebarProvider>
+    </AppPermissionProvider>
   );
 }
 
@@ -84,6 +103,7 @@ interface MainSidebarType extends React.ComponentProps<typeof Sidebar> {
   mainLabel?: string;
   subLabel?: string;
   subMenu?: SubMenuItem[];
+  apps: MenuApps[];
 }
 
 async function MainSidebar({
@@ -91,20 +111,11 @@ async function MainSidebar({
   mainLabel,
   subLabel,
   subMenu,
+  apps,
   ...props
 }: MainSidebarType) {
   const user = await currentUser();
   const menuItems = await menuData(service, user?.id);
-  const apps: MenuApps[] = suiteApps.map((app) => {
-    const envKey = `NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`;
-    const url = process.env[envKey as keyof typeof process.env];
-
-    return {
-      slug: app.slug,
-      url: url,
-    };
-  });
-
   return (
     <Sidebar {...props} variant="inset" collapsible="offcanvas">
       <SidebarHeader>
