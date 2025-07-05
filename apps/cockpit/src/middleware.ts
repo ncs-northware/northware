@@ -12,8 +12,6 @@ export default clerkMiddleware(async (auth, request) => {
   }
 });
 
-// TODO: Prüfung, ob der Nutzer die nötigen Berechtigungen hat um die App zu nutzen, ansonsten auf eine Seite weiterleiten auf der der Nutzer eine andere App wählen kann
-
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
