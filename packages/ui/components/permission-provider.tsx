@@ -1,4 +1,5 @@
 import { getUserPermissions } from "@northware/auth/account";
+import { SignOutButton } from "@northware/auth/client";
 import { currentUser } from "@northware/auth/server";
 import type { ServiceType } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/brand";
@@ -8,7 +9,6 @@ import { Headline } from "@northware/ui/components/headline";
 import { ShieldXIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Alert, AlertDescription, AlertIcon } from "./alert";
 import type { MenuApps } from "./app-switch";
 
 export async function userHasPermission(permissionKeys: string[]) {
@@ -66,36 +66,46 @@ export async function AppPermissionProvider({
 
   return (
     <div className="flex h-svh flex-col items-center justify-center gap-8">
-      <div>
-        <Headline level="h1">Bitte wählen Sie eine App</Headline>
-        <p className="text-muted-foreground text-xl">
-          Sie sind berechtigt, folgende Apps zu nutzen:
-        </p>
-      </div>
-      <div className="flex gap-8">
-        {hasAllowedApps ? (
-          apps.map(
-            (app) =>
-              app.allowed && (
-                <Link key={app.slug} href={app.url || ""}>
-                  <Card className="hover:bg-accent/50">
-                    <CardContent>
-                      <Brand service={app.slug} />
-                    </CardContent>
-                  </Card>
-                </Link>
-              )
-          )
-        ) : (
-          <Alert variant="danger">
-            <AlertIcon variant="danger" />{" "}
-            <AlertDescription>
-              Es wurde keine App gefunden, zu der Sie Zugriff haben. Bitte
+      {hasAllowedApps ? (
+        <>
+          <div>
+            <Headline level="h1">Bitte wählen Sie eine App</Headline>
+            <p className="text-muted-foreground text-xl">
+              Sie sind berechtigt, folgende Apps zu nutzen:
+            </p>
+          </div>
+          <div className="flex gap-8">
+            {apps.map(
+              (app) =>
+                app.allowed && (
+                  <Link key={app.slug} href={app.url || ""}>
+                    <Card className="hover:bg-accent/50">
+                      <CardContent>
+                        <Brand service={app.slug} />
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )
+            )}
+          </div>
+        </>
+      ) : (
+        <>
+          <ShieldXIcon className="size-12" />
+          <div>
+            <Headline level="h1" className="mb-4 text-center">
+              Sie haben keinen Zugriff auf Apps.
+            </Headline>
+            <p className="text-center text-muted-foreground text-xl">
+              Sie sind nicht berechtigt eine Northware App zu nutzen. Bitte
               kontaktieren Sie den Support.
-            </AlertDescription>
-          </Alert>
-        )}
-      </div>
+            </p>
+          </div>
+        </>
+      )}
+      <SignOutButton>
+        <Button variant="outline">Abmelden</Button>
+      </SignOutButton>
     </div>
   );
 }
