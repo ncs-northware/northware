@@ -4,7 +4,6 @@
   "semanticCommits": "enabled",
   "labels": ["dependencies"],
   "rangeStrategy": "bump",
-  "schedule": ["* 0-3 1 * *"],
   "timezone": "Europe/Amsterdam",
   "vulnerabilityAlerts": {
     "labels": ["security", "dependencies"]
