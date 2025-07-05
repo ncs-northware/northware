@@ -54,9 +54,9 @@
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
     "@svgr/cli": "^8.1.0",
-    "@tailwindcss/postcss": "^4.1.7",
+    "@tailwindcss/postcss": "^4.1.11",
     "@types/react": "^19.1.4",
-    "tailwindcss": "^4.1.7",
+    "tailwindcss": "^4.1.11",
     "tw-animate-css": "^1.3.5"
   }
 }
