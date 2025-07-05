@@ -20,15 +20,16 @@
     }
   },
   "files": {
-    "ignore": [
-      "**/node_modules/**",
-      "**/.turbo",
-      "**/.next",
-      "tsconfig.tsbuildinfo",
-      "**/dist/**",
-      "**/build/**",
-      "**/drizzle-migrations/**",
-      "**/storybook-static/**"
+    "includes": [
+      "**",
+      "!**/node_modules/**",
+      "!**/.turbo",
+      "!**/.next",
+      "!**/tsconfig.tsbuildinfo",
+      "!**/dist/**",
+      "!**/build/**",
+      "!**/drizzle-migrations/**",
+      "!**/storybook-static/**"
     ]
   }
 }
