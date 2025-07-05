@@ -8,6 +8,7 @@ import { Headline } from "@northware/ui/components/headline";
 import { ShieldXIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Alert, AlertDescription, AlertIcon } from "./alert";
 
 export async function userHasPermission(permissionKeys: string[]) {
   const user = await currentUser();
@@ -72,6 +73,8 @@ export async function AppPermissionProvider({
     })
   );
 
+  const hasAllowedApps = sidebarApps.some((app) => app.allowed);
+
   return (
     <div className="flex h-svh flex-col items-center justify-center gap-8">
       <div>
@@ -81,17 +84,27 @@ export async function AppPermissionProvider({
         </p>
       </div>
       <div className="flex gap-8">
-        {sidebarApps.map(
-          (app) =>
-            app.allowed && (
-              <Link key={app.slug} href={app.url || ""}>
-                <Card className="hover:bg-accent/50">
-                  <CardContent>
-                    <Brand service={app.slug} />
-                  </CardContent>
-                </Card>
-              </Link>
-            )
+        {hasAllowedApps ? (
+          sidebarApps.map(
+            (app) =>
+              app.allowed && (
+                <Link key={app.slug} href={app.url || ""}>
+                  <Card className="hover:bg-accent/50">
+                    <CardContent>
+                      <Brand service={app.slug} />
+                    </CardContent>
+                  </Card>
+                </Link>
+              )
+          )
+        ) : (
+          <Alert variant="danger">
+            <AlertIcon variant="danger" />{" "}
+            <AlertDescription>
+              Es wurde keine App gefunden, zu der Sie Zugriff haben. Bitte
+              kontaktieren Sie den Support.
+            </AlertDescription>
+          </Alert>
         )}
       </div>
     </div>
