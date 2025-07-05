@@ -20,6 +20,7 @@ import Link from "next/link";
 export type MenuApps = {
   slug: ServiceType;
   url: string | undefined;
+  allowed: boolean;
 };
 
 export function AppSwitch({
@@ -50,18 +51,19 @@ export function AppSwitch({
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            {apps.map((app) => {
-              return (
-                <DropdownMenuItem key={app.slug} className="gap-2 p-2">
-                  <Link href={app.url || ""} target="_blank">
-                    <Brand
-                      service={app.slug}
-                      className="gap-2 font-medium text-base"
-                    />
-                  </Link>
-                </DropdownMenuItem>
-              );
-            })}
+            {apps.map(
+              (app) =>
+                app.allowed && (
+                  <DropdownMenuItem key={app.slug} className="gap-2 p-2">
+                    <Link href={app.url || ""} target="_blank">
+                      <Brand
+                        service={app.slug}
+                        className="gap-2 font-medium text-base"
+                      />
+                    </Link>
+                  </DropdownMenuItem>
+                )
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

@@ -1,6 +1,6 @@
 import { currentUser } from "@northware/auth/server";
 import { type ServiceType, suiteApps } from "@northware/service-config";
-import { AppSwitch, type MenuApps } from "@northware/ui/components/app-switch";
+import { AppSwitch } from "@northware/ui/components/app-switch";
 import {
   AutoBreadcrumbs,
   type BreadcrumbType,
@@ -10,6 +10,10 @@ import {
   Collapsible,
   CollapsibleContent,
 } from "@northware/ui/components/collapsible";
+import {
+  AppPermissionProvider,
+  userHasPermission,
+} from "@northware/ui/components/permission-provider";
 import { Separator } from "@northware/ui/components/separator";
 import {
   Sidebar,
@@ -51,31 +55,33 @@ export function SidebarLayout({
   subMenu?: SubMenuItem[];
 }) {
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
-      <MainSidebar
-        service={service}
-        mainLabel={mainLabel}
-        subLabel={subLabel}
-        subMenu={subMenu}
-      />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex w-full justify-between px-4">
-            <div className="flex items-center gap-2">
-              <SidebarTrigger
-                className={buttonVariants({ variant: "ghost", size: "icon" })}
-              />
-              {breadcrumbs && (
-                <Separator orientation="vertical" className="mr-2 h-4" />
-              )}
-              {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
+    <AppPermissionProvider service={service}>
+      <SidebarProvider defaultOpen={defaultOpen}>
+        <MainSidebar
+          service={service}
+          mainLabel={mainLabel}
+          subLabel={subLabel}
+          subMenu={subMenu}
+        />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <div className="flex w-full justify-between px-4">
+              <div className="flex items-center gap-2">
+                <SidebarTrigger
+                  className={buttonVariants({ variant: "ghost", size: "icon" })}
+                />
+                {breadcrumbs && (
+                  <Separator orientation="vertical" className="mr-2 h-4" />
+                )}
+                {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
+              </div>
+              <ThemeSwitch className="px-4" />
             </div>
-            <ThemeSwitch className="px-4" />
-          </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-4">{children}</div>
-      </SidebarInset>
-    </SidebarProvider>
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-4">{children}</div>
+        </SidebarInset>
+      </SidebarProvider>
+    </AppPermissionProvider>
   );
 }
 
@@ -95,20 +101,22 @@ async function MainSidebar({
 }: MainSidebarType) {
   const user = await currentUser();
   const menuItems = await menuData(service, user?.id);
-  const apps: MenuApps[] = suiteApps.map((app) => {
-    const envKey = `NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`;
-    const url = process.env[envKey as keyof typeof process.env];
+  const sidebarApps = await Promise.all(
+    suiteApps.map(async (app) => {
+      const envKey = `NEXT_PUBLIC_${app.slug.toUpperCase()}_URL`;
+      const url = process.env[envKey as keyof typeof process.env];
 
-    return {
-      slug: app.slug,
-      url: url,
-    };
-  });
-
+      return {
+        slug: app.slug,
+        url: url,
+        allowed: await userHasPermission([`${app.slug}::app.read`]),
+      };
+    })
+  );
   return (
     <Sidebar {...props} variant="inset" collapsible="offcanvas">
       <SidebarHeader>
-        <AppSwitch service={service} apps={apps} />
+        <AppSwitch service={service} apps={sidebarApps} />
       </SidebarHeader>
       <SidebarContent>
         {subMenu && <SubNav subLabel={subLabel} subMenu={subMenu} />}
