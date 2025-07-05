@@ -26,8 +26,8 @@
     "@storybook/test": "8.6.14",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^22.15.29",
-    "@types/react": "^19.1.4",
-    "@types/react-dom": "^19.1.5",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "storybook": "8.6.14",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3"
