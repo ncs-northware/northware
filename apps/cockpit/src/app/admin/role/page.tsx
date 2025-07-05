@@ -1,4 +1,3 @@
-import { getRoleList } from "@/lib/role-actions";
 import { Button } from "@northware/ui/components/button";
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
@@ -8,6 +7,7 @@ import {
 } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import Link from "next/link";
+import { getRoleList } from "@/lib/role-actions";
 import { columns } from "./columns";
 export const metadata = { title: "Rollenverwaltung" };
 
@@ -19,12 +19,12 @@ export default async function Page() {
   }
   return (
     <SidebarLayout
-      service="cockpit"
-      defaultOpen={false}
       breadcrumbs={[
         { label: "Admin Panel", href: "/admin" },
         { label: "Rollenverwaltung", href: "/admin/roles", active: true },
       ]}
+      defaultOpen={false}
+      service="cockpit"
     >
       <PermissionProvider permissionKeys={["cockpit::role.read"]}>
         <div className="flex justify-between gap-4">
@@ -46,8 +46,8 @@ export default async function Page() {
         <DataTable
           columns={columns}
           data={roleList.roleList}
-          withRowSelect={false}
           initialSorting="roleKey"
+          withRowSelect={false}
         />
       </PermissionProvider>
     </SidebarLayout>

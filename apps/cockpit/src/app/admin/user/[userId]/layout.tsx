@@ -1,9 +1,11 @@
-import { getSingleUser } from "@/lib/user-actions";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
+import { getSingleUser } from "@/lib/user-actions";
 
 export async function generateMetadata({
   params,
-}: { params: Promise<{ userId: string }> }) {
+}: {
+  params: Promise<{ userId: string }>;
+}) {
   const { userId } = await params;
   const user = await getSingleUser(userId);
   return { title: user?.fullName };
@@ -12,12 +14,14 @@ export async function generateMetadata({
 export default async function EditUserLayout({
   params,
   children,
-}: { params: Promise<{ userId: string }>; children: React.ReactNode }) {
+}: {
+  params: Promise<{ userId: string }>;
+  children: React.ReactNode;
+}) {
   const { userId } = await params;
   const user = await getSingleUser(userId);
   return (
     <SidebarLayout
-      service="cockpit"
       breadcrumbs={[
         { label: "Admin Panel", href: "/admin" },
         { label: "Benutzerverwaltung", href: "/admin/user" },
@@ -31,6 +35,7 @@ export default async function EditUserLayout({
         },
       ]}
       mainLabel="Hauptnavigation"
+      service="cockpit"
       subLabel={user?.fullName || "Benutzer"}
       subMenu={[
         {

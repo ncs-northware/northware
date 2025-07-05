@@ -1,5 +1,17 @@
 "use server";
 
+import { db } from "@northware/database/connection";
+import { handleNeonError } from "@northware/database/neon-error-handling";
+import {
+  permissionsTable,
+  permissionsToAccounts,
+  permissionsToRoles,
+  rolesTable,
+  rolesToAccounts,
+} from "@northware/database/schema";
+import { and, eq, inArray, ne } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import { cache } from "react";
 import type {
   TCreatePermissionDetailFormSchema,
   TCreateRoleFormData,
@@ -13,18 +25,6 @@ import type {
   TUpdatePermissionsParams,
   TUpdateRolesParams,
 } from "@/lib/rbac-types";
-import { db } from "@northware/database/connection";
-import { handleNeonError } from "@northware/database/neon-error-handling";
-import {
-  permissionsTable,
-  permissionsToAccounts,
-  permissionsToRoles,
-  rolesTable,
-  rolesToAccounts,
-} from "@northware/database/schema";
-import { and, eq, inArray, ne } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-import { cache } from "react";
 
 /************ Role Management **************************************/
 
@@ -92,7 +92,7 @@ export async function updateUserRoles({
     .filter((userrole) => userrole !== undefined)
     .filter((userRole) => !data.roles.includes(userRole));
 
-  const insertRoles = new Array();
+  const insertRoles: { roleKey: string; accountUserId: string }[] = [];
   rolesToAdd.forEach((role, i) => {
     insertRoles[i] = { roleKey: role, accountUserId: userId };
   });
@@ -154,16 +154,15 @@ export const getRole = cache(async (recordId: number) => {
 
     return {
       role: roleResponse[0],
-      permissions: permissions,
+      permissions,
     };
   } catch (error) {
-    console.error(error);
     return null;
   }
 });
 
 export async function createRole(data: TCreateRoleFormData) {
-  const insertPermissions = new Array();
+  const insertPermissions = [];
   data.permissions.forEach((permission, i) => {
     insertPermissions[i] = {
       permissionKey: permission,
@@ -216,9 +215,9 @@ export async function updateRolePermissions({
     .filter((permission) => permission !== null)
     .filter((perm) => !data.permissions.includes(perm));
 
-  const insertPermissions = new Array();
+  const insertPermissions = [];
   permissionsToAdd.forEach((permission, i) => {
-    insertPermissions[i] = { permissionKey: permission, roleKey: roleKey };
+    insertPermissions[i] = { permissionKey: permission, roleKey };
   });
 
   try {
@@ -294,7 +293,7 @@ export async function updateUserPermissions({
     )
     .filter((userRole) => !data.permissions.includes(userRole));
 
-  const insertPermissions = new Array();
+  const insertPermissions = [];
   permissionsToAdd.forEach((permission, i) => {
     insertPermissions[i] = { permissionKey: permission, accountUserId: userId };
   });

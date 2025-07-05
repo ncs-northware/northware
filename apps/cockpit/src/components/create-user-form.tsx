@@ -1,8 +1,4 @@
 "use client";
-import {
-  CreateUserFormSchema,
-  type TCreateUserFormSchema,
-} from "@/lib/rbac-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert } from "@northware/ui/components/alert";
 import { Button } from "@northware/ui/components/button";
@@ -18,10 +14,16 @@ import { Input } from "@northware/ui/components/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import {
+  CreateUserFormSchema,
+  type TCreateUserFormSchema,
+} from "@/lib/rbac-schema";
 
 export default function CreateUserForm({
   createUser,
-}: { createUser: SubmitHandler<TCreateUserFormSchema> }) {
+}: {
+  createUser: SubmitHandler<TCreateUserFormSchema>;
+}) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TCreateUserFormSchema>({
     resolver: zodResolver(CreateUserFormSchema),

@@ -1,3 +1,8 @@
+import { Headline } from "@northware/ui/components/headline";
+import {
+  PermissionProvider,
+  userHasPermission,
+} from "@northware/ui/components/permission-provider";
 import {
   UpdatePasswordFormDialog,
   UpdateUserForm,
@@ -5,15 +10,12 @@ import {
   UserEmailList,
 } from "@/components/user-forms";
 import { getSingleUser } from "@/lib/user-actions";
-import { Headline } from "@northware/ui/components/headline";
-import {
-  PermissionProvider,
-  userHasPermission,
-} from "@northware/ui/components/permission-provider";
 
 export default async function Page({
   params,
-}: { params: Promise<{ userId: string }> }) {
+}: {
+  params: Promise<{ userId: string }>;
+}) {
   const { userId } = await params;
   const user = await getSingleUser(userId);
 
@@ -35,15 +37,15 @@ export default async function Page({
         </div>
         <UpdatePasswordFormDialog id={user?.id} />
         {(await userHasPermission(["cockpit::user.delete"])) && (
-          <UserDeleteButton userId={user?.id || ""} mode="page" />
+          <UserDeleteButton mode="page" userId={user?.id || ""} />
         )}
       </div>
       <UpdateUserForm user={user} />
       <Headline level="h2">E-Mail Adressen</Headline>
       <UserEmailList
-        userId={user?.id}
         data={user?.emailAddresses}
         primaryEmailAddressId={user?.primaryEmailAddressId}
+        userId={user?.id}
       />
     </PermissionProvider>
   );

@@ -1,11 +1,5 @@
 "use server";
 
-import type {
-  TCreateEMailAddressFormSchema,
-  TCreateUserFormSchema,
-  TUpdatePasswordFormSchema,
-  TUpdateUserFormSchema,
-} from "@/lib/rbac-schema";
 import { clerkClient, currentUser } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
@@ -16,6 +10,12 @@ import {
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
+import type {
+  TCreateEMailAddressFormSchema,
+  TCreateUserFormSchema,
+  TUpdatePasswordFormSchema,
+  TUpdateUserFormSchema,
+} from "@/lib/rbac-schema";
 
 /****************** Clerk User **********************/
 interface ClerkError {
@@ -151,11 +151,11 @@ export async function createUser(formData: TCreateUserFormSchema) {
   try {
     const client = await clerkClient();
     await client.users.createUser({
-      firstName: firstName,
-      lastName: lastName,
-      username: username,
+      firstName,
+      lastName,
+      username,
       emailAddress: [emailAddress],
-      password: password,
+      password,
     });
     revalidatePath("/admin");
   } catch (error) {
@@ -175,9 +175,9 @@ export async function updateUser(formData: TUpdateUserFormSchema, id?: string) {
     try {
       const client = await clerkClient();
       await client.users.updateUser(id, {
-        username: username,
-        firstName: firstName,
-        lastName: lastName,
+        username,
+        firstName,
+        lastName,
       });
       revalidatePath("/user");
     } catch (error) {
@@ -220,10 +220,10 @@ export async function createEmailAddress(
     try {
       const client = await clerkClient();
       await client.emailAddresses.createEmailAddress({
-        userId: userId,
-        emailAddress: emailAddress,
-        verified: verified,
-        primary: primary,
+        userId,
+        emailAddress,
+        verified,
+        primary,
       });
       revalidatePath("/user");
     } catch (error) {

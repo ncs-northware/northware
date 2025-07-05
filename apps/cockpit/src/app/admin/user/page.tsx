@@ -1,4 +1,3 @@
-import { getUserList } from "@/lib/user-actions";
 import {
   Alert,
   AlertDescription,
@@ -14,6 +13,7 @@ import {
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { LightbulbIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
+import { getUserList } from "@/lib/user-actions";
 import { columns } from "./columns";
 
 export const metadata = { title: "Benutzerverwaltung" };
@@ -22,12 +22,12 @@ export default async function Page() {
   const userArray = (await getUserList()) || [];
   return (
     <SidebarLayout
-      service="cockpit"
-      defaultOpen={false}
       breadcrumbs={[
         { label: "Admin Panel", href: "/admin" },
         { label: "Benutzerverwaltung", href: "/admin/user", active: true },
       ]}
+      defaultOpen={false}
+      service="cockpit"
     >
       <PermissionProvider permissionKeys={["cockpit::user.read"]}>
         <div className="flex justify-between gap-4">
@@ -48,8 +48,8 @@ export default async function Page() {
         <DataTable
           columns={columns}
           data={userArray}
-          withRowSelect={false}
           initialSorting="fullName"
+          withRowSelect={false}
         />
         <Alert>
           <LightbulbIcon className="size-4" />

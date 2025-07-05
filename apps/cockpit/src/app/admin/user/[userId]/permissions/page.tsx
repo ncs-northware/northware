@@ -1,11 +1,13 @@
-import { UpdateUserPermissionsForm } from "@/components/user-forms";
-import { getPermissionList } from "@/lib/role-actions";
 import { getExtraPermissions } from "@northware/auth/account";
 import { Headline } from "@northware/ui/components/headline";
 import { PermissionProvider } from "@northware/ui/components/permission-provider";
+import { UpdateUserPermissionsForm } from "@/components/user-forms";
+import { getPermissionList } from "@/lib/role-actions";
 export default async function Page({
   params,
-}: { params: Promise<{ userId: string }> }) {
+}: {
+  params: Promise<{ userId: string }>;
+}) {
   const { userId } = await params;
   const permissionList = await getPermissionList();
   const extraPermissions = await getExtraPermissions(userId);
@@ -19,9 +21,9 @@ export default async function Page({
         um die Rollen-Berechtigungen zu erweitern.
       </p>
       <UpdateUserPermissionsForm
+        extraPermissionsResponse={extraPermissions}
         permissionsResponse={permissionList}
         userId={userId}
-        extraPermissionsResponse={extraPermissions}
       />
       {/* TODO: Dialogs für PermissionKeys bearbeiten und erstellen, Berechtigungen gruppieren?, Berechtigungen in einem grid darstellen? */}
     </PermissionProvider>
