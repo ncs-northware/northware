@@ -130,8 +130,8 @@ export default function CreateUserForm({
         {errors.length > 0 && (
           <Alert variant="danger">
             <ul>
-              {errors.map((error, index) => (
-                <li key={index}>{error}</li>
+              {errors.map((error) => (
+                <li key={error}>{error}</li>
               ))}
             </ul>
           </Alert>

@@ -29,7 +29,7 @@ interface ClerkError {
 function handleClerkError(typesafeError: ClerkError) {
   const errorMessages: string[] = [];
   if (typesafeError.errors) {
-    typesafeError.errors.map((error) => {
+    for (const error of typesafeError.errors) {
       switch (error.code) {
         case "form_password_length_too_short":
           errorMessages.push(
@@ -71,12 +71,11 @@ function handleClerkError(typesafeError: ClerkError) {
           break;
         default:
           errorMessages.push(
-            `Es ist ein Fehler aufgetreten: ${error.message} (Fehlercode: ${error.code})` ||
-              "Es ist ein unbekannter Fehler bei der Kommunikation mit dem Server aufgetreten."
+            `Es ist ein Fehler aufgetreten: ${error.message} (Fehlercode: ${error.code})`
           );
           break;
       }
-    });
+    }
   } else {
     errorMessages.push(
       "Es ist ein unbekannter Fehler beim Aktualisieren des Nutzers aufgetreten."
@@ -142,7 +141,7 @@ export const getSingleUser = cache(async (id: string) => {
     };
   } catch (error) {
     // FIXME: Kann dieser Error in eine global-error Seite eingebaut werden?
-    console.error(error);
+    return error;
   }
 });
 

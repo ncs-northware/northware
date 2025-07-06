@@ -36,7 +36,7 @@ export function MainSidebarMenuButton({
   if (type === "parent") {
     return (
       <CollapsibleTrigger asChild>
-        <SidebarMenuButton tooltip={title} isActive={isActive()}>
+        <SidebarMenuButton isActive={isActive()} tooltip={title}>
           <span>{title}</span>
           <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
         </SidebarMenuButton>

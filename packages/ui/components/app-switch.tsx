@@ -26,7 +26,10 @@ export type MenuApps = {
 export function AppSwitch({
   service,
   apps,
-}: { service: ServiceType; apps: MenuApps[] }) {
+}: {
+  service: ServiceType;
+  apps: MenuApps[];
+}) {
   const { isMobile } = useSidebar();
   if (!service) {
     return null;
@@ -38,27 +41,27 @@ export function AppSwitch({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
-              size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              size="lg"
             >
-              <Brand service={service} className="truncate text-base" />
+              <Brand className="truncate text-base" service={service} />
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
             align="start"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
             {apps.map(
               (app) =>
                 app.allowed && (
-                  <DropdownMenuItem key={app.slug} className="gap-2 p-2">
+                  <DropdownMenuItem className="gap-2 p-2" key={app.slug}>
                     <Link href={app.url || ""} target="_blank">
                       <Brand
-                        service={app.slug}
                         className="gap-2 font-medium text-base"
+                        service={app.slug}
                       />
                     </Link>
                   </DropdownMenuItem>

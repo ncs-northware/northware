@@ -1,5 +1,5 @@
 import { cn } from "@northware/ui/lib/utils";
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import {
   CircleAlertIcon,
   CircleCheckIcon,
@@ -35,9 +35,9 @@ function Alert({
 }: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
   return (
     <div
+      className={cn(alertVariants({ variant }), className)}
       data-slot="alert"
       role="alert"
-      className={cn(alertVariants({ variant }), className)}
       {...props}
     />
   );
@@ -46,11 +46,11 @@ function Alert({
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="alert-title"
       className={cn(
         "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
         className
       )}
+      data-slot="alert-title"
       {...props}
     />
   );
@@ -62,11 +62,11 @@ function AlertDescription({
 }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="alert-description"
       className={cn(
         "col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
         className
       )}
+      data-slot="alert-description"
       {...props}
     />
   );
@@ -74,7 +74,9 @@ function AlertDescription({
 
 const AlertIcon = ({
   variant,
-}: { variant: "default" | "danger" | "info" | "success" | "warning" }) => {
+}: {
+  variant: "default" | "danger" | "info" | "success" | "warning";
+}) => {
   switch (variant) {
     case "danger":
       return <CircleAlertIcon className="size-4" />;

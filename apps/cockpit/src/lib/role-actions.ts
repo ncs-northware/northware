@@ -156,13 +156,13 @@ export const getRole = cache(async (recordId: number) => {
       role: roleResponse[0],
       permissions,
     };
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 });
 
 export async function createRole(data: TCreateRoleFormData) {
-  const insertPermissions = [];
+  const insertPermissions: { permissionKey: string; roleKey: string }[] = [];
   data.permissions.forEach((permission, i) => {
     insertPermissions[i] = {
       permissionKey: permission,
@@ -215,9 +215,14 @@ export async function updateRolePermissions({
     .filter((permission) => permission !== null)
     .filter((perm) => !data.permissions.includes(perm));
 
-  const insertPermissions = [];
+  const insertPermissions: {
+    permissionKey: string;
+    roleKey: string;
+  }[] = [];
   permissionsToAdd.forEach((permission, i) => {
-    insertPermissions[i] = { permissionKey: permission, roleKey };
+    if (roleKey) {
+      insertPermissions[i] = { permissionKey: permission, roleKey };
+    }
   });
 
   try {
@@ -293,7 +298,8 @@ export async function updateUserPermissions({
     )
     .filter((userRole) => !data.permissions.includes(userRole));
 
-  const insertPermissions = [];
+  const insertPermissions: { permissionKey: string; accountUserId: string }[] =
+    [];
   permissionsToAdd.forEach((permission, i) => {
     insertPermissions[i] = { permissionKey: permission, accountUserId: userId };
   });

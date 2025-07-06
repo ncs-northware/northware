@@ -24,8 +24,8 @@ export function ThemeSwitch({
     <Button
       className={className}
       onClick={toggleTheme}
-      variant={variant}
       size={withDescriptionText ? "sm" : "icon"}
+      variant={variant}
     >
       <SunIcon className="hidden group-[.storybook-darkTheme]:block [html.dark_&]:block" />
       <MoonIcon className="hidden group-[.storybook-lightTheme]:block [html.light_&]:block" />

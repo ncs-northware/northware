@@ -1,17 +1,5 @@
 "use client";
 
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeftIcon,
-  ChevronsRightIcon,
-  ChevronsUpDownIcon,
-  EyeOffIcon,
-} from "lucide-react";
-
 import { Button } from "@northware/ui/components/button";
 import { Checkbox } from "@northware/ui/components/checkbox";
 import {
@@ -42,16 +30,27 @@ import { cn } from "@northware/ui/lib/utils";
 import {
   type Column,
   type ColumnDef,
-  type SortingState,
-  type Table as TableType,
-  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  type SortingState,
+  type Table as TableType,
   useReactTable,
+  type VisibilityState,
 } from "@tanstack/react-table";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  ChevronsUpDownIcon,
+  EyeOffIcon,
+} from "lucide-react";
 import { useState } from "react";
 
 export interface DataTableProps<TData, TValue> {
@@ -102,10 +101,10 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center gap-2 py-4">
         <Input
-          placeholder={filterPlaceholder}
           onChange={(event) =>
             table.setGlobalFilter(String(event.target.value))
           }
+          placeholder={filterPlaceholder}
           value={globalFilter}
         />
         <DataTableViewOptions table={table} />
@@ -119,6 +118,7 @@ export function DataTable<TData, TValue>({
                   {withRowSelect && (
                     <TableHead key="select">
                       <Checkbox
+                        aria-label="Alle auswählen"
                         checked={
                           table.getIsAllPageRowsSelected() ||
                           (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -126,7 +126,6 @@ export function DataTable<TData, TValue>({
                         onCheckedChange={(value) =>
                           table.toggleAllPageRowsSelected(!!value)
                         }
-                        aria-label="Alle auswählen"
                       />
                     </TableHead>
                   )}
@@ -149,6 +148,7 @@ export function DataTable<TData, TValue>({
                 {withRowSelect && (
                   <TableHead key="select">
                     <Checkbox
+                      aria-label="Alle auswählen"
                       checked={
                         table.getIsAllPageRowsSelected() ||
                         (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -156,7 +156,6 @@ export function DataTable<TData, TValue>({
                       onCheckedChange={(value) =>
                         table.toggleAllPageRowsSelected(!!value)
                       }
-                      aria-label="Alle auswählen"
                     />
                   </TableHead>
                 )}
@@ -171,15 +170,15 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  key={row.id}
                 >
                   {withRowSelect && (
                     <TableCell key="select">
                       <Checkbox
+                        aria-label="Eintrag auswählen"
                         checked={row.getIsSelected()}
                         onCheckedChange={(value) => row.toggleSelected(!!value)}
-                        aria-label="Eintrag auswählen"
                       />
                     </TableCell>
                   )}
@@ -196,8 +195,8 @@ export function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
                   className="h-24 text-center"
+                  colSpan={columns.length}
                 >
                   Es wurden keine Einträge gefunden.
                 </TableCell>
@@ -222,9 +221,9 @@ export function DataTableViewOptions<TData>({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
-          size="sm"
           className="ml-auto hidden h-8 lg:flex"
+          size="sm"
+          variant="outline"
         >
           Spalten
           <ChevronDownIcon />
@@ -240,9 +239,9 @@ export function DataTableViewOptions<TData>({
           .map((column) => {
             return (
               <DropdownMenuCheckboxItem
-                key={column.id}
-                className="capitalize"
                 checked={column.getIsVisible()}
+                className="capitalize"
+                key={column.id}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
                 {column.id}
@@ -266,10 +265,10 @@ export function DataTablePagination<TData>({
       <div className="flex items-center space-x-2">
         <p className="font-medium text-sm">Einträge pro Seite</p>
         <Select
-          value={`${table.getState().pagination.pageSize}`}
           onValueChange={(value) => {
             table.setPageSize(Number(value));
           }}
+          value={`${table.getState().pagination.pageSize}`}
         >
           <SelectTrigger className="h-8 w-[70px]">
             <SelectValue placeholder={table.getState().pagination.pageSize} />
@@ -289,37 +288,37 @@ export function DataTablePagination<TData>({
       </div>
       <div className="flex items-center space-x-2">
         <Button
-          variant="outline"
           className="hidden h-8 w-8 p-0 lg:flex"
-          onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
+          onClick={() => table.setPageIndex(0)}
+          variant="outline"
         >
           <span className="sr-only">Zur ersten Seite</span>
           <ChevronsLeftIcon />
         </Button>
         <Button
-          variant="outline"
           className="h-8 w-8 p-0"
-          onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          onClick={() => table.previousPage()}
+          variant="outline"
         >
           <span className="sr-only">Zur vorherigen Seite</span>
           <ChevronLeftIcon />
         </Button>
         <Button
-          variant="outline"
           className="h-8 w-8 p-0"
-          onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          onClick={() => table.nextPage()}
+          variant="outline"
         >
           <span className="sr-only">Zur nächsten Seite</span>
           <ChevronRightIcon />
         </Button>
         <Button
-          variant="outline"
           className="hidden h-8 w-8 p-0 lg:flex"
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
+          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          variant="outline"
         >
           <span className="sr-only">Zur letzen Seite</span>
           <ChevronsRightIcon />
@@ -349,14 +348,14 @@ export function DataTableColumnHeader<TData, TValue>({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="ghost"
-            size="sm"
             className="-ml-3 h-8 data-[state=open]:bg-accent"
+            size="sm"
+            variant="ghost"
           >
             <span>{title}</span>
             {column.getIsSorted() === "desc" ? (
               <ArrowDownIcon />
-              // biome-ignore lint/nursery/noNestedTernary:
+              // biome-ignore lint/style/noNestedTernary: shadcn internal
             ) : column.getIsSorted() === "asc" ? (
               <ArrowUpIcon />
             ) : (

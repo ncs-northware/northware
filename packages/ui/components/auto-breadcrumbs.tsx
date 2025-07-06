@@ -15,12 +15,14 @@ export interface BreadcrumbType {
 
 export function AutoBreadcrumbs({
   breadcrumbs,
-}: { breadcrumbs: BreadcrumbType[] }) {
+}: {
+  breadcrumbs: BreadcrumbType[];
+}) {
   return (
     <Breadcrumb>
       <BreadcrumbList className="gap-0 sm:gap-0">
         {breadcrumbs.map((breadcrumb, index) => (
-          <div key={breadcrumb.href} className="flex items-center">
+          <div className="flex items-center" key={breadcrumb.href}>
             <BreadcrumbItem className="hidden md:block">
               {breadcrumb.active ? (
                 <BreadcrumbPage>{breadcrumb.label}</BreadcrumbPage>

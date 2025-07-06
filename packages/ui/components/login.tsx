@@ -30,17 +30,17 @@ export function LoginForm({ service }: { service: ServiceType }) {
         <Clerk.Loading>
           {(isGlobalLoading) => (
             <>
-              <SignIn.Step name="start" className="w-full max-w-sm">
+              <SignIn.Step className="w-full max-w-sm" name="start">
                 <Card className="bg-background">
                   <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <Clerk.Field name="identifier" className="grid gap-4">
+                    <Clerk.Field className="grid gap-4" name="identifier">
                       <Clerk.Label asChild>
                         <Label>Email</Label>
                       </Clerk.Label>
-                      <Clerk.Input type="email" required asChild>
+                      <Clerk.Input asChild required type="email">
                         <Input placeholder="kunde@northware.de" />
                       </Clerk.Input>
                       <Clerk.FieldError>
@@ -51,12 +51,12 @@ export function LoginForm({ service }: { service: ServiceType }) {
                     </Clerk.Field>
                   </CardContent>
                   <CardFooter>
-                    <SignIn.Action submit asChild>
+                    <SignIn.Action asChild submit>
                       <Button
+                        className="w-full"
                         disabled={isGlobalLoading}
                         size="lg"
                         variant="default"
-                        className="w-full"
                       >
                         <Clerk.Loading>
                           {(isLoading) => {
@@ -73,7 +73,7 @@ export function LoginForm({ service }: { service: ServiceType }) {
                 </Card>
               </SignIn.Step>
 
-              <SignIn.Step name="verifications" className="w-full max-w-sm">
+              <SignIn.Step className="w-full max-w-sm" name="verifications">
                 <SignIn.Strategy name="password">
                   <Card>
                     <CardHeader>
@@ -88,7 +88,7 @@ export function LoginForm({ service }: { service: ServiceType }) {
                       </p>
                     </CardHeader>
                     <CardContent>
-                      <Clerk.Field name="password" className="grid gap-4">
+                      <Clerk.Field className="grid gap-4" name="password">
                         <Clerk.Label asChild>
                           <Label>Passwort</Label>
                         </Clerk.Label>
@@ -100,11 +100,11 @@ export function LoginForm({ service }: { service: ServiceType }) {
                             <Input className="rounded-r-none border-r-0" />
                           </Clerk.Input>
                           <Button
-                            onClick={() => setShowPassword(!showPassword)}
-                            variant="ghost"
-                            size="icon"
                             className="rounded-l-none border border-input bg-background dark:bg-input/30"
+                            onClick={() => setShowPassword(!showPassword)}
+                            size="icon"
                             type="button"
+                            variant="ghost"
                           >
                             {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
                           </Button>
@@ -117,12 +117,12 @@ export function LoginForm({ service }: { service: ServiceType }) {
                       </Clerk.Field>
                     </CardContent>
                     <CardFooter>
-                      <SignIn.Action submit asChild>
+                      <SignIn.Action asChild submit>
                         <Button
+                          className="w-full"
                           disabled={isGlobalLoading}
                           size="lg"
                           variant="default"
-                          className="w-full"
                         >
                           <Clerk.Loading>
                             {(isLoading) => {

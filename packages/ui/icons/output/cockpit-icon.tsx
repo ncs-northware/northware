@@ -1,5 +1,6 @@
 import type { SVGProps } from "react";
-import { type Ref, forwardRef } from "react";
+import { forwardRef, type Ref } from "react";
+
 interface SVGRProps {
   title?: string;
   titleId?: string;
@@ -10,8 +11,8 @@ const SvgCockpitIcon = (
 ) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlSpace="preserve"
+      aria-labelledby={titleId}
+      ref={ref}
       style={{
         fillRule: "evenodd",
         clipRule: "evenodd",
@@ -19,8 +20,8 @@ const SvgCockpitIcon = (
         strokeMiterlimit: 2,
       }}
       viewBox="0 0 2138 2134"
-      ref={ref}
-      aria-labelledby={titleId}
+      xmlns="http://www.w3.org/2000/svg"
+      xmlSpace="preserve"
       {...props}
     >
       {title ? <title id={titleId}>{title}</title> : null}

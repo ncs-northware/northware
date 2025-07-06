@@ -1,5 +1,6 @@
 import type { SVGProps } from "react";
-import { type Ref, forwardRef } from "react";
+import { forwardRef, type Ref } from "react";
+
 interface SVGRProps {
   title?: string;
   titleId?: string;
@@ -10,11 +11,11 @@ const SvgShadcnuiIcon = (
 ) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+      aria-labelledby={titleId}
       fill="currentcolor"
       ref={ref}
-      aria-labelledby={titleId}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       {title ? <title id={titleId}>{title}</title> : null}

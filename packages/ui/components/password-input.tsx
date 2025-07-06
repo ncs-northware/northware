@@ -10,16 +10,16 @@ function PasswordInput({ ...props }) {
   return (
     <div className="flex">
       <Input
-        type={showPassword ? "text" : "password"}
         className={cn("rounded-r-none border-r-0", props.className)}
+        type={showPassword ? "text" : "password"}
         {...props}
       />
       <Button
-        onClick={() => setShowPassword(!showPassword)}
-        variant="ghost"
-        size="icon"
         className="rounded-l-none border border-input bg-background dark:bg-input/30"
+        onClick={() => setShowPassword(!showPassword)}
+        size="icon"
         type="button"
+        variant="ghost"
       >
         {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
       </Button>
