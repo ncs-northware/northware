@@ -16,6 +16,7 @@ import type {
   TUpdatePasswordFormSchema,
   TUpdateUserFormSchema,
 } from "@/lib/rbac-schema";
+import type { TSingleUser } from "@/lib/rbac-types";
 
 /****************** Clerk User **********************/
 interface ClerkError {
@@ -110,43 +111,45 @@ export async function getUserList() {
   }
 }
 
-export const getSingleUser = cache(async (id: string) => {
-  try {
-    const client = await clerkClient();
-    const response = await client.users.getUser(id);
-    const user_emailAddresses = response.emailAddresses
-      .map((email) => ({
-        id: email.id,
-        emailAddress: email.emailAddress,
-        verificationStatus: email.verification?.status,
-      }))
-      .sort((a, b) => {
-        if (a.id === response.primaryEmailAddressId) {
-          return -1; // 'a' kommt zuerst
-        }
-        if (b.id === response.primaryEmailAddressId) {
-          return 1; // 'b' kommt zuerst
-        }
-        // Alphabetische Sortierung der übrigen E-Mail-Adressen
-        return a.emailAddress.localeCompare(b.emailAddress);
-      });
-    return {
-      id: response.id,
-      firstName: response.firstName,
-      lastName: response.lastName,
-      fullName: response.fullName,
-      username: response.username,
-      emailAddresses: user_emailAddresses,
-      primaryEmailAddressId: response.primaryEmailAddressId,
-    };
-  } catch (error: unknown) {
-    // FIXME: Kann dieser Error in eine global-error Seite eingebaut werden?
-    if (error instanceof Error) {
-      return error;
+export const getSingleUser = cache(
+  async (id: string): Promise<TSingleUser | Error> => {
+    try {
+      const client = await clerkClient();
+      const response = await client.users.getUser(id);
+      const user_emailAddresses = response.emailAddresses
+        .map((email) => ({
+          id: email.id,
+          emailAddress: email.emailAddress,
+          verificationStatus: email.verification?.status,
+        }))
+        .sort((a, b) => {
+          if (a.id === response.primaryEmailAddressId) {
+            return -1; // 'a' kommt zuerst
+          }
+          if (b.id === response.primaryEmailAddressId) {
+            return 1; // 'b' kommt zuerst
+          }
+          // Alphabetische Sortierung der übrigen E-Mail-Adressen
+          return a.emailAddress.localeCompare(b.emailAddress);
+        });
+      return {
+        id: response.id,
+        firstName: response.firstName,
+        lastName: response.lastName,
+        fullName: response.fullName,
+        username: response.username,
+        emailAddresses: user_emailAddresses,
+        primaryEmailAddressId: response.primaryEmailAddressId,
+      };
+    } catch (error: unknown) {
+      // FIXME: Kann dieser Error in eine global-error Seite eingebaut werden?
+      if (error instanceof Error) {
+        return error;
+      }
+      return new Error("Es ist ein unbekannter Fehler aufgetreten.");
     }
-    return new Error("Es ist ein unbekannter Fehler aufgetreten.");
   }
-});
+);
 
 export async function createUser(formData: TCreateUserFormSchema) {
   const { firstName, lastName, username, emailAddress, password } = formData;

@@ -86,13 +86,13 @@ import {
 import type {
   TPermissionListResponse,
   TRoleListResponse,
+  TSingleUser,
 } from "@/lib/rbac-types";
 import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
 import {
   createEmailAddress,
   deleteEmailAddress,
   deleteUser,
-  type getSingleUser,
   updateEmailAddress,
   updatePassword,
   updateUser,
@@ -100,11 +100,7 @@ import {
 
 /*********************** Clerk User Data **************************************/
 
-export function UpdateUserForm({
-  user,
-}: {
-  user?: Awaited<ReturnType<typeof getSingleUser>>;
-}) {
+export function UpdateUserForm({ user }: { user?: TSingleUser }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TUpdateUserFormSchema>({
     resolver: zodResolver(UpdateUserFromSchema),

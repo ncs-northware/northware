@@ -1,3 +1,17 @@
+export type TSingleUser = {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+  fullName: string | null;
+  username: string | null;
+  emailAddresses: {
+    id: string;
+    emailAddress: string;
+    verificationStatus: string | undefined;
+  }[];
+  primaryEmailAddressId: string | null;
+};
+
 export type TRoleWithPermissions = {
   recordId: number;
   roleKey: string;
