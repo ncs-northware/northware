@@ -1,5 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import {
   Select,
   SelectContent,
@@ -10,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@northware/ui/components/select";
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof Select> = {
   title: "Components/Form Parts/Select",

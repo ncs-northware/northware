@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@northware/ui/components/accordion";
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
   title: "Components/Panels/Accordion",

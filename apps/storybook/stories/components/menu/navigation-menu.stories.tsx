@@ -1,5 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,6 +7,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@northware/ui/components/navigation-menu";
+import type { Meta, StoryObj } from "@storybook/react";
 import Link from "next/link";
 
 /**

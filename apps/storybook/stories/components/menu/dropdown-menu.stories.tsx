@@ -1,12 +1,3 @@
-import {
-  Mail,
-  Plus,
-  PlusCircle,
-  Search,
-  UserPlus,
-} from "@northware/ui/icons/lucide";
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { Button } from "@northware/ui/components/button";
 import {
   DropdownMenu,
@@ -25,6 +16,14 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@northware/ui/components/dropdown-menu";
+import {
+  Mail,
+  Plus,
+  PlusCircle,
+  Search,
+  UserPlus,
+} from "@northware/ui/icons/lucide";
+import type { Meta, StoryObj } from "@storybook/react";
 
 /**
  * Displays a menu to the user — such as a set of actions or functions —

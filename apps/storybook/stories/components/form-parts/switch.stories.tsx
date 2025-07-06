@@ -9,7 +9,7 @@ const meta = {
   render: (args) => (
     <div className="flex items-center space-x-2">
       <Switch {...args} />
-      <Label htmlFor={args.id} className="peer-disabled:text-foreground/50">
+      <Label className="peer-disabled:text-foreground/50" htmlFor={args.id}>
         Airplane Mode
       </Label>
     </div>

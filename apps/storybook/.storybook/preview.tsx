@@ -47,6 +47,8 @@ const preview: Preview = {
       return (
         <div className={`bg-background ${source_sans.variable} p-2 font-sans`}>
           <ThemeProvider
+            defaultTheme="CockpitLight"
+            enableSystem={false}
             themes={[
               "CockpitLight",
               "CockpitDark",
@@ -55,8 +57,6 @@ const preview: Preview = {
               "TraderLight",
               "TraderDark",
             ]}
-            enableSystem={false}
-            defaultTheme="CockpitLight"
           >
             <Story />
           </ThemeProvider>
