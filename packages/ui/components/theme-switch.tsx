@@ -3,7 +3,7 @@
 import { Button } from "@northware/ui/components/button";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
-import * as React from "react";
+import { useCallback } from "react";
 
 export function ThemeSwitch({
   className,
@@ -16,7 +16,7 @@ export function ThemeSwitch({
 }) {
   const { setTheme, resolvedTheme } = useTheme();
 
-  const toggleTheme = React.useCallback(() => {
+  const toggleTheme = useCallback(() => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   }, [resolvedTheme, setTheme]);
 

@@ -1,5 +1,4 @@
 import { cn } from "@northware/ui/lib/utils";
-import type * as React from "react";
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (

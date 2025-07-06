@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@northware/ui/lib/utils";
-import type * as React from "react";
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (

@@ -1,8 +1,7 @@
 "use client";
 
 import { cn } from "@northware/ui/lib/utils";
-import * as SwitchPrimitive from "@radix-ui/react-switch";
-import type * as React from "react";
+import { Switch as SwitchPrimitive } from "radix-ui";
 
 function Switch({
   className,

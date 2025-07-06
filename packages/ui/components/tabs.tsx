@@ -1,8 +1,7 @@
 "use client";
 
 import { cn } from "@northware/ui/lib/utils";
-import * as TabsPrimitive from "@radix-ui/react-tabs";
-import type * as React from "react";
+import { Tabs as TabsPrimitive } from "radix-ui";
 
 function Tabs({
   className,

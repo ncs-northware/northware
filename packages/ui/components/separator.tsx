@@ -1,8 +1,7 @@
 "use client";
 
 import { cn } from "@northware/ui/lib/utils";
-import * as SeparatorPrimitive from "@radix-ui/react-separator";
-import type * as React from "react";
+import { Separator as SeparatorPrimitive } from "radix-ui";
 
 function Separator({
   className,
