@@ -8,6 +8,14 @@ export async function generateMetadata({
 }) {
   const { userId } = await params;
   const user = await getSingleUser(userId);
+
+  if (user instanceof Error) {
+    // Hier kannst du entscheiden, wie du mit dem Fehler umgehen möchtest.
+    // Für Metadaten könntest du einen Standardtitel oder einen Fehlerindikator verwenden.
+    // Zum Beispiel:
+    return "Benutzerprofil";
+  }
+
   return { title: user?.fullName };
 }
 
@@ -20,6 +28,12 @@ export default async function EditUserLayout({
 }) {
   const { userId } = await params;
   const user = await getSingleUser(userId);
+
+  if (user instanceof Error) {
+    // FIXME: globalError
+    return "Es wurde kein Nutzer gefunden";
+  }
+
   return (
     <SidebarLayout
       breadcrumbs={[

@@ -19,6 +19,11 @@ export default async function Page({
   const { userId } = await params;
   const user = await getSingleUser(userId);
 
+  if (user instanceof Error) {
+    return "Es wurde keine Benutzer gefunden";
+    // FIXME: globalError
+  }
+
   return (
     <PermissionProvider permissionKeys={["cockpit::user.update"]}>
       <div className="flex justify-between gap-4">

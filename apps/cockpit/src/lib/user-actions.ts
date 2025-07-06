@@ -139,9 +139,12 @@ export const getSingleUser = cache(async (id: string) => {
       emailAddresses: user_emailAddresses,
       primaryEmailAddressId: response.primaryEmailAddressId,
     };
-  } catch (error) {
+  } catch (error: unknown) {
     // FIXME: Kann dieser Error in eine global-error Seite eingebaut werden?
-    return error;
+    if (error instanceof Error) {
+      return error;
+    }
+    return new Error("Es ist ein unbekannter Fehler aufgetreten.");
   }
 });
 
