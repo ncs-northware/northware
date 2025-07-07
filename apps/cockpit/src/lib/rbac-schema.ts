@@ -1,25 +1,23 @@
-import { z } from "zod";
+import { z } from "zod/v4";
 
 /************** User Form Schema  **************************************************************/
 
 export const CreateUserFormSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
-  emailAddress: z
-    .string()
-    .email("Bitte geben Sie eine gültige E-Mail Adresse an."),
+  emailAddress: z.email("Bitte geben Sie eine gültige E-Mail Adresse an."),
   username: z
     .string()
     .min(4, {
-      message: "Der Benutzername muss mindestens 4 Zeichen lang sein.",
+      error: "Der Benutzername muss mindestens 4 Zeichen lang sein.",
     })
     .max(64, {
-      message: "Der Benutzername darf maximal 64 Zeichen lang sein.",
+      error: "Der Benutzername darf maximal 64 Zeichen lang sein.",
     }),
   password: z
     .string()
-    .min(8, { message: "Das Passwort muss mindestens 8 Zeichen lang sein." })
-    .max(72, { message: "Das Passwort darf maximal 72 Zeichen lang sein." }),
+    .min(8, { error: "Das Passwort muss mindestens 8 Zeichen lang sein." })
+    .max(72, { error: "Das Passwort darf maximal 72 Zeichen lang sein." }),
 });
 export type TCreateUserFormSchema = z.infer<typeof CreateUserFormSchema>;
 
@@ -29,16 +27,16 @@ export const UpdateUserFromSchema = z.object({
   username: z
     .string()
     .min(4, {
-      message: "Der Benutzername muss mindestens 4 Zeichen lang sein.",
+      error: "Der Benutzername muss mindestens 4 Zeichen lang sein.",
     })
     .max(64, {
-      message: "Der Benutzername darf maximal 64 Zeichen lang sein.",
+      error: "Der Benutzername darf maximal 64 Zeichen lang sein.",
     }),
 });
 export type TUpdateUserFormSchema = z.infer<typeof UpdateUserFromSchema>;
 
 export const CreateEMailAddressFormSchema = z.object({
-  emailAddress: z.string(),
+  emailAddress: z.email(),
   verified: z.boolean().default(true).optional(),
   primary: z.boolean().default(false).optional(),
 });
@@ -50,20 +48,15 @@ export const UpdatePasswordFormSchema = z
   .object({
     newPassword: z
       .string()
-      .min(8, { message: "Das Passwort muss mindestens 8 Zeichen lang sein." })
-      .max(72, { message: "Das Passwort darf maximal 72 Zeichen lang sein." }),
+      .min(8, { error: "Das Passwort muss mindestens 8 Zeichen lang sein." })
+      .max(72, { error: "Das Passwort darf maximal 72 Zeichen lang sein." }),
     confirmPassword: z.string(),
     signOutSessions: z.boolean(),
     skipChecks: z.boolean(),
   })
-  .superRefine(({ newPassword, confirmPassword }, ctx) => {
-    if (confirmPassword !== newPassword) {
-      ctx.addIssue({
-        path: ["confirmPassword"],
-        code: "custom",
-        message: "Die Passwörter stimmen nicht überein",
-      });
-    }
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    error: "Die Passwörter stimmen nicht überein.",
+    path: ["confirmPassword"],
   });
 
 export type TUpdatePasswordFormSchema = z.infer<
