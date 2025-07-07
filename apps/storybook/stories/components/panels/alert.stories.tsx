@@ -5,7 +5,7 @@ import {
   AlertTitle,
 } from "@northware/ui/components/alert";
 import { Terminal } from "@northware/ui/icons/lucide";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
   title: "Components/Panels/Alert",

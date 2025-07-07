@@ -1,5 +1,5 @@
 import { Headline } from "@northware/ui/components/headline";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 /**
  * Die Headline Komponente soll verwendet werden, wenn eine Überschift gebrauch wird. Über den Property `level` kann gesteuert werden, welcher Überschriftstag gerendert wird (`h1` bis `h6`).

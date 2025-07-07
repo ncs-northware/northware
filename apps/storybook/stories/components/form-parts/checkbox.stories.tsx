@@ -1,7 +1,7 @@
 import { Checkbox } from "@northware/ui/components/checkbox";
 import { Label } from "@northware/ui/components/label";
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta: Meta<typeof Checkbox> = {
   title: "Components/Form Parts/Checkbox",

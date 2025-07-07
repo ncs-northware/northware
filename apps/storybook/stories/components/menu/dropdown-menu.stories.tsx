@@ -23,7 +23,7 @@ import {
   Search,
   UserPlus,
 } from "@northware/ui/icons/lucide";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 /**
  * Displays a menu to the user — such as a set of actions or functions —

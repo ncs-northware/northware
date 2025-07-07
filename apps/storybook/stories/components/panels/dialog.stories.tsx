@@ -11,7 +11,7 @@ import {
 } from "@northware/ui/components/dialog";
 import { Input } from "@northware/ui/components/input";
 import { Label } from "@northware/ui/components/label";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
   title: "Components/Panels/Dialog",

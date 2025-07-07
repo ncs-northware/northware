@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/nextjs";
 // biome-ignore lint/correctness/noUnusedImports: React has to be imported to use jsx in this file.
 import React from "react";
 import "@northware/ui/css";
