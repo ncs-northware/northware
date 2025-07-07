@@ -1,6 +1,6 @@
 import { navigationMenuButtonStyle } from "@northware/ui/components/navigation-menu";
 import { ThemeSwitch } from "@northware/ui/components/theme-switch";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
   title: "Components/Menu/ThemeSwitch",

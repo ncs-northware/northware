@@ -1,5 +1,5 @@
 import { Brand } from "@northware/ui/components/brand";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
   title: "Components/Base/Brand",

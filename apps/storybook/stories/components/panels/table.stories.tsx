@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@northware/ui/components/table";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const invoices = [
   {

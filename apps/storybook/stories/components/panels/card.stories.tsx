@@ -18,7 +18,7 @@ import {
 } from "@northware/ui/components/select";
 import { Switch } from "@northware/ui/components/switch";
 import { BellRing, Check } from "@northware/ui/icons/lucide";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const notifications = [
   {

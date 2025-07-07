@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@northware/ui/components/dropdown-menu";
 import { MoreHorizontal } from "@northware/ui/icons/lucide";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/nextjs";
 import type { ColumnDef } from "@tanstack/react-table";
 
 export type Payment = {

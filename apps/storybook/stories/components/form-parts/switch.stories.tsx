@@ -1,6 +1,6 @@
 import { Label } from "@northware/ui/components/label";
 import { Switch } from "@northware/ui/components/switch";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
   title: "Components/Form Parts/Switch",
