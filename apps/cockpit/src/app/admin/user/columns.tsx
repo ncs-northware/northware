@@ -1,11 +1,11 @@
 "use client";
 
-import { UserDeleteButton } from "@/components/user-forms";
 import { Button } from "@northware/ui/components/button";
 import { DataTableColumnHeader } from "@northware/ui/components/data-table";
 import { EditIcon } from "@northware/ui/icons/lucide";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
+import { UserDeleteButton } from "@/components/user-forms";
 
 export type UserRow = {
   id: string;
@@ -39,7 +39,7 @@ export const columns: ColumnDef<UserRow>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex justify-end">
-          <Button variant="ghost" asChild>
+          <Button asChild variant="ghost">
             {/* TODO: Nur mit Berechtigung update User aber nicht wenn User all-access hat */}
             <Link href={`user/${row.original.id}`}>
               <EditIcon />

@@ -61,20 +61,20 @@ export async function SidebarLayout({
 
       return {
         slug: app.slug,
-        url: url,
+        url,
         allowed: await userHasPermission([`${app.slug}::app.read`]),
       };
     })
   );
   return (
-    <AppPermissionProvider service={service} apps={apps}>
+    <AppPermissionProvider apps={apps} service={service}>
       <SidebarProvider defaultOpen={defaultOpen}>
         <MainSidebar
-          service={service}
+          apps={apps}
           mainLabel={mainLabel}
+          service={service}
           subLabel={subLabel}
           subMenu={subMenu}
-          apps={apps}
         />
         <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -84,7 +84,7 @@ export async function SidebarLayout({
                   className={buttonVariants({ variant: "ghost", size: "icon" })}
                 />
                 {breadcrumbs && (
-                  <Separator orientation="vertical" className="mr-2 h-4" />
+                  <Separator className="mr-2 h-4" orientation="vertical" />
                 )}
                 {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
               </div>
@@ -117,19 +117,19 @@ async function MainSidebar({
   const user = await currentUser();
   const menuItems = await menuData(service, user?.id);
   return (
-    <Sidebar {...props} variant="inset" collapsible="offcanvas">
+    <Sidebar {...props} collapsible="offcanvas" variant="inset">
       <SidebarHeader>
-        <AppSwitch service={service} apps={apps} />
+        <AppSwitch apps={apps} service={service} />
       </SidebarHeader>
       <SidebarContent>
         {subMenu && <SubNav subLabel={subLabel} subMenu={subMenu} />}
-        <NavMain menuItems={menuItems} mainLabel={mainLabel} />
+        <NavMain mainLabel={mainLabel} menuItems={menuItems} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser
-          fullName={user?.fullName}
-          emailAddress={user?.emailAddresses[0].emailAddress}
           avatar={user?.imageUrl}
+          emailAddress={user?.emailAddresses[0].emailAddress}
+          fullName={user?.fullName}
         />
       </SidebarFooter>
       <SidebarRail />
@@ -153,7 +153,10 @@ type MenuType = {
 function NavMain({
   menuItems,
   mainLabel,
-}: { menuItems: MenuType; mainLabel?: string }) {
+}: {
+  menuItems: MenuType;
+  mainLabel?: string;
+}) {
   return (
     <SidebarGroup>
       {mainLabel && <SidebarGroupLabel>{mainLabel}</SidebarGroupLabel>}
@@ -180,23 +183,23 @@ function NavMain({
             return (
               // Top-Level-Element mit Unterpunkten
               <Collapsible
-                key={item.itemId}
                 asChild
                 className="group/collapsible"
+                key={item.itemId}
               >
                 <SidebarMenuItem>
                   <MainSidebarMenuButton
+                    href={item.href}
                     title={item.title}
                     type="parent"
-                    href={item.href}
                   />
                   <CollapsibleContent>
                     <SidebarMenuSub>
                       {ItemChildren.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.itemId}>
                           <MainSidebarMenuButton
-                            title={subItem.title}
                             href={subItem.href}
+                            title={subItem.title}
                             type="child"
                           />
                         </SidebarMenuSubItem>
@@ -222,7 +225,10 @@ type SubMenuItem = {
 function SubNav({
   subLabel,
   subMenu,
-}: { subLabel?: string; subMenu: SubMenuItem[] }) {
+}: {
+  subLabel?: string;
+  subMenu: SubMenuItem[];
+}) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{subLabel || "Seitennavigation"}</SidebarGroupLabel>
@@ -231,10 +237,10 @@ function SubNav({
           {subMenu.map((item) => (
             <SidebarMenuItem key={item.title}>
               <MainSidebarMenuButton
+                exactMatch={item.exactMatch}
                 href={item.href}
                 title={item.title}
                 type="topLevel"
-                exactMatch={item.exactMatch}
               />
             </SidebarMenuItem>
           ))}

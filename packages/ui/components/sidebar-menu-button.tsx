@@ -1,9 +1,12 @@
 "use client";
+import { CollapsibleTrigger } from "@northware/ui/components/collapsible";
+import {
+  SidebarMenuButton,
+  SidebarMenuSubButton,
+} from "@northware/ui/components/sidebar";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CollapsibleTrigger } from "./collapsible";
-import { SidebarMenuButton, SidebarMenuSubButton } from "./sidebar";
 
 export function MainSidebarMenuButton({
   href,
@@ -36,7 +39,7 @@ export function MainSidebarMenuButton({
   if (type === "parent") {
     return (
       <CollapsibleTrigger asChild>
-        <SidebarMenuButton tooltip={title} isActive={isActive()}>
+        <SidebarMenuButton isActive={isActive()} tooltip={title}>
           <span>{title}</span>
           <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
         </SidebarMenuButton>

@@ -27,7 +27,10 @@ export async function userHasPermission(permissionKeys: string[]) {
 export async function PermissionProvider({
   children,
   permissionKeys,
-}: { children: ReactNode; permissionKeys: string[] }) {
+}: {
+  children: ReactNode;
+  permissionKeys: string[];
+}) {
   if (await userHasPermission(permissionKeys)) {
     return children;
   }
@@ -35,7 +38,7 @@ export async function PermissionProvider({
     <div className="flex h-svh flex-col items-center justify-center gap-8">
       <ShieldXIcon className="size-12" />
       <div>
-        <Headline level="h1" className="mb-4 text-center">
+        <Headline className="mb-4 text-center" level="h1">
           Der Zugriff wurde verweigert.
         </Headline>
         <p className="text-center text-muted-foreground text-xl">
@@ -56,7 +59,11 @@ export async function AppPermissionProvider({
   children,
   service,
   apps,
-}: { children: ReactNode; service: ServiceType; apps: MenuApps[] }) {
+}: {
+  children: ReactNode;
+  service: ServiceType;
+  apps: MenuApps[];
+}) {
   const permissionKey = `${service}::app.read`;
   if (await userHasPermission([permissionKey])) {
     return children;
@@ -78,7 +85,7 @@ export async function AppPermissionProvider({
             {apps.map(
               (app) =>
                 app.allowed && (
-                  <Link key={app.slug} href={app.url || ""}>
+                  <Link href={app.url || ""} key={app.slug}>
                     <Card className="hover:bg-accent/50">
                       <CardContent>
                         <Brand service={app.slug} />
@@ -93,7 +100,7 @@ export async function AppPermissionProvider({
         <>
           <ShieldXIcon className="size-12" />
           <div>
-            <Headline level="h1" className="mb-4 text-center">
+            <Headline className="mb-4 text-center" level="h1">
               Sie haben keinen Zugriff auf Apps.
             </Headline>
             <p className="text-center text-muted-foreground text-xl">

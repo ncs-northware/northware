@@ -54,7 +54,7 @@ const columns: ColumnDef<Payment>[] = [
         <div className="text-right">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="size-8 p-0">
+              <Button className="size-8 p-0" variant="ghost">
                 <span className="sr-only">Open Menu</span>
                 <MoreHorizontal className="size-4" />
               </Button>
@@ -119,8 +119,8 @@ const Template: StoryFn<DataTableProps<Payment, unknown>> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  columns: columns,
-  data: data,
+  columns,
+  data,
 };
 
 /**
@@ -129,8 +129,8 @@ Default.args = {
 
 export const CustomFilterPlaceholder = Template.bind({});
 CustomFilterPlaceholder.args = {
-  columns: columns,
-  data: data,
+  columns,
+  data,
   filterPlaceholder: "Finde etwas...",
 };
 
@@ -140,8 +140,8 @@ CustomFilterPlaceholder.args = {
 
 export const NoRowSelect = Template.bind({});
 NoRowSelect.args = {
-  columns: columns,
-  data: data,
+  columns,
+  data,
   withRowSelect: false,
 };
 
@@ -286,6 +286,6 @@ const moreData: Payment[] = [
 
 export const BigTable = Template.bind({});
 BigTable.args = {
-  columns: columns,
+  columns,
   data: moreData,
 };

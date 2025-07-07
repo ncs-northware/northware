@@ -37,7 +37,7 @@ export function Brand({
     <div
       className={cn("flex items-center gap-1 font-semibold text-xl", className)}
     >
-      {textOnly ? "" : <BrandIcon service={service} className={iconWidth} />}
+      {textOnly ? "" : <BrandIcon className={iconWidth} service={service} />}
       <span>
         Northware{" "}
         <span className={`${brandColors[service]}`}>{subBrand()}</span>

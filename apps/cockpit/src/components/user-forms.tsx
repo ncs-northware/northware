@@ -1,32 +1,5 @@
 "use client";
 
-import {
-  CreateEMailAddressFormSchema,
-  type TCreateEMailAddressFormSchema,
-  type TUpdatePasswordFormSchema,
-  type TUpdatePermissionSchema,
-  type TUpdateRoleSchema,
-  type TUpdateUserFormSchema,
-  UpdatePasswordFormSchema,
-  UpdateUserFromSchema,
-  UpdateUserRoleFormSchema,
-  UserUpdatePermissionsFormSchema,
-  parseErrorMessages,
-} from "@/lib/rbac-schema";
-import type {
-  TPermissionListResponse,
-  TRoleListResponse,
-} from "@/lib/rbac-types";
-import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
-import {
-  createEmailAddress,
-  deleteEmailAddress,
-  deleteUser,
-  type getSingleUser,
-  updateEmailAddress,
-  updatePassword,
-  updateUser,
-} from "@/lib/user-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@northware/ui/components/alert";
 import {
@@ -97,12 +70,37 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import {
+  CreateEMailAddressFormSchema,
+  parseErrorMessages,
+  type TCreateEMailAddressFormSchema,
+  type TUpdatePasswordFormSchema,
+  type TUpdatePermissionSchema,
+  type TUpdateRoleSchema,
+  type TUpdateUserFormSchema,
+  UpdatePasswordFormSchema,
+  UpdateUserFromSchema,
+  UpdateUserRoleFormSchema,
+  UserUpdatePermissionsFormSchema,
+} from "@/lib/rbac-schema";
+import type {
+  TPermissionListResponse,
+  TRoleListResponse,
+  TSingleUser,
+} from "@/lib/rbac-types";
+import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
+import {
+  createEmailAddress,
+  deleteEmailAddress,
+  deleteUser,
+  updateEmailAddress,
+  updatePassword,
+  updateUser,
+} from "@/lib/user-actions";
 
 /*********************** Clerk User Data **************************************/
 
-export function UpdateUserForm({
-  user,
-}: { user?: Awaited<ReturnType<typeof getSingleUser>> }) {
+export function UpdateUserForm({ user }: { user?: TSingleUser }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TUpdateUserFormSchema>({
     resolver: zodResolver(UpdateUserFromSchema),
@@ -126,8 +124,8 @@ export function UpdateUserForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className="mb-5 grid grid-cols-2 gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
@@ -170,18 +168,18 @@ export function UpdateUserForm({
         />
 
         {errors.length > 0 && (
-          <Alert variant="danger" className="col-span-2">
+          <Alert className="col-span-2" variant="danger">
             <AlertDescription>
               <ul className="w-max">
-                {errors.map((error, index) => (
-                  <li key={index}>{error}</li>
+                {errors.map((error) => (
+                  <li key={error}>{error}</li>
                 ))}
               </ul>
             </AlertDescription>
           </Alert>
         )}
 
-        <Button variant="default" type="submit" className="col-span-2">
+        <Button className="col-span-2" type="submit" variant="default">
           Speichern
         </Button>
       </form>
@@ -277,8 +275,8 @@ export function UserEmailList({
 
                     {primaryEmailAddressId === row.id && (
                       <Badge
-                        variant="secondary"
                         className="bg-success text-success-foreground"
+                        variant="secondary"
                       >
                         Primär-Adresse
                       </Badge>
@@ -289,7 +287,7 @@ export function UserEmailList({
               <TableCell className="text-right">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
+                    <Button size="icon" variant="ghost">
                       <EllipsisIcon className="size-4" />
                     </Button>
                   </DropdownMenuTrigger>
@@ -316,8 +314,8 @@ export function UserEmailList({
                     )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      variant="destructive"
                       onClick={() => submitEmailDeletion(row.id)}
+                      variant="destructive"
                     >
                       E-Mail Adresse löschen
                     </DropdownMenuItem>
@@ -357,9 +355,9 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button size="sm" variant="outline">
           E-Mail Adresse hinzufügen
         </Button>
       </DialogTrigger>
@@ -369,8 +367,8 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
           <div>
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit(onSubmit)}
                 className="grid gap-4 py-4"
+                onSubmit={form.handleSubmit(onSubmit)}
               >
                 <FormField
                   control={form.control}
@@ -423,8 +421,8 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                   <Alert variant="danger">
                     <AlertDescription>
                       <ul className="w-max">
-                        {errors.map((error, index) => (
-                          <li key={index}>{error}</li>
+                        {errors.map((error) => (
+                          <li key={error}>{error}</li>
                         ))}
                       </ul>
                     </AlertDescription>
@@ -468,9 +466,9 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button size="sm" variant="outline">
           Passwort ändern
         </Button>
       </DialogTrigger>
@@ -480,8 +478,8 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
           <div>
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit(onSubmit)}
                 className="grid gap-4 py-4"
+                onSubmit={form.handleSubmit(onSubmit)}
               >
                 <FormField
                   control={form.control}
@@ -547,8 +545,8 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
                   <Alert variant="danger">
                     <AlertDescription>
                       <ul className="w-max">
-                        {errors.map((error, index) => (
-                          <li key={index}>{error}</li>
+                        {errors.map((error) => (
+                          <li key={error}>{error}</li>
                         ))}
                       </ul>
                     </AlertDescription>
@@ -569,7 +567,10 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
 export function UserDeleteButton({
   userId,
   mode = "list",
-}: { userId: string; mode?: "list" | "page" }) {
+}: {
+  userId: string;
+  mode?: "list" | "page";
+}) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   async function submitUserDeletion() {
@@ -589,8 +590,8 @@ export function UserDeleteButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant={mode === "page" ? "danger" : "ghostDanger"}
           size={mode === "page" ? "sm" : "icon"}
+          variant={mode === "page" ? "danger" : "ghostDanger"}
         >
           <TrashIcon />
           {mode === "page" && <span>Benutzer löschen</span>}
@@ -612,8 +613,8 @@ export function UserDeleteButton({
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
           <AlertDialogAction
-            variant="danger"
             onClick={() => submitUserDeletion()}
+            variant="danger"
           >
             Benutzer löschen
           </AlertDialogAction>
@@ -637,16 +638,16 @@ export function UpdateUserRolesForm({
   userId,
 }: RolesFormProps) {
   const [errors, setErrors] = useState<string[]>([]);
-  if (!rolesResponse.success) {
-    return rolesResponse.error.message;
-  }
-  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
   const form = useForm<TUpdateRoleSchema>({
     resolver: zodResolver(UpdateUserRoleFormSchema),
     defaultValues: {
       roles: userRolesResponse,
     },
   });
+
+  if (!rolesResponse.success) {
+    return rolesResponse.error.message;
+  }
 
   async function onSubmit(data: TUpdateRoleSchema) {
     try {
@@ -659,7 +660,7 @@ export function UpdateUserRolesForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+      <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="roles"
@@ -667,11 +668,11 @@ export function UpdateUserRolesForm({
             <FormItem className="grid-cols-2">
               {rolesResponse.roleList.map((role) => (
                 <FormField
-                  key={role.roleKey}
                   control={form.control}
+                  key={role.roleKey}
                   name="roles"
                   render={({ field }) => (
-                    <FormItem key={role.roleKey} className="p-3">
+                    <FormItem className="p-3" key={role.roleKey}>
                       <Collapsible>
                         <div className="flex flex-row items-center justify-between">
                           <FormLabel>
@@ -679,10 +680,10 @@ export function UpdateUserRolesForm({
                             <Badge variant="secondary">{role.roleKey}</Badge>
                             <CollapsibleTrigger asChild>
                               <Button
-                                variant="ghost"
-                                size="icon"
                                 className="size-8"
+                                size="icon"
                                 type="button"
+                                variant="ghost"
                               >
                                 <ChevronDownIcon />
                               </Button>
@@ -712,15 +713,15 @@ export function UpdateUserRolesForm({
                             {role.permissions.length > 0 ? (
                               role.permissions.map((permission) => (
                                 <li
-                                  key={permission.permissionKey}
                                   className="my-2"
+                                  key={permission.permissionKey}
                                 >
                                   <span className="mr-2">
                                     {permission.permissionName}
                                   </span>
                                   <Badge
-                                    variant="secondary"
                                     className="font-mono"
+                                    variant="secondary"
                                   >
                                     {permission.permissionKey}
                                   </Badge>
@@ -746,14 +747,14 @@ export function UpdateUserRolesForm({
           <Alert variant="danger">
             <AlertDescription>
               <ul>
-                {errors.map((err, idx) => (
-                  <li key={idx}>{err}</li>
+                {errors.map((err) => (
+                  <li key={err}>{err}</li>
                 ))}
               </ul>
             </AlertDescription>
           </Alert>
         )}
-        <Button type="submit" className="w-full">
+        <Button className="w-full" type="submit">
           Rollen aktualisieren
         </Button>
       </form>
@@ -796,7 +797,7 @@ export function UpdateUserPermissionsForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+      <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="permissions"
@@ -804,13 +805,13 @@ export function UpdateUserPermissionsForm({
             <FormItem className="grid-cols-2">
               {permissionsResponse.permissionList.map((perm) => (
                 <FormField
-                  key={perm.recordId}
                   control={form.control}
+                  key={perm.recordId}
                   name="permissions"
                   render={({ field }) => (
                     <FormItem
-                      key={perm.recordId}
                       className="flex flex-row items-center justify-between p-3"
+                      key={perm.recordId}
                     >
                       <FormLabel>
                         <span>{perm.permissionName}</span>
@@ -845,14 +846,14 @@ export function UpdateUserPermissionsForm({
           <Alert variant="danger">
             <AlertDescription>
               <ul>
-                {errors.map((err, idx) => (
-                  <li key={idx}>{err}</li>
+                {errors.map((err) => (
+                  <li key={err}>{err}</li>
                 ))}
               </ul>
             </AlertDescription>
           </Alert>
         )}
-        <Button type="submit" className="w-full">
+        <Button className="w-full" type="submit">
           Zusätzliche Berechtigungen aktualisieren
         </Button>
       </form>

@@ -1,12 +1,12 @@
 "use client";
 
+import { DataTableColumnHeader } from "@northware/ui/components/data-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
   PermissionDeleteButton,
   UpdatePermissionDetails,
 } from "@/components/role-forms";
 import type { TPermissionType } from "@/lib/rbac-types";
-import { DataTableColumnHeader } from "@northware/ui/components/data-table";
-import type { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<TPermissionType>[] = [
   {

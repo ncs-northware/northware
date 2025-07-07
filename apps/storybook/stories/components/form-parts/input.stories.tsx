@@ -75,7 +75,7 @@ export const WithButton: Story = {
   render: (args) => (
     <div className="flex w-full max-w-sm items-center space-x-2">
       <Input {...args} />
-      <Button variant="default" type="submit">
+      <Button type="submit" variant="default">
         Subscribe
       </Button>
     </div>

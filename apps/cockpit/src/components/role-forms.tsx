@@ -1,32 +1,5 @@
 "use client";
 
-import {
-  CreatePermissionDetailFormSchema,
-  CreateRoleFormSchema,
-  PermissionDetailFormSchema,
-  RoleDetailFormSchema,
-  type TCreatePermissionDetailFormSchema,
-  type TCreateRoleFormData,
-  type TPermissionDetailFormSchema,
-  type TRoleDetailFormSchema,
-  type TUpdatePermissionSchema,
-  UserUpdatePermissionsFormSchema,
-  parseErrorMessages,
-} from "@/lib/rbac-schema";
-import type {
-  TPermissionListResponse,
-  TPermissionType,
-} from "@/lib/rbac-types";
-
-import {
-  createPermDetails,
-  createRole,
-  deletePermission,
-  deleteRole,
-  updatePermDetails,
-  updateRoleDetails,
-  updateRolePermissions,
-} from "@/lib/role-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@northware/ui/components/alert";
 import {
@@ -64,17 +37,38 @@ import { EditIcon, TrashIcon } from "@northware/ui/icons/lucide";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import {
+  CreatePermissionDetailFormSchema,
+  CreateRoleFormSchema,
+  PermissionDetailFormSchema,
+  parseErrorMessages,
+  RoleDetailFormSchema,
+  type TCreatePermissionDetailFormSchema,
+  type TCreateRoleFormData,
+  type TPermissionDetailFormSchema,
+  type TRoleDetailFormSchema,
+  type TUpdatePermissionSchema,
+  UserUpdatePermissionsFormSchema,
+} from "@/lib/rbac-schema";
+import type {
+  TPermissionListResponse,
+  TPermissionType,
+} from "@/lib/rbac-types";
+import {
+  createPermDetails,
+  createRole,
+  deletePermission,
+  deleteRole,
+  updatePermDetails,
+  updateRoleDetails,
+  updateRolePermissions,
+} from "@/lib/role-actions";
 
 export function CreateRoleForm({
   permissionsResponse,
-}: { permissionsResponse: TPermissionListResponse }) {
-  const router = useRouter();
-  const [errors, setErrors] = useState<string[]>([]);
-  if (!permissionsResponse.success) {
-    return permissionsResponse.error.message;
-  }
-
-  // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
+}: {
+  permissionsResponse: TPermissionListResponse;
+}) {
   const form = useForm<TCreateRoleFormData>({
     resolver: zodResolver(CreateRoleFormSchema),
     defaultValues: {
@@ -83,6 +77,12 @@ export function CreateRoleForm({
       permissions: [],
     },
   });
+
+  const router = useRouter();
+  const [errors, setErrors] = useState<string[]>([]);
+  if (!permissionsResponse.success) {
+    return permissionsResponse.error.message;
+  }
 
   const onSubmit: SubmitHandler<TCreateRoleFormData> = async (data) => {
     try {
@@ -96,8 +96,8 @@ export function CreateRoleForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="grid grid-cols-2 gap-4">
           <FormField
@@ -137,13 +137,13 @@ export function CreateRoleForm({
                 {permissionsResponse.permissionList.map((perm) => (
                   // TODO: Gruppiert nach App
                   <FormField
-                    key={perm.recordId}
                     control={form.control}
+                    key={perm.recordId}
                     name="permissions"
                     render={({ field }) => (
                       <FormItem
-                        key={perm.recordId}
                         className="flex flex-row items-center justify-between p-3"
+                        key={perm.recordId}
                       >
                         <FormLabel>
                           <span>{perm.permissionName}</span>
@@ -181,15 +181,15 @@ export function CreateRoleForm({
           <Alert variant="danger">
             <AlertDescription>
               <ul>
-                {errors.map((err, idx) => (
-                  <li key={idx}>{err}</li>
+                {errors.map((err) => (
+                  <li key={err}>{err}</li>
                 ))}
               </ul>
             </AlertDescription>
           </Alert>
         )}
 
-        <Button type="submit" className="w-full">
+        <Button className="w-full" type="submit">
           Rolle erstellen
         </Button>
       </form>
@@ -205,7 +205,9 @@ type TRoleDetails = {
 
 export function UpdateRoleDetailForm({
   roleDetails,
-}: { roleDetails?: TRoleDetails }) {
+}: {
+  roleDetails?: TRoleDetails;
+}) {
   const [errors, setErrors] = useState<string[]>([]);
 
   const form = useForm<TRoleDetailFormSchema>({
@@ -273,15 +275,15 @@ export function UpdateRoleDetailForm({
           <Alert variant="danger">
             <AlertDescription>
               <ul>
-                {errors.map((err, idx) => (
-                  <li key={idx}>{err}</li>
+                {errors.map((err) => (
+                  <li key={err}>{err}</li>
                 ))}
               </ul>
             </AlertDescription>
           </Alert>
         )}
 
-        <Button type="submit" className="w-full">
+        <Button className="w-full" type="submit">
           Rolle speichern
         </Button>
       </form>
@@ -300,16 +302,15 @@ export function RolePermissionsForm({
 }) {
   const [errors, setErrors] = useState<string[]>([]);
 
-  if (!permissionsResponse.success) {
-    // TODO globalError
-    return <div>Fehler: {permissionsResponse.error.message}</div>;
-  }
-
-  // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
   const form = useForm<TUpdatePermissionSchema>({
     resolver: zodResolver(UserUpdatePermissionsFormSchema),
     defaultValues: { permissions: rolePermissions },
   });
+
+  if (!permissionsResponse.success) {
+    // TODO globalError
+    return <div>Fehler: {permissionsResponse.error.message}</div>;
+  }
 
   async function onSubmit(data: TUpdatePermissionSchema) {
     try {
@@ -322,7 +323,7 @@ export function RolePermissionsForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="permissions"
@@ -331,13 +332,13 @@ export function RolePermissionsForm({
               {permissionsResponse.permissionList.map((perm) => (
                 // TODO: Gruppiert nach App
                 <FormField
-                  key={perm.recordId}
                   control={form.control}
+                  key={perm.recordId}
                   name="permissions"
                   render={({ field }) => (
                     <FormItem
-                      key={perm.recordId}
                       className="flex flex-row items-center justify-between p-3"
+                      key={perm.recordId}
                     >
                       <FormLabel>
                         <span>{perm.permissionName}</span>
@@ -372,15 +373,15 @@ export function RolePermissionsForm({
           <Alert variant="danger">
             <AlertDescription>
               <ul>
-                {errors.map((err, idx) => (
-                  <li key={idx}>{err}</li>
+                {errors.map((err) => (
+                  <li key={err}>{err}</li>
                 ))}
               </ul>
             </AlertDescription>
           </Alert>
         )}
 
-        <Button type="submit" className="w-full">
+        <Button className="w-full" type="submit">
           Rollenberechtigungen aktualisieren
         </Button>
       </form>
@@ -391,7 +392,10 @@ export function RolePermissionsForm({
 export function RoleDeleteButton({
   recordId,
   mode = "list",
-}: { recordId: number; mode?: "list" | "page" }) {
+}: {
+  recordId: number;
+  mode?: "list" | "page";
+}) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   async function submitRoleDeletion() {
@@ -413,7 +417,7 @@ export function RoleDeleteButton({
     <AlertDialog>
       {mode === "list" && (
         <AlertDialogTrigger asChild>
-          <Button variant="ghostDanger" size="icon">
+          <Button size="icon" variant="ghostDanger">
             <TrashIcon className="size-4" />
           </Button>
         </AlertDialogTrigger>
@@ -444,8 +448,8 @@ export function RoleDeleteButton({
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
           <AlertDialogAction
-            variant="danger"
             onClick={() => submitRoleDeletion()}
+            variant="danger"
           >
             Rolle löschen
           </AlertDialogAction>
@@ -478,7 +482,7 @@ export function CreatePermissionDetails() {
   };
   return (
     // TODO: Assistant um mehere Berechtigungen zu erstellen
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
         <Button>Berechtigungsschlüssel hinzufügen</Button>
       </DialogTrigger>
@@ -526,8 +530,8 @@ export function CreatePermissionDetails() {
                 <Alert variant="danger">
                   <AlertDescription>
                     <ul>
-                      {errors.map((err, idx) => (
-                        <li key={idx}>{err}</li>
+                      {errors.map((err) => (
+                        <li key={err}>{err}</li>
                       ))}
                     </ul>
                   </AlertDescription>
@@ -544,7 +548,9 @@ export function CreatePermissionDetails() {
 
 export function UpdatePermissionDetails({
   permissionDetails,
-}: { permissionDetails: TPermissionType }) {
+}: {
+  permissionDetails: TPermissionType;
+}) {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TPermissionDetailFormSchema>({
@@ -566,9 +572,9 @@ export function UpdatePermissionDetails({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button variant="ghost" type="button">
+        <Button type="button" variant="ghost">
           <EditIcon />
         </Button>
       </DialogTrigger>
@@ -624,8 +630,8 @@ export function UpdatePermissionDetails({
                 <Alert variant="danger">
                   <AlertDescription>
                     <ul>
-                      {errors.map((err, idx) => (
-                        <li key={idx}>{err}</li>
+                      {errors.map((err) => (
+                        <li key={err}>{err}</li>
                       ))}
                     </ul>
                   </AlertDescription>
@@ -643,7 +649,10 @@ export function UpdatePermissionDetails({
 export function PermissionDeleteButton({
   recordId,
   mode = "list",
-}: { recordId: number; mode?: "list" | "page" }) {
+}: {
+  recordId: number;
+  mode?: "list" | "page";
+}) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   async function submitPermDeletion() {
@@ -665,7 +674,7 @@ export function PermissionDeleteButton({
     <AlertDialog>
       {mode === "list" && (
         <AlertDialogTrigger asChild>
-          <Button variant="ghostDanger" size="icon">
+          <Button size="icon" variant="ghostDanger">
             <TrashIcon />
           </Button>
         </AlertDialogTrigger>
@@ -695,8 +704,8 @@ export function PermissionDeleteButton({
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
           <AlertDialogAction
-            variant="danger"
             onClick={() => submitPermDeletion()}
+            variant="danger"
           >
             Berechtigungsschlüssel löschen
           </AlertDialogAction>

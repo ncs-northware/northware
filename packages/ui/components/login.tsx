@@ -1,7 +1,19 @@
 "use client";
 
-import * as Clerk from "@clerk/elements/common";
-import * as SignIn from "@clerk/elements/sign-in";
+import {
+  Input as ClerkInput,
+  Label as ClerkLabel,
+  Field,
+  FieldError,
+  Loading,
+} from "@clerk/elements/common";
+import {
+  Action,
+  Root,
+  SafeIdentifier,
+  Step,
+  Strategy,
+} from "@clerk/elements/sign-in";
 import type { ServiceType } from "@northware/service-config";
 import { Alert, AlertDescription } from "@northware/ui/components/alert";
 import { Brand } from "@northware/ui/components/brand";
@@ -25,40 +37,40 @@ export function LoginForm({ service }: { service: ServiceType }) {
 
   return (
     <main className="flex h-screen w-full flex-col items-center justify-center px-4">
-      <SignIn.Root>
+      <Root>
         <Brand className="mb-6 text-2xl" iconWidth="w-14" service={service} />
-        <Clerk.Loading>
+        <Loading>
           {(isGlobalLoading) => (
             <>
-              <SignIn.Step name="start" className="w-full max-w-sm">
+              <Step className="w-full max-w-sm" name="start">
                 <Card className="bg-background">
                   <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <Clerk.Field name="identifier" className="grid gap-4">
-                      <Clerk.Label asChild>
+                    <Field className="grid gap-4" name="identifier">
+                      <ClerkLabel asChild>
                         <Label>Email</Label>
-                      </Clerk.Label>
-                      <Clerk.Input type="email" required asChild>
+                      </ClerkLabel>
+                      <ClerkInput asChild required type="email">
                         <Input placeholder="kunde@northware.de" />
-                      </Clerk.Input>
-                      <Clerk.FieldError>
+                      </ClerkInput>
+                      <FieldError>
                         {({ message, code }) => (
                           <LoginErrorAlert code={code} message={message} />
                         )}
-                      </Clerk.FieldError>
-                    </Clerk.Field>
+                      </FieldError>
+                    </Field>
                   </CardContent>
                   <CardFooter>
-                    <SignIn.Action submit asChild>
+                    <Action asChild submit>
                       <Button
+                        className="w-full"
                         disabled={isGlobalLoading}
                         size="lg"
                         variant="default"
-                        className="w-full"
                       >
-                        <Clerk.Loading>
+                        <Loading>
                           {(isLoading) => {
                             return isLoading ? (
                               <LoaderCircle className="size-4 animate-spin" />
@@ -66,65 +78,65 @@ export function LoginForm({ service }: { service: ServiceType }) {
                               "Weiter"
                             );
                           }}
-                        </Clerk.Loading>
+                        </Loading>
                       </Button>
-                    </SignIn.Action>
+                    </Action>
                   </CardFooter>
                 </Card>
-              </SignIn.Step>
+              </Step>
 
-              <SignIn.Step name="verifications" className="w-full max-w-sm">
-                <SignIn.Strategy name="password">
+              <Step className="w-full max-w-sm" name="verifications">
+                <Strategy name="password">
                   <Card>
                     <CardHeader>
                       <CardTitle className="text-2xl">
                         Herzlich Willkommen
                       </CardTitle>
                       <p className="flex items-center text-muted-foreground text-sm leading-none">
-                        <SignIn.SafeIdentifier />
-                        <SignIn.Action asChild navigate="start">
+                        <SafeIdentifier />
+                        <Action asChild navigate="start">
                           <PencilIcon className="ml-3 size-4 cursor-pointer" />
-                        </SignIn.Action>
+                        </Action>
                       </p>
                     </CardHeader>
                     <CardContent>
-                      <Clerk.Field name="password" className="grid gap-4">
-                        <Clerk.Label asChild>
+                      <Field className="grid gap-4" name="password">
+                        <ClerkLabel asChild>
                           <Label>Passwort</Label>
-                        </Clerk.Label>
+                        </ClerkLabel>
                         <div className="flex">
-                          <Clerk.Input
+                          <ClerkInput
                             asChild
                             type={showPassword ? "text" : "password"}
                           >
                             <Input className="rounded-r-none border-r-0" />
-                          </Clerk.Input>
+                          </ClerkInput>
                           <Button
-                            onClick={() => setShowPassword(!showPassword)}
-                            variant="ghost"
-                            size="icon"
                             className="rounded-l-none border border-input bg-background dark:bg-input/30"
+                            onClick={() => setShowPassword(!showPassword)}
+                            size="icon"
                             type="button"
+                            variant="ghost"
                           >
                             {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
                           </Button>
                         </div>
-                        <Clerk.FieldError>
+                        <FieldError>
                           {({ message, code }) => (
                             <LoginErrorAlert code={code} message={message} />
                           )}
-                        </Clerk.FieldError>
-                      </Clerk.Field>
+                        </FieldError>
+                      </Field>
                     </CardContent>
                     <CardFooter>
-                      <SignIn.Action submit asChild>
+                      <Action asChild submit>
                         <Button
+                          className="w-full"
                           disabled={isGlobalLoading}
                           size="lg"
                           variant="default"
-                          className="w-full"
                         >
-                          <Clerk.Loading>
+                          <Loading>
                             {(isLoading) => {
                               return isLoading ? (
                                 <LoaderCircle className="size-4 animate-spin" />
@@ -132,17 +144,17 @@ export function LoginForm({ service }: { service: ServiceType }) {
                                 "Anmelden"
                               );
                             }}
-                          </Clerk.Loading>
+                          </Loading>
                         </Button>
-                      </SignIn.Action>
+                      </Action>
                     </CardFooter>
                   </Card>
-                </SignIn.Strategy>
-              </SignIn.Step>
+                </Strategy>
+              </Step>
             </>
           )}
-        </Clerk.Loading>
-      </SignIn.Root>
+        </Loading>
+      </Root>
       <ThemeSwitch
         className={`mt-3 text-muted-foreground ${navigationMenuButtonStyle()}`}
         withDescriptionText

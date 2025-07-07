@@ -5,7 +5,7 @@ export const ViewSource = ({ path }: { path: string }) => {
   const baseurl =
     "https://github.com/ncs-northware/northware/tree/main/packages/ui";
   return (
-    <Button asChild variant="secondary" size="sm">
+    <Button asChild size="sm" variant="secondary">
       <Link href={`${baseurl}/${path}`} target="_blank">
         <GithubIcon className="text-primary" />
         Quellcode anzeigen
@@ -18,7 +18,7 @@ export const ShadcnDocs = ({ path }: { path: string }) => {
   const baseurl = "https://ui.shadcn.com/docs";
 
   return (
-    <Button asChild variant="secondary" size="sm">
+    <Button asChild size="sm" variant="secondary">
       <Link href={`${baseurl}/${path}`} target="_blank">
         <ShadcnuiIcon className="text-primary" />
         shadcn/ui Docs
