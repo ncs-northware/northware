@@ -42,7 +42,7 @@ importers:
   apps/cockpit:
     dependencies:
       '@hookform/resolvers':
-        specifier: ^5.0.1
+        specifier: ^5.1.1
         version: 5.1.1(react-hook-form@7.60.0(react@19.1.0))
       '@northware/auth':
         specifier: workspace:*
@@ -221,7 +221,7 @@ importers:
         specifier: ^0.23.37
         version: 0.23.37(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@hookform/resolvers':
-        specifier: ^5.0.1
+        specifier: ^5.1.1
         version: 5.1.1(react-hook-form@7.60.0(react@19.1.0))
       '@northware/auth':
         specifier: workspace:*
