@@ -1,23 +1,23 @@
 /** biome-ignore-all lint/nursery/noShadow: Some Typedefinitions use the prop name multiple times because it accepst a direct value as well as a return value of a function. */
 "use client";
 
-import { Button } from "@northware/ui/components/button";
-import { Input } from "@northware/ui/components/input";
-import { Separator } from "@northware/ui/components/separator";
+import { Button } from "@northware/ui/components/ui-registry/button";
+import { Input } from "@northware/ui/components/ui-registry/input";
+import { Separator } from "@northware/ui/components/ui-registry/separator";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@northware/ui/components/sheet";
-import { Skeleton } from "@northware/ui/components/skeleton";
+} from "@northware/ui/components/ui-registry/sheet";
+import { Skeleton } from "@northware/ui/components/ui-registry/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@northware/ui/components/tooltip";
+} from "@northware/ui/components/ui-registry/tooltip";
 import { useIsMobile } from "@northware/ui/hooks/use-mobile";
 import { cn } from "@northware/ui/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";

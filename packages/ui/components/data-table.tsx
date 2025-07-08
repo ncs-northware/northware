@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@northware/ui/components/button";
-import { Checkbox } from "@northware/ui/components/checkbox";
+import { Button } from "@northware/ui/components/ui-registry/button";
+import { Checkbox } from "@northware/ui/components/ui-registry/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -9,15 +9,15 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/dropdown-menu";
-import { Input } from "@northware/ui/components/input";
+} from "@northware/ui/components/ui-registry/dropdown-menu";
+import { Input } from "@northware/ui/components/ui-registry/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@northware/ui/components/select";
+} from "@northware/ui/components/ui-registry/select";
 import {
   Table,
   TableBody,
@@ -25,7 +25,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@northware/ui/components/table";
+} from "@northware/ui/components/ui-registry/table";
 import { cn } from "@northware/ui/lib/utils";
 import {
   type Column,

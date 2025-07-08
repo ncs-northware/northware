@@ -1,6 +1,6 @@
 "use client";
 
-import { buttonVariants } from "@northware/ui/components/button";
+import { buttonVariants } from "@northware/ui/components/ui-registry/button";
 import { cn } from "@northware/ui/lib/utils";
 import type { VariantProps } from "class-variance-authority";
 import { AlertDialog as AlertDialogPrimitive } from "radix-ui";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Label } from "@northware/ui/components/label";
+import { Label } from "@northware/ui/components/ui-registry/label";
 import { cn } from "@northware/ui/lib/utils";
 import { Slot } from "radix-ui";
 import { createContext, useContext, useId } from "react";

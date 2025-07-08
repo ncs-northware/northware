@@ -5,7 +5,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@northware/ui/components/breadcrumb";
+} from "@northware/ui/components/ui-registry/breadcrumb";
 
 export interface BreadcrumbType {
   label: string;
