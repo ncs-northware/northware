@@ -1,4 +1,3 @@
-import { Button } from "@northware/ui/components/button";
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import {
@@ -6,6 +5,7 @@ import {
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import Link from "next/link";
 import { getRoleList } from "@/lib/role-actions";
 import { columns } from "./columns";

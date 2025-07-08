@@ -1,7 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, AlertDescription } from "@northware/ui/components/alert";
+import { PasswordInput } from "@northware/ui/components/password-input";
+import {
+  Alert,
+  AlertDescription,
+} from "@northware/ui/components/ui-registry/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,29 +16,29 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@northware/ui/components/alert-dialog";
-import { Badge } from "@northware/ui/components/badge";
-import { Button } from "@northware/ui/components/button";
-import { Checkbox } from "@northware/ui/components/checkbox";
+} from "@northware/ui/components/ui-registry/alert-dialog";
+import { Badge } from "@northware/ui/components/ui-registry/badge";
+import { Button } from "@northware/ui/components/ui-registry/button";
+import { Checkbox } from "@northware/ui/components/ui-registry/checkbox";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@northware/ui/components/collapsible";
+} from "@northware/ui/components/ui-registry/collapsible";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/dialog";
+} from "@northware/ui/components/ui-registry/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/dropdown-menu";
+} from "@northware/ui/components/ui-registry/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -42,23 +46,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form";
-import { Input } from "@northware/ui/components/input";
-import { PasswordInput } from "@northware/ui/components/password-input";
-import { toast } from "@northware/ui/components/sonner";
-import { Switch } from "@northware/ui/components/switch";
+} from "@northware/ui/components/ui-registry/form";
+import { Input } from "@northware/ui/components/ui-registry/input";
+import { toast } from "@northware/ui/components/ui-registry/sonner";
+import { Switch } from "@northware/ui/components/ui-registry/switch";
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
-} from "@northware/ui/components/table";
+} from "@northware/ui/components/ui-registry/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@northware/ui/components/tooltip";
+} from "@northware/ui/components/ui-registry/tooltip";
 import {
   BadgeCheckIcon,
   ChevronDownIcon,

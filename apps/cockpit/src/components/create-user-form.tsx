@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert } from "@northware/ui/components/alert";
-import { Button } from "@northware/ui/components/button";
+import { Alert } from "@northware/ui/components/ui-registry/alert";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import {
   Form,
   FormControl,
@@ -9,8 +9,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form";
-import { Input } from "@northware/ui/components/input";
+} from "@northware/ui/components/ui-registry/form";
+import { Input } from "@northware/ui/components/ui-registry/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";

@@ -1,9 +1,3 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@northware/ui/components/alert";
-import { Button } from "@northware/ui/components/button";
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import {
@@ -11,6 +5,12 @@ import {
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@northware/ui/components/ui-registry/alert";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import { LightbulbIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 import { getUserList } from "@/lib/user-actions";

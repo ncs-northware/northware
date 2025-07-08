@@ -1,7 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, AlertDescription } from "@northware/ui/components/alert";
+import {
+  Alert,
+  AlertDescription,
+} from "@northware/ui/components/ui-registry/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,16 +14,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@northware/ui/components/alert-dialog";
-import { Badge } from "@northware/ui/components/badge";
-import { Button } from "@northware/ui/components/button";
+} from "@northware/ui/components/ui-registry/alert-dialog";
+import { Badge } from "@northware/ui/components/ui-registry/badge";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/dialog";
+} from "@northware/ui/components/ui-registry/dialog";
 import {
   Form,
   FormControl,
@@ -29,10 +32,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form";
-import { Input } from "@northware/ui/components/input";
-import { toast } from "@northware/ui/components/sonner";
-import { Switch } from "@northware/ui/components/switch";
+} from "@northware/ui/components/ui-registry/form";
+import { Input } from "@northware/ui/components/ui-registry/input";
+import { toast } from "@northware/ui/components/ui-registry/sonner";
+import { Switch } from "@northware/ui/components/ui-registry/switch";
 import { EditIcon, TrashIcon } from "@northware/ui/icons/lucide";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
