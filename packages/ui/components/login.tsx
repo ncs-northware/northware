@@ -16,11 +16,9 @@ import {
 } from "@clerk/elements/sign-in";
 import type { ServiceType } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/brand";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
 import { ThemeSwitch } from "@northware/ui/components/theme-switch";
-import {
-  Alert,
-  AlertDescription,
-} from "@northware/ui/components/ui-registry/alert";
+import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
 import { Button } from "@northware/ui/components/ui-registry/button";
 import {
   Card,
@@ -183,10 +181,10 @@ function LoginErrorAlert({ code, message }: { code: string; message: string }) {
     }
   };
   return (
-    <Alert variant="danger">
+    <AlertWrapper variant="danger">
       <AlertDescription>
         <p>{alertMessage()}</p>
       </AlertDescription>
-    </Alert>
+    </AlertWrapper>
   );
 }
