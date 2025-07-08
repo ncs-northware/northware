@@ -1,10 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Alert,
-  AlertDescription,
-} from "@northware/ui/components/ui-registry/alert";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -181,7 +179,7 @@ export function CreateRoleForm({
         </div>
 
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="danger">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -189,7 +187,7 @@ export function CreateRoleForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button className="w-full" type="submit">
@@ -275,7 +273,7 @@ export function UpdateRoleDetailForm({
         </div>
 
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="danger">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -283,7 +281,7 @@ export function UpdateRoleDetailForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button className="w-full" type="submit">
@@ -373,7 +371,7 @@ export function RolePermissionsForm({
         />
 
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="danger">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -381,7 +379,7 @@ export function RolePermissionsForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button className="w-full" type="submit">
@@ -530,7 +528,7 @@ export function CreatePermissionDetails() {
                 )}
               />
               {errors.length > 0 && (
-                <Alert variant="danger">
+                <AlertWrapper variant="danger">
                   <AlertDescription>
                     <ul>
                       {errors.map((err) => (
@@ -538,7 +536,7 @@ export function CreatePermissionDetails() {
                       ))}
                     </ul>
                   </AlertDescription>
-                </Alert>
+                </AlertWrapper>
               )}
               <Button type="submit">Berechtigungsschlüssel hinzufügen</Button>
             </div>
@@ -630,7 +628,7 @@ export function UpdatePermissionDetails({
               />
 
               {errors.length > 0 && (
-                <Alert variant="danger">
+                <AlertWrapper variant="danger">
                   <AlertDescription>
                     <ul>
                       {errors.map((err) => (
@@ -638,7 +636,7 @@ export function UpdatePermissionDetails({
                       ))}
                     </ul>
                   </AlertDescription>
-                </Alert>
+                </AlertWrapper>
               )}
               <Button type="submit">Speichern</Button>
             </div>

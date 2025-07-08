@@ -1,11 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
 import { PasswordInput } from "@northware/ui/components/password-input";
-import {
-  Alert,
-  AlertDescription,
-} from "@northware/ui/components/ui-registry/alert";
+import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -171,7 +169,7 @@ export function UpdateUserForm({ user }: { user?: TSingleUser }) {
         />
 
         {errors.length > 0 && (
-          <Alert className="col-span-2" variant="danger">
+          <AlertWrapper className="col-span-2" variant="danger">
             <AlertDescription>
               <ul className="w-max">
                 {errors.map((error) => (
@@ -179,7 +177,7 @@ export function UpdateUserForm({ user }: { user?: TSingleUser }) {
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button className="col-span-2" type="submit" variant="default">
@@ -421,7 +419,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                   )}
                 />
                 {errors.length > 0 && (
-                  <Alert variant="danger">
+                  <AlertWrapper variant="danger">
                     <AlertDescription>
                       <ul className="w-max">
                         {errors.map((error) => (
@@ -429,7 +427,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                         ))}
                       </ul>
                     </AlertDescription>
-                  </Alert>
+                  </AlertWrapper>
                 )}
                 <Button type="submit" variant="default">
                   E-Mail Adresse hinzufügen
@@ -545,7 +543,7 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
                   )}
                 />
                 {errors.length > 0 && (
-                  <Alert variant="danger">
+                  <AlertWrapper variant="danger">
                     <AlertDescription>
                       <ul className="w-max">
                         {errors.map((error) => (
@@ -553,7 +551,7 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
                         ))}
                       </ul>
                     </AlertDescription>
-                  </Alert>
+                  </AlertWrapper>
                 )}
                 <Button type="submit" variant="default">
                   Passwort ändern
@@ -747,7 +745,7 @@ export function UpdateUserRolesForm({
           )}
         />
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="danger">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -755,7 +753,7 @@ export function UpdateUserRolesForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
         <Button className="w-full" type="submit">
           Rollen aktualisieren
@@ -846,7 +844,7 @@ export function UpdateUserPermissionsForm({
         />
 
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="danger">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -854,7 +852,7 @@ export function UpdateUserPermissionsForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
         <Button className="w-full" type="submit">
           Zusätzliche Berechtigungen aktualisieren

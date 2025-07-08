@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert } from "@northware/ui/components/ui-registry/alert";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
 import { Button } from "@northware/ui/components/ui-registry/button";
 import {
   Form,
@@ -128,13 +128,13 @@ export default function CreateUserForm({
           )}
         />
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="danger">
             <ul>
               {errors.map((error) => (
                 <li key={error}>{error}</li>
               ))}
             </ul>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button type="submit">Benutzer hinzufügen</Button>
