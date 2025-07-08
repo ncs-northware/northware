@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite -c packages/ui",
     "commit": "commit",
     "dev": "turbo dev",
     "format": "turbo format",
