@@ -7,7 +7,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "@northware/ui/components/select";
+} from "@northware/ui/components/ui-registry/select";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta: Meta<typeof Select> = {

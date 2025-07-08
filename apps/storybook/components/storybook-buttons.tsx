@@ -1,4 +1,4 @@
-import { Button } from "@northware/ui/components/button";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import { GithubIcon, ShadcnuiIcon } from "@northware/ui/icons";
 import Link from "next/link";
 export const ViewSource = ({ path }: { path: string }) => {
