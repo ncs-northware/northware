@@ -6,6 +6,9 @@
     "rules": {
       "performance": {
         "noNamespaceImport": "off"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off"
       }
     }
   }
