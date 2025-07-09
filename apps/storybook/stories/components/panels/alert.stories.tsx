@@ -1,7 +1,6 @@
+import { AlertIcon, AlertWrapper } from "@northware/ui/components/custom-alert";
 import {
-  Alert,
   AlertDescription,
-  AlertIcon,
   AlertTitle,
 } from "@northware/ui/components/ui-registry/alert";
 import { Terminal } from "@northware/ui/icons/lucide";
@@ -9,10 +8,10 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
   title: "Components/Panels/Alert",
-  component: Alert,
+  component: AlertWrapper,
   argTypes: {
     variant: {
-      options: ["default", "danger", "info", "success", "warning"],
+      options: ["default", "destructive", "info", "success", "warning"],
       control: { type: "select" },
     },
   },
@@ -21,14 +20,14 @@ const meta = {
   },
 
   render: (args) => (
-    <Alert {...args}>
+    <AlertWrapper {...args}>
       <AlertTitle>Übrigens...</AlertTitle>
       <AlertDescription>
         Du kannst Komponenten mit der shadcn CLI hinzufügen.
       </AlertDescription>
-    </Alert>
+    </AlertWrapper>
   ),
-} satisfies Meta<typeof Alert>;
+} satisfies Meta<typeof AlertWrapper>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -43,10 +42,10 @@ export const Default: Story = {};
  */
 export const Info: Story = {
   render: (args) => (
-    <Alert {...args}>
+    <AlertWrapper {...args}>
       <AlertTitle>Nur zu deiner Information</AlertTitle>
       <AlertDescription>Es wurden 15 Ergebnisse gefunden.</AlertDescription>
-    </Alert>
+    </AlertWrapper>
   ),
   args: {
     variant: "info",
@@ -54,19 +53,19 @@ export const Info: Story = {
 };
 
 /**
- * Mit der Variante `danger` können Alerts angezeigt werden, die einen Fehler melden
+ * Mit der Variante `destructive` können Alerts angezeigt werden, die einen Fehler melden
  */
 export const Danger: Story = {
   render: (args) => (
-    <Alert {...args}>
+    <AlertWrapper {...args}>
       <AlertTitle>Error</AlertTitle>
       <AlertDescription>
         Die Session ist abgelaufen. Bitte melde dich erneut an.
       </AlertDescription>
-    </Alert>
+    </AlertWrapper>
   ),
   args: {
-    variant: "danger",
+    variant: "destructive",
   },
 };
 
@@ -75,12 +74,12 @@ export const Danger: Story = {
  */
 export const Sucess: Story = {
   render: (args) => (
-    <Alert {...args}>
+    <AlertWrapper {...args}>
       <AlertTitle>Super!</AlertTitle>
       <AlertDescription>
         Der Datensatz wurde erfolgreich gespeichert.
       </AlertDescription>
-    </Alert>
+    </AlertWrapper>
   ),
   args: {
     variant: "success",
@@ -92,12 +91,12 @@ export const Sucess: Story = {
  */
 export const Warning: Story = {
   render: (args) => (
-    <Alert {...args}>
+    <AlertWrapper {...args}>
       <AlertTitle>Achtung!</AlertTitle>
       <AlertDescription>
         Zu den eingegebenen Suchbegriffen wurden keine Ergebnisse gefunden.
       </AlertDescription>
-    </Alert>
+    </AlertWrapper>
   ),
   args: {
     variant: "warning",
@@ -106,13 +105,13 @@ export const Warning: Story = {
 
 export const WithAlertIcon: Story = {
   render: (args) => (
-    <Alert {...args}>
+    <AlertWrapper {...args}>
       <AlertIcon variant={args.variant || "default"} />
       <AlertTitle>Übrigens...</AlertTitle>
       <AlertDescription>
         Du kannst Komponenten mit der shadcn CLI hinzufügen.
       </AlertDescription>
-    </Alert>
+    </AlertWrapper>
   ),
   args: {
     variant: "default",
@@ -121,13 +120,13 @@ export const WithAlertIcon: Story = {
 
 export const WithCustomIcon: Story = {
   render: (args) => (
-    <Alert {...args}>
+    <AlertWrapper {...args}>
       <Terminal className="size-4" />
       <AlertTitle>Übrigens...</AlertTitle>
       <AlertDescription>
         Du kannst Komponenten mit der shadcn CLI hinzufügen.
       </AlertDescription>
-    </Alert>
+    </AlertWrapper>
   ),
   args: {
     variant: "default",
