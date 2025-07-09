@@ -128,7 +128,7 @@ export default function CreateUserForm({
           )}
         />
         {errors.length > 0 && (
-          <AlertWrapper variant="danger">
+          <AlertWrapper variant="destructive">
             <ul>
               {errors.map((error) => (
                 <li key={error}>{error}</li>

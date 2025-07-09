@@ -179,7 +179,7 @@ export function CreateRoleForm({
         </div>
 
         {errors.length > 0 && (
-          <AlertWrapper variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -273,7 +273,7 @@ export function UpdateRoleDetailForm({
         </div>
 
         {errors.length > 0 && (
-          <AlertWrapper variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -371,7 +371,7 @@ export function RolePermissionsForm({
         />
 
         {errors.length > 0 && (
-          <AlertWrapper variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -445,7 +445,7 @@ export function RoleDeleteButton({
               sind.
             </span>
             <br />
-            <span className="text-danger">
+            <span className="text-destructive">
               Diese Aktion kann nicht rückgängig gemacht werden.
             </span>
           </AlertDescription>
@@ -529,7 +529,7 @@ export function CreatePermissionDetails() {
                 )}
               />
               {errors.length > 0 && (
-                <AlertWrapper variant="danger">
+                <AlertWrapper variant="destructive">
                   <AlertDescription>
                     <ul>
                       {errors.map((err) => (
@@ -629,7 +629,7 @@ export function UpdatePermissionDetails({
               />
 
               {errors.length > 0 && (
-                <AlertWrapper variant="danger">
+                <AlertWrapper variant="destructive">
                   <AlertDescription>
                     <ul>
                       {errors.map((err) => (
@@ -702,7 +702,7 @@ export function PermissionDeleteButton({
               Benutzer und Rollen verlieren die entsprechende Berechtigung.
             </span>
             <br />
-            <span className="text-danger">
+            <span className="text-destructive">
               Diese Aktion kann nicht rückgängig gemacht werden.
             </span>
           </AlertDescription>

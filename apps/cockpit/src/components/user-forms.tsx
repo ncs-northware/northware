@@ -169,7 +169,7 @@ export function UpdateUserForm({ user }: { user?: TSingleUser }) {
         />
 
         {errors.length > 0 && (
-          <AlertWrapper className="col-span-2" variant="danger">
+          <AlertWrapper className="col-span-2" variant="destructive">
             <AlertDescription>
               <ul className="w-max">
                 {errors.map((error) => (
@@ -419,7 +419,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                   )}
                 />
                 {errors.length > 0 && (
-                  <AlertWrapper variant="danger">
+                  <AlertWrapper variant="destructive">
                     <AlertDescription>
                       <ul className="w-max">
                         {errors.map((error) => (
@@ -543,7 +543,7 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
                   )}
                 />
                 {errors.length > 0 && (
-                  <AlertWrapper variant="danger">
+                  <AlertWrapper variant="destructive">
                     <AlertDescription>
                       <ul className="w-max">
                         {errors.map((error) => (
@@ -745,7 +745,7 @@ export function UpdateUserRolesForm({
           )}
         />
         {errors.length > 0 && (
-          <AlertWrapper variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -844,7 +844,7 @@ export function UpdateUserPermissionsForm({
         />
 
         {errors.length > 0 && (
-          <AlertWrapper variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
