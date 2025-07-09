@@ -1,15 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
   "root": false,
   "extends": "//",
-  "linter": {
-    "rules": {
-      "performance": {
-        "noNamespaceImport": "off"
-      },
-      "a11y": {
-        "noSvgWithoutTitle": "off"
-      }
-    }
-  }
+  "files": { "includes": ["**", "!**/components/ui-registry"] }
 }
