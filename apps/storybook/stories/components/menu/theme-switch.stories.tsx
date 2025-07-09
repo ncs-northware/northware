@@ -1,15 +1,15 @@
 import { ThemeSwitch } from "@northware/ui/components/theme-switch";
-import { navigationMenuButtonStyle } from "@northware/ui/components/ui-registry/navigation-menu";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-  title: "Components/Menu/ThemeSwitch",
-  component: ThemeSwitch,
-  parameters: { layout: "centered" },
+	title: "Components/Menu/ThemeSwitch",
+	component: ThemeSwitch,
+	parameters: { layout: "centered" },
 
-  args: {
-    className: "group storybook-lightTheme",
-  },
+	args: {
+		className: "group storybook-lightTheme",
+		as: "icon",
+	},
 } satisfies Meta<typeof ThemeSwitch>;
 
 export default meta;
@@ -21,18 +21,23 @@ type Story = StoryObj<typeof meta>;
  */
 
 export const Light: Story = {
-  argTypes: {
-    className: {
-      control: {
-        type: "radio",
-        labels: {
-          "group storybook-lightTheme": "Light Theme",
-          "group storybook-darkTheme": "Dark Theme",
-        },
-      },
-      options: ["group storybook-lightTheme", "group storybook-darkTheme"],
-    },
-  },
+	argTypes: {
+		className: {
+			control: {
+				type: "radio",
+				labels: {
+					"group storybook-lightTheme": "Light Theme",
+					"group storybook-darkTheme": "Dark Theme",
+				},
+			},
+			options: ["group storybook-lightTheme", "group storybook-darkTheme"],
+		},
+		as: {
+			control: { type: "radio" },
+			labels: { icon: "Nur Icon", button: "Button Icon und Text" },
+			options: ["icon", "button"],
+		},
+	},
 };
 
 /**
@@ -40,35 +45,15 @@ export const Light: Story = {
  */
 
 export const Dark: Story = {
-  argTypes: { ...Light.argTypes },
-  args: { className: "group storybook-darkTheme" },
+	argTypes: { ...Light.argTypes },
+	args: { className: "group storybook-darkTheme" },
 };
 
 /**
- * Der Property `variant` kann neben `ghost` auch `outline` lauten.
- * Dieses Property wird an den Button vererbt, sodass ein Button der Variante `outline` gezeigt wird.
+ * Wenn der der ThemeSwitch nicht nur mit dem Icon sondern auch mit einem Text angezeigt werden soll, kann die Variante "as button" verwendet werden.
  */
 
-export const Outline: Story = {
-  args: { variant: "outline" },
-};
-
-/**
- * Auf den `ThemeSwitch` kann auch das Property `withDescriptionText` angewendet werden.
- * So wird neben dem zugehörigen Theme angezeigt, was ein Klick auf den Button auslöst.
- */
-
-export const WithDescriptionText: Story = {
-  args: { withDescriptionText: true },
-};
-
-/**
- * Der `ThemeSwitch` lässt sich mit dem Property `className` weiter anpassen, da dieses Property an den Button weitergegeben wird.
- * In der Hauptnavigation auf dem Desktop wird `navigationMenuButtonStyle()` als `className` auf den `ThemeSwitch` angewendet.
- */
-
-export const AsMainNavItem: Story = {
-  args: {
-    className: `${navigationMenuButtonStyle()} group storybook-lightTheme`,
-  },
+export const AsButton: Story = {
+	argTypes: { ...Light.argTypes },
+	args: { as: "button" },
 };
