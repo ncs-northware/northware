@@ -114,6 +114,7 @@
   --success-foreground: oklch(0.985 0 0);
   --warning: oklch(0.554 0.135 66.442);
   --warning-foreground: oklch(0.985 0 0);
+  /* FIXME: Remove danger in favour of destructive */
   --danger: oklch(0.396 0.141 25.723);
   --danger-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.396 0.141 25.723);
