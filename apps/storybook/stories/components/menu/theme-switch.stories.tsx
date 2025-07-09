@@ -2,14 +2,14 @@ import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-	title: "Components/Menu/ThemeSwitch",
-	component: ThemeSwitch,
-	parameters: { layout: "centered" },
+  title: "Components/Menu/ThemeSwitch",
+  component: ThemeSwitch,
+  parameters: { layout: "centered" },
 
-	args: {
-		className: "group storybook-lightTheme",
-		as: "icon",
-	},
+  args: {
+    className: "group storybook-lightTheme",
+    as: "icon",
+  },
 } satisfies Meta<typeof ThemeSwitch>;
 
 export default meta;
@@ -21,23 +21,23 @@ type Story = StoryObj<typeof meta>;
  */
 
 export const Light: Story = {
-	argTypes: {
-		className: {
-			control: {
-				type: "radio",
-				labels: {
-					"group storybook-lightTheme": "Light Theme",
-					"group storybook-darkTheme": "Dark Theme",
-				},
-			},
-			options: ["group storybook-lightTheme", "group storybook-darkTheme"],
-		},
-		as: {
-			control: { type: "radio" },
-			labels: { icon: "Nur Icon", button: "Button Icon und Text" },
-			options: ["icon", "button"],
-		},
-	},
+  argTypes: {
+    className: {
+      control: {
+        type: "radio",
+        labels: {
+          "group storybook-lightTheme": "Light Theme",
+          "group storybook-darkTheme": "Dark Theme",
+        },
+      },
+      options: ["group storybook-lightTheme", "group storybook-darkTheme"],
+    },
+    as: {
+      control: { type: "radio" },
+      labels: { icon: "Nur Icon", button: "Button Icon und Text" },
+      options: ["icon", "button"],
+    },
+  },
 };
 
 /**
@@ -45,8 +45,8 @@ export const Light: Story = {
  */
 
 export const Dark: Story = {
-	argTypes: { ...Light.argTypes },
-	args: { className: "group storybook-darkTheme" },
+  argTypes: { ...Light.argTypes },
+  args: { className: "group storybook-darkTheme" },
 };
 
 /**
@@ -54,6 +54,6 @@ export const Dark: Story = {
  */
 
 export const AsButton: Story = {
-	argTypes: { ...Light.argTypes },
-	args: { as: "button" },
+  argTypes: { ...Light.argTypes },
+  args: { as: "button" },
 };
