@@ -591,8 +591,11 @@ export function UserDeleteButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
+          className={
+            mode === "list" ? "text-destructive hover:text-destructive" : ""
+          }
           size={mode === "page" ? "sm" : "icon"}
-          variant={mode === "page" ? "danger" : "ghostDanger"}
+          variant={mode === "page" ? "destructive" : "ghost"}
         >
           <TrashIcon />
           {mode === "page" && <span>Benutzer löschen</span>}
@@ -606,18 +609,15 @@ export function UserDeleteButton({
               Sind Sie sicher, dass der Benutzer gelöscht werden soll?
             </span>
             <br />
-            <span className="text-danger">
+            <span className="text-destructive">
               Diese Aktion kann nicht rückgängig gemacht werden.
             </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => submitUserDeletion()}
-            variant="danger"
-          >
-            Benutzer löschen
+          <AlertDialogAction asChild onClick={() => submitUserDeletion()}>
+            <Button variant="destructive">Benutzer löschen</Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

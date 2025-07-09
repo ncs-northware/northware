@@ -418,14 +418,18 @@ export function RoleDeleteButton({
     <AlertDialog>
       {mode === "list" && (
         <AlertDialogTrigger asChild>
-          <Button size="icon" variant="ghostDanger">
+          <Button
+            className="text-destructive hover:text-destructive"
+            size="icon"
+            variant="ghost"
+          >
             <TrashIcon className="size-4" />
           </Button>
         </AlertDialogTrigger>
       )}
       {mode === "page" && (
         <AlertDialogTrigger asChild>
-          <Button variant="danger">
+          <Button variant="destructive">
             <TrashIcon className="size-4" />
             <span>Rolle löschen</span>
           </Button>
@@ -448,11 +452,8 @@ export function RoleDeleteButton({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => submitRoleDeletion()}
-            variant="danger"
-          >
-            Rolle löschen
+          <AlertDialogAction asChild onClick={() => submitRoleDeletion()}>
+            <Button variant="destructive">Rolle löschen</Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -675,14 +676,18 @@ export function PermissionDeleteButton({
     <AlertDialog>
       {mode === "list" && (
         <AlertDialogTrigger asChild>
-          <Button size="icon" variant="ghostDanger">
+          <Button
+            className="text-destructive hover:text-destructive"
+            size="icon"
+            variant="ghost"
+          >
             <TrashIcon />
           </Button>
         </AlertDialogTrigger>
       )}
       {mode === "page" && (
         <AlertDialogTrigger asChild>
-          <Button variant="danger">
+          <Button variant="destructive">
             <TrashIcon className="size-4" />
             <span>Rolle löschen</span>
           </Button>
@@ -704,10 +709,7 @@ export function PermissionDeleteButton({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => submitPermDeletion()}
-            variant="danger"
-          >
+          <AlertDialogAction onClick={() => submitPermDeletion()}>
             Berechtigungsschlüssel löschen
           </AlertDialogAction>
         </AlertDialogFooter>
