@@ -7,13 +7,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@northware/ui/components/dropdown-menu";
+} from "@northware/ui/components/ui-registry/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@northware/ui/components/sidebar";
+} from "@northware/ui/components/ui-registry/sidebar";
 import { ChevronsUpDown } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 

@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, AlertDescription } from "@northware/ui/components/alert";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { PasswordInput } from "@northware/ui/components/password-input";
+import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,29 +14,29 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@northware/ui/components/alert-dialog";
-import { Badge } from "@northware/ui/components/badge";
-import { Button } from "@northware/ui/components/button";
-import { Checkbox } from "@northware/ui/components/checkbox";
+} from "@northware/ui/components/ui-registry/alert-dialog";
+import { Badge } from "@northware/ui/components/ui-registry/badge";
+import { Button } from "@northware/ui/components/ui-registry/button";
+import { Checkbox } from "@northware/ui/components/ui-registry/checkbox";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@northware/ui/components/collapsible";
+} from "@northware/ui/components/ui-registry/collapsible";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/dialog";
+} from "@northware/ui/components/ui-registry/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/dropdown-menu";
+} from "@northware/ui/components/ui-registry/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -42,23 +44,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form";
-import { Input } from "@northware/ui/components/input";
-import { PasswordInput } from "@northware/ui/components/password-input";
-import { toast } from "@northware/ui/components/sonner";
-import { Switch } from "@northware/ui/components/switch";
+} from "@northware/ui/components/ui-registry/form";
+import { Input } from "@northware/ui/components/ui-registry/input";
+import { Switch } from "@northware/ui/components/ui-registry/switch";
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
-} from "@northware/ui/components/table";
+} from "@northware/ui/components/ui-registry/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@northware/ui/components/tooltip";
+} from "@northware/ui/components/ui-registry/tooltip";
 import {
   BadgeCheckIcon,
   ChevronDownIcon,
@@ -67,6 +67,7 @@ import {
   TrashIcon,
   TriangleAlertIcon,
 } from "@northware/ui/icons/lucide";
+import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -168,7 +169,7 @@ export function UpdateUserForm({ user }: { user?: TSingleUser }) {
         />
 
         {errors.length > 0 && (
-          <Alert className="col-span-2" variant="danger">
+          <AlertWrapper className="col-span-2" variant="destructive">
             <AlertDescription>
               <ul className="w-max">
                 {errors.map((error) => (
@@ -176,7 +177,7 @@ export function UpdateUserForm({ user }: { user?: TSingleUser }) {
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button className="col-span-2" type="submit" variant="default">
@@ -418,7 +419,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                   )}
                 />
                 {errors.length > 0 && (
-                  <Alert variant="danger">
+                  <AlertWrapper variant="destructive">
                     <AlertDescription>
                       <ul className="w-max">
                         {errors.map((error) => (
@@ -426,7 +427,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
                         ))}
                       </ul>
                     </AlertDescription>
-                  </Alert>
+                  </AlertWrapper>
                 )}
                 <Button type="submit" variant="default">
                   E-Mail Adresse hinzufügen
@@ -542,7 +543,7 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
                   )}
                 />
                 {errors.length > 0 && (
-                  <Alert variant="danger">
+                  <AlertWrapper variant="destructive">
                     <AlertDescription>
                       <ul className="w-max">
                         {errors.map((error) => (
@@ -550,7 +551,7 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
                         ))}
                       </ul>
                     </AlertDescription>
-                  </Alert>
+                  </AlertWrapper>
                 )}
                 <Button type="submit" variant="default">
                   Passwort ändern
@@ -590,8 +591,11 @@ export function UserDeleteButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
+          className={
+            mode === "list" ? "text-destructive hover:text-destructive" : ""
+          }
           size={mode === "page" ? "sm" : "icon"}
-          variant={mode === "page" ? "danger" : "ghostDanger"}
+          variant={mode === "page" ? "destructive" : "ghost"}
         >
           <TrashIcon />
           {mode === "page" && <span>Benutzer löschen</span>}
@@ -605,18 +609,15 @@ export function UserDeleteButton({
               Sind Sie sicher, dass der Benutzer gelöscht werden soll?
             </span>
             <br />
-            <span className="text-danger">
+            <span className="text-destructive">
               Diese Aktion kann nicht rückgängig gemacht werden.
             </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => submitUserDeletion()}
-            variant="danger"
-          >
-            Benutzer löschen
+          <AlertDialogAction asChild onClick={() => submitUserDeletion()}>
+            <Button variant="destructive">Benutzer löschen</Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -744,7 +745,7 @@ export function UpdateUserRolesForm({
           )}
         />
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -752,7 +753,7 @@ export function UpdateUserRolesForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
         <Button className="w-full" type="submit">
           Rollen aktualisieren
@@ -843,7 +844,7 @@ export function UpdateUserPermissionsForm({
         />
 
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -851,7 +852,7 @@ export function UpdateUserPermissionsForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
         <Button className="w-full" type="submit">
           Zusätzliche Berechtigungen aktualisieren

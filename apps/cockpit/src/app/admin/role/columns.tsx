@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@northware/ui/components/button";
 import { DataTableColumnHeader } from "@northware/ui/components/data-table";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import { EditIcon } from "@northware/ui/icons/lucide";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";

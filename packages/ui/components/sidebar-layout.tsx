@@ -5,16 +5,19 @@ import {
   AutoBreadcrumbs,
   type BreadcrumbType,
 } from "@northware/ui/components/auto-breadcrumbs";
-import { buttonVariants } from "@northware/ui/components/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-} from "@northware/ui/components/collapsible";
 import {
   AppPermissionProvider,
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
-import { Separator } from "@northware/ui/components/separator";
+import { MainSidebarMenuButton } from "@northware/ui/components/sidebar-menu-button";
+import { NavUser } from "@northware/ui/components/sidebar-nav-user";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
+import { buttonVariants } from "@northware/ui/components/ui-registry/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+} from "@northware/ui/components/ui-registry/collapsible";
+import { Separator } from "@northware/ui/components/ui-registry/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -31,10 +34,7 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@northware/ui/components/sidebar";
-import { MainSidebarMenuButton } from "@northware/ui/components/sidebar-menu-button";
-import { NavUser } from "@northware/ui/components/sidebar-nav-user";
-import { ThemeSwitch } from "@northware/ui/components/theme-switch";
+} from "@northware/ui/components/ui-registry/sidebar";
 import { menuData } from "@northware/ui/lib/menu-data";
 
 export async function SidebarLayout({
@@ -88,7 +88,7 @@ export async function SidebarLayout({
                 )}
                 {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
               </div>
-              <ThemeSwitch className="px-4" />
+              <ThemeSwitch as="icon" />
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 p-4 pt-4">{children}</div>

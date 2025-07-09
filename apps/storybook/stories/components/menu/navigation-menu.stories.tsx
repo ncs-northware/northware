@@ -6,7 +6,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@northware/ui/components/navigation-menu";
+} from "@northware/ui/components/ui-registry/navigation-menu";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import Link from "next/link";
 

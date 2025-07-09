@@ -15,20 +15,20 @@ import {
   Strategy,
 } from "@clerk/elements/sign-in";
 import type { ServiceType } from "@northware/service-config";
-import { Alert, AlertDescription } from "@northware/ui/components/alert";
 import { Brand } from "@northware/ui/components/brand";
-import { Button } from "@northware/ui/components/button";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
+import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@northware/ui/components/card";
-import { Input } from "@northware/ui/components/input";
-import { Label } from "@northware/ui/components/label";
-import { navigationMenuButtonStyle } from "@northware/ui/components/navigation-menu";
-import { ThemeSwitch } from "@northware/ui/components/theme-switch";
+} from "@northware/ui/components/ui-registry/card";
+import { Input } from "@northware/ui/components/ui-registry/input";
+import { Label } from "@northware/ui/components/ui-registry/label";
 import { EyeClosedIcon, EyeIcon, LoaderCircle, PencilIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -155,10 +155,7 @@ export function LoginForm({ service }: { service: ServiceType }) {
           )}
         </Loading>
       </Root>
-      <ThemeSwitch
-        className={`mt-3 text-muted-foreground ${navigationMenuButtonStyle()}`}
-        withDescriptionText
-      />
+      <ThemeSwitch as="button" />
     </main>
   );
 }
@@ -180,10 +177,10 @@ function LoginErrorAlert({ code, message }: { code: string; message: string }) {
     }
   };
   return (
-    <Alert variant="danger">
+    <AlertWrapper variant="destructive">
       <AlertDescription>
         <p>{alertMessage()}</p>
       </AlertDescription>
-    </Alert>
+    </AlertWrapper>
   );
 }
