@@ -181,7 +181,7 @@ function LoginErrorAlert({ code, message }: { code: string; message: string }) {
     }
   };
   return (
-    <AlertWrapper variant="danger">
+    <AlertWrapper variant="destructive">
       <AlertDescription>
         <p>{alertMessage()}</p>
       </AlertDescription>

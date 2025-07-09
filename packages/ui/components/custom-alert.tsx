@@ -15,8 +15,6 @@ const customAlertVariants = cva(
         default: "bg-card text-card-foreground",
         destructive:
           "bg-destructive text-destructive-foreground *:data-[slot=alert-description]:text-destructive-foreground/90 [&>svg]:text-current",
-        danger:
-          "bg-danger text-danger-foreground [&>svg]:text-danger-foreground",
         info: "bg-info text-info-foreground [&>svg]:text-info-foreground",
         success:
           "bg-success text-success-foreground [&>svg]:text-success-foreground",
@@ -53,14 +51,14 @@ function AlertWrapper({
 const AlertIcon = ({
   variant,
 }: {
-  variant: "default" | "danger" | "info" | "success" | "warning";
+  variant: "default" | "destructive" | "info" | "success" | "warning";
 }) => {
   /*
     AlertIcon is a custom component which you can use alongside AlertWrapper and the Alerts from shadcn.
     While shadcn uses lucide icons as alert icons by default the AlertIcon component does the same but based on the given variant prop it renders a predifined icon.
   */
   switch (variant) {
-    case "danger":
+    case "destructive":
       return <CircleAlertIcon className="size-4" />;
     case "info":
       return <InfoIcon className="size-4" />;
