@@ -1,28 +1,28 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
-	"extends": ["ultracite"],
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"defaultBranch": "main"
-	},
-	"javascript": {
-		"globals": ["React"],
-		"formatter": {
-			"quoteStyle": "double"
-		}
-	},
-	"files": {
-		"includes": [
-			"**",
-			"!**/node_modules/**",
-			"!**/.turbo",
-			"!**/.next",
-			"!**/tsconfig.tsbuildinfo",
-			"!**/dist/**",
-			"!**/build/**",
-			"!**/drizzle-migrations/**",
-			"!**/storybook-static/**"
-		]
-	}
+  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+  "extends": ["ultracite"],
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "defaultBranch": "main"
+  },
+  "javascript": {
+    "globals": ["React"],
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/node_modules/**",
+      "!**/.turbo",
+      "!**/.next",
+      "!**/tsconfig.tsbuildinfo",
+      "!**/dist/**",
+      "!**/build/**",
+      "!**/drizzle-migrations/**",
+      "!**/storybook-static/**"
+    ]
+  }
 }
