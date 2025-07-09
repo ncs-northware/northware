@@ -32,9 +32,9 @@ import {
   FormMessage,
 } from "@northware/ui/components/ui-registry/form";
 import { Input } from "@northware/ui/components/ui-registry/input";
-import { toast } from "@northware/ui/components/ui-registry/sonner";
 import { Switch } from "@northware/ui/components/ui-registry/switch";
 import { EditIcon, TrashIcon } from "@northware/ui/icons/lucide";
+import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
