@@ -1,9 +1,4 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@northware/ui/components/alert";
-import { Button } from "@northware/ui/components/button";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import {
@@ -11,6 +6,11 @@ import {
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
+import {
+  AlertDescription,
+  AlertTitle,
+} from "@northware/ui/components/ui-registry/alert";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import { LightbulbIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 import { getUserList } from "@/lib/user-actions";
@@ -51,14 +51,14 @@ export default async function Page() {
           initialSorting="fullName"
           withRowSelect={false}
         />
-        <Alert>
+        <AlertWrapper>
           <LightbulbIcon className="size-4" />
           <AlertTitle>Tipp</AlertTitle>
           <AlertDescription>
             Die eigenen Benutzerdaten können über das Benutzerprofil geändert
             werden.
           </AlertDescription>
-        </Alert>
+        </AlertWrapper>
       </PermissionProvider>
     </SidebarLayout>
   );

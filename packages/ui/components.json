@@ -15,6 +15,6 @@
     "utils": "@northware/ui/lib/utils",
     "hooks": "@northware/ui/hooks",
     "lib": "@northware/ui/lib",
-    "ui": "@northware/ui/components"
+    "ui": "@northware/ui/components/ui-registry"
   }
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, AlertDescription } from "@northware/ui/components/alert";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,16 +12,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@northware/ui/components/alert-dialog";
-import { Badge } from "@northware/ui/components/badge";
-import { Button } from "@northware/ui/components/button";
+} from "@northware/ui/components/ui-registry/alert-dialog";
+import { Badge } from "@northware/ui/components/ui-registry/badge";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/dialog";
+} from "@northware/ui/components/ui-registry/dialog";
 import {
   Form,
   FormControl,
@@ -29,11 +30,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form";
-import { Input } from "@northware/ui/components/input";
-import { toast } from "@northware/ui/components/sonner";
-import { Switch } from "@northware/ui/components/switch";
+} from "@northware/ui/components/ui-registry/form";
+import { Input } from "@northware/ui/components/ui-registry/input";
+import { Switch } from "@northware/ui/components/ui-registry/switch";
 import { EditIcon, TrashIcon } from "@northware/ui/icons/lucide";
+import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -178,7 +179,7 @@ export function CreateRoleForm({
         </div>
 
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -186,7 +187,7 @@ export function CreateRoleForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button className="w-full" type="submit">
@@ -272,7 +273,7 @@ export function UpdateRoleDetailForm({
         </div>
 
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -280,7 +281,7 @@ export function UpdateRoleDetailForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button className="w-full" type="submit">
@@ -370,7 +371,7 @@ export function RolePermissionsForm({
         />
 
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="destructive">
             <AlertDescription>
               <ul>
                 {errors.map((err) => (
@@ -378,7 +379,7 @@ export function RolePermissionsForm({
                 ))}
               </ul>
             </AlertDescription>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button className="w-full" type="submit">
@@ -417,14 +418,18 @@ export function RoleDeleteButton({
     <AlertDialog>
       {mode === "list" && (
         <AlertDialogTrigger asChild>
-          <Button size="icon" variant="ghostDanger">
+          <Button
+            className="text-destructive hover:text-destructive"
+            size="icon"
+            variant="ghost"
+          >
             <TrashIcon className="size-4" />
           </Button>
         </AlertDialogTrigger>
       )}
       {mode === "page" && (
         <AlertDialogTrigger asChild>
-          <Button variant="danger">
+          <Button variant="destructive">
             <TrashIcon className="size-4" />
             <span>Rolle löschen</span>
           </Button>
@@ -440,18 +445,15 @@ export function RoleDeleteButton({
               sind.
             </span>
             <br />
-            <span className="text-danger">
+            <span className="text-destructive">
               Diese Aktion kann nicht rückgängig gemacht werden.
             </span>
           </AlertDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => submitRoleDeletion()}
-            variant="danger"
-          >
-            Rolle löschen
+          <AlertDialogAction asChild onClick={() => submitRoleDeletion()}>
+            <Button variant="destructive">Rolle löschen</Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -527,7 +529,7 @@ export function CreatePermissionDetails() {
                 )}
               />
               {errors.length > 0 && (
-                <Alert variant="danger">
+                <AlertWrapper variant="destructive">
                   <AlertDescription>
                     <ul>
                       {errors.map((err) => (
@@ -535,7 +537,7 @@ export function CreatePermissionDetails() {
                       ))}
                     </ul>
                   </AlertDescription>
-                </Alert>
+                </AlertWrapper>
               )}
               <Button type="submit">Berechtigungsschlüssel hinzufügen</Button>
             </div>
@@ -627,7 +629,7 @@ export function UpdatePermissionDetails({
               />
 
               {errors.length > 0 && (
-                <Alert variant="danger">
+                <AlertWrapper variant="destructive">
                   <AlertDescription>
                     <ul>
                       {errors.map((err) => (
@@ -635,7 +637,7 @@ export function UpdatePermissionDetails({
                       ))}
                     </ul>
                   </AlertDescription>
-                </Alert>
+                </AlertWrapper>
               )}
               <Button type="submit">Speichern</Button>
             </div>
@@ -674,14 +676,18 @@ export function PermissionDeleteButton({
     <AlertDialog>
       {mode === "list" && (
         <AlertDialogTrigger asChild>
-          <Button size="icon" variant="ghostDanger">
+          <Button
+            className="text-destructive hover:text-destructive"
+            size="icon"
+            variant="ghost"
+          >
             <TrashIcon />
           </Button>
         </AlertDialogTrigger>
       )}
       {mode === "page" && (
         <AlertDialogTrigger asChild>
-          <Button variant="danger">
+          <Button variant="destructive">
             <TrashIcon className="size-4" />
             <span>Rolle löschen</span>
           </Button>
@@ -696,17 +702,14 @@ export function PermissionDeleteButton({
               Benutzer und Rollen verlieren die entsprechende Berechtigung.
             </span>
             <br />
-            <span className="text-danger">
+            <span className="text-destructive">
               Diese Aktion kann nicht rückgängig gemacht werden.
             </span>
           </AlertDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => submitPermDeletion()}
-            variant="danger"
-          >
+          <AlertDialogAction onClick={() => submitPermDeletion()}>
             Berechtigungsschlüssel löschen
           </AlertDialogAction>
         </AlertDialogFooter>

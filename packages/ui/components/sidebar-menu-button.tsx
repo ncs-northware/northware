@@ -1,9 +1,9 @@
 "use client";
-import { CollapsibleTrigger } from "@northware/ui/components/collapsible";
+import { CollapsibleTrigger } from "@northware/ui/components/ui-registry/collapsible";
 import {
   SidebarMenuButton,
   SidebarMenuSubButton,
-} from "@northware/ui/components/sidebar";
+} from "@northware/ui/components/ui-registry/sidebar";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

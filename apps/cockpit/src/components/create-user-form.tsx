@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert } from "@northware/ui/components/alert";
-import { Button } from "@northware/ui/components/button";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import {
   Form,
   FormControl,
@@ -9,8 +9,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/form";
-import { Input } from "@northware/ui/components/input";
+} from "@northware/ui/components/ui-registry/form";
+import { Input } from "@northware/ui/components/ui-registry/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -128,13 +128,13 @@ export default function CreateUserForm({
           )}
         />
         {errors.length > 0 && (
-          <Alert variant="danger">
+          <AlertWrapper variant="destructive">
             <ul>
               {errors.map((error) => (
                 <li key={error}>{error}</li>
               ))}
             </ul>
-          </Alert>
+          </AlertWrapper>
         )}
 
         <Button type="submit">Benutzer hinzufügen</Button>

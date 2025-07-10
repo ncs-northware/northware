@@ -4,7 +4,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@northware/ui/components/avatar";
+} from "@northware/ui/components/ui-registry/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,13 +13,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/dropdown-menu";
+} from "@northware/ui/components/ui-registry/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@northware/ui/components/sidebar";
+} from "@northware/ui/components/ui-registry/sidebar";
 import {
   BadgeCheck,
   ChevronsUpDown,
