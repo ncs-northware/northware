@@ -1,0 +1,46 @@
+name: Monatliches shadcn Upgrade (bump-ui)
+
+on:
+  schedule:
+    - cron: '0 0 1 * *' # Jeden Monat am 1. um 00:00 UTC
+  workflow_dispatch:
+
+jobs:
+  bump-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run pnpm bump-ui
+        run: pnpm bump-ui
+
+      - name: Commit & Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(ui): Monthly bumps of shadcn/ui'
+          branch: actions/monthly-bump-ui
+          create_branch: true
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: actions/monthly-bump-ui
+          title: 'chore(ui): Monthly bumps of shadcn/ui'
+          body: 'Automatischer monatlicher UI-Bump via GitHub Actions.
+           Bitte überprüfe die Änderungen gründlich und führe sie zusammen.'
