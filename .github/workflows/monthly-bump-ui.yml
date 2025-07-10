@@ -38,7 +38,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore(ui): Monthly bumps of shadcn/ui'
-          branch: actions/monthly-bump-ui
+          branch: pr-base/actions/monthly-bump-ui
           create_branch: true
 
       - name: Create Pull Request
