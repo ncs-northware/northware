@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 /************** User Form Schema  **************************************************************/
 
@@ -36,7 +36,9 @@ export const UpdateUserFromSchema = z.object({
 export type TUpdateUserFormSchema = z.infer<typeof UpdateUserFromSchema>;
 
 export const CreateEMailAddressFormSchema = z.object({
-  emailAddress: z.email(),
+  emailAddress: z.email({
+    error: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+  }),
   verified: z.boolean().default(true).optional(),
   primary: z.boolean().default(false).optional(),
 });
@@ -111,28 +113,24 @@ export type TRoleDetailFormSchema = z.infer<typeof RoleDetailFormSchema>;
 
 export const PermissionDetailFormSchema = z.object({
   recordId: z.number(),
-  permissionKey: z.union([
-    z.literal("all-access"),
-    z
-      .string()
-      .regex(
-        /^(all|cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?\.(read|create|update|delete)$/,
-        "Ungültiges Format des Berechtigungssschlüssels. Erwartet wird app::feature:subfeature.permission"
-      ),
-  ]),
+  permissionKey: z
+    .string()
+    .regex(
+      /^(all|cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?\.(read|create|update|delete)$/,
+      "Ungültiges Format des Berechtigungssschlüssels. Erwartet wird app::feature:subfeature.permission"
+    )
+    .or(z.literal("all-access")),
   permissionName: z.string(),
 });
 
 export const CreatePermissionDetailFormSchema = z.object({
-  permissionKey: z.union([
-    z.literal("all-access"),
-    z
-      .string()
-      .regex(
-        /^(cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?\.(read|create|update|delete)$/,
-        "Ungültiges Format des Berechtigungssschlüssels. Erwartet wird app::feature:subfeature.permission"
-      ),
-  ]),
+  permissionKey: z
+    .string()
+    .regex(
+      /^(all|cockpit|trader|finance)::([a-z0-9]+(?:-[a-z0-9]+)*)(?::([a-z0-9]+(?:-[a-z0-9]+)*))?\.(read|create|update|delete)$/,
+      "Ungültiges Format des Berechtigungssschlüssels. Erwartet wird app::feature:subfeature.permission"
+    )
+    .or(z.literal("all-access")),
   permissionName: z.string(),
 });
 
