@@ -72,8 +72,8 @@ importers:
         specifier: ^7.60.0
         version: 7.60.0(react@19.1.0)
       zod:
-        specifier: ^4.0.2
-        version: 4.0.2
+        specifier: ^4.0.5
+        version: 4.0.5
     devDependencies:
       '@northware/tsconfig':
         specifier: workspace:*
@@ -118,8 +118,8 @@ importers:
         specifier: ^7.60.0
         version: 7.60.0(react@19.1.0)
       zod:
-        specifier: ^4.0.2
-        version: 4.0.2
+        specifier: ^4.0.5
+        version: 4.0.5
     devDependencies:
       '@northware/service-config':
         specifier: workspace:*
@@ -356,8 +356,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       zod:
-        specifier: ^4.0.2
-        version: 4.0.2
+        specifier: ^4.0.5
+        version: 4.0.5
     devDependencies:
       '@northware/tsconfig':
         specifier: workspace:*
@@ -5935,8 +5935,8 @@ packages:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
 
-  zod@4.0.2:
-    resolution: {integrity: sha512-X2niJNY54MGam4L6Kj0AxeedeDIi/E5QFW0On2faSX5J4/pfLk1tW+cRMIMoojnCavn/u5W/kX17e1CSGnKMxA==}
+  zod@4.0.5:
+    resolution: {integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==}
 
 snapshots:
 
@@ -11802,4 +11802,4 @@ snapshots:
 
   yoctocolors-cjs@2.1.2: {}
 
-  zod@4.0.2: {}
+  zod@4.0.5: {}
