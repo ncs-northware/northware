@@ -88,7 +88,7 @@ export async function SidebarLayout({
                 )}
                 {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
               </div>
-              <ThemeSwitch as="icon" />
+              <ThemeSwitch />
             </div>
           </header>
           <div className="flex flex-1 flex-col gap-4 p-4 pt-4">{children}</div>
