@@ -1,6 +1,7 @@
 import { AlertWrapper } from "@northware/ui/components/custom-alert";
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
+import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
   PermissionProvider,
   userHasPermission,
@@ -20,6 +21,11 @@ export const metadata = { title: "Benutzerverwaltung" };
 
 export default async function Page() {
   const userArray = (await getUserList()) || [];
+  if (!userArray.success) {
+    return (
+      <DataFetchError message={userArray.error.message} service="cockpit" />
+    );
+  }
   return (
     <SidebarLayout
       breadcrumbs={[
@@ -47,7 +53,7 @@ export default async function Page() {
         </div>
         <DataTable
           columns={columns}
-          data={userArray}
+          data={userArray.users}
           initialSorting="fullName"
           withRowSelect={false}
         />

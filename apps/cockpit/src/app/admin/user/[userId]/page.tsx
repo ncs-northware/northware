@@ -3,6 +3,7 @@ import {
   PermissionProvider,
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
+import { notFound } from "next/navigation";
 import {
   UpdatePasswordFormDialog,
   UpdateUserForm,
@@ -19,9 +20,8 @@ export default async function Page({
   const { userId } = await params;
   const user = await getSingleUser(userId);
 
-  if (user instanceof Error) {
-    return "Es wurde keine Benutzer gefunden";
-    // FIXME: globalError
+  if (!user.success) {
+    return notFound();
   }
 
   return (
@@ -40,17 +40,17 @@ export default async function Page({
             der Benutzer gespeichert.
           </p>
         </div>
-        <UpdatePasswordFormDialog id={user?.id} />
+        <UpdatePasswordFormDialog id={user?.response.id} />
         {(await userHasPermission(["cockpit::user.delete"])) && (
-          <UserDeleteButton mode="page" userId={user?.id || ""} />
+          <UserDeleteButton mode="page" userId={user?.response.id || ""} />
         )}
       </div>
-      <UpdateUserForm user={user} />
+      <UpdateUserForm user={user.response} />
       <Headline level="h2">E-Mail Adressen</Headline>
       <UserEmailList
-        data={user?.emailAddresses}
-        primaryEmailAddressId={user?.primaryEmailAddressId}
-        userId={user?.id}
+        data={user?.response.emailAddresses}
+        primaryEmailAddressId={user?.response.primaryEmailAddressId}
+        userId={user?.response.id}
       />
     </PermissionProvider>
   );

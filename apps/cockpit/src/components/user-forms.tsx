@@ -1,9 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { AlertIcon, AlertWrapper } from "@northware/ui/components/custom-alert";
 import { PasswordInput } from "@northware/ui/components/password-input";
-import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
+import {
+  AlertDescription,
+  AlertTitle,
+} from "@northware/ui/components/ui-registry/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -776,16 +779,25 @@ export function UpdateUserPermissionsForm({
 }: PermissionsFormProps) {
   const [errors, setErrors] = useState<string[]>([]);
 
-  if (!permissionsResponse.success) {
-    // TODO globalError
-    return <div>Fehler: {permissionsResponse.error.message}</div>;
-  }
-
-  // biome-ignore lint/correctness/useHookAtTopLevel: Da FormSchema und defaultValues sich auf roleResponse beziehen und vorher geprüft werden muss, ob roleResponse vorhanden ist, kann auch useForm erst verwendet werden, wenn roleResponse.success erfüllt ist.
   const form = useForm<TUpdatePermissionSchema>({
     resolver: zodResolver(UserUpdatePermissionsFormSchema),
     defaultValues: { permissions: extraPermissionsResponse },
   });
+
+  if (!permissionsResponse.success) {
+    return (
+      <AlertWrapper variant="warning">
+        <AlertIcon variant="warning" />
+        <AlertTitle>Es ist ein Fehler aufgetreten.</AlertTitle>
+        <AlertDescription>
+          Wir konnten nicht alle erforderlichen Daten abrufen. Es ist daher
+          aktuell nicht möglich, die Rollenberechtigungen zu bearbeiten.
+          <br />
+          {permissionsResponse.error.message}
+        </AlertDescription>
+      </AlertWrapper>
+    );
+  }
 
   async function onSubmit(data: TUpdatePermissionSchema) {
     try {

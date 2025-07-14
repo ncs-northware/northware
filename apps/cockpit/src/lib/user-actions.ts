@@ -10,6 +10,7 @@ import {
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
+import type { UserRow } from "@/app/admin/user/columns";
 import type {
   TCreateEMailAddressFormSchema,
   TCreateUserFormSchema,
@@ -87,7 +88,9 @@ function handleClerkError(typesafeError: ClerkError) {
   }
 }
 
-export async function getUserList() {
+export async function getUserList(): Promise<
+  { success: true; users: UserRow[] } | { success: false; error: Error }
+> {
   try {
     const loggedInUser = await currentUser();
     const client = await clerkClient();
@@ -105,14 +108,24 @@ export async function getUserList() {
           username: user.username,
         };
       });
-    return users;
-  } catch {
-    return null;
+    return { success: true, users };
+  } catch (error) {
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+    };
   }
 }
 
 export const getSingleUser = cache(
-  async (id: string): Promise<TSingleUser | Error> => {
+  async (
+    id: string
+  ): Promise<
+    { success: true; response: TSingleUser } | { success: false; error: Error }
+  > => {
     try {
       const client = await clerkClient();
       const response = await client.users.getUser(id);
@@ -133,20 +146,25 @@ export const getSingleUser = cache(
           return a.emailAddress.localeCompare(b.emailAddress);
         });
       return {
-        id: response.id,
-        firstName: response.firstName,
-        lastName: response.lastName,
-        fullName: response.fullName,
-        username: response.username,
-        emailAddresses: user_emailAddresses,
-        primaryEmailAddressId: response.primaryEmailAddressId,
+        success: true,
+        response: {
+          id: response.id,
+          firstName: response.firstName,
+          lastName: response.lastName,
+          fullName: response.fullName,
+          username: response.username,
+          emailAddresses: user_emailAddresses,
+          primaryEmailAddressId: response.primaryEmailAddressId,
+        },
       };
     } catch (error: unknown) {
-      // FIXME: Kann dieser Error in eine global-error Seite eingebaut werden?
-      if (error instanceof Error) {
-        return error;
-      }
-      return new Error("Es ist ein unbekannter Fehler aufgetreten.");
+      return {
+        success: false,
+        error:
+          error instanceof Error
+            ? error
+            : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      };
     }
   }
 );

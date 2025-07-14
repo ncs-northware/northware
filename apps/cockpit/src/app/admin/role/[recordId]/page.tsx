@@ -4,7 +4,7 @@ import {
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import {
   RoleDeleteButton,
   RolePermissionsForm,
@@ -19,6 +19,9 @@ export async function generateMetadata({
 }) {
   const { recordId } = await params;
   const details = await getRole(recordId);
+  if (!details.success) {
+    return "Rolle bearbeiten";
+  }
   return { title: details?.role.roleName };
 }
 
@@ -30,8 +33,8 @@ export default async function Page({
   const { recordId } = await params;
   const details = await getRole(recordId);
   const permissionsList = await getPermissionList();
-  if (!details) {
-    redirect("/admin/role");
+  if (!details.success) {
+    notFound();
   }
   return (
     <SidebarLayout

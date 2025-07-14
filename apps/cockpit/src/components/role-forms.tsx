@@ -1,8 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertWrapper } from "@northware/ui/components/custom-alert";
-import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
+import { AlertIcon, AlertWrapper } from "@northware/ui/components/custom-alert";
+import {
+  AlertDescription,
+  AlertTitle,
+} from "@northware/ui/components/ui-registry/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -309,8 +312,18 @@ export function RolePermissionsForm({
   });
 
   if (!permissionsResponse.success) {
-    // TODO globalError
-    return <div>Fehler: {permissionsResponse.error.message}</div>;
+    return (
+      <AlertWrapper variant="warning">
+        <AlertIcon variant="warning" />
+        <AlertTitle>Es ist ein Fehler aufgetreten.</AlertTitle>
+        <AlertDescription>
+          Wir konnten nicht alle erforderlichen Daten abrufen. Es ist daher
+          aktuell nicht möglich, die Rollenberechtigungen zu bearbeiten.
+          <br />
+          {permissionsResponse.error.message}
+        </AlertDescription>
+      </AlertWrapper>
+    );
   }
 
   async function onSubmit(data: TUpdatePermissionSchema) {

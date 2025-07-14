@@ -71,7 +71,10 @@ export async function getRoleList(): Promise<TRoleListResponse> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error : new Error("Unknown Error"),
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
     };
   }
 }
@@ -123,43 +126,61 @@ export async function updateUserRoles({
   }
 }
 
-export const getRole = cache(async (recordId: number) => {
-  try {
-    const roleResponse = await db
-      .select({
-        recordId: rolesTable.recordId,
-        roleKey: rolesTable.roleKey,
-        roleName: rolesTable.roleName,
-      })
-      .from(rolesTable)
-      .limit(1)
-      .where(eq(rolesTable.recordId, recordId));
+export const getRole = cache(
+  async (
+    recordId: number
+  ): Promise<
+    | {
+        success: true;
+        role: { recordId: number; roleKey: string; roleName: string | null };
+        permissions: string[];
+      }
+    | { success: false; error: Error }
+  > => {
+    try {
+      const roleResponse = await db
+        .select({
+          recordId: rolesTable.recordId,
+          roleKey: rolesTable.roleKey,
+          roleName: rolesTable.roleName,
+        })
+        .from(rolesTable)
+        .limit(1)
+        .where(eq(rolesTable.recordId, recordId));
 
-    if (roleResponse.length === 0) {
-      return null; // Gebe null zurück, wenn keine Rolle gefunden wurde
+      if (roleResponse.length === 0) {
+        throw new Error("Es wurde keine Rolle gefunden."); // Gebe null zurück, wenn keine Rolle gefunden wurde
+      }
+
+      const role = roleResponse[0];
+
+      const permissionsResponse = await db
+        .select({ permissionKey: permissionsToRoles.permissionKey })
+        .from(permissionsToRoles)
+        .where(eq(permissionsToRoles.roleKey, role.roleKey));
+
+      const permissions = [
+        ...new Set(
+          permissionsResponse.map((permission) => permission.permissionKey)
+        ),
+      ];
+
+      return {
+        success: true,
+        role: roleResponse[0],
+        permissions,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error:
+          error instanceof Error
+            ? error
+            : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      };
     }
-
-    const role = roleResponse[0];
-
-    const permissionsResponse = await db
-      .select({ permissionKey: permissionsToRoles.permissionKey })
-      .from(permissionsToRoles)
-      .where(eq(permissionsToRoles.roleKey, role.roleKey));
-
-    const permissions = [
-      ...new Set(
-        permissionsResponse.map((permission) => permission.permissionKey)
-      ),
-    ];
-
-    return {
-      role: roleResponse[0],
-      permissions,
-    };
-  } catch (_error) {
-    return null;
   }
-});
+);
 
 export async function createRole(data: TCreateRoleFormData) {
   const insertPermissions: { permissionKey: string; roleKey: string }[] = [];
@@ -276,7 +297,10 @@ export async function getPermissionList(): Promise<TPermissionListResponse> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error : new Error("Unknown Error"),
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
     };
   }
 }
