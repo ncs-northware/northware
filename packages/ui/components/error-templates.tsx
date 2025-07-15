@@ -56,6 +56,5 @@ export function LoadingPageTemplate() {
         <Button variant="outline">Abmelden</Button>
       </SignOutButton>
     </div>
-    
   );
 }
