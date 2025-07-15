@@ -1,5 +1,6 @@
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
+import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
   PermissionProvider,
   userHasPermission,
@@ -14,8 +15,12 @@ export const metadata = { title: "Berechtigungsschlüssel verwalten" };
 export default async function Page() {
   const permissionList = await getPermissionList();
   if (!permissionList.success) {
-    // TODO: globalError
-    return <div>Fehler: {permissionList.error.message}</div>;
+    return (
+      <DataFetchError
+        message={permissionList.error.message}
+        service="cockpit"
+      />
+    );
   }
   return (
     <SidebarLayout

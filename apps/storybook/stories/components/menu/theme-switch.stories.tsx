@@ -8,7 +8,6 @@ const meta = {
 
   args: {
     className: "group storybook-lightTheme",
-    as: "icon",
   },
 } satisfies Meta<typeof ThemeSwitch>;
 
@@ -32,11 +31,6 @@ export const Light: Story = {
       },
       options: ["group storybook-lightTheme", "group storybook-darkTheme"],
     },
-    as: {
-      control: { type: "radio" },
-      labels: { icon: "Nur Icon", button: "Button Icon und Text" },
-      options: ["icon", "button"],
-    },
   },
 };
 
@@ -47,13 +41,4 @@ export const Light: Story = {
 export const Dark: Story = {
   argTypes: { ...Light.argTypes },
   args: { className: "group storybook-darkTheme" },
-};
-
-/**
- * Wenn der der ThemeSwitch nicht nur mit dem Icon sondern auch mit einem Text angezeigt werden soll, kann die Variante "as button" verwendet werden.
- */
-
-export const AsButton: Story = {
-  argTypes: { ...Light.argTypes },
-  args: { as: "button" },
 };

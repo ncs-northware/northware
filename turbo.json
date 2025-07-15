@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalEnv": ["DATABASE_URL", "AUTH_SECRET"],
+  "globalEnv": ["DATABASE_URL", "CLERK_SECRET_KEY"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

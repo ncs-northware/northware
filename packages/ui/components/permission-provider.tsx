@@ -35,13 +35,13 @@ export async function PermissionProvider({
     return children;
   }
   return (
-    <div className="flex h-svh flex-col items-center justify-center gap-8">
+    <div className="flex h-full flex-col items-center justify-center gap-4">
       <ShieldXIcon className="size-12" />
-      <div>
-        <Headline className="mb-4 text-center" level="h1">
+      <div className="flex flex-col gap-2 text-center">
+        <Headline className="m-0" level="h1">
           Der Zugriff wurde verweigert.
         </Headline>
-        <p className="text-center text-muted-foreground text-xl">
+        <p className="text-muted-foreground text-xl">
           Sie sind nicht berechtigt, diese Seite zu besuchen.
           <br />
           Falls Sie der Meinung sind, dass Sie die nötigen Berechtigungen
@@ -72,11 +72,13 @@ export async function AppPermissionProvider({
   const hasAllowedApps = apps.some((app) => app.allowed);
 
   return (
-    <div className="flex h-svh flex-col items-center justify-center gap-8">
+    <div className="flex h-svh flex-col items-center justify-center gap-4">
       {hasAllowedApps ? (
         <>
-          <div>
-            <Headline level="h1">Bitte wählen Sie eine App</Headline>
+          <div className="flex flex-col gap-2">
+            <Headline className="m-0" level="h1">
+              Bitte wählen Sie eine App
+            </Headline>
             <p className="text-muted-foreground text-xl">
               Sie sind berechtigt, folgende Apps zu nutzen:
             </p>
@@ -99,11 +101,11 @@ export async function AppPermissionProvider({
       ) : (
         <>
           <ShieldXIcon className="size-12" />
-          <div>
-            <Headline className="mb-4 text-center" level="h1">
+          <div className="flex flex-col gap-2 text-center">
+            <Headline className="m-0" level="h1">
               Sie haben keinen Zugriff auf Apps.
             </Headline>
-            <p className="text-center text-muted-foreground text-xl">
+            <p className="text-muted-foreground text-xl">
               Sie sind nicht berechtigt eine Northware App zu nutzen. Bitte
               kontaktieren Sie den Support.
             </p>

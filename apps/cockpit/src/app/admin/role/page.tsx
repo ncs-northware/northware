@@ -1,5 +1,6 @@
 import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
+import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
   PermissionProvider,
   userHasPermission,
@@ -14,8 +15,9 @@ export const metadata = { title: "Rollenverwaltung" };
 export default async function Page() {
   const roleList = (await getRoleList()) || [];
   if (!roleList.success) {
-    // TODO: globalError
-    return <div>Fehler: {roleList.error.message}</div>;
+    return (
+      <DataFetchError message={roleList.error.message} service="cockpit" />
+    );
   }
   return (
     <SidebarLayout

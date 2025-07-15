@@ -15,7 +15,6 @@
   "dependencies": {
     "@clerk/nextjs": "^6.24.0",
     "@northware/database": "workspace:*",
-    "@northware/service-config": "workspace:*",
     "drizzle-orm": "^0.44.2",
     "react": "^19.1.0",
     "server-only": "^0.0.1"

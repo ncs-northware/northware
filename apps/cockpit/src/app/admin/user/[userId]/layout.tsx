@@ -1,4 +1,5 @@
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
+import { notFound } from "next/navigation";
 import { getSingleUser } from "@/lib/user-actions";
 
 export async function generateMetadata({
@@ -9,14 +10,12 @@ export async function generateMetadata({
   const { userId } = await params;
   const user = await getSingleUser(userId);
 
-  if (user instanceof Error) {
-    // Hier kannst du entscheiden, wie du mit dem Fehler umgehen möchtest.
-    // Für Metadaten könntest du einen Standardtitel oder einen Fehlerindikator verwenden.
-    // Zum Beispiel:
+  if (!user.success) {
+    // Standard-Titel für Metadaten, falls die Benutzerdaten nicht ermittelt werden können.
     return "Benutzerprofil";
   }
 
-  return { title: user?.fullName };
+  return { title: user?.response.fullName };
 }
 
 export default async function EditUserLayout({
@@ -29,9 +28,8 @@ export default async function EditUserLayout({
   const { userId } = await params;
   const user = await getSingleUser(userId);
 
-  if (user instanceof Error) {
-    // FIXME: globalError
-    return "Es wurde kein Nutzer gefunden";
+  if (!user.success) {
+    notFound();
   }
 
   return (
@@ -41,8 +39,8 @@ export default async function EditUserLayout({
         { label: "Benutzerverwaltung", href: "/admin/user" },
         {
           label:
-            user?.fullName ||
-            user?.emailAddresses[0].emailAddress ||
+            user?.response.fullName ||
+            user?.response.emailAddresses[0].emailAddress ||
             "Benutzer",
           href: `/admin/user/${userId}`,
           active: true,
@@ -50,7 +48,7 @@ export default async function EditUserLayout({
       ]}
       mainLabel="Hauptnavigation"
       service="cockpit"
-      subLabel={user?.fullName || "Benutzer"}
+      subLabel={user?.response.fullName || "Benutzer"}
       subMenu={[
         {
           title: "Persönliche Daten",

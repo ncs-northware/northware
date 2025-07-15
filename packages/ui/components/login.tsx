@@ -17,7 +17,6 @@ import {
 import type { ServiceType } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/brand";
 import { AlertWrapper } from "@northware/ui/components/custom-alert";
-import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import { AlertDescription } from "@northware/ui/components/ui-registry/alert";
 import { Button } from "@northware/ui/components/ui-registry/button";
 import {
@@ -155,7 +154,6 @@ export function LoginForm({ service }: { service: ServiceType }) {
           )}
         </Loading>
       </Root>
-      <ThemeSwitch as="button" />
     </main>
   );
 }
