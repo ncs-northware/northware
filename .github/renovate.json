@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "customManagers:biomeVersions"],
+  "extends": [
+    "config:recommended",
+    "customManagers:biomeVersions",
+    "group:allNonMajor",
+    "schedule:automergeEarlyMondays"
+  ],
   "semanticCommits": "enabled",
   "labels": ["dependencies"],
   "rangeStrategy": "bump",
