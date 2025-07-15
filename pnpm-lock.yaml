@@ -36,8 +36,8 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
       ultracite:
-        specifier: 5.0.35
-        version: 5.0.35(@types/node@22.16.4)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.43.1)
+        specifier: 5.0.36
+        version: 5.0.36(@types/node@22.16.4)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.43.1)
 
   apps/cockpit:
     dependencies:
@@ -5636,8 +5636,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ultracite@5.0.35:
-    resolution: {integrity: sha512-Gvv5JoJw/8VaQwVW7Y9UQFncdrahvgoCh3QV8APLNoq6HZe4wpYHZJ3wuSpgq/CR8nKSOM2dnERbhb9jSC1nGg==}
+  ultracite@5.0.36:
+    resolution: {integrity: sha512-BpRoP+aCyGeLyIy50xB/K15vntOaKblgoSh9v9AfXGZGqKA12aG2FDLIaXD+ywRJRytVffgstd8y2Yq9/mScMw==}
     hasBin: true
 
   undici-types@6.21.0:
@@ -11458,7 +11458,7 @@ snapshots:
 
   typescript@5.8.3: {}
 
-  ultracite@5.0.35(@types/node@22.16.4)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.43.1):
+  ultracite@5.0.36(@types/node@22.16.4)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.43.1):
     dependencies:
       '@clack/prompts': 0.11.0
       commander: 14.0.0
