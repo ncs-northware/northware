@@ -80,7 +80,7 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                {/* TODO: Profilsite verlinken #466 */}
+                {/* TODO: #466 Profilsite verlinken */}
                 <BadgeCheck />
                 Profil
               </DropdownMenuItem>
