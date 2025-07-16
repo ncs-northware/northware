@@ -19,6 +19,8 @@ import {
   type TCreateUserFormSchema,
 } from "@/lib/rbac-schema";
 
+// TODO #515 User Onboarding
+
 export default function CreateUserForm({
   createUser,
 }: {
@@ -59,9 +61,6 @@ export default function CreateUserForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        {/* 
-        TODO: Styling für Form-Validation Messages
-        */}
         <FormField
           control={form.control}
           name="firstName"

@@ -29,7 +29,7 @@ export const columns: ColumnDef<TPermissionType>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex justify-end">
-          {/* TODO: Nur mit entsprechenden Berechtigungen */}
+          {/* TODO: #541 Nur mit entsprechenden Berechtigungen */}
           <UpdatePermissionDetails permissionDetails={row.original} />
           <PermissionDeleteButton recordId={row.original.recordId} />
         </div>
