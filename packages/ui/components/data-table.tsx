@@ -35,6 +35,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  type Row as RowType,
   type SortingState,
   type Table as TableType,
   useReactTable,
@@ -380,5 +381,50 @@ export function DataTableColumnHeader<TData, TValue>({
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
+  );
+}
+
+interface DataTableFilterProps<TData> {
+  table: TableType<TData>;
+  globalFilter: string;
+}
+
+export function DataTableFilter<TData>({
+  table,
+  globalFilter,
+}: DataTableFilterProps<TData>) {
+  return (
+    <Input
+      onChange={(event) => table.setGlobalFilter(String(event.target.value))}
+      placeholder="Filter emails..."
+      value={globalFilter}
+    />
+  );
+}
+
+export function DataTableSelectHeader<TData>({
+  table,
+}: {
+  table: TableType<TData>;
+}) {
+  return (
+    <Checkbox
+      aria-label="Alle auswählen"
+      checked={
+        table.getIsAllPageRowsSelected() ||
+        (table.getIsSomePageRowsSelected() && "indeterminate")
+      }
+      onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+    />
+  );
+}
+
+export function DataTableSelectCell<TData>({ row }: { row: RowType<TData> }) {
+  return (
+    <Checkbox
+      aria-label="Zeile auswählen"
+      checked={row.getIsSelected()}
+      onCheckedChange={(value) => row.toggleSelected(!!value)}
+    />
   );
 }
