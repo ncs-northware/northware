@@ -1,5 +1,4 @@
 import { AlertWrapper } from "@northware/ui/components/custom-alert";
-import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
@@ -16,6 +15,7 @@ import { LightbulbIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 import { getUserList } from "@/lib/user-actions";
 import { columns } from "./columns";
+import { DataTable } from "./data-table";
 
 export const metadata = { title: "Benutzerverwaltung" };
 
@@ -37,6 +37,7 @@ export default async function Page() {
     >
       <PermissionProvider permissionKeys={["cockpit::user.read"]}>
         <div className="flex justify-between gap-4">
+          {/* FIXME: Responsive überarbeiten */}
           <div>
             <Headline level="h1">Benutzerverwaltung</Headline>
             <p className="mb-4 text-justify font-medium text-muted-foreground">
@@ -54,8 +55,10 @@ export default async function Page() {
         <DataTable
           columns={columns}
           data={userArray.users}
-          initialSorting="fullName"
-          withRowSelect={false}
+          permissions={{
+            update: await userHasPermission(["cockpit::user.update"]),
+            delete: await userHasPermission(["cockpit::user.delete"]),
+          }}
         />
         <AlertWrapper>
           <LightbulbIcon className="size-4" />

@@ -1,11 +1,16 @@
 "use client";
 
 import { DataTableColumnHeader } from "@northware/ui/components/data-table";
-import { Button } from "@northware/ui/components/ui-registry/button";
-import { EditIcon } from "@northware/ui/icons/lucide";
+import {
+  StackedTableDescriptionElement,
+  StackedTableDescriptionList,
+  StackedTableDescriptionTerm,
+} from "@northware/ui/components/stacked-table-description-list";
+import {
+  TableCell,
+  TableHead,
+} from "@northware/ui/components/ui-registry/table";
 import type { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { UserDeleteButton } from "@/components/user-forms";
 
 export type UserRow = {
   id: string;
@@ -18,37 +23,54 @@ export const columns: ColumnDef<UserRow>[] = [
   {
     accessorKey: "fullName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Name" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell className="w-full max-w-0 font-medium sm:w-auto sm:max-w-none">
+        {row.original.fullName}
+        <StackedTableDescriptionList className="lg:hidden">
+          <StackedTableDescriptionTerm>
+            E-Mail Adresse
+          </StackedTableDescriptionTerm>
+          <StackedTableDescriptionElement className="text-muted-foreground">
+            {row.original.email}
+          </StackedTableDescriptionElement>
+          <StackedTableDescriptionTerm>
+            Benutzername
+          </StackedTableDescriptionTerm>
+          <StackedTableDescriptionElement className="text-muted-foreground sm:hidden">
+            {row.original.username}
+          </StackedTableDescriptionElement>
+        </StackedTableDescriptionList>
+      </TableCell>
     ),
   },
   {
     accessorKey: "email",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="E-Mail" />
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="E-Mail Adresse" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell className="hidden truncate lg:table-cell">
+        {row.original.email}
+      </TableCell>
     ),
   },
   {
     accessorKey: "username",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Benutzername" />
+      <TableHead className="hidden sm:table-cell">
+        <DataTableColumnHeader column={column} title="Benutzername" />
+      </TableHead>
     ),
-  },
-
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-end">
-          <Button asChild variant="ghost">
-            {/* TODO: #541 Nur mit Berechtigung update User aber nicht wenn User all-access hat  */}
-            <Link href={`user/${row.original.id}`}>
-              <EditIcon />
-            </Link>
-          </Button>
-          {/* TODO #541 Nur mit Berechtigung delete User aber nicht wenn User all-access hat */}
-          <UserDeleteButton userId={row.original.id} />
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <TableCell className="hidden sm:table-cell">
+        {row.original.username}
+      </TableCell>
+    ),
   },
 ];
