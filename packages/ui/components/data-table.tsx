@@ -52,6 +52,7 @@ import {
   ChevronsUpDownIcon,
   EyeOffIcon,
 } from "lucide-react";
+import type React from "react";
 import { useState } from "react";
 
 export interface DataTableProps<TData, TValue> {
@@ -63,6 +64,7 @@ export interface DataTableProps<TData, TValue> {
 }
 
 // TODO: #464 Rethink DataTable responsive and on individual page level
+// FIXME: Remove unused DataTable component in favour of individual DataTables
 
 export function DataTable<TData, TValue>({
   columns,
@@ -396,7 +398,7 @@ export function DataTableFilter<TData>({
   return (
     <Input
       onChange={(event) => table.setGlobalFilter(String(event.target.value))}
-      placeholder="Filter emails..."
+      placeholder="Tabelle durchsuchen..."
       value={globalFilter}
     />
   );
@@ -427,4 +429,25 @@ export function DataTableSelectCell<TData>({ row }: { row: RowType<TData> }) {
       onCheckedChange={(value) => row.toggleSelected(!!value)}
     />
   );
+}
+
+export function TableDescriptionList({
+  className,
+  ...props
+}: React.ComponentProps<"dl">) {
+  return <dl className={className} {...props} />;
+}
+
+export function TableDescriptionTerm({
+  className,
+  ...props
+}: React.ComponentProps<"dt">) {
+  return <dt className={cn("sr-only", className)} {...props} />;
+}
+
+export function TableDescriptionElement({
+  className,
+  ...props
+}: React.ComponentProps<"dd">) {
+  return <dd className={className} {...props} />;
 }
