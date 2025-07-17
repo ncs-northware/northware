@@ -7,79 +7,111 @@ import {
 } from "@northware/ui/components/data-table";
 import { Button } from "@northware/ui/components/ui-registry/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@northware/ui/components/ui-registry/dropdown-menu";
-import { MoreHorizontal } from "@northware/ui/icons/lucide";
+  TableCell,
+  TableHead,
+} from "@northware/ui/components/ui-registry/table";
+import { TrashIcon } from "@northware/ui/icons/lucide";
 import type { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 
 export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
+  id: number;
+  name: string;
+  title: string;
   email: string;
+  role: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
   {
     id: "select",
-    header: ({ table }) => <DataTableSelectHeader table={table} />,
-    cell: ({ row }) => <DataTableSelectCell row={row} />,
+    header: ({ table }) => (
+      <TableHead>
+        <DataTableSelectHeader table={table} />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell>
+        <DataTableSelectCell row={row} />
+      </TableCell>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
 
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "name",
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Name" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell className="w-full max-w-0 py-4 pr-3.5 pl-4 font-medium text-sm sm:w-auto sm:max-w-none sm:pl-0">
+        {row.original.name}
+        {/* Diese DL wird nur auf Bildschirmen kleiner als 'lg' (Large) angezeigt */}
+        <dl className="font-normal lg:hidden">
+          <dt className="sr-only">Title</dt>
+          <dd className="mt-1">{row.original.title}</dd>
+          <dt className="sr-only">Email</dt>
+          {/* Diese DD wird nur auf Bildschirmen kleiner als 'sm' (Small) angezeigt */}
+          <dd className="mt-1 sm:hidden">{row.original.email}</dd>
+        </dl>
+      </TableCell>
+    ),
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => (
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="Title" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell className="hidden lg:table-cell">
+        {row.original.title}
+      </TableCell>
+    ),
   },
   {
     accessorKey: "email",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
+      <TableHead className="hidden sm:table-cell">
+        <DataTableColumnHeader column={column} title="Email" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell className="hidden truncate sm:table-cell">
+        {row.original.email}
+      </TableCell>
     ),
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("de-DE", {
-        style: "currency",
-        currency: "EUR",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
+    accessorKey: "role",
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Role" />
+      </TableHead>
+    ),
+    cell: ({ row }) => <TableCell>{row.original.role}</TableCell>,
   },
+
   {
     id: "actions",
+    header: () => (
+      <TableHead className="relative">
+        <span className="sr-only">Edit</span>
+      </TableHead>
+    ),
     cell: ({ row }) => {
-      const payment = row.original;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="ghost">
-              <span className="sr-only">Open Menu</span>
-              <MoreHorizontal className="size-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <TableCell>
+          <Button asChild variant="ghost">
+            <Link href={`user/${row.original.id}`}>
+              <TrashIcon />
+            </Link>
+          </Button>
+        </TableCell>
       );
     },
   },

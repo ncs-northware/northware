@@ -5,6 +5,7 @@ import {
   DataTablePagination,
   DataTableViewOptions,
 } from "@northware/ui/components/data-table";
+import { Button } from "@northware/ui/components/ui-registry/button";
 import {
   Table,
   TableBody,
@@ -13,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@northware/ui/components/ui-registry/table";
+import { EditIcon } from "@northware/ui/icons/lucide";
 import {
   type ColumnDef,
   flexRender,
@@ -24,16 +26,19 @@ import {
   useReactTable,
   type VisibilityState,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import Link from "next/link";
+import { Fragment, useState } from "react";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends { id: number | string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  permissions: { edit: boolean; delete: boolean };
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { id: number }, TValue>({
   columns,
   data,
+  permissions,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -74,21 +79,17 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      //   FIXME: Wie sollen die TableHead abhängig vom Mobile State gestylet werden
-                      key={header.id}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <Fragment key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </Fragment>
+                ))}
+                <TableHead className="relative">
+                  <span className="sr-only">Edit</span>
+                </TableHead>
               </TableRow>
             ))}
           </TableHeader>
@@ -100,17 +101,22 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      // FIXME: Wie sollen die TableCells mobil anpassbar gestylet werden?
-                    >
+                    <Fragment key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                      {/* FIXME: Wie können Descriptions hinzugefügt werden? */}
-                    </TableCell>
+                    </Fragment>
                   ))}
+                  <TableCell>
+                    {permissions.edit && (
+                      <Button asChild variant="ghost">
+                        <Link href={`user/${row.original.id}`}>
+                          <EditIcon />
+                        </Link>
+                      </Button>
+                    )}
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
