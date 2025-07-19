@@ -65,6 +65,7 @@ export interface DataTableProps<TData, TValue> {
 
 // TODO: #464 Rethink DataTable responsive and on individual page level
 // FIXME: Remove unused DataTable component in favour of individual DataTables
+// FIXME: Prüfungen einbauen, ob table die nötigen Objekte enthält und ggf. Errors einbauen
 
 export function DataTable<TData, TValue>({
   columns,
