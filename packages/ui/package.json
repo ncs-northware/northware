@@ -18,7 +18,7 @@
     "./postcss.config": "./postcss.config.mjs"
   },
   "dependencies": {
-    "@clerk/elements": "^0.23.40",
+    "@clerk/elements": "^0.23.43",
     "@hookform/resolvers": "^5.1.1",
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:",
@@ -73,11 +73,11 @@
     "@svgr/cli": "^8.1.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/react": "^19.1.8",
-    "next": "15.4.1",
+    "next": "15.4.2",
     "tailwindcss": "^4.1.11",
     "tw-animate-css": "^1.3.5"
   },
   "peerDependencies": {
-    "next": "15.4.1"
+    "next": "15.4.2"
   }
 }
