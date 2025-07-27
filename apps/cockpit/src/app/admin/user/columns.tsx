@@ -1,11 +1,11 @@
 "use client";
 
-import { DataTableColumnHeader } from "@northware/ui/components/data-table";
 import {
-  StackedTableDescriptionElement,
-  StackedTableDescriptionList,
-  StackedTableDescriptionTerm,
-} from "@northware/ui/components/stacked-table-description-list";
+  DataTableColumnHeader,
+  TableDescriptionElement,
+  TableDescriptionList,
+  TableDescriptionTerm,
+} from "@northware/ui/components/data-table";
 import {
   TableCell,
   TableHead,
@@ -30,20 +30,16 @@ export const columns: ColumnDef<UserRow>[] = [
     cell: ({ row }) => (
       <TableCell className="w-full max-w-0 font-medium sm:w-auto sm:max-w-none">
         {row.original.fullName}
-        <StackedTableDescriptionList className="lg:hidden">
-          <StackedTableDescriptionTerm>
-            E-Mail Adresse
-          </StackedTableDescriptionTerm>
-          <StackedTableDescriptionElement className="text-muted-foreground">
+        <TableDescriptionList className="lg:hidden">
+          <TableDescriptionTerm>E-Mail Adresse</TableDescriptionTerm>
+          <TableDescriptionElement className="text-muted-foreground">
             {row.original.email}
-          </StackedTableDescriptionElement>
-          <StackedTableDescriptionTerm>
-            Benutzername
-          </StackedTableDescriptionTerm>
-          <StackedTableDescriptionElement className="text-muted-foreground sm:hidden">
+          </TableDescriptionElement>
+          <TableDescriptionTerm>Benutzername</TableDescriptionTerm>
+          <TableDescriptionElement className="text-muted-foreground sm:hidden">
             {row.original.username}
-          </StackedTableDescriptionElement>
-        </StackedTableDescriptionList>
+          </TableDescriptionElement>
+        </TableDescriptionList>
       </TableCell>
     ),
   },
