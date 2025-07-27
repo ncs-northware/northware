@@ -1,4 +1,3 @@
-import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
@@ -10,6 +9,8 @@ import { Button } from "@northware/ui/components/ui-registry/button";
 import Link from "next/link";
 import { getRoleList } from "@/lib/role-actions";
 import { columns } from "./columns";
+import { DataTable } from "./data-table";
+
 export const metadata = { title: "Rollenverwaltung" };
 
 export default async function Page() {
@@ -30,6 +31,7 @@ export default async function Page() {
     >
       <PermissionProvider permissionKeys={["cockpit::role.read"]}>
         <div className="flex justify-between gap-4">
+          {/* FIXME: Responsive überarbeiten */}
           <div>
             <Headline level="h1">Rollenverwaltung</Headline>
             <p className="mb-4 text-justify font-medium text-muted-foreground">
@@ -48,8 +50,10 @@ export default async function Page() {
         <DataTable
           columns={columns}
           data={roleList.roleList}
-          initialSorting="roleKey"
-          withRowSelect={false}
+          permissions={{
+            update: await userHasPermission(["cockpit::role.update"]),
+            delete: await userHasPermission(["cockpit::role.delete"]),
+          }}
         />
       </PermissionProvider>
     </SidebarLayout>

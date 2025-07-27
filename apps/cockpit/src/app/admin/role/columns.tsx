@@ -1,43 +1,51 @@
 "use client";
 
-import { DataTableColumnHeader } from "@northware/ui/components/data-table";
-import { Button } from "@northware/ui/components/ui-registry/button";
-import { EditIcon } from "@northware/ui/icons/lucide";
+import {
+  DataTableColumnHeader,
+  TableDescriptionElement,
+  TableDescriptionList,
+  TableDescriptionTerm,
+} from "@northware/ui/components/data-table";
+import {
+  TableCell,
+  TableHead,
+} from "@northware/ui/components/ui-registry/table";
 import type { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
-import { RoleDeleteButton } from "@/components/role-forms";
 import type { TRoleWithPermissions } from "@/lib/rbac-types";
 
 export const columns: ColumnDef<TRoleWithPermissions>[] = [
   {
     accessorKey: "roleKey",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Schlüsselbezeichnung" />
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Schlüsselbezeichnung" />
+      </TableHead>
     ),
     cell: ({ row }) => (
-      <span className="font-mono">{row.original.roleKey}</span>
+      <TableCell>
+        <span className="font-mono text-muted-foreground sm:text-foreground">
+          {row.original.roleKey}
+        </span>
+        <TableDescriptionList className="sm:hidden">
+          <TableDescriptionTerm>Rollenbezeichnung</TableDescriptionTerm>
+          <TableDescriptionElement>
+            {row.original.roleName}
+          </TableDescriptionElement>
+        </TableDescriptionList>
+      </TableCell>
     ),
   },
   {
     accessorKey: "roleName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Rollenbezeichnung" />
+      <TableHead className="hidden sm:table-cell">
+        <DataTableColumnHeader column={column} title="Rollenbezeichnung" />
+      </TableHead>
     ),
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-end">
-          <Button asChild size="icon" variant="ghost">
-            {/* TODO: #541 Nur mit Berechtigung update Role */}
-            <Link href={`role/${row.original.recordId}`}>
-              <EditIcon />
-            </Link>
-          </Button>
-          <RoleDeleteButton mode="list" recordId={row.original.recordId} />
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <TableCell className="hidden sm:table-cell">
+        {row.original.roleName}
+      </TableCell>
+    ),
   },
 ];
