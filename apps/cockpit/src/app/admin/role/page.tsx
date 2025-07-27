@@ -6,6 +6,7 @@ import {
 } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { Button } from "@northware/ui/components/ui-registry/button";
+import { PlusIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 import { getRoleList } from "@/lib/role-actions";
 import { columns } from "./columns";
@@ -31,22 +32,22 @@ export default async function Page() {
     >
       <PermissionProvider permissionKeys={["cockpit::role.read"]}>
         <div className="flex justify-between gap-4">
-          {/* FIXME: Responsive überarbeiten */}
-          <div>
-            <Headline level="h1">Rollenverwaltung</Headline>
-            <p className="mb-4 text-justify font-medium text-muted-foreground">
-              Rollen sind Sammlungen von Rechten. Vergebe Rollen an einen
-              Benutzer, um ihm diese Sammlung an Rechten zuzuweisen. Benutzer
-              einer bestimmten Rolle erhalten alle enthaltenen Rechte. Es ist
-              nicht möglich dem Benutzer ein Rollen-Recht zu entziehen.
-            </p>
-          </div>
+          <Headline level="h1">Rollenverwaltung</Headline>
           {(await userHasPermission(["cockpit::role.create"])) && (
             <Button asChild>
-              <Link href="/admin/role/create">Rolle erstellen</Link>
+              <Link href="/admin/role/create">
+                <PlusIcon className="sm:hidden" />
+                <span className="hidden sm:block">Rolle erstellen</span>
+              </Link>
             </Button>
           )}
         </div>
+        <p className="mb-4 text-justify font-medium text-muted-foreground">
+          Rollen sind Sammlungen von Rechten. Vergebe Rollen an einen Benutzer,
+          um ihm diese Sammlung an Rechten zuzuweisen. Benutzer einer bestimmten
+          Rolle erhalten alle enthaltenen Rechte. Es ist nicht möglich dem
+          Benutzer ein Rollen-Recht zu entziehen.
+        </p>
         <DataTable
           columns={columns}
           data={roleList.roleList}
