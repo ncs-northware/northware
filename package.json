@@ -17,16 +17,16 @@
     "tsc-check:root": "tsc --noEmit"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.1",
+    "@biomejs/biome": "2.1.3",
     "@changesets/cli": "^2.29.5",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@commitlint/prompt-cli": "^19.8.1",
     "@commitlint/types": "^19.8.1",
     "@northware/tsconfig": "workspace:",
-    "turbo": "^2.5.4",
-    "typescript": "^5.8.3",
-    "ultracite": "5.0.36"
+    "turbo": "^2.5.5",
+    "typescript": "^5.9.2",
+    "ultracite": "5.1.2"
   },
   "engines": {
     "node": ">=18"
