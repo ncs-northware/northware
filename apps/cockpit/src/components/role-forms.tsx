@@ -36,7 +36,7 @@ import {
 } from "@northware/ui/components/ui-registry/form";
 import { Input } from "@northware/ui/components/ui-registry/input";
 import { Switch } from "@northware/ui/components/ui-registry/switch";
-import { EditIcon, TrashIcon } from "@northware/ui/icons/lucide";
+import { EditIcon, PlusIcon, TrashIcon } from "@northware/ui/icons/lucide";
 import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -499,7 +499,12 @@ export function CreatePermissionDetails() {
     // TODO: #542 Assistant um mehere Berechtigungen zu erstellen
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button>Berechtigungsschlüssel hinzufügen</Button>
+        <Button>
+          <PlusIcon className="sm:hidden" />
+          <span className="hidden sm:block">
+            Berechtigungsschlüssel hinzufügen
+          </span>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -558,6 +563,7 @@ export function CreatePermissionDetails() {
         </Form>
       </DialogContent>
     </Dialog>
+    // FIXME: Die Formularwerte müssen immer den aktuellen Daten entsprechen. Es sollte nicht dazu kommen, das die Formular-Daten eines anderen Eintrags gecached werden.
   );
 }
 
@@ -659,6 +665,7 @@ export function UpdatePermissionDetails({
       </DialogContent>
     </Dialog>
   );
+  // FIXME: Die Formularwerte müssen immer den aktuellen Daten entsprechen. Es sollte nicht dazu kommen, das die Formular-Daten eines anderen Eintrags gecached werden.
 }
 
 export function PermissionDeleteButton({

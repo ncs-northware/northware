@@ -1,4 +1,3 @@
-import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
@@ -9,6 +8,7 @@ import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { CreatePermissionDetails } from "@/components/role-forms";
 import { getPermissionList } from "@/lib/role-actions";
 import { columns } from "./columns";
+import { DataTable } from "./data-table";
 
 export const metadata = { title: "Berechtigungsschlüssel verwalten" };
 
@@ -36,26 +36,28 @@ export default async function Page() {
     >
       <PermissionProvider permissionKeys={["cockpit::permission.read"]}>
         <div className="flex justify-between gap-4">
-          <div>
-            <Headline level="h1">Berechtigungsschlüssel verwalten</Headline>
-            <p className="mb-4 text-justify font-medium text-muted-foreground">
-              Berechtigungsschlüssel sind Strings, die innerhalb der Northware
-              Apps verwendet werden können, um zu prüfen, ob Benutzer und
-              Benutzergruppen berechtigt sind, einzelne Seiten aufzurufen, Daten
-              anzusehen und Aktionen auszuführen. Die einzelnen Berechtigungen
-              können verschiedenen Rollen oder einzelnen Benutzern zugewiesen
-              werden.
-            </p>
-          </div>
+          <Headline className="text-3xl sm:text-4xl" level="h1">
+            Berechtigungsschlüssel verwalten
+          </Headline>
+
           {(await userHasPermission(["cockpit::permission.create"])) && (
             <CreatePermissionDetails />
           )}
         </div>
+        <p className="mb-4 text-justify font-medium text-muted-foreground">
+          Berechtigungsschlüssel sind Strings, die innerhalb der Northware Apps
+          verwendet werden können, um zu prüfen, ob Benutzer und Benutzergruppen
+          berechtigt sind, einzelne Seiten aufzurufen, Daten anzusehen und
+          Aktionen auszuführen. Die einzelnen Berechtigungen können
+          verschiedenen Rollen oder einzelnen Benutzern zugewiesen werden.
+        </p>
         <DataTable
           columns={columns}
           data={permissionList.permissionList}
-          initialSorting="permissionKey"
-          withRowSelect={false}
+          permissions={{
+            update: await userHasPermission(["cockpit::permission.update"]),
+            delete: await userHasPermission(["cockpit::permission.delete"]),
+          }}
         />
       </PermissionProvider>
     </SidebarLayout>

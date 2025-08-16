@@ -1,5 +1,4 @@
 import { AlertWrapper } from "@northware/ui/components/custom-alert";
-import { DataTable } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
@@ -12,10 +11,11 @@ import {
   AlertTitle,
 } from "@northware/ui/components/ui-registry/alert";
 import { Button } from "@northware/ui/components/ui-registry/button";
-import { LightbulbIcon } from "@northware/ui/icons/lucide";
+import { LightbulbIcon, PlusIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 import { getUserList } from "@/lib/user-actions";
 import { columns } from "./columns";
+import { DataTable } from "./data-table";
 
 export const metadata = { title: "Benutzerverwaltung" };
 
@@ -37,25 +37,27 @@ export default async function Page() {
     >
       <PermissionProvider permissionKeys={["cockpit::user.read"]}>
         <div className="flex justify-between gap-4">
-          <div>
-            <Headline level="h1">Benutzerverwaltung</Headline>
-            <p className="mb-4 text-justify font-medium text-muted-foreground">
-              Ein Benutzerkonto ist eine digitale Identität, mit der sich eine
-              Person in den Northware Apps authentifizieren kann.
-            </p>
-          </div>
-
+          <Headline level="h1">Benutzerverwaltung</Headline>
           {(await userHasPermission(["cockpit::user.create"])) && (
-            <Button variant="default">
-              <Link href="user/create">Benutzer hinzufügen</Link>
+            <Button asChild>
+              <Link href="user/create">
+                <PlusIcon className="sm:hidden" />
+                <span className="hidden sm:block">Benutzer hinzufügen</span>
+              </Link>
             </Button>
           )}
         </div>
+        <p className="mb-4 text-justify font-medium text-muted-foreground">
+          Ein Benutzerkonto ist eine digitale Identität, mit der sich eine
+          Person in den Northware Apps authentifizieren kann.
+        </p>
         <DataTable
           columns={columns}
           data={userArray.users}
-          initialSorting="fullName"
-          withRowSelect={false}
+          permissions={{
+            update: await userHasPermission(["cockpit::user.update"]),
+            delete: await userHasPermission(["cockpit::user.delete"]),
+          }}
         />
         <AlertWrapper>
           <LightbulbIcon className="size-4" />

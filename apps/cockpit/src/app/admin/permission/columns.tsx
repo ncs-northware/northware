@@ -1,39 +1,51 @@
 "use client";
 
-import { DataTableColumnHeader } from "@northware/ui/components/data-table";
-import type { ColumnDef } from "@tanstack/react-table";
 import {
-  PermissionDeleteButton,
-  UpdatePermissionDetails,
-} from "@/components/role-forms";
+  DataTableColumnHeader,
+  TableDescriptionElement,
+  TableDescriptionList,
+  TableDescriptionTerm,
+} from "@northware/ui/components/data-table";
+import {
+  TableCell,
+  TableHead,
+} from "@northware/ui/components/ui-registry/table";
+import type { ColumnDef } from "@tanstack/react-table";
 import type { TPermissionType } from "@/lib/rbac-types";
 
 export const columns: ColumnDef<TPermissionType>[] = [
   {
     accessorKey: "permissionKey",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Berechtigungsschlüssel" />
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Berechtigungsschlüssel" />
+      </TableHead>
     ),
     cell: ({ row }) => (
-      <span className="font-mono">{row.original.permissionKey}</span>
+      <TableCell>
+        <span className="font-mono text-muted-foreground sm:text-foreground">
+          {row.original.permissionKey}
+        </span>
+        <TableDescriptionList className="sm:hidden">
+          <TableDescriptionTerm>Bezeichnung</TableDescriptionTerm>
+          <TableDescriptionElement>
+            {row.original.permissionName}
+          </TableDescriptionElement>
+        </TableDescriptionList>
+      </TableCell>
     ),
   },
   {
     accessorKey: "permissionName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Bezeichnung" />
+      <TableHead className="hidden sm:table-cell">
+        <DataTableColumnHeader column={column} title="Bezeichnung" />
+      </TableHead>
     ),
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-end">
-          {/* TODO: #541 Nur mit entsprechenden Berechtigungen */}
-          <UpdatePermissionDetails permissionDetails={row.original} />
-          <PermissionDeleteButton recordId={row.original.recordId} />
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <TableCell className="hidden sm:table-cell">
+        {row.original.permissionName}
+      </TableCell>
+    ),
   },
 ];

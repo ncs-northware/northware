@@ -18,27 +18,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@northware/ui/components/ui-registry/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@northware/ui/components/ui-registry/table";
 import { cn } from "@northware/ui/lib/utils";
-import {
-  type Column,
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  type SortingState,
-  type Table as TableType,
-  useReactTable,
-  type VisibilityState,
+import type {
+  Column as ColumnType,
+  Row as RowType,
+  Table as TableType,
 } from "@tanstack/react-table";
 import {
   ArrowDownIcon,
@@ -51,164 +35,7 @@ import {
   ChevronsUpDownIcon,
   EyeOffIcon,
 } from "lucide-react";
-import { useState } from "react";
-
-export interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  filterPlaceholder?: string;
-  withRowSelect?: boolean;
-  initialSorting?: string;
-}
-
-// TODO: #464 Rethink DataTable responsive and on individual page level
-
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  filterPlaceholder = "Suche",
-  withRowSelect = true,
-  initialSorting,
-}: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>(
-    initialSorting ? [{ id: initialSorting, desc: false }] : []
-  );
-  const [globalFilter, setGlobalFilter] = useState("");
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    globalFilterFn: "includesString",
-    onGlobalFilterChange: setGlobalFilter,
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnVisibility,
-      rowSelection,
-      globalFilter,
-    },
-  });
-
-  return (
-    <div>
-      <div className="flex items-center gap-2 py-4">
-        <Input
-          onChange={(event) =>
-            table.setGlobalFilter(String(event.target.value))
-          }
-          placeholder={filterPlaceholder}
-          value={globalFilter}
-        />
-        <DataTableViewOptions table={table} />
-      </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getFilteredSelectedRowModel().rows.length === 0 &&
-              table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {withRowSelect && (
-                    <TableHead key="select">
-                      <Checkbox
-                        aria-label="Alle auswählen"
-                        checked={
-                          table.getIsAllPageRowsSelected() ||
-                          (table.getIsSomePageRowsSelected() && "indeterminate")
-                        }
-                        onCheckedChange={(value) =>
-                          table.toggleAllPageRowsSelected(!!value)
-                        }
-                      />
-                    </TableHead>
-                  )}
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            {table.getFilteredSelectedRowModel().rows.length > 0 && (
-              <TableRow>
-                {withRowSelect && (
-                  <TableHead key="select">
-                    <Checkbox
-                      aria-label="Alle auswählen"
-                      checked={
-                        table.getIsAllPageRowsSelected() ||
-                        (table.getIsSomePageRowsSelected() && "indeterminate")
-                      }
-                      onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                      }
-                    />
-                  </TableHead>
-                )}
-                <TableHead colSpan={columns.length}>
-                  {table.getFilteredSelectedRowModel().rows.length} von{" "}
-                  {table.getFilteredRowModel().rows.length} Einträgen ausgewählt
-                </TableHead>
-              </TableRow>
-            )}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  data-state={row.getIsSelected() && "selected"}
-                  key={row.id}
-                >
-                  {withRowSelect && (
-                    <TableCell key="select">
-                      <Checkbox
-                        aria-label="Eintrag auswählen"
-                        checked={row.getIsSelected()}
-                        onCheckedChange={(value) => row.toggleSelected(!!value)}
-                      />
-                    </TableCell>
-                  )}
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  className="h-24 text-center"
-                  colSpan={columns.length}
-                >
-                  Es wurden keine Einträge gefunden.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <DataTablePagination table={table} />
-    </div>
-  );
-}
+import type React from "react";
 
 interface DataTableViewOptionsProps<TData> {
   table: TableType<TData>;
@@ -330,7 +157,7 @@ export function DataTablePagination<TData>({
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>;
+  column: ColumnType<TData, TValue>;
   title: string;
 }
 
@@ -381,4 +208,70 @@ export function DataTableColumnHeader<TData, TValue>({
       </DropdownMenu>
     </div>
   );
+}
+
+interface DataTableFilterProps<TData> {
+  table: TableType<TData>;
+  globalFilter: string;
+}
+
+export function DataTableFilter<TData>({
+  table,
+  globalFilter,
+}: DataTableFilterProps<TData>) {
+  return (
+    <Input
+      onChange={(event) => table.setGlobalFilter(String(event.target.value))}
+      placeholder="Tabelle durchsuchen..."
+      value={globalFilter}
+    />
+  );
+}
+
+export function DataTableSelectHeader<TData>({
+  table,
+}: {
+  table: TableType<TData>;
+}) {
+  return (
+    <Checkbox
+      aria-label="Alle auswählen"
+      checked={
+        table.getIsAllPageRowsSelected() ||
+        (table.getIsSomePageRowsSelected() && "indeterminate")
+      }
+      onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+    />
+  );
+}
+
+export function DataTableSelectCell<TData>({ row }: { row: RowType<TData> }) {
+  return (
+    <Checkbox
+      aria-label="Zeile auswählen"
+      checked={row.getIsSelected()}
+      onCheckedChange={(value) => row.toggleSelected(!!value)}
+    />
+  );
+}
+
+export function TableDescriptionList({
+  className,
+  ...props
+}: React.ComponentProps<"dl">) {
+  return <dl className={className} {...props} />;
+}
+
+export function TableDescriptionTerm({
+  className,
+  ...props
+}: React.ComponentProps<"dt">) {
+  return <dt className={cn("sr-only", className)} {...props} />;
+}
+
+export function TableDescriptionElement({
+  className,
+  ...props
+}: React.ComponentProps<"dd">) {
+  return <dd className={className} {...props} />;
 }
