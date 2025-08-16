@@ -1,39 +1,34 @@
 "use client";
 
 import { DataTableColumnHeader } from "@northware/ui/components/data-table";
-import type { ColumnDef } from "@tanstack/react-table";
 import {
-  PermissionDeleteButton,
-  UpdatePermissionDetails,
-} from "@/components/role-forms";
+  TableCell,
+  TableHead,
+} from "@northware/ui/components/ui-registry/table";
+import type { ColumnDef } from "@tanstack/react-table";
 import type { TPermissionType } from "@/lib/rbac-types";
 
 export const columns: ColumnDef<TPermissionType>[] = [
   {
     accessorKey: "permissionKey",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Berechtigungsschlüssel" />
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Berechtigungsschlüssel" />
+      </TableHead>
     ),
     cell: ({ row }) => (
-      <span className="font-mono">{row.original.permissionKey}</span>
+      <TableCell>
+        <span className="font-mono">{row.original.permissionKey}</span>
+      </TableCell>
     ),
   },
   {
     accessorKey: "permissionName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Bezeichnung" />
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Bezeichnung" />
+      </TableHead>
     ),
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-end">
-          {/* TODO: #541 Nur mit entsprechenden Berechtigungen */}
-          <UpdatePermissionDetails permissionDetails={row.original} />
-          <PermissionDeleteButton recordId={row.original.recordId} />
-        </div>
-      );
-    },
+    cell: ({ row }) => <TableCell>{row.original.permissionName}</TableCell>,
   },
 ];

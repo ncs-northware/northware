@@ -558,6 +558,7 @@ export function CreatePermissionDetails() {
         </Form>
       </DialogContent>
     </Dialog>
+    // FIXME: Die Formularwerte müssen immer den aktuellen Daten entsprechen. Es sollte nicht dazu kommen, das die Formular-Daten eines anderen Eintrags gecached werden.
   );
 }
 
@@ -659,6 +660,7 @@ export function UpdatePermissionDetails({
       </DialogContent>
     </Dialog>
   );
+  // FIXME: Die Formularwerte müssen immer den aktuellen Daten entsprechen. Es sollte nicht dazu kommen, das die Formular-Daten eines anderen Eintrags gecached werden.
 }
 
 export function PermissionDeleteButton({
