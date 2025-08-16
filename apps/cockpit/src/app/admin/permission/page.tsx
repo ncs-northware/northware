@@ -36,21 +36,21 @@ export default async function Page() {
     >
       <PermissionProvider permissionKeys={["cockpit::permission.read"]}>
         <div className="flex justify-between gap-4">
-          <div>
-            <Headline level="h1">Berechtigungsschlüssel verwalten</Headline>
-            <p className="mb-4 text-justify font-medium text-muted-foreground">
-              Berechtigungsschlüssel sind Strings, die innerhalb der Northware
-              Apps verwendet werden können, um zu prüfen, ob Benutzer und
-              Benutzergruppen berechtigt sind, einzelne Seiten aufzurufen, Daten
-              anzusehen und Aktionen auszuführen. Die einzelnen Berechtigungen
-              können verschiedenen Rollen oder einzelnen Benutzern zugewiesen
-              werden.
-            </p>
-          </div>
+          <Headline className="text-3xl sm:text-4xl" level="h1">
+            Berechtigungsschlüssel verwalten
+          </Headline>
+
           {(await userHasPermission(["cockpit::permission.create"])) && (
             <CreatePermissionDetails />
           )}
         </div>
+        <p className="mb-4 text-justify font-medium text-muted-foreground">
+          Berechtigungsschlüssel sind Strings, die innerhalb der Northware Apps
+          verwendet werden können, um zu prüfen, ob Benutzer und Benutzergruppen
+          berechtigt sind, einzelne Seiten aufzurufen, Daten anzusehen und
+          Aktionen auszuführen. Die einzelnen Berechtigungen können
+          verschiedenen Rollen oder einzelnen Benutzern zugewiesen werden.
+        </p>
         <DataTable
           columns={columns}
           data={permissionList.permissionList}

@@ -1,6 +1,11 @@
 "use client";
 
-import { DataTableColumnHeader } from "@northware/ui/components/data-table";
+import {
+  DataTableColumnHeader,
+  TableDescriptionElement,
+  TableDescriptionList,
+  TableDescriptionTerm,
+} from "@northware/ui/components/data-table";
 import {
   TableCell,
   TableHead,
@@ -18,17 +23,29 @@ export const columns: ColumnDef<TPermissionType>[] = [
     ),
     cell: ({ row }) => (
       <TableCell>
-        <span className="font-mono">{row.original.permissionKey}</span>
+        <span className="font-mono text-muted-foreground sm:text-foreground">
+          {row.original.permissionKey}
+        </span>
+        <TableDescriptionList className="sm:hidden">
+          <TableDescriptionTerm>Bezeichnung</TableDescriptionTerm>
+          <TableDescriptionElement>
+            {row.original.permissionName}
+          </TableDescriptionElement>
+        </TableDescriptionList>
       </TableCell>
     ),
   },
   {
     accessorKey: "permissionName",
     header: ({ column }) => (
-      <TableHead>
+      <TableHead className="hidden sm:table-cell">
         <DataTableColumnHeader column={column} title="Bezeichnung" />
       </TableHead>
     ),
-    cell: ({ row }) => <TableCell>{row.original.permissionName}</TableCell>,
+    cell: ({ row }) => (
+      <TableCell className="hidden sm:table-cell">
+        {row.original.permissionName}
+      </TableCell>
+    ),
   },
 ];
