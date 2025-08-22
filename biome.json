@@ -12,6 +12,12 @@
       "quoteStyle": "double"
     }
   },
+  "linter": {
+    "rules": {
+      "performance": { "noBarrelFile": "warn" },
+      "style": { "noMagicNumbers": "info" }
+    }
+  },
   "files": {
     "includes": [
       "**",
