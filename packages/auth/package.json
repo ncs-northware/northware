@@ -13,7 +13,7 @@
     "./account": "./src/account.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.31.1",
+    "@clerk/nextjs": "^6.31.4",
     "@northware/database": "workspace:*",
     "drizzle-orm": "^0.44.4",
     "react": "^19.1.1",
