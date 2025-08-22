@@ -20,17 +20,10 @@ export function Brand({
     trader: "text-trader",
   };
 
-  const subBrand = () => {
-    switch (service) {
-      case "cockpit":
-        return "Cockpit";
-      case "finance":
-        return "Finance";
-      case "trader":
-        return "Trader";
-      default:
-        ("");
-    }
+  const subBrand = {
+    cockpit: "Cockpit",
+    finance: "Finance",
+    trader: "Trader",
   };
 
   return (
@@ -40,7 +33,7 @@ export function Brand({
       {textOnly ? "" : <BrandIcon className={iconWidth} service={service} />}
       <span>
         Northware{" "}
-        <span className={`${brandColors[service]}`}>{subBrand()}</span>
+        <span className={`${brandColors[service]}`}>{subBrand[service]}</span>
       </span>
     </div>
   );
