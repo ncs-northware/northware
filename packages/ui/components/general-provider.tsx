@@ -11,6 +11,6 @@ export const GeneralProvider = ({
 }: GeneralProviderProperties) => (
   <ThemeProvider {...properties}>
     <AuthProvider>{children}</AuthProvider>
-    <Toaster />
+    <Toaster richColors />
   </ThemeProvider>
 );
