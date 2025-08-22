@@ -30,11 +30,11 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { UserDeleteButton } from "@/components/user-forms";
 
-interface DataTableProps<TData extends { id: string }, TValue> {
+type DataTableProps<TData extends { id: string }, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   permissions: { update: boolean; delete: boolean };
-}
+};
 
 export function DataTable<TData extends { id: string }, TValue>({
   columns,

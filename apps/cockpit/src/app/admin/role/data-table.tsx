@@ -30,11 +30,11 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { RoleDeleteButton } from "@/components/role-forms";
 
-interface DataTableProps<TData extends { recordId: number }, TValue> {
+type DataTableProps<TData extends { recordId: number }, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   permissions: { update: boolean; delete: boolean };
-}
+};
 
 export function DataTable<TData extends { recordId: number }, TValue>({
   columns,

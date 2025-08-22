@@ -20,13 +20,13 @@ import type {
 import type { TSingleUser } from "@/lib/rbac-types";
 
 /****************** Clerk User **********************/
-interface ClerkError {
+type ClerkError = {
   errors: Array<{
     code: string;
     message: string;
     meta: { paramName: string };
   }>;
-}
+};
 
 function handleClerkError(typesafeError: ClerkError) {
   const errorMessages: string[] = [];
