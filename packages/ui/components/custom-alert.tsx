@@ -57,18 +57,15 @@ const AlertIcon = ({
     AlertIcon is a custom component which you can use alongside AlertWrapper and the Alerts from shadcn.
     While shadcn uses lucide icons as alert icons by default the AlertIcon component does the same but based on the given variant prop it renders a predifined icon.
   */
-  switch (variant) {
-    case "destructive":
-      return <CircleAlertIcon className="size-4" />;
-    case "info":
-      return <InfoIcon className="size-4" />;
-    case "success":
-      return <CircleCheckIcon className="size-4" />;
-    case "warning":
-      return <TriangleAlertIcon className="size-4" />;
-    default:
-      return <InfoIcon className="size-4" />;
-  }
+  const icons = {
+    destructive: <CircleAlertIcon className="size-4" />,
+    info: <InfoIcon className="size-4" />,
+    success: <CircleCheckIcon className="size-4" />,
+    warning: <TriangleAlertIcon className="size-4" />,
+    default: <InfoIcon className="size-4" />,
+  };
+
+  return icons[variant] ?? icons.default;
 };
 
 export { AlertWrapper, AlertIcon, customAlertVariants };
