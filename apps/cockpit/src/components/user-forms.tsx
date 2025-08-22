@@ -347,11 +347,20 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
     },
   });
 
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      form.reset();
+      setErrors([]);
+    }
+  };
+
   async function onSubmit(values: TCreateEMailAddressFormSchema) {
     setErrors([]); // Fehler zurücksetzen
     try {
       await createEmailAddress(values, userId);
       setOpen(false);
+      form.reset();
       toast.success("Die E-Mail Adresse wurde hinzugefügt.");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -359,7 +368,7 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
   }
 
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
+    <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogTrigger asChild>
         <Button size="sm" variant="outline">
           E-Mail Adresse hinzufügen
@@ -458,11 +467,20 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
     },
   });
 
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      form.reset(); // Formular zurücksetzen, wenn Dialog geschlossen wird
+      setErrors([]); // Fehler auch zurücksetzen
+    }
+  };
+
   const onSubmit: SubmitHandler<TUpdatePasswordFormSchema> = async (data) => {
     setErrors([]); // Fehler zurücksetzen
     try {
       await updatePassword(id, data);
       setOpen(false);
+      form.reset();
       toast.success("Das Passwort wurde gespeichert.");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -470,7 +488,7 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
   };
 
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
+    <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogTrigger asChild>
         <Button size="sm" variant="outline">
           Passwort ändern

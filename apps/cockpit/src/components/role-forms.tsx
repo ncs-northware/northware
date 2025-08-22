@@ -484,12 +484,22 @@ export function CreatePermissionDetails() {
       permissionName: "",
     },
   });
+
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      form.reset(); // Formular zurücksetzen, wenn Dialog geschlossen wird
+      setErrors([]); // Fehler auch zurücksetzen
+    }
+  };
+
   const onSubmit: SubmitHandler<TCreatePermissionDetailFormSchema> = async (
     data
   ) => {
     try {
       await createPermDetails(data);
       setOpen(false);
+      form.reset(); // Formular nach Submit zurücksetzen
       toast.success("Es wurde ein neuer Berechtigungsschlüssel hinzugefügt.");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -497,7 +507,7 @@ export function CreatePermissionDetails() {
   };
   return (
     // TODO: #542 Assistant um mehere Berechtigungen zu erstellen
-    <Dialog onOpenChange={setOpen} open={open}>
+    <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogTrigger asChild>
         <Button>
           <PlusIcon className="sm:hidden" />
@@ -563,7 +573,6 @@ export function CreatePermissionDetails() {
         </Form>
       </DialogContent>
     </Dialog>
-    // FIXME: Die Formularwerte müssen immer den aktuellen Daten entsprechen. Es sollte nicht dazu kommen, das die Formular-Daten eines anderen Eintrags gecached werden.
   );
 }
 
@@ -582,6 +591,19 @@ export function UpdatePermissionDetails({
       permissionName: permissionDetails.permissionName || "",
     },
   });
+
+  // Formularwerte zurücksetzen, wenn Dialog geöffnet wird oder permissionDetails sich ändern
+  useEffect(() => {
+    if (open) {
+      form.reset({
+        recordId: permissionDetails.recordId,
+        permissionKey: permissionDetails.permissionKey,
+        permissionName: permissionDetails.permissionName || "",
+      });
+      setErrors([]);
+    }
+  }, [open, permissionDetails, form.reset]);
+
   const onSubmit: SubmitHandler<TPermissionDetailFormSchema> = async (data) => {
     try {
       await updatePermDetails(data);
@@ -665,7 +687,6 @@ export function UpdatePermissionDetails({
       </DialogContent>
     </Dialog>
   );
-  // FIXME: Die Formularwerte müssen immer den aktuellen Daten entsprechen. Es sollte nicht dazu kommen, das die Formular-Daten eines anderen Eintrags gecached werden.
 }
 
 export function PermissionDeleteButton({
