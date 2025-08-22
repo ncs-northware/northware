@@ -7,11 +7,11 @@ import {
   BreadcrumbSeparator,
 } from "@northware/ui/components/ui-registry/breadcrumb";
 
-export interface BreadcrumbType {
+export type BreadcrumbType = {
   label: string;
   href: string;
   active?: boolean;
-}
+};
 
 export function AutoBreadcrumbs({
   breadcrumbs,

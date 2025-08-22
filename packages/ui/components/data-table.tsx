@@ -37,9 +37,9 @@ import {
 } from "lucide-react";
 import type React from "react";
 
-interface DataTableViewOptionsProps<TData> {
+type DataTableViewOptionsProps<TData> = {
   table: TableType<TData>;
-}
+};
 
 export function DataTableViewOptions<TData>({
   table,
@@ -80,9 +80,9 @@ export function DataTableViewOptions<TData>({
   );
 }
 
-interface DataTablePaginationProps<TData> {
+type DataTablePaginationProps<TData> = {
   table: TableType<TData>;
-}
+};
 
 export function DataTablePagination<TData>({
   table,
@@ -101,6 +101,7 @@ export function DataTablePagination<TData>({
             <SelectValue placeholder={table.getState().pagination.pageSize} />
           </SelectTrigger>
           <SelectContent side="top">
+            {/** biome-ignore lint/style/noMagicNumbers: shadcn internals */}
             {[10, 20, 30, 40, 50].map((pageSize) => (
               <SelectItem key={pageSize} value={`${pageSize}`}>
                 {pageSize}
@@ -210,10 +211,10 @@ export function DataTableColumnHeader<TData, TValue>({
   );
 }
 
-interface DataTableFilterProps<TData> {
+type DataTableFilterProps<TData> = {
   table: TableType<TData>;
   globalFilter: string;
-}
+};
 
 export function DataTableFilter<TData>({
   table,

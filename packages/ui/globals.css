@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/nursery/noUnknownAtRule: These are tailwind internal at-rules */
+/** biome-ignore-all lint/suspicious/noUnknownAtRules: Tailwind internal at-rules */
 @import "tailwindcss";
 @import "tw-animate-css";
 
