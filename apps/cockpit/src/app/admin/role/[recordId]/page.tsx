@@ -39,7 +39,7 @@ export default async function Page({
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Amin Panel", href: "/admin" },
+        { label: "Admin Panel", href: "/admin" },
         { label: "Rollenverwaltung", href: "/admin/role" },
         {
           label: details?.role.roleName || "Rolle",
