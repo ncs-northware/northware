@@ -325,7 +325,7 @@ export function PermissionFilter({
     <div className="flex flex-row gap-2">
       <Input
         onChange={(e) => setFilterValue(e.target.value)}
-        placeholder="Berechtigungen filtern"
+        placeholder="Liste filtern"
         value={filterValue}
       />
       <Button

@@ -661,6 +661,7 @@ export function UpdateUserRolesForm({
   userId,
 }: RolesFormProps) {
   const [errors, setErrors] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState<string>("");
   const form = useForm<TUpdateRoleSchema>({
     resolver: zodResolver(UpdateUserRoleFormSchema),
     defaultValues: {
@@ -681,15 +682,30 @@ export function UpdateUserRolesForm({
     }
   }
 
+  const filteredRoles = rolesResponse.roleList.filter((role) => {
+    if (!filterValue) {
+      return true;
+    }
+    const v = filterValue.toLowerCase();
+    return (
+      role.roleName?.toLowerCase().includes(v) ||
+      role.roleKey?.toLowerCase().includes(v)
+    );
+  });
+
   return (
     <Form {...form}>
+      <PermissionFilter
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+      />
       <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="roles"
           render={() => (
             <FormItem className="grid-cols-2">
-              {rolesResponse.roleList.map((role) => (
+              {filteredRoles.map((role) => (
                 <FormField
                   control={form.control}
                   key={role.roleKey}
