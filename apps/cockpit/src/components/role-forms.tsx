@@ -589,7 +589,6 @@ export function CreatePermissionDetails() {
     }
   };
   return (
-    // TODO: #542 Assistant um mehere Berechtigungen zu erstellen
     <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogTrigger asChild>
         <Button>
