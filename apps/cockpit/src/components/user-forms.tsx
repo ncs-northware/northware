@@ -74,6 +74,7 @@ import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { PermissionFilter } from "@/components/role-forms";
 import {
   CreateEMailAddressFormSchema,
   parseErrorMessages,
@@ -796,6 +797,7 @@ export function UpdateUserPermissionsForm({
   userId,
 }: PermissionsFormProps) {
   const [errors, setErrors] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState<string>("");
 
   const form = useForm<TUpdatePermissionSchema>({
     resolver: zodResolver(UserUpdatePermissionsFormSchema),
@@ -826,15 +828,32 @@ export function UpdateUserPermissionsForm({
     }
   }
 
+  const filteredPermissions = permissionsResponse.permissionList.filter(
+    (perm) => {
+      if (!filterValue) {
+        return true;
+      }
+      const v = filterValue.toLowerCase();
+      return (
+        perm.permissionName?.toLowerCase().includes(v) ||
+        perm.permissionKey?.toLowerCase().includes(v)
+      );
+    }
+  );
+
   return (
     <Form {...form}>
+      <PermissionFilter
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+      />
       <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="permissions"
           render={() => (
             <FormItem className="grid-cols-2">
-              {permissionsResponse.permissionList.map((perm) => (
+              {filteredPermissions.map((perm) => (
                 <FormField
                   control={form.control}
                   key={perm.recordId}

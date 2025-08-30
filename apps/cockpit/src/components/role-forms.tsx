@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertIcon, AlertWrapper } from "@northware/ui/components/custom-alert";
+import { Headline } from "@northware/ui/components/headline";
 import {
   AlertDescription,
   AlertTitle,
@@ -39,7 +40,7 @@ import { Switch } from "@northware/ui/components/ui-registry/switch";
 import { EditIcon, PlusIcon, TrashIcon } from "@northware/ui/icons/lucide";
 import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import {
   CreatePermissionDetailFormSchema,
@@ -73,6 +74,8 @@ export function CreateRoleForm({
 }: {
   permissionsResponse: TPermissionListResponse;
 }) {
+  const [filterValue, setFilterValue] = useState<string>("");
+
   const form = useForm<TCreateRoleFormData>({
     resolver: zodResolver(CreateRoleFormSchema),
     defaultValues: {
@@ -97,13 +100,26 @@ export function CreateRoleForm({
     }
   };
 
+  const filteredPermissions = permissionsResponse.permissionList.filter(
+    (perm) => {
+      if (!filterValue) {
+        return true;
+      }
+      const v = filterValue.toLowerCase();
+      return (
+        perm.permissionName?.toLowerCase().includes(v) ||
+        perm.permissionKey?.toLowerCase().includes(v)
+      );
+    }
+  );
+
   return (
     <Form {...form}>
       <form
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="grid grid-cols-2 gap-4">
+        <div className="mb-5 grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="roleKey"
@@ -131,15 +147,18 @@ export function CreateRoleForm({
             )}
           />
         </div>
-
+        <Headline level="h2">Rollenberechtigungen vergeben</Headline>
         <div className="grid gap-4">
+          <PermissionFilter
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+          />
           <FormField
             control={form.control}
             name="permissions"
             render={() => (
               <FormItem className="grid-cols-2">
-                {permissionsResponse.permissionList.map((perm) => (
-                  // TODO: #539 Gruppiert nach App
+                {filteredPermissions.map((perm) => (
                   <FormField
                     control={form.control}
                     key={perm.recordId}
@@ -295,6 +314,52 @@ export function UpdateRoleDetailForm({
   );
 }
 
+export function PermissionFilter({
+  setFilterValue,
+  filterValue,
+}: {
+  setFilterValue: Dispatch<SetStateAction<string>>;
+  filterValue: string;
+}) {
+  return (
+    <div className="flex flex-row gap-2">
+      <Input
+        onChange={(e) => setFilterValue(e.target.value)}
+        placeholder="Berechtigungen filtern"
+        value={filterValue}
+      />
+      <Button
+        onClick={() => setFilterValue("cockpit")}
+        type="button"
+        variant="secondary"
+      >
+        Northware Cockpit
+      </Button>
+      <Button
+        onClick={() => setFilterValue("finance")}
+        type="button"
+        variant="secondary"
+      >
+        Northware Finance
+      </Button>
+      <Button
+        onClick={() => setFilterValue("trader")}
+        type="button"
+        variant="secondary"
+      >
+        Northware Trader
+      </Button>
+      <Button
+        onClick={() => setFilterValue("")}
+        type="button"
+        variant="outline"
+      >
+        Zurücksetzen
+      </Button>
+    </div>
+  );
+}
+
 export function RolePermissionsForm({
   roleKey,
   permissionsResponse,
@@ -305,6 +370,7 @@ export function RolePermissionsForm({
   rolePermissions: string[];
 }) {
   const [errors, setErrors] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState<string>(""); // Filter-Value State
 
   const form = useForm<TUpdatePermissionSchema>({
     resolver: zodResolver(UserUpdatePermissionsFormSchema),
@@ -335,16 +401,33 @@ export function RolePermissionsForm({
     }
   }
 
+  // Gefilterte Liste
+  const filteredPermissions = permissionsResponse.permissionList.filter(
+    (perm) => {
+      if (!filterValue) {
+        return true;
+      }
+      const v = filterValue.toLowerCase();
+      return (
+        perm.permissionName?.toLowerCase().includes(v) ||
+        perm.permissionKey?.toLowerCase().includes(v)
+      );
+    }
+  );
+
   return (
     <Form {...form}>
+      <PermissionFilter
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+      />
       <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="permissions"
           render={() => (
             <FormItem className="grid-cols-2">
-              {permissionsResponse.permissionList.map((perm) => (
-                // TODO: #539 Gruppiert nach App
+              {filteredPermissions.map((perm) => (
                 <FormField
                   control={form.control}
                   key={perm.recordId}
@@ -506,7 +589,6 @@ export function CreatePermissionDetails() {
     }
   };
   return (
-    // TODO: #542 Assistant um mehere Berechtigungen zu erstellen
     <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogTrigger asChild>
         <Button>

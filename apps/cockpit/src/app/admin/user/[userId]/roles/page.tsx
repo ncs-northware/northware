@@ -28,7 +28,6 @@ export default async function Page({
         userId={userId}
         userRolesResponse={userRoles}
       />
-      {/* TODO: #539, #540 Dialogs für Rollen bearbeiten und erstellen, Rollen gruppieren?, Rollen in einem grid darstellen?  */}
     </PermissionProvider>
   );
 }
