@@ -86,7 +86,7 @@ export function LoginForm({ service }: { service: ServiceType }) {
 
               <Step className="w-full max-w-sm" name="verifications">
                 <Strategy name="password">
-                  <Card>
+                  <Card className="bg-background">
                     <CardHeader>
                       <CardTitle className="text-2xl">
                         Herzlich Willkommen
