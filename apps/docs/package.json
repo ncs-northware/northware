@@ -1,30 +1,30 @@
 {
   "name": "docs",
-  "version": "0.0.0",
   "private": true,
+  "version": "0.2.0",
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbo --port 40180",
+    "format": "ultracite format",
+    "lint": "ultracite lint",
+    "postinstall": "fumadocs-mdx",
     "start": "next start",
-    "postinstall": "fumadocs-mdx"
+    "tsc-check": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "15.5.2",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "fumadocs-ui": "15.7.7",
+    "@northware/ui": "workspace:",
     "fumadocs-core": "15.7.7",
     "fumadocs-mdx": "11.8.2",
-    "@northware/ui": "workspace:"
+    "fumadocs-ui": "15.7.7",
+    "next": "15.5.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "@types/mdx": "^2.0.13",
     "@types/node": "24.3.0",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
-    "typescript": "^5.9.2",
-    "@types/mdx": "^2.0.13",
-    "@tailwindcss/postcss": "^4.1.12",
-    "tailwindcss": "^4.1.12",
-    "postcss": "^8.5.6"
+    "typescript": "^5.9.2"
   }
 }
