@@ -704,7 +704,7 @@ export function UpdateUserRolesForm({
           control={form.control}
           name="roles"
           render={() => (
-            <FormItem className="grid-cols-2">
+            <FormItem className="lg:grid-cols-2">
               {filteredRoles.map((role) => (
                 <FormField
                   control={form.control}
@@ -868,7 +868,7 @@ export function UpdateUserPermissionsForm({
           control={form.control}
           name="permissions"
           render={() => (
-            <FormItem className="grid-cols-2">
+            <FormItem className="lg:grid-cols-2">
               {filteredPermissions.map((perm) => (
                 <FormField
                   control={form.control}
