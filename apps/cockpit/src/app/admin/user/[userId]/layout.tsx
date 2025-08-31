@@ -12,7 +12,7 @@ export async function generateMetadata({
 
   if (!user.success) {
     // Standard-Titel für Metadaten, falls die Benutzerdaten nicht ermittelt werden können.
-    return "Benutzerprofil";
+    return { title: "Benutzerprofil" };
   }
 
   return { title: user?.response.fullName };

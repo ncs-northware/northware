@@ -322,8 +322,9 @@ export function PermissionFilter({
   filterValue: string;
 }) {
   return (
-    <div className="flex flex-row gap-2">
+    <div className="grid gap-2 lg:grid-cols-5">
       <Input
+        className="lg:col-span-2"
         onChange={(e) => setFilterValue(e.target.value)}
         placeholder="Liste filtern"
         value={filterValue}
@@ -348,13 +349,6 @@ export function PermissionFilter({
         variant="secondary"
       >
         Northware Trader
-      </Button>
-      <Button
-        onClick={() => setFilterValue("")}
-        type="button"
-        variant="outline"
-      >
-        Zurücksetzen
       </Button>
     </div>
   );
