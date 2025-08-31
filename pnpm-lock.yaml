@@ -90,6 +90,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@northware/ui':
+        specifier: 'workspace:'
+        version: link:../../packages/ui
       fumadocs-core:
         specifier: 15.7.7
         version: 15.7.7(@types/react@19.1.12)(next@15.5.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
