@@ -1,4 +1,3 @@
-@import "tailwindcss";
+@import "@northware/ui/css";
 @import "fumadocs-ui/css/shadcn.css";
 @import "fumadocs-ui/css/preset.css";
-@import "@northware/ui/css";
