@@ -71,14 +71,17 @@ import {
   TriangleAlertIcon,
 } from "@northware/ui/icons/lucide";
 import { toast } from "@northware/ui/lib/utils";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { PermissionFilter } from "@/components/role-forms";
 import {
   CreateEMailAddressFormSchema,
+  CreateUserFormSchema,
   parseErrorMessages,
   type TCreateEMailAddressFormSchema,
+  type TCreateUserFormSchema,
   type TUpdatePasswordFormSchema,
   type TUpdatePermissionSchema,
   type TUpdateRoleSchema,
@@ -96,6 +99,7 @@ import type {
 import { updateUserPermissions, updateUserRoles } from "@/lib/role-actions";
 import {
   createEmailAddress,
+  createUser,
   deleteEmailAddress,
   deleteUser,
   updateEmailAddress,
@@ -104,6 +108,122 @@ import {
 } from "@/lib/user-actions";
 
 /*********************** Clerk User Data **************************************/
+export default function CreateUserForm() {
+  const router = useRouter();
+  const [errors, setErrors] = useState<string[]>([]);
+  const form = useForm<TCreateUserFormSchema>({
+    resolver: zodResolver(CreateUserFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      emailAddress: "",
+      username: "",
+      password: "",
+    },
+  });
+
+  const onSubmit: SubmitHandler<TCreateUserFormSchema> = async (data) => {
+    setErrors([]); // Fehler zurücksetzen
+    try {
+      const userId = await createUser(data);
+      router.push(`/admin/user/create/${userId}/roles`);
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form
+        className="mb-5 grid gap-4 sm:grid-cols-2"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <FormField
+          control={form.control}
+          name="firstName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Vorname</FormLabel>
+              <FormControl>
+                <Input placeholder="Max" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nachname</FormLabel>
+              <FormControl>
+                <Input placeholder="Mustermann" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="emailAddress"
+          render={({ field }) => (
+            <FormItem className="sm:col-span-2">
+              <FormLabel>E-Mail</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="mmuster@northware.de"
+                  type="email"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem className="sm:col-span-2">
+              <FormLabel>Benutzername</FormLabel>
+              <FormControl>
+                <Input placeholder="mmuster" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="sm:col-span-2">
+              <FormLabel>Passwort</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {errors.length > 0 && (
+          <AlertWrapper className="sm:col-span-2" variant="destructive">
+            <ul className="w-max">
+              {errors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </AlertWrapper>
+        )}
+
+        <Button className="sm:col-span-2" type="submit">
+          Speichern und Weiter
+        </Button>
+      </form>
+    </Form>
+  );
+}
 
 export function UpdateUserForm({ user }: { user?: TSingleUser }) {
   const [errors, setErrors] = useState<string[]>([]);
@@ -801,6 +921,160 @@ export function UpdateUserRolesForm({
   );
 }
 
+export function CreateUserRolesForm({
+  rolesResponse,
+  userRolesResponse,
+  userId,
+}: RolesFormProps) {
+  const router = useRouter();
+  const [errors, setErrors] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState<string>("");
+  const form = useForm<TUpdateRoleSchema>({
+    resolver: zodResolver(UpdateUserRoleFormSchema),
+    defaultValues: {
+      roles: userRolesResponse,
+    },
+  });
+
+  if (!rolesResponse.success) {
+    return rolesResponse.error.message;
+  }
+
+  async function onSubmit(data: TUpdateRoleSchema) {
+    try {
+      await updateUserRoles({ data, userRolesResponse, userId });
+      router.push(`/admin/user/create/${userId}/permissions`);
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
+    }
+  }
+
+  const filteredRoles = rolesResponse.roleList.filter((role) => {
+    if (!filterValue) {
+      return true;
+    }
+    const v = filterValue.toLowerCase();
+    return (
+      role.roleName?.toLowerCase().includes(v) ||
+      role.roleKey?.toLowerCase().includes(v)
+    );
+  });
+
+  return (
+    <Form {...form}>
+      <PermissionFilter
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+      />
+      <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="roles"
+          render={() => (
+            <FormItem className="lg:grid-cols-2">
+              {filteredRoles.map((role) => (
+                <FormField
+                  control={form.control}
+                  key={role.roleKey}
+                  name="roles"
+                  render={({ field }) => (
+                    <FormItem className="p-3" key={role.roleKey}>
+                      <Collapsible>
+                        <div className="flex flex-row items-center justify-between">
+                          <FormLabel>
+                            <span>{role.roleName}</span>
+                            <Badge variant="secondary">{role.roleKey}</Badge>
+                            <CollapsibleTrigger asChild>
+                              <Button
+                                className="size-8"
+                                size="icon"
+                                type="button"
+                                variant="ghost"
+                              >
+                                <ChevronDownIcon />
+                              </Button>
+                            </CollapsibleTrigger>
+                          </FormLabel>
+
+                          <FormControl>
+                            <Switch
+                              checked={field.value.includes(role.roleKey)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...field.value,
+                                      role.roleKey,
+                                    ])
+                                  : field.onChange(
+                                      field.value.filter(
+                                        (value) => value !== role.roleKey
+                                      )
+                                    );
+                              }}
+                            />
+                          </FormControl>
+                        </div>
+                        <CollapsibleContent>
+                          <ul className="text-muted-foreground text-sm">
+                            {role.permissions.length > 0 ? (
+                              role.permissions.map((permission) => (
+                                <li
+                                  className="my-2"
+                                  key={permission.permissionKey}
+                                >
+                                  <span className="mr-2">
+                                    {permission.permissionName}
+                                  </span>
+                                  <Badge
+                                    className="font-mono"
+                                    variant="secondary"
+                                  >
+                                    {permission.permissionKey}
+                                  </Badge>
+                                </li>
+                              ))
+                            ) : (
+                              <li className="my-2">
+                                Die Rolle enthält keine Berechtigungen.
+                              </li>
+                            )}
+                          </ul>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    </FormItem>
+                  )}
+                />
+              ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {errors.length > 0 && (
+          <AlertWrapper variant="destructive">
+            <AlertDescription>
+              <ul>
+                {errors.map((err) => (
+                  <li key={err}>{err}</li>
+                ))}
+              </ul>
+            </AlertDescription>
+          </AlertWrapper>
+        )}
+        <div className="flex w-full flex-col gap-2 lg:flex-row lg:gap-2">
+          <Button className="flex-auto" type="submit">
+            Rollen vergeben und weiter
+          </Button>
+          <Button className="flex-auto" variant="secondary">
+            <Link href={`/admin/user/create/${userId}/permissions`}>
+              Weiter ohne Rollen
+            </Link>
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
+}
+
 type PermissionsFormProps = {
   permissionsResponse: TPermissionListResponse;
   extraPermissionsResponse: (string | undefined)[];
@@ -922,6 +1196,139 @@ export function UpdateUserPermissionsForm({
         <Button className="w-full" type="submit">
           Zusätzliche Berechtigungen aktualisieren
         </Button>
+      </form>
+    </Form>
+  );
+}
+
+export function CreateUserPermissionsForm({
+  permissionsResponse,
+  extraPermissionsResponse,
+  userId,
+}: PermissionsFormProps) {
+  const router = useRouter();
+  const [errors, setErrors] = useState<string[]>([]);
+  const [filterValue, setFilterValue] = useState<string>("");
+
+  const form = useForm<TUpdatePermissionSchema>({
+    resolver: zodResolver(UserUpdatePermissionsFormSchema),
+    defaultValues: { permissions: extraPermissionsResponse },
+  });
+
+  if (!permissionsResponse.success) {
+    return (
+      <AlertWrapper variant="warning">
+        <AlertIcon variant="warning" />
+        <AlertTitle>Es ist ein Fehler aufgetreten.</AlertTitle>
+        <AlertDescription>
+          Wir konnten nicht alle erforderlichen Daten abrufen. Es ist daher
+          aktuell nicht möglich, die Berechtigungen zu bearbeiten.
+          <br />
+          {permissionsResponse.error.message}
+        </AlertDescription>
+      </AlertWrapper>
+    );
+  }
+
+  async function onSubmit(data: TUpdatePermissionSchema) {
+    try {
+      await updateUserPermissions({ data, extraPermissionsResponse, userId });
+      router.push("/admin/user");
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
+    }
+  }
+
+  const filteredPermissions = permissionsResponse.permissionList.filter(
+    (perm) => {
+      if (!filterValue) {
+        return true;
+      }
+      const v = filterValue.toLowerCase();
+      return (
+        perm.permissionName?.toLowerCase().includes(v) ||
+        perm.permissionKey?.toLowerCase().includes(v)
+      );
+    }
+  );
+
+  return (
+    <Form {...form}>
+      <PermissionFilter
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+      />
+      <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="permissions"
+          render={() => (
+            <FormItem className="lg:grid-cols-2">
+              {filteredPermissions.map((perm) => (
+                <FormField
+                  control={form.control}
+                  key={perm.recordId}
+                  name="permissions"
+                  render={({ field }) => (
+                    <FormItem
+                      className="flex flex-row items-center justify-between p-3"
+                      key={perm.recordId}
+                    >
+                      <FormLabel>
+                        <span>{perm.permissionName}</span>
+                        <Badge variant="secondary">{perm.permissionKey}</Badge>
+                      </FormLabel>
+                      <FormControl>
+                        <Switch
+                          checked={field.value.includes(perm.permissionKey)}
+                          onCheckedChange={(checked) => {
+                            return checked
+                              ? field.onChange([
+                                  ...field.value,
+                                  perm.permissionKey,
+                                ])
+                              : field.onChange(
+                                  field.value.filter(
+                                    (value) => value !== perm.permissionKey
+                                  )
+                                );
+                          }}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </FormItem>
+          )}
+        />
+
+        {errors.length > 0 && (
+          <AlertWrapper variant="destructive">
+            <AlertDescription>
+              <ul>
+                {errors.map((err) => (
+                  <li key={err}>{err}</li>
+                ))}
+              </ul>
+            </AlertDescription>
+          </AlertWrapper>
+        )}
+        <div className="flex w-full flex-col gap-2 lg:flex-row lg:gap-2">
+          <Button className="flex-auto" variant="secondary">
+            <Link href={`/admin/user/create/${userId}/roles`}>
+              Zurück zu den Rollen
+            </Link>
+          </Button>
+          <Button className="flex-auto" type="submit">
+            Berechtigungen vergeben und abschließen
+          </Button>
+          <Button className="flex-auto" variant="secondary">
+            <Link href={"/admin/user"}>
+              Weiter ohne zusätzliche Berechtigungen
+            </Link>
+          </Button>
+        </div>
       </form>
     </Form>
   );

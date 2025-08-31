@@ -173,14 +173,14 @@ export async function createUser(formData: TCreateUserFormSchema) {
   const { firstName, lastName, username, emailAddress, password } = formData;
   try {
     const client = await clerkClient();
-    await client.users.createUser({
+    const user = await client.users.createUser({
       firstName,
       lastName,
       username,
       emailAddress: [emailAddress],
       password,
     });
-    revalidatePath("/admin");
+    return user.id;
   } catch (error) {
     const typesafeError = error as ClerkError;
     handleClerkError(typesafeError);
