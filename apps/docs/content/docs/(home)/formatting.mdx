@@ -62,7 +62,7 @@ Im Root-Package des Projektes sind mehrere Commands definiert, um die Biome CLI.
 }
 
 ```
-<Warning>
+<Callout type="info">
 Die Commands `pnpm lint:root` und `pnpm format:root` wenden den Biome Linter und Formatter auf alle Dateien des Packages an. 
 `pnpm lint` und `pnpm format` greifen auf die selbe Config-Datei zu und führen den selben Command in den Apps und Packages des Projektes aus.
 
@@ -70,4 +70,4 @@ Die Commands `pnpm lint:root` und `pnpm format:root` wenden den Biome Linter und
 Sollen alle Teile des Projektes geprüft werden, sollten `pnpm lint:root` oder `pnpm format:root` ausgeführt werden.
 
 Keinesfalls sollten `pnpm format` und `pnpm format:root` sowie `pnpm lint` und `pnpm lint:root` kombiniert werden, da dann beide Commands die selbe Arbeit erledigen.
-</Warning>
+</Callout>

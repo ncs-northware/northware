@@ -2,15 +2,14 @@
 title: Workflows
 ---
 
-import  {GitHubBadge}  from '@/github-badge.tsx';
 
 ## GitHub Management
 
 ### Pull Request Labeler
 
 Der Workflow "Pull Request Labeler" (`.github/workflows/pr_labeler.yml`) nutzt die GitHub Action [Labeler](https://github.com/marketplace/actions/labeler).
-Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit <GitHubBadge title="apps/" color="black" borderColor="black" background="white"/> und
-<GitHubBadge title="packages/" color="black" background="#F0B9F8"/> Labels.
+Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit `apps/` und
+`packages/` Labels.
 Damit dieses Labeling korrekt funktioniert müssen die einzelnen Labels in der Konfigurationsdatei `.github/labeler.yml` zu den zugehörigen Dateipfaden zugeordnet werden.
 
 ```yaml .github/workflows/pr_labeler.yml
@@ -94,10 +93,10 @@ Der Workflow **Turborepo CI** (`.github/workflows/turborepo-ci.yml`) wird immer 
 
 Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgebrochen.
 
-<Info>
+<Callout type="info">
 Der Turborepo CI-Workflow durchläuft bei jedem Pull Request und bei jedem Merge die Schritte `pnpm turbo build --affected` und `pnpm turbo run lint:ci`. 
 Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist lässt sich dieser Ablauf mit `pnpm localci` auch lokal abbilden, damit Fehler schon vor dem CI-Durchlauf auffallen.
-</Info>
+</Callout>
 
 ### autofix.ci
 

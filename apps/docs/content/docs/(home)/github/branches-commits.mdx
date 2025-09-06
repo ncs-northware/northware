@@ -37,7 +37,7 @@ welchen Zweck die Änderungen haben (z.B. `docs/gh-management` oder `fix/menu-st
 
 Auch wenn es all diese Möglichkeiten gibt, ist der einzelne Prefix des Codeteils gegenüber dem Zweck-Prefix und auch gegenüber der Kobination vorzuziehen.
 
-<Warning>
+<Callout type="warn">
 Es ist nicht möglich, Branches ohne Prefix zu verwenden und zur gleichen Zeit einen Branch mit Prefix zu verwenden der gleich lautet, wie der Branchname ohne Prefix.
 Es kann also z.B. nicht der Branch `cockpit` neben dem Branch `cockpit/hrmanagement` existieren. 
 Wird nur der Branch `cockpit` oder nur der Branch `cockpit/hrmanagement` zu einem Zeitpunkt verwendet, funktioniert es.
@@ -50,7 +50,7 @@ nachdem dieser Remote-Branch gelöscht wurde ein neuer Branch `github-management
 dass es den Remote-Branch `github-management` noch gibt, und dies zu Konflikten führt.
 
 In diesem Fall kann der Command `git remote prune origin` verwendet werden, um Verlinkungen zu nicht mehr vorhandenen Remote-Branches zu entfernen.
-</Warning>
+</Callout>
 
 ## Commits
 
@@ -58,10 +58,10 @@ Commits im GitHub Repository sollen den vorgegebenen Regeln von **Conventional C
 Um die Entwickler bei dem erstellen von Conventional Commits zu unterstützen, wird in dem Repository [commitlint](https://commitlint.js.org/) genutzt.
 Wenn zum commiten von Codeänderungen der Command `pnpm commit` genutzt wird, wird der Nutzer mit unterschiedlichen Abfragen durch die vorgesehenen Commitbereiche geführt.
 
-<Warning>
+<Callout type="info">
 Aktuell wird der Nutzer nicht dazu gezwungen, einen Commit mit commitlint auszuführen, sondern er hat auch weiterhin die Möglichkeit, jede Art von Commit-Message anzugeben.
 Es sollte dennoch möglichst der Commit-Prompt (`pnpm commit`) genutzt werden, damit es übersichtlich bleibt.
-</Warning>
+</Callout>
 
 ### Commit Conventions
 
@@ -113,13 +113,13 @@ Der genaue Wortlaut von `scope` ist nicht vorgegeben, es sollte aber eine kurze 
 Bei Änderungen an Apps kann z.B. `cockpit`, `finance` oder `admin` verwendet werden. Die Prefix `northware-` und auch `apps/` sollten weggelassen werden.
 Bei Änderungen an Packages kann z.B. `theme`, `auth` oder `tailwind-config` verwendet werden. Der Prefix `package/` sollte weggelassen werden.
 
-<Note> 
+<Callout type="info"> 
 - Um die Regel des kurzen und prägnanten Scopes zu befolgen ist es auch zulässig, einen anderen als den Scope des Labels zu verwenden, wenn es den Commit übersichtlicher macht.
 - **Wenn ein Commit mehrere Codeteile verändert,** ist der Scope `mixed` zu wählen. In diesem Fall sollte im Body oder Subject erwähnt sein, welche Codeteile verändert wurden.
 - Änderungen an CI-Konfigurationen erhalten in anderen Umgebungen i.d.R. einen eigenen Type. In diesem Repository ist es nicht so. 
 Wenn Änderungen an der CI durchgeführt werden, kann ein beliebiger Type verwendet werden. Hier sollte dann der **Scope** `ci` oder `cicd` lauten, 
 wenn es keinen Grund gibt stattdessen `gh-managment` o.ä. zu verwenden.
-</Note>
+</Callout>
 
 
 
