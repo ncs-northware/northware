@@ -1,0 +1,14 @@
+{
+  "title": "Home",
+  "root": true,
+  "pages": [
+    "index",
+    "filestructure",
+    "formatting",
+    "---GitHub Management---",
+    "github/branches-commits",
+    "github/project-management",
+    "github/release-strategy",
+    "github/workflows"
+  ]
+}
