@@ -1,5 +1,7 @@
 # Northware
 
+The Northware Suite is a set of WebApps to manage the bussiness, finance and commerce of the NCS Group. The monorepo is powered by [Turborepo](https://turborepo.com) and inspired by [next-forge](https://next-forge.com). The apps and packages are based on [Next.js](https://nextjs.org) and [React](https://react.dev) as well as some other Frameworks.
+
 > [!WARNING]
 > The Northware project (including Northware Cockpit, Northware Trader, Northware Finance, Northware Docs, and all apps and packages contained within this repository) is intended for demonstration and educational purposes only. This project was not developed for productive use in the real world (business or otherwise). The code may be partially or completely insecure and/or unstable and is in no way legally compliant.
 >
