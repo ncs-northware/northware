@@ -15,3 +15,15 @@ shadcn/ui preset und `@northware/ui` angepasst.
 
 Die Inhalte sind in MDX geschrieben. Das ermglicht die Verwendung von TSX-Komponenten in Markdown. Es gibt Inhalte zu dem Projekt und dem Entwicklungsprozess 
 sowie Inhalte zur Verwendung und Funktionialität jeder App und zu jedem Package.
+
+## Spezielle Komponenten der Docs
+
+### ChildDocs
+
+Die Komponente ChildDocs zeigt alle Seiten und Ordner, die unterhalb eines bestimmten Ordners liegen 
+als Liste von [Cards](https://fumadocs.dev/docs/ui/markdown#cards)
+
+<ChildDocs folder="apps" />
+
+Die Komponente erwartet unter dem Property `folder` den Pfad zu dem Ordner, dessen ChildDocs gezeigt werden sollen. 
+Damit auch Unterordner in der Liste richtig dargestellt werden, benötigt jeder Unterordner eine `index.mdx`, die optional ebenfalls ChildDocs zeigen kann.
