@@ -1,39 +1,42 @@
 ---
 title: '@northware/service-config'
-description: 'Das Package `@northware/service-config` stellt helfende Funktionalitäten bereit, um zu kontrollieren, welche App der Northware-Suite gerade genutzt wird.'
+description: 'Helfende Funktionen, um zu kontrollieren, welche App der Northware-Suite gerade genutzt wird.'
 ---
 
-Überall wo es nötig ist, kann @northware/service-config verwendet werden, um innerhalb von Packages die aktuell genutzte App herauszufinden (z.B. Conditional-Rendering von UI-Komponenten oder API-Fetching-Filter).
-Mit `@northware/service-config` soll es so schnell und einfach möglich sein, die Konfigurationen der Apps zentral zu verändern.
+Überall wo es nötig ist, kann @northware/service-config verwendet werden, um innerhalb von Packages die aktuell genutzte App herauszufinden (z.B. Conditional-
+Rendering von UI-Komponenten oder API-Fetching-Filter). Mit `@northware/service-config` soll es so schnell und einfach möglich sein, die Konfigurationen der Apps 
+zentral zu verändern.
 
 ## App-Auswertung als Component-Prop
 
-Der einfachste Weg, die aktuell genutzte App ausuwerten bzw. zu definieren, ist ihn als ein Component-Prop zu definieren und dann an Child-Komponenten weiter zu geben. 
-Der Vorteil hierbei ist, dass der Wert auch in Server-Komponenten nutzbar ist.
-Um den Prop nicht immer wieder mit TypeScript zu defineren, sollte für den Prop der ServiceType verwendet werden, der von `@northware/service-config` bereitgestellt wird.
+Der einfachste Weg, die aktuell genutzte App ausuwerten bzw. zu definieren, ist ihn als ein Component-Prop zu definieren und dann an Child-Komponenten
+weiter zu geben. Der Vorteil hierbei ist, dass der Wert auch in Server-Komponenten nutzbar ist.
+Um den Prop nicht immer wieder mit TypeScript zu defineren, sollte für den Prop der ServiceType verwendet werden, 
+der von `@northware/service-config` bereitgestellt wird.
 
-```tsx service-config/types.ts
+```tsx title="service-config/types.ts"
 export type ServiceType = 'cockpit' | 'admin' | 'finance' | 'trader';
 ```
 
 Der Type kann dann in Komponenten verwendet werden, die direkt in die App integriert werden. 
 An alle von der Komponente selbst verwendeten Komponenten kann der Wert des Props weitergegeben werden.
 
-```tsx ui/components/layout/container.tsx {1, 7, 11, 15}
-import type { ServiceType } from '@northware/service-config';
+```tsx title="ui/components/layout/container.tsx"
+import type { ServiceType } from '@northware/service-config'; //[!code highlight]
 ...
 
 export function Container({
   children,
   className,
-  service,
+  service, //[!code highlight]
 }: {
   children: ReactNode;
   className?: string;
-  service: ServiceType;
+  service: ServiceType; //[!code highlight]
 }) {
   return (
     <>
+      //[!code highlight]
       <SiteHeader service={service} />
       <main className={cn('container pt-8', className)}>{children}</main>
     </>
@@ -50,18 +53,18 @@ So lässt sich eine neue App einfach über `ServiceType` zu den akzeptierten Wer
 Komponenten, die auf Daten aus der API zugreifen, können den Service-Prop auch als Argument an Funktionen weitergeben. 
 Die Funktionen, die die Daten der API bereitstellen können dann anhand dieses Wertes filtern.
 
-```tsx ui/components/menu/main-nav.tsx {4}
+```tsx title="ui/components/menu/main-nav.tsx"
 import { menuData } from '@northware/ui/components/menu/menu-data';
 
 export async function MainNav({ service }: { service: ServiceType }) {
-  const menuItems = await menuData(service);
+  const menuItems = await menuData(service); //[!code highlight]
   return (
     ...
   )
 }
 ```
 
-```ts ui/components/menu/menuData.ts {15}
+```ts title="ui/components/menu/menuData.ts"
 import { db } from '@northware/database/connection';
 import { mainNavTable } from '@northware/database/schema';
 import type { ServiceType } from '@northware/service-config';
@@ -76,7 +79,7 @@ export async function menuData(service: ServiceType) {
       childOf: mainNavTable.childOf,
     })
     .from(mainNavTable)
-    .where(eq(mainNavTable.app, service))
+    .where(eq(mainNavTable.app, service)) //[!code highlight]
     .orderBy(mainNavTable.order);
 
   const topLevelItems = result.filter((item) => item.childOf == null);
@@ -94,28 +97,26 @@ export async function menuData(service: ServiceType) {
 Auch der Array für die in der Meta-Navigation verlinkten Apps wird von `@northware/service-config` bereitgestellt.
 Die Meta-Navigationen in Mobile und Desktop-Ansichten mappen dann durch diesen Array um entsprechende Links zu präsentieren.
 
-```tsx service-config/apps.ts
-export const suiteAppsMeta: {
+```tsx title="service-config/apps.ts"
+import type { ServiceType } from "./types";
+
+export const suiteApps: {
   title: string;
-  href: string;
   slug: ServiceType;
-  textColor: string;
 }[] = [
   // Attribute der Navigationspunkte der AppSwitches in MetaNav
   {
-    title: 'Northware Cockpit',
-    href: 'http://localhost:40110',
-    slug: 'cockpit',
-    textColor: 'text-cockpit',
+    title: "Northware Cockpit",
+    slug: "cockpit",
   },
   {
-    title: 'Northware Finance',
-    href: 'http://localhost:40120',
-    slug: 'finance',
-    textColor: 'text-finance',
+    title: "Northware Finance",
+    slug: "finance",
   },
-  ...
-]
-```
+  {
+    title: "Northware Trader",
+    slug: "trader",
+  },
+];
 
-Über diesen zentralen Array lassen sich nun die Klassen der einzelnen App-Buttons und die Links zu den Apps steuern.
+```

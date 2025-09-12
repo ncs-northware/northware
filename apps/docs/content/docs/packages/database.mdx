@@ -1,5 +1,6 @@
 ---
 title: '@northware/database'
+description: Wie die Neon Database von Northware genutzt und mit Drizzle ORM verwaltet werden kann
 ---
 
 Innerhalb von `@northware/database` wird die Verbindung zu den Neon Databases hergestellt. Außerdem sind hier die Drizzle Schema-Dateien der Datenbank gespeichert.
@@ -13,13 +14,14 @@ Das Package exportiert die Variablen `client` und `db` unter der Adresse `@north
 Innerhalb des Packages werden auch allen Dateien gespeichert, die mit [Drizzle](https://orm.drizzle.team/) das Schema der Datenbank definieren.
 
 Alle Schema-Definitionen werden in dem Ordner `/schema` gespeichert. Das gesamte Database-Schema wird auf mehrere Dateien verteilt, 
-um eine möglichst hohe Übersichtlichkeit zu erreichen. Damit wird [diesem Ansatz](https://orm.drizzle.team/docs/sql-schema-declaration#schema-in-multiple-files) gefolgt.
+um eine möglichst hohe Übersichtlichkeit zu erreichen. 
+Damit wird [diesem Ansatz](https://orm.drizzle.team/docs/sql-schema-declaration#schema-in-multiple-files) gefolgt.
 
 Das Schma soll folgendermaßen aufgeteilt werden:
 
 - Jede größere Datenbanktabelle erhält eine eigene Schema-Datei
-- Schema-Dateien können Schemata für mehrere Tabellen enthalten, wenn sie gemeinsam für ein Feature benötigt werden (Das Schema der Haupttabelle wird in der gleichen Datei 
-definiert wie kleinere Tabellen, die Relationen zur Haupttabelle haben).
+- Schema-Dateien können Schemata für mehrere Tabellen enthalten, wenn sie gemeinsam für ein Feature benötigt werden (Das Schema der Haupttabelle wird in der 
+gleichen Datei definiert wie kleinere Tabellen, die Relationen zur Haupttabelle haben).
 
 Das Drizzle Kit wird verwendet, um das Datenbank-Schema der [Neon Database](https://neon.tech/docs/) mit den Schema-Definitionen in der Codebase abzustimmen.
 
@@ -27,8 +29,8 @@ Der Workflow mit Drizzle Kit und die Verbindung zur Datenbank in diesem Workflow
 Hier ist definiert, dass alle Schema-Dateien im `./schema` Ordner abgelegt sind. Außerdem ist hier definiert, dass die von Drizzle generierten Migrations-Dateien im 
 Ordner `./drizzle-migrations` abgelegt werden sollen. Da diese Dateien nur temporär benötigt werden, wird der Ordner `drizzle-migrations` von Git ignoriert.
 
-Die `drizzle.config.ts` greift auf die Environment-Variable `NW_API` zu. Diese Variable muss innerhalb einer `./.env.local` im `@northware/database` Package definiert werden und
-die Verbindungs-URL zur Datenbank enthalten.
+Die `drizzle.config.ts` greift auf die Environment-Variable `NW_API` zu. Diese Variable muss innerhalb einer `./.env.local` im `@northware/database` Package 
+definiert werden und die Verbindungs-URL zur Datenbank enthalten.
 
 ### Drizzle Kit
 
