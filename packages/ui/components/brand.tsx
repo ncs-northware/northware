@@ -1,5 +1,10 @@
 import type { ServiceType } from "@northware/service-config";
-import { CockpitIcon, FinanceIcon, TraderIcon } from "@northware/ui/icons";
+import {
+  CockpitIcon,
+  DocsIcon,
+  FinanceIcon,
+  TraderIcon,
+} from "@northware/ui/icons";
 
 import { cn } from "@northware/ui/lib/utils";
 
@@ -18,12 +23,14 @@ export function Brand({
     cockpit: "text-cockpit",
     finance: "text-finance",
     trader: "text-trader",
+    docs: "text-cockpit",
   };
 
   const subBrand = {
     cockpit: "Cockpit",
     finance: "Finance",
     trader: "Trader",
+    docs: "Docs",
   };
 
   return (
@@ -50,6 +57,8 @@ export function BrandIcon({
       return <FinanceIcon {...props} />;
     case "trader":
       return <TraderIcon {...props} />;
+    case "docs":
+      return <DocsIcon {...props} />;
 
     default:
       return "";

@@ -1,0 +1,122 @@
+---
+title: '@northware/service-config'
+description: 'Helfende Funktionen, um zu kontrollieren, welche App der Northware-Suite gerade genutzt wird.'
+---
+
+Überall wo es nötig ist, kann @northware/service-config verwendet werden, um innerhalb von Packages die aktuell genutzte App herauszufinden (z.B. Conditional-
+Rendering von UI-Komponenten oder API-Fetching-Filter). Mit `@northware/service-config` soll es so schnell und einfach möglich sein, die Konfigurationen der Apps 
+zentral zu verändern.
+
+## App-Auswertung als Component-Prop
+
+Der einfachste Weg, die aktuell genutzte App ausuwerten bzw. zu definieren, ist ihn als ein Component-Prop zu definieren und dann an Child-Komponenten
+weiter zu geben. Der Vorteil hierbei ist, dass der Wert auch in Server-Komponenten nutzbar ist.
+Um den Prop nicht immer wieder mit TypeScript zu defineren, sollte für den Prop der ServiceType verwendet werden, 
+der von `@northware/service-config` bereitgestellt wird.
+
+```tsx title="service-config/types.ts"
+export type ServiceType = 'cockpit' | 'admin' | 'finance' | 'trader';
+```
+
+Der Type kann dann in Komponenten verwendet werden, die direkt in die App integriert werden. 
+An alle von der Komponente selbst verwendeten Komponenten kann der Wert des Props weitergegeben werden.
+
+```tsx title="ui/components/layout/container.tsx"
+import type { ServiceType } from '@northware/service-config'; //[!code highlight]
+...
+
+export function Container({
+  children,
+  className,
+  service, //[!code highlight]
+}: {
+  children: ReactNode;
+  className?: string;
+  service: ServiceType; //[!code highlight]
+}) {
+  return (
+    <>
+      //[!code highlight]
+      <SiteHeader service={service} />
+      <main className={cn('container pt-8', className)}>{children}</main>
+    </>
+  );
+}
+
+```
+
+Durch die Verwendung von `ServiceType` wird sichergestellt, dass der Prop der Komponente nur die vorgegebenen Werte akzeptiert. 
+So lässt sich eine neue App einfach über `ServiceType` zu den akzeptierten Werten hinzufügen und alle anderen Werte werden zurückgewiesen.
+
+### Verwendung des Service Props als Filter für API-Calls
+
+Komponenten, die auf Daten aus der API zugreifen, können den Service-Prop auch als Argument an Funktionen weitergeben. 
+Die Funktionen, die die Daten der API bereitstellen können dann anhand dieses Wertes filtern.
+
+```tsx title="ui/components/menu/main-nav.tsx"
+import { menuData } from '@northware/ui/components/menu/menu-data';
+
+export async function MainNav({ service }: { service: ServiceType }) {
+  const menuItems = await menuData(service); //[!code highlight]
+  return (
+    ...
+  )
+}
+```
+
+```ts title="ui/components/menu/menuData.ts"
+import { db } from '@northware/database/connection';
+import { mainNavTable } from '@northware/database/schema';
+import type { ServiceType } from '@northware/service-config';
+import { eq } from 'drizzle-orm';
+
+export async function menuData(service: ServiceType) {
+  const result = await db
+    .select({
+      itemId: mainNavTable.itemId,
+      title: mainNavTable.title,
+      href: mainNavTable.href,
+      childOf: mainNavTable.childOf,
+    })
+    .from(mainNavTable)
+    .where(eq(mainNavTable.app, service)) //[!code highlight]
+    .orderBy(mainNavTable.order);
+
+  const topLevelItems = result.filter((item) => item.childOf == null);
+  const childItems = (parent: string) => {
+    const children = result.filter((item) => item.childOf === parent);
+    return children;
+  };
+  return { topLevelItems, childItems };
+}
+
+```
+
+## suiteApps Array in den Meta-Navigationen
+
+Auch der Array für die in der Meta-Navigation verlinkten Apps wird von `@northware/service-config` bereitgestellt.
+Die Meta-Navigationen in Mobile und Desktop-Ansichten mappen dann durch diesen Array um entsprechende Links zu präsentieren.
+
+```tsx title="service-config/apps.ts"
+import type { ServiceType } from "./types";
+
+export const suiteApps: {
+  title: string;
+  slug: ServiceType;
+}[] = [
+  // Attribute der Navigationspunkte der AppSwitches in MetaNav
+  {
+    title: "Northware Cockpit",
+    slug: "cockpit",
+  },
+  {
+    title: "Northware Finance",
+    slug: "finance",
+  },
+  {
+    title: "Northware Trader",
+    slug: "trader",
+  },
+];
+
+```

@@ -1,0 +1,29 @@
+---
+title: Northware Docs
+description: Wie diese Dokumentation funktioniert
+---
+
+<Callout type="info">
+Die Dokumentation wird lokal unter dem Port 40180 betrieben und unter [northware-docs.netlify.app](https://northware-docs.netlify.app) veröffentlicht.
+</Callout>
+
+Diese Dokumentation basiert auf [Fumadocs](https://fumadocs.dev/). 
+Da Fumadocs auf Next.js basiert, funtioniert es sehr ählich wie eine solche App, die durch die Module von Fumadocs erweitert wurde.
+
+Das Layout der Dokumentation basiert auf dem [Notebook Layout](https://fumadocs.dev/docs/ui/layouts/notebook) von Fumadocs und wurde mit dem
+shadcn/ui preset und `@northware/ui` angepasst.
+
+Die Inhalte sind in MDX geschrieben. Das ermglicht die Verwendung von TSX-Komponenten in Markdown. Es gibt Inhalte zu dem Projekt und dem Entwicklungsprozess 
+sowie Inhalte zur Verwendung und Funktionialität jeder App und zu jedem Package.
+
+## Spezielle Komponenten der Docs
+
+### ChildDocs
+
+Die Komponente ChildDocs zeigt alle Seiten und Ordner, die unterhalb eines bestimmten Ordners liegen 
+als Liste von [Cards](https://fumadocs.dev/docs/ui/markdown#cards)
+
+<ChildDocs folder="apps" />
+
+Die Komponente erwartet unter dem Property `folder` den Pfad zu dem Ordner, dessen ChildDocs gezeigt werden sollen. 
+Damit auch Unterordner in der Liste richtig dargestellt werden, benötigt jeder Unterordner eine `index.mdx`, die optional ebenfalls ChildDocs zeigen kann.
