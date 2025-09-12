@@ -13,7 +13,7 @@ Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten
 `packages/` Labels.
 Damit dieses Labeling korrekt funktioniert müssen die einzelnen Labels in der Konfigurationsdatei `.github/labeler.yml` zu den zugehörigen Dateipfaden zugeordnet werden.
 
-```yaml .github/workflows/pr_labeler.yml
+```yaml title=".github/workflows/pr_labeler.yml"
 
 # This file is enabling the Labeler Action to run. Labeler is configured in .github/labeler.yml
 
@@ -32,7 +32,7 @@ jobs:
 
 ```
 
-```yaml .github/labeler.yml
+```yaml title=".github/labeler.yml"
 
 # This file serves as configuration file for the labeler Workflow (.github/workflows/pr_labeler.yml)
 

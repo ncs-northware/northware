@@ -48,7 +48,7 @@ Im Root-Package des Projektes sind mehrere Commands definiert, um die Biome CLI.
 - **`pnpm turbo lint`** führt das Script `lint` in allen Apps und Packages aus, in denen ein solches Script definiert ist. In allen `package.json` sollte daher ein Script definiert sein, dass hinter dem Script `lint` den Command `ultracite lint` ausführt.
 - **`pnpm turbo format`** führt das Script `format` in allen Apps und Packages aus, in denen ein solches Script definiert ist. In allen `package.json` sollte daher ein Script definiert sein, dass hinter dem Script `format` den Command `ultracite format` ausführt.
 
-```json package.json
+```json title="package.json"
 
 {
     "name":"@northware/ui",
