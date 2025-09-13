@@ -1,0 +1,65 @@
+---
+title: "@northware/tsconfig"
+description: Config Presets für TypeScript in den Apss und Packages
+---
+
+Das Package `@northware/tsconfig` stellt einige Config-Presets für TypeScript zur Verfügung, die von Apps und Packages verwendet werden.
+Durch die Verwendung dieser Presets wird sichergestellt, das alle Apps und Packages den gleichen Konfigurationsstandards unterliegen.
+
+Das Package basiert auf einem Standard-Package von Turborepo. Die Standard-Konfigurationen allerdings auf den Stack in diesem Projekt abgestimmt.
+Auf der [Website von Turborepo](https://turborepo.com/docs/guides/tools/typescript) ist genauer beschrieben, 
+wie das Package funktioniert und konfiguriert werden kann.
+
+## Das Base Preset
+
+In der Datei `base.json` ist die Basis-Konfiguration von TypeScript definiert. Diese Konfiguration wird von allen übrigen Presets verwendet und erweitert.
+
+## TSConfig in einer Next.js App
+
+Das Preset `@northware/tsconfig/nextjs.json` enthält die Standard-Konfiguration für Next.js Apps.
+Innerhalb der einzelnen Apps muss dieses Preset dann nur noch importiert werden und die `baseUrl`, 
+einzelne `paths` und die zu prüfenden Dateien müssen definiert werden.
+
+```json title="tsconfig.json in einer App"
+{
+  "extends": "@northware/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@northware/ui/*": ["../../packages/ui/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+Sollte es in einer App spezielle Anforderungen an die TypeScript Konfiguration geben, kann das Next.js Preset in der `tsconfig.json` der App erweitert werdem.
+
+## TSConfig in einem Package
+
+Das Preset `@northware/tsconfig/react-library.json` enthält die Standard-Konfiguration für alle Packages ([Library Packages](https://turborepo.com/docs/core-concepts/package-types#library-packages)) 
+innerhalb des Monorepos. 
+
+Das Preset kann innerhalb der einzelnen Packages importiert werden. Hier müssen dann nur noch die `baseUrl` und die zu beachtenden Dateien definiert werden.
+
+```json title="tsconfig.json in einem Package"
+{
+  "extends": "@northware/tsconfig/react-library.json",
+  "include": ["."],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": "."
+  }
+}
+```
+
+Dieses Preset enthält weniger Konfigurationen als das Next.js Preset. 
+Die Konfigurationen können bei Bedarf auf die individuellen Anforderungen des Packages abgestimmt werden.
+
+<Callout type="info">
+Wenn nötig können einzelne Packages auch das Next.js Preset verwenden, 
+falls die Library-Konfiguration für das individuelle Package nicht ausreichend ist oder zu Problemen führt.
+</Callout>
