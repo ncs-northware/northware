@@ -1,4 +1,4 @@
-name: Auto Release
+name: Changesets Auto Release
 
 on:
   push:
@@ -18,14 +18,16 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v5
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js 20
         uses: actions/setup-node@v5
         with:
           node-version: 22.19.0
+          cache: pnpm
       
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
 
 
       - name: Install Dependencies
