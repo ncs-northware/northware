@@ -86,7 +86,8 @@ Die Workflows sind nicht mit klassischen GitHub Actions sondern über das [integ
 
 ### Turborepo CI
 
-Der Workflow **Turborepo CI** (`.github/workflows/turborepo-ci.yml`) wird immer dann ausgelöst, wenn Code auf den `main` Branch gepusht wird oder ein neuer Pull Request eröffnet oder aktualisiert wird.
+Der Workflow **Turborepo CI** (`.github/workflows/turborepo-ci.yml`) wird immer dann ausgelöst, 
+wenn Code auf den `main` Branch gepusht wird oder ein neuer Pull Request eröffnet oder aktualisiert wird.
 
 - Der Workflow nutzt den vorliegenden Code und installiert das Projekt in einer Node.js Umgebung mit `pnpm`.
 - Mit `pnpm build --affected` werden die von der Änderung betroffenen Code-Teile gebaut.
@@ -96,7 +97,8 @@ Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgeb
 
 <Callout type="info">
 Der Turborepo CI-Workflow durchläuft bei jedem Pull Request und bei jedem Merge die Schritte `pnpm turbo build --affected` und `pnpm turbo run lint:ci`. 
-Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist lässt sich dieser Ablauf mit `pnpm localci` auch lokal abbilden, damit Fehler schon vor dem CI-Durchlauf auffallen.
+Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist lässt sich dieser Ablauf mit `pnpm localci` auch lokal abbilden, 
+damit Fehler schon vor dem CI-Durchlauf auffallen.
 </Callout>
 
 ### autofix.ci
@@ -107,6 +109,25 @@ Innerhalb des Workflows wird das Projekt vollständig gebaut, der vorhandene Cod
 Wenn durch den Durchlauf des Workflows Änderungen am Code vorgenommen wurden, werden diese Code Fixes auf den vorhandenen Pull Request commitet.
 
 **Dieser Commit unterbricht nun alle laufenden Workflows.** Diese Workflows scheitern. Anschließend starten alle vorgesehenen Workflows wieder von neuem.
+
+### Changesets Auto Release
+
+Der Workflow **Changesets Auto Release** (.github/workflows/changesets-release.yml) wird ausgeführt, wenn Code auf den `main` Branch gepusht wird.
+
+Der Workflow nutzt [changesets/action](https://github.com/changesets/action), um einen Pull Request mit dem Titel `chore(release): New Package Versions` zu erstellen. Wird dieser Pull Request in `main` gemerged,
+werden alle Packages und Apps entsprechend der im Repository enthaltenen Changesets versioniert und die `CHANGELOG.md` wird entsprechend der Changesets aktualisiert.
+Alle vorhandenen Changesets werden gelöscht. [Weitere Infos zur Release Strategie](./release-strategy.mdx)
+
+Exisitiert bereits ein durch Changesets erstellter Pull Request, wird dieser bei jedem push auf den `main` Branch aktualisiert.
+Enthält der gepushte Code ein neues oder geändertes Changeset, wird dieses in das `CHANGELOG` aufgenommen.
+Enthält der gepushte Code keine Veränderungen an Changesets, wird der Branch lediglich auf den Stand des `main` Branch gebracht.
+
+### Typescript Syntax Checks
+
+Der Workflow **Typescript Syntax Checks** (.github/workflows/tsc-check) wird bei jedem neu eröffneten oder aktualisierten Pull Request und bei Pushes auf den `main` Branch ausgeführt. 
+Das Projekt wird mit den Commands `pnpm tsc-check:root` (für Dateien im Root-Verzeichnis) und `pnpm turbo tsc-check` (für die einzelnen Apps und Packages) auf Typescript-Fehler untersucht.
+Die beschriebenen Commands führen dazu den Command `tsc --noEmit` aus. Werden Fehler im Typescript-Code festgestellt, scheitert der Durchlauf des Workflows. Die Fehler sollten behoben werden, 
+bevor der Pull Request gemerged wird.
 
 ## Renovate Bot
 

@@ -1,0 +1,38 @@
+---
+title: Admin Panel
+description: Funktionen, mit der die Northware Suite technisch administriert werden
+---
+
+Über das Admin Panel wird die Northware Suite technisch administriert.
+
+## Benutzerverwaltung
+
+Über die Benutzerverwaltung können die Benutzerkonten der Endnutzer der Northware Suite verwaltet werden. Es können Benutzer und ihre Berechtigungen verwaltet werden.
+
+Ein Benutzer besteht aus einem User-Account und den Relationen des Butzers zu Rollen und Berechtigungen in der Northware Suite.
+Die Benutzerverwaltung ist die Oberfläche, mit der Adminstratoren diese Benutzer, Rollen und Berechtigungen aus `@northware/auth` und der Northware Datenbank verwalten können.
+
+Jeder User-Account enthält E-Mail-Adresse, Benutzernamen und Passwort sowie optional Vorname und Nachname des Benutzers. 
+Dieser Benutzer wird bei [Clerk](https://clerk.com/) gespeichert.
+
+Darüber hinaus erhält jeder Benutzer Rollen und Berechtigungen zur Nutzung der Northware Apps. Diese Daten werden in der Northware Datenbank gespeichert.
+In der Codebase wird abgefragt, ob ein Benutzer eine bestimmte Berechtigung hat. Die verfügbaren Berechtigungen werden in der Datenbank gespeichert.
+Diese Daten können zu Rollen zusammengefasst werden. Diese Rollen können einer Gruppe von Benutzern zugewiesen werden. 
+Wurde einem Nutzer eine Rolle zugewiesen, erhält er alle Berechtigungen, die der Rolle zugewiesen wurden. Ein Benutzer kann mehrere Rollen erhalten.
+Es ist auch möglich, einem Benutzer einzelne Berechtigungen zuzuweisen, die über die Rollenberechtigungen zu erweitern. 
+Es ist nicht möglich einem Benutzer eine Rollenberechtigung zu entziehen.
+
+### Rollendetails
+
+| Feldname             | Beschreibung                                                   | Eingabeformat         | Beispiel                    |
+| -------------------- | -------------------------------------------------------------- | --------------------  | --------                    |
+| Schlüsselbezeichnung | Der eindeutige Schlüssel der Rolle, der im Code verwendet wird | app::rolestring.role  | app::hr-management          |
+| Rollenbezeichnung    | Die kurze und lesbare Bezeichnung der Rolle                    | String                | Verwaltung von Mitarbeitern |
+| Rollenberechtigungen | Relationen zu Berechtigungen der Northware Suite               | Many-to-many Relation |                             |
+
+### Details der Berechtigungsschlüssel
+
+| Feldname               | Beschreibung                                                     | Eingabeformat                      | Beispiel                |
+| --------------------   | --------------------------------------------------------------   | ---------------------------------- | ------------------------|
+| Berechtigungsschlüssel | Der eindeutige Schlüssel der Berechtigung zur Verwendung im Code | app::feature:subfeature.permission | app::hr:employee.create |
+| Bezeichnung            | Die kurze lesbare Bezeichnung der Berechtigung                   | String                             | Mitarbeiter erstellen   |

@@ -7,19 +7,26 @@ description: Wie die Apps und Packages der Northware Suite versioniert werden
 
 Das Tool [Changesets](https://github.com/changesets/changesets) wird verwendet, um die Versionierung und das erstellen von Changelogs zu vereinfachen.
 
-Zu jedem Pull Request, der einen neuen Release (major, minor oder patch) auslösen soll benötigt ein Changeset. Ein Changeset ist eine Markdown-Datei im `.changesets/*` Ordner, der beschreibt welche Art von Release passiert, wenn die beschriebene Code-Änderung in die App übernommen wird (Versionsänderung) und was mit dieser Code-Änderung passiert (Changelog Eintrag zur neuen Version).
+Zu jedem Pull Request, der einen neuen Release (major, minor oder patch) auslösen soll, wird ein Changeset benötigt.
+Ein Changeset ist eine Markdown-Datei im `.changesets/*` Ordner, die beschreibt welche Art von Release passiert, 
+wenn die beschriebene Code-Änderung in die App übernommen wird (Versionsänderung) und was mit dieser Code-Änderung passiert (Changelog Eintrag zur neuen Version).
 
-Der [Changeset Bot](https://github.com/apps/changeset-bot) prüft bei jedem Pull Request, ob ein Changeset existiert und erinnert ggf. mit einem Kommentar im PR daran, ein Changeset hinzuzufügen.
+Der [Changeset Bot](https://github.com/apps/changeset-bot) prüft bei jedem Pull Request, 
+ob ein Changeset existiert und erinnert ggf. mit einem Kommentar im PR daran, ein Changeset hinzuzufügen.
 
-Ein Changeset kann schon vor Eröffnung des Pull Requests oder per Link in dem Kommentar vom Changesets Bot direkt in GitHub oder als nachträglicher Commit hinzugefügt werden. Es bietet sich an, zur Erstellung eines Changesets den CLI Command `pnpm changeset` oder `pnpm changeset add` zu verwenden, Da dieser Command interaktiv durch die Erstellung eines Changesets führt.
+Ein Changeset kann schon vor Eröffnung des Pull Requests oder per Link in dem Kommentar vom Changesets Bot direkt in GitHub
+oder als nachträglicher Commit hinzugefügt werden. 
+Es bietet sich an, zur Erstellung eines Changesets den CLI Command `pnpm changeset` oder `pnpm changeset add` zu verwenden, 
+da dieser Command interaktiv durch die Erstellung eines Changesets führt.
 
-Innerhalb einer Changeset-Datei wird definiert, welche Packages durch den Merge dieses Changesets welche Art von Version Bump erhalten. Außerdem wird im Changeset für das Changelog beschrieben, welche Änderungen vorgenommen wurden.
+Innerhalb einer Changeset-Datei wird definiert, welche Packages durch den Merge dieses Changesets welche Art von Version Bump erhalten. 
+Außerdem wird im Changeset für das Changelog beschrieben, welche Änderungen vorgenommen wurden.
 
 ```mdx
 ---
 <!-- Welche Packages erhalten welche Art von Version Bump -->
 "docs": patch
-"northware-cockpit": patch
+"cockpit": patch
 ---
 
 <!-- Beschreibung für das Changelog -->
@@ -29,7 +36,8 @@ An awesome release
 
 ### Changesets Release Workflow
 
-Der Workflow "Auto Release" (release.yml) erstellt immer automatisch einen Pull Request, der den nächsten Release vorbereitet. Der Pull Request wird immer mit dem `main` Branch abgeglichen. Ein Merge dieses Pull Requests führt zur Veröffentlichung neuer Versionen.
+Der Workflow "Changesets Release" (changesets-release.yml) erstellt immer automatisch einen Pull Request, der den nächsten Release vorbereitet. 
+Der Pull Request wird immer mit dem `main` Branch abgeglichen. Ein Merge dieses Pull Requests führt zur Veröffentlichung neuer Versionen.
 
 ### Mehr über Changesets
 
