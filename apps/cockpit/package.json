@@ -11,7 +11,7 @@
     "format": "ultracite format"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.1",
+    "@hookform/resolvers": "^5.2.2",
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:*",
     "@northware/ui": "workspace:*",
@@ -20,8 +20,8 @@
     "next": "15.5.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hook-form": "^7.62.0",
-    "zod": "^4.1.8"
+    "react-hook-form": "^7.63.0",
+    "zod": "^4.1.9"
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
