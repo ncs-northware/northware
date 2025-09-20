@@ -1,12 +1,14 @@
 ---
 title: '@northware/auth'
-description: Authentifizierung, Login und Rechte
+description: Funktionen zum Umgang mit Authentifizierung und Zugriffsbeschränkungen von Benutzern.
 ---
 
-Das Package `@northware/auth` stellt die Authentifizierungs- und Loginfunktion für die Northware Apps bereit.
-Das Package nutzt für diese Funktionalität [Auth.js](https://authjs.dev/) mit dem Credentials Provider.
+Das Package `@northware/auth` stellt die Authentifizierungsfunktion für die Northware Apps bereit.
+Außerdem wird über dieses Package der Umgang mit Zugriffsberechtigungen gesteuert.
+Das Package nutzt für diese Funktionalität den Service von [Clerk](https://clerk.com/) und einige spezielle Funktionen zum Abruf von Zugriffsberechtigungen.
 
-Die User-Daten werden in der Neon API gespeichert. Die Definition der Tabelle der Nutzerdaten wird vom `@northware/database` Package übernommen.
-Innerhalb von `@northware/auth` wird auf die Nutzerdaten zugegriffen und validiert.
+Das Package stellt alle Funktionen des Packages `@clerk/nextjs` client- und serverseitig bereit. 
+Mithilfe dieser Funktionen kann sich ein Benutzer in einer App an- und abmelden. 
+Außerdem werden die von Clerk gespeicherten Nutzerdaten von diesem Package bereitgestellt.
 
-Der Code im `@northware/auth` Package ist vom Repository [vercel/nextjs-postgres-auth-starter](https://github.com/vercel/nextjs-postgres-auth-starter) inspiriert.
+Darauf aufbauend stellt `@northware/auth` einige Funktionen bereit, um die Berechtigungen eines Benutzers aus der Northware Datenbank abzurufen.
