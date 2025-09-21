@@ -18,7 +18,6 @@
     "./postcss.config": "./postcss.config.mjs"
   },
   "dependencies": {
-    "@clerk/elements": "^0.23.63",
     "@hookform/resolvers": "^5.2.2",
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:",
