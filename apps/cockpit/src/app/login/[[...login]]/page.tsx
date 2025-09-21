@@ -1,7 +1,7 @@
-import { LoginForm } from "@northware/ui/components/login";
+import { SignInForm } from "@northware/ui/components/auth";
 
 const Page = () => {
-  return <LoginForm service="cockpit" />;
+  return <SignInForm service="cockpit" />;
 };
 
 export default Page;
