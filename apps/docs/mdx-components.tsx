@@ -7,6 +7,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
     ...components,
+    // biome-ignore lint/style/useNamingConvention: JSX Component
     ChildDocs,
   };
 }
