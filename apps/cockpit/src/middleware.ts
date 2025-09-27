@@ -4,10 +4,8 @@ const isPublicRoute = createRouteMatcher(["/login(.*)"]);
 
 export default clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
     await auth.protect({
-      unauthenticatedUrl: url.toString(),
+      token: "session_token",
     });
   }
 });

@@ -1,7 +1,6 @@
-import { LoginForm } from "@northware/ui/components/login";
+"use client";
+import { SignInForm } from "@northware/ui/components/auth";
 
-const Page = () => {
-  return <LoginForm service="cockpit" />;
-};
-
-export default Page;
+export default function Page() {
+  return <SignInForm service="cockpit" />;
+}

@@ -8,12 +8,14 @@
     "lint": "ultracite lint"
   },
   "exports": {
-    "./client": "./src/client.ts",
-    "./server": "./src/server.ts",
+    "./client": "./src/client.tsx",
+    "./server": "./src/server.tsx",
     "./account": "./src/account.ts"
   },
   "dependencies": {
+    "@clerk/localizations": "^3.25.1",
     "@clerk/nextjs": "^6.32.0",
+    "@clerk/themes": "^2.4.19",
     "@northware/database": "workspace:*",
     "drizzle-orm": "^0.44.5",
     "react": "^19.1.1",

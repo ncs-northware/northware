@@ -1,6 +1,7 @@
 import { currentUser } from "@northware/auth/server";
 import { type ServiceType, suiteApps } from "@northware/service-config";
 import { AppSwitch, type MenuApps } from "@northware/ui/components/app-switch";
+import { UserMenu } from "@northware/ui/components/auth";
 import {
   AutoBreadcrumbs,
   type BreadcrumbType,
@@ -10,7 +11,6 @@ import {
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
 import { MainSidebarMenuButton } from "@northware/ui/components/sidebar-menu-button";
-import { NavUser } from "@northware/ui/components/sidebar-nav-user";
 import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import { buttonVariants } from "@northware/ui/components/ui-registry/button";
 import {
@@ -126,11 +126,7 @@ async function MainSidebar({
         <NavMain mainLabel={mainLabel} menuItems={menuItems} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          avatar={user?.imageUrl}
-          emailAddress={user?.emailAddresses[0].emailAddress}
-          fullName={user?.fullName}
-        />
+        <UserMenu />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
