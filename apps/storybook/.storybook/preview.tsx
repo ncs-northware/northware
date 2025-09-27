@@ -3,7 +3,7 @@ import type { Preview } from "@storybook/nextjs";
 import React from "react";
 import "@northware/ui/css";
 import { ThemeProvider } from "@northware/ui/components/theme-provider";
-import { source_sans } from "@northware/ui/lib/fonts";
+import { SourceSans } from "@northware/ui/lib/fonts";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
 const preview: Preview = {
@@ -34,35 +34,33 @@ const preview: Preview = {
   decorators: [
     withThemeByClassName({
       themes: {
-        CockpitLight: "CockpitLight",
-        CockpitDark: "CockpitDark",
-        FinanceLight: "FinanceLight",
-        FinanceDark: "FinanceDark",
-        TraderLight: "TraderLight",
-        TraderDark: "TraderDark",
+        cockpitLight: "CockpitLight",
+        cockpitDark: "CockpitDark",
+        financeLight: "FinanceLight",
+        financeDark: "FinanceDark",
+        traderLight: "TraderLight",
+        traderDark: "TraderDark",
       },
       defaultTheme: "CockpitLight",
     }),
-    (Story) => {
-      return (
-        <div className={`bg-background ${source_sans.variable} p-2 font-sans`}>
-          <ThemeProvider
-            defaultTheme="CockpitLight"
-            enableSystem={false}
-            themes={[
-              "CockpitLight",
-              "CockpitDark",
-              "FinanceLight",
-              "FinanceDark",
-              "TraderLight",
-              "TraderDark",
-            ]}
-          >
-            <Story />
-          </ThemeProvider>
-        </div>
-      );
-    },
+    (Story) => (
+      <div className={`bg-background ${SourceSans.variable} p-2 font-sans`}>
+        <ThemeProvider
+          defaultTheme="CockpitLight"
+          enableSystem={false}
+          themes={[
+            "CockpitLight",
+            "CockpitDark",
+            "FinanceLight",
+            "FinanceDark",
+            "TraderLight",
+            "TraderDark",
+          ]}
+        >
+          <Story />
+        </ThemeProvider>
+      </div>
+    ),
   ],
 };
 
