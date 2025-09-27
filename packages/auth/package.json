@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "tsc-check": "tsc --noEmit",
-    "format": "ultracite format",
-    "lint": "ultracite lint"
+    "format": "ultracite fix",
+    "lint": "ultracite check"
   },
   "exports": {
     "./client": "./src/client.tsx",

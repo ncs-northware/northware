@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "tsc-check": "tsc --noEmit",
-    "lint": "ultracite lint",
-    "format": "ultracite format"
+    "lint": "ultracite check",
+    "format": "ultracite fix"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

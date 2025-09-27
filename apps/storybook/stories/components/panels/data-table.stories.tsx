@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useNamingConvention: JSX Components */
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import {
   DataTableColumnHeaderDemo,

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useNamingConvention: clerk internal names */
 "use client";
 
 import { SignIn, UserButton } from "@northware/auth/client";

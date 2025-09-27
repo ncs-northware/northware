@@ -20,12 +20,14 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "cache": false
     },
     "//#lint:root": {},
     "//#lint:ci": {},
     "format": {
-      "dependsOn": ["^format"]
+      "dependsOn": ["^format"],
+      "cache": false
     },
     "//#format:root": {},
     "tsc-check": {

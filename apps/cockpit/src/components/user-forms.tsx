@@ -852,8 +852,8 @@ export function UpdateUserRolesForm({
                           <FormControl>
                             <Switch
                               checked={field.value.includes(role.roleKey)}
-                              onCheckedChange={(checked) => {
-                                return checked
+                              onCheckedChange={(checked) =>
+                                checked
                                   ? field.onChange([
                                       ...field.value,
                                       role.roleKey,
@@ -862,8 +862,8 @@ export function UpdateUserRolesForm({
                                       field.value.filter(
                                         (value) => value !== role.roleKey
                                       )
-                                    );
-                              }}
+                                    )
+                              }
                             />
                           </FormControl>
                         </div>
@@ -999,8 +999,8 @@ export function CreateUserRolesForm({
                           <FormControl>
                             <Switch
                               checked={field.value.includes(role.roleKey)}
-                              onCheckedChange={(checked) => {
-                                return checked
+                              onCheckedChange={(checked) =>
+                                checked
                                   ? field.onChange([
                                       ...field.value,
                                       role.roleKey,
@@ -1009,8 +1009,8 @@ export function CreateUserRolesForm({
                                       field.value.filter(
                                         (value) => value !== role.roleKey
                                       )
-                                    );
-                              }}
+                                    )
+                              }
                             />
                           </FormControl>
                         </div>
@@ -1160,8 +1160,8 @@ export function UpdateUserPermissionsForm({
                       <FormControl>
                         <Switch
                           checked={field.value.includes(perm.permissionKey)}
-                          onCheckedChange={(checked) => {
-                            return checked
+                          onCheckedChange={(checked) =>
+                            checked
                               ? field.onChange([
                                   ...field.value,
                                   perm.permissionKey,
@@ -1170,8 +1170,8 @@ export function UpdateUserPermissionsForm({
                                   field.value.filter(
                                     (value) => value !== perm.permissionKey
                                   )
-                                );
-                          }}
+                                )
+                          }
                         />
                       </FormControl>
                     </FormItem>
@@ -1281,8 +1281,8 @@ export function CreateUserPermissionsForm({
                       <FormControl>
                         <Switch
                           checked={field.value.includes(perm.permissionKey)}
-                          onCheckedChange={(checked) => {
-                            return checked
+                          onCheckedChange={(checked) =>
+                            checked
                               ? field.onChange([
                                   ...field.value,
                                   perm.permissionKey,
@@ -1291,8 +1291,8 @@ export function CreateUserPermissionsForm({
                                   field.value.filter(
                                     (value) => value !== perm.permissionKey
                                   )
-                                );
-                          }}
+                                )
+                          }
                         />
                       </FormControl>
                     </FormItem>

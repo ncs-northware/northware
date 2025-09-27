@@ -139,10 +139,8 @@ export const Disabled: Story = {
  * Wenn die `Button` Komponente andere Elemente umschließen soll kann der `asChild` Parameter verwendet werden.
  */
 
-export const AsChild = () => {
-  return (
-    <Button asChild>
-      <Link href="#">Link Child</Link>
-    </Button>
-  );
-};
+export const AsChild = () => (
+  <Button asChild>
+    <Link href="#">Link Child</Link>
+  </Button>
+);

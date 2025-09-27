@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "lint": "ultracite lint",
-    "format": "ultracite format"
+    "lint": "ultracite check",
+    "format": "ultracite fix"
   }
 }

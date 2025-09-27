@@ -8,8 +8,7 @@ module.exports = {
   prettier: false,
   filenameCase: "kebab",
   titleProp: true,
-  template: (variables, { tpl }) => {
-    return tpl`
+  template: (variables, { tpl }) => tpl`
       ${variables.imports};
       
       ${variables.interfaces};
@@ -22,6 +21,5 @@ module.exports = {
       };
 
       ${variables.exports}
-    `;
-  },
+    `,
 };
