@@ -233,3 +233,14 @@
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
+
+/******************************************** Clerk Customization **********************************************************************/
+.cl-signIn-root .cl-internal-1dauvpw,
+.cl-userProfile-root .cl-internal-1dauvpw {
+  /* Hide Clerk Branding and Development Mode Banner from SignIn and UserProfile Component */
+  display: none;
+}
+.cl-userProfile-root .cl-internal-15hkgn2 {
+  /* Hide Development Mode Overlay on from the UserProfile Component */
+  visibility: hidden;
+}
