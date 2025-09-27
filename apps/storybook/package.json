@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "storybook dev --no-open -p 40181",
     "build": "storybook build",
-    "tsc-check": "tsc --noEmit"
+    "tsc-check": "tsc --noEmit",
+    "format": "ultracite fix",
+    "lint": "ultracite check"
   },
   "dependencies": {
     "@northware/ui": "workspace:*",
