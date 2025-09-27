@@ -1,6 +1,7 @@
 import { SignIn, UserButton } from "@northware/auth/client";
 import type { ServiceType } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/brand";
+import { LoaderCircleIcon } from "lucide-react";
 
 export function SignInForm({ service }: { service: ServiceType }) {
   return (
@@ -15,6 +16,7 @@ export function SignInForm({ service }: { service: ServiceType }) {
             footer: "hidden",
           },
         }}
+        fallback={<LoaderCircleIcon className="size-12 animate-spin" />}
       />
     </main>
   );
