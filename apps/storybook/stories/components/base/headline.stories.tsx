@@ -16,26 +16,26 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Überschrift1: Story = {
+export const Headline1: Story = {
   args: { level: "h1" },
 };
 
-export const Überschrift2: Story = {
+export const Headline2: Story = {
   args: { level: "h2" },
 };
 
-export const Überschrift3: Story = {
+export const Headline3: Story = {
   args: { level: "h3" },
 };
 
-export const Überschrift4: Story = {
+export const Headline4: Story = {
   args: { level: "h4" },
 };
 
-export const Überschrift5: Story = {
+export const Headline5: Story = {
   args: { level: "h5" },
 };
 
-export const Überschrift6: Story = {
+export const Headline6: Story = {
   args: { level: "h6" },
 };
