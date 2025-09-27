@@ -15,7 +15,13 @@
   "linter": {
     "rules": {
       "performance": { "noBarrelFile": "warn" },
-      "style": { "noMagicNumbers": "info" }
+      "style": {
+        "noMagicNumbers": "info",
+        "useNamingConvention": {
+          "options": { "strictCase": false },
+          "level": "error"
+        }
+      }
     }
   },
   "files": {
