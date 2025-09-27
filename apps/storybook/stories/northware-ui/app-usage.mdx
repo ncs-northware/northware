@@ -33,7 +33,7 @@ damit der User zwischen Light und DarkMode wechseln kann sowie `AuthProvider` vo
 ```tsx
 import "@northware/ui/css";
 import { GeneralProvider } from "@northware/ui/components/providers/general-provider";
-import { source_sans } from "@northware/ui/lib/fonts";
+import { SourceSans } from "@northware/ui/lib/fonts";
 ```
 
 Auch an dem Markup des Layouts müssen einige Veränderungen vorgenommen werden.
@@ -48,7 +48,7 @@ Die fertige `layout.tsx` der App könnte dann so aussehen:
 ```tsx
 import "@northware/ui/css";
 import { GeneralProvider } from "@northware/ui/components/providers/general-provider";
-import { source_sans } from "@northware/ui/lib/fonts";
+import { SourceSans } from "@northware/ui/lib/fonts";
 
 export const metadata = {
   title: {
@@ -64,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html className="theme-cockpit" lang="de" suppressHydrationWarning>
-      <body className={`${source_sans.variable} font-sans`}>
+      <body className={`${SourceSans.variable} font-sans`}>
         <GeneralProvider>{children}</GeneralProvider>
       </body>
     </html>
