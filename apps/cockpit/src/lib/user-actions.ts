@@ -129,7 +129,7 @@ export const getSingleUser = cache(
     try {
       const client = await clerkClient();
       const response = await client.users.getUser(id);
-      const user_emailAddresses = response.emailAddresses
+      const userEmailAddresses = response.emailAddresses
         .map((email) => ({
           id: email.id,
           emailAddress: email.emailAddress,
@@ -153,7 +153,7 @@ export const getSingleUser = cache(
           lastName: response.lastName,
           fullName: response.fullName,
           username: response.username,
-          emailAddresses: user_emailAddresses,
+          emailAddresses: userEmailAddresses,
           primaryEmailAddressId: response.primaryEmailAddressId,
         },
       };

@@ -177,8 +177,8 @@ export function CreateRoleForm({
                         <FormControl>
                           <Switch
                             checked={field.value.includes(perm.permissionKey)}
-                            onCheckedChange={(checked) => {
-                              return checked
+                            onCheckedChange={(checked) =>
+                              checked
                                 ? field.onChange([
                                     ...field.value,
                                     perm.permissionKey,
@@ -187,8 +187,8 @@ export function CreateRoleForm({
                                     field.value.filter(
                                       (value) => value !== perm.permissionKey
                                     )
-                                  );
-                            }}
+                                  )
+                            }
                           />
                         </FormControl>
                       </FormItem>
@@ -438,8 +438,8 @@ export function RolePermissionsForm({
                       <FormControl>
                         <Switch
                           checked={field.value.includes(perm.permissionKey)}
-                          onCheckedChange={(checked) => {
-                            return checked
+                          onCheckedChange={(checked) =>
+                            checked
                               ? field.onChange([
                                   ...field.value,
                                   perm.permissionKey,
@@ -448,8 +448,8 @@ export function RolePermissionsForm({
                                   field.value.filter(
                                     (value) => value !== perm.permissionKey
                                   )
-                                );
-                          }}
+                                )
+                          }
                         />
                       </FormControl>
                     </FormItem>
