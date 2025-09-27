@@ -16,10 +16,8 @@ function MultisessionProvider({ children }: { children: ReactNode }) {
 
 export function AuthProvider({ ...props }) {
   return (
-    // FIXME: Signin URL als Env-Variable
     <ClerkProvider
       appearance={{ theme: shadcn }}
-      signInUrl="/login"
       {...props}
       localization={deDE}
     >

@@ -2,16 +2,13 @@ import { clerkMiddleware, createRouteMatcher } from "@northware/auth/server";
 
 const isPublicRoute = createRouteMatcher(["/login(.*)"]);
 
-export default clerkMiddleware(
-  async (auth, request) => {
-    if (!isPublicRoute(request)) {
-      await auth.protect({
-        token: "session_token",
-      });
-    }
-  },
-  { signInUrl: "/login" }
-);
+export default clerkMiddleware(async (auth, request) => {
+  if (!isPublicRoute(request)) {
+    await auth.protect({
+      token: "session_token",
+    });
+  }
+});
 
 export const config = {
   matcher: [
