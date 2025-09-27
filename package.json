@@ -7,11 +7,11 @@
     "commit": "commit",
     "dev": "turbo dev",
     "format": "turbo format",
-    "format:root": "ultracite format",
+    "format:root": "ultracite fix",
     "generate-icons": "cd packages/ui && pnpm generate-icons",
     "lint": "turbo lint",
     "lint:ci": "biome ci ./",
-    "lint:root": "ultracite lint",
+    "lint:root": "ultracite check",
     "localci": "turbo build lint:ci --affected",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"

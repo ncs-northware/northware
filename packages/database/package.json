@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "tsc-check": "tsc --noEmit",
-    "lint": "ultracite lint",
-    "format": "ultracite format"
+    "lint": "ultracite check",
+    "format": "ultracite fix"
   },
   "exports": {
     "./connection": "./db-connect.ts",
