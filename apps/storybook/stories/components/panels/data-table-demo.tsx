@@ -11,7 +11,7 @@ import {
   TableDescriptionList,
   TableDescriptionTerm,
 } from "@northware/ui/components/data-table";
-import { Button } from "@northware/ui/components/ui-registry/button";
+import { Button } from "@northware/ui/components/shadcn/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +19,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/ui-registry/dropdown-menu";
+} from "@northware/ui/components/shadcn/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -27,7 +27,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@northware/ui/components/ui-registry/table";
+} from "@northware/ui/components/shadcn/table";
 import { MoreHorizontalIcon } from "@northware/ui/icons/lucide";
 import {
   type ColumnDef,

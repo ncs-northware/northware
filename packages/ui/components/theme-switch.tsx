@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@northware/ui/components/ui-registry/button";
+import { Button } from "@northware/ui/components/shadcn/button";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCallback } from "react";

@@ -1,4 +1,4 @@
-import { Button } from "@northware/ui/components/ui-registry/button";
+import { Button } from "@northware/ui/components/shadcn/button";
 import {
   Dialog,
   DialogClose,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/ui-registry/dialog";
-import { Input } from "@northware/ui/components/ui-registry/input";
-import { Label } from "@northware/ui/components/ui-registry/label";
+} from "@northware/ui/components/shadcn/dialog";
+import { Input } from "@northware/ui/components/shadcn/input";
+import { Label } from "@northware/ui/components/shadcn/label";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {

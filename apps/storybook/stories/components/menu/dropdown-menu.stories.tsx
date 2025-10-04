@@ -1,4 +1,4 @@
-import { Button } from "@northware/ui/components/ui-registry/button";
+import { Button } from "@northware/ui/components/shadcn/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -15,7 +15,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@northware/ui/components/ui-registry/dropdown-menu";
+} from "@northware/ui/components/shadcn/dropdown-menu";
 import {
   Mail,
   Plus,

@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@northware/ui/components/ui-registry/table";
+} from "@northware/ui/components/shadcn/table";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const invoices = [

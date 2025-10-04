@@ -1,5 +1,5 @@
-import { Label } from "@northware/ui/components/ui-registry/label";
-import { Switch } from "@northware/ui/components/ui-registry/switch";
+import { Label } from "@northware/ui/components/shadcn/label";
+import { Switch } from "@northware/ui/components/shadcn/switch";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {

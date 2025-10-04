@@ -2,7 +2,7 @@ import { AlertIcon, AlertWrapper } from "@northware/ui/components/custom-alert";
 import {
   AlertDescription,
   AlertTitle,
-} from "@northware/ui/components/ui-registry/alert";
+} from "@northware/ui/components/shadcn/alert";
 import { Terminal } from "@northware/ui/icons/lucide";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 

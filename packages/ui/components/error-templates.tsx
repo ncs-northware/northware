@@ -1,7 +1,7 @@
 import { SignOutButton } from "@northware/auth/client";
 import { Headline } from "@northware/ui/components/headline";
-import { Button } from "@northware/ui/components/ui-registry/button";
-import { LoaderCircleIcon } from "lucide-react";
+import { Button } from "@northware/ui/components/shadcn/button";
+import { Spinner } from "@northware/ui/components/shadcn/spinner";
 import Link from "next/link";
 
 export function NotFoundTemplate() {
@@ -50,7 +50,7 @@ export function ErrorPageTemplate() {
 export function LoadingPageTemplate() {
   return (
     <div className="flex h-svh flex-col items-center justify-center gap-4">
-      <LoaderCircleIcon className="size-12 animate-spin" />
+      <Spinner />
       <p className="text-muted-foreground text-xl">Die Seite wird geladen...</p>
       <SignOutButton>
         <Button variant="outline">Abmelden</Button>
