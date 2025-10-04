@@ -1,5 +1,3 @@
-import type { ServiceType } from "./types";
-
 export const suiteApps: {
   title: string;
   slug: ServiceType;
@@ -18,3 +16,5 @@ export const suiteApps: {
     slug: "trader",
   },
 ];
+
+export type ServiceType = "cockpit" | "finance" | "trader" | "docs";

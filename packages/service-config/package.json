@@ -7,7 +7,7 @@
     "format": "ultracite fix"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./index.ts"
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*"
