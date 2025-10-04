@@ -6,7 +6,7 @@ import { PasswordInput } from "@northware/ui/components/password-input";
 import {
   AlertDescription,
   AlertTitle,
-} from "@northware/ui/components/ui-registry/alert";
+} from "@northware/ui/components/shadcn/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,29 +17,29 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@northware/ui/components/ui-registry/alert-dialog";
-import { Badge } from "@northware/ui/components/ui-registry/badge";
-import { Button } from "@northware/ui/components/ui-registry/button";
-import { Checkbox } from "@northware/ui/components/ui-registry/checkbox";
+} from "@northware/ui/components/shadcn/alert-dialog";
+import { Badge } from "@northware/ui/components/shadcn/badge";
+import { Button } from "@northware/ui/components/shadcn/button";
+import { Checkbox } from "@northware/ui/components/shadcn/checkbox";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@northware/ui/components/ui-registry/collapsible";
+} from "@northware/ui/components/shadcn/collapsible";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/ui-registry/dialog";
+} from "@northware/ui/components/shadcn/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@northware/ui/components/ui-registry/dropdown-menu";
+} from "@northware/ui/components/shadcn/dropdown-menu";
 import {
   Form,
   FormControl,
@@ -47,21 +47,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/ui-registry/form";
-import { Input } from "@northware/ui/components/ui-registry/input";
-import { Switch } from "@northware/ui/components/ui-registry/switch";
+} from "@northware/ui/components/shadcn/form";
+import { Input } from "@northware/ui/components/shadcn/input";
+import { Switch } from "@northware/ui/components/shadcn/switch";
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
-} from "@northware/ui/components/ui-registry/table";
+} from "@northware/ui/components/shadcn/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@northware/ui/components/ui-registry/tooltip";
+} from "@northware/ui/components/shadcn/tooltip";
 import {
   BadgeCheckIcon,
   ChevronDownIcon,

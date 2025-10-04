@@ -6,7 +6,7 @@ import { Headline } from "@northware/ui/components/headline";
 import {
   AlertDescription,
   AlertTitle,
-} from "@northware/ui/components/ui-registry/alert";
+} from "@northware/ui/components/shadcn/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,16 +16,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@northware/ui/components/ui-registry/alert-dialog";
-import { Badge } from "@northware/ui/components/ui-registry/badge";
-import { Button } from "@northware/ui/components/ui-registry/button";
+} from "@northware/ui/components/shadcn/alert-dialog";
+import { Badge } from "@northware/ui/components/shadcn/badge";
+import { Button } from "@northware/ui/components/shadcn/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@northware/ui/components/ui-registry/dialog";
+} from "@northware/ui/components/shadcn/dialog";
 import {
   Form,
   FormControl,
@@ -34,9 +34,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@northware/ui/components/ui-registry/form";
-import { Input } from "@northware/ui/components/ui-registry/input";
-import { Switch } from "@northware/ui/components/ui-registry/switch";
+} from "@northware/ui/components/shadcn/form";
+import { Input } from "@northware/ui/components/shadcn/input";
+import { Switch } from "@northware/ui/components/shadcn/switch";
 import { EditIcon, PlusIcon, TrashIcon } from "@northware/ui/icons/lucide";
 import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";

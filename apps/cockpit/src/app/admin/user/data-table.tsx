@@ -5,7 +5,7 @@ import {
   DataTablePagination,
   DataTableViewOptions,
 } from "@northware/ui/components/data-table";
-import { Button } from "@northware/ui/components/ui-registry/button";
+import { Button } from "@northware/ui/components/shadcn/button";
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@northware/ui/components/ui-registry/table";
+} from "@northware/ui/components/shadcn/table";
 import { EditIcon } from "@northware/ui/icons/lucide";
 import {
   type ColumnDef,

@@ -4,8 +4,8 @@ import {
   PermissionProvider,
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
+import { Button } from "@northware/ui/components/shadcn/button";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
-import { Button } from "@northware/ui/components/ui-registry/button";
 import { PlusIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 import { getRoleList } from "@/lib/role-actions";

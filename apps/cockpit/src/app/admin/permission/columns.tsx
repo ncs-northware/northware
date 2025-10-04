@@ -6,10 +6,7 @@ import {
   TableDescriptionList,
   TableDescriptionTerm,
 } from "@northware/ui/components/data-table";
-import {
-  TableCell,
-  TableHead,
-} from "@northware/ui/components/ui-registry/table";
+import { TableCell, TableHead } from "@northware/ui/components/shadcn/table";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { TPermissionType } from "@/lib/rbac-types";
 
