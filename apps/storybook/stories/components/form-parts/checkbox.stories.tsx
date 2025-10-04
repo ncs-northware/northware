@@ -1,5 +1,5 @@
-import { Checkbox } from "@northware/ui/components/ui-registry/checkbox";
-import { Label } from "@northware/ui/components/ui-registry/label";
+import { Checkbox } from "@northware/ui/components/shadcn/checkbox";
+import { Label } from "@northware/ui/components/shadcn/label";
 
 import type { Meta, StoryObj } from "@storybook/nextjs";
 

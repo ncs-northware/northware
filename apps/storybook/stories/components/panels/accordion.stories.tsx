@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@northware/ui/components/ui-registry/accordion";
+} from "@northware/ui/components/shadcn/accordion";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {

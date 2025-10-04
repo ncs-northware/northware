@@ -1,4 +1,4 @@
-import { Label } from "@northware/ui/components/ui-registry/label";
+import { Label } from "@northware/ui/components/shadcn/label";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {

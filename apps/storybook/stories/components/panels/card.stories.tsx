@@ -1,4 +1,4 @@
-import { Button } from "@northware/ui/components/ui-registry/button";
+import { Button } from "@northware/ui/components/shadcn/button";
 import {
   Card,
   CardContent,
@@ -6,17 +6,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@northware/ui/components/ui-registry/card";
-import { Input } from "@northware/ui/components/ui-registry/input";
-import { Label } from "@northware/ui/components/ui-registry/label";
+} from "@northware/ui/components/shadcn/card";
+import { Input } from "@northware/ui/components/shadcn/input";
+import { Label } from "@northware/ui/components/shadcn/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@northware/ui/components/ui-registry/select";
-import { Switch } from "@northware/ui/components/ui-registry/switch";
+} from "@northware/ui/components/shadcn/select";
+import { Switch } from "@northware/ui/components/shadcn/switch";
 import { BellRing, Check } from "@northware/ui/icons/lucide";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 

@@ -1,6 +1,6 @@
-import { Button } from "@northware/ui/components/ui-registry/button";
-import { Input } from "@northware/ui/components/ui-registry/input";
-import { Label } from "@northware/ui/components/ui-registry/label";
+import { Button } from "@northware/ui/components/shadcn/button";
+import { Input } from "@northware/ui/components/shadcn/input";
+import { Label } from "@northware/ui/components/shadcn/label";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
