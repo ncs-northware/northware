@@ -4,7 +4,7 @@
 import { SignIn, UserButton } from "@northware/auth/client";
 import type { ServiceType } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/brand";
-import { Spinner } from "@northware/ui/components/ui-registry/spinner";
+import { Spinner } from "@northware/ui/components/shadcn/spinner";
 
 export function SignInForm({ service }: { service: ServiceType }) {
   return (

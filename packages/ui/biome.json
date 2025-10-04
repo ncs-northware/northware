@@ -3,6 +3,6 @@
   "root": false,
   "extends": "//",
   "files": {
-    "includes": ["**", "!**/components/ui-registry", "!**/icons"]
+    "includes": ["**", "!**/components/shadcn", "!**/icons"]
   }
 }

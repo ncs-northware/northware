@@ -10,14 +10,12 @@ import {
   AppPermissionProvider,
   userHasPermission,
 } from "@northware/ui/components/permission-provider";
-import { MainSidebarMenuButton } from "@northware/ui/components/sidebar-menu-button";
-import { ThemeSwitch } from "@northware/ui/components/theme-switch";
-import { buttonVariants } from "@northware/ui/components/ui-registry/button";
+import { buttonVariants } from "@northware/ui/components/shadcn/button";
 import {
   Collapsible,
   CollapsibleContent,
-} from "@northware/ui/components/ui-registry/collapsible";
-import { Separator } from "@northware/ui/components/ui-registry/separator";
+} from "@northware/ui/components/shadcn/collapsible";
+import { Separator } from "@northware/ui/components/shadcn/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -34,7 +32,9 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@northware/ui/components/ui-registry/sidebar";
+} from "@northware/ui/components/shadcn/sidebar";
+import { MainSidebarMenuButton } from "@northware/ui/components/sidebar-menu-button";
+import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import { menuData } from "@northware/ui/lib/menu-data";
 
 export async function SidebarLayout({

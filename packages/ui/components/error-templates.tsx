@@ -1,7 +1,7 @@
 import { SignOutButton } from "@northware/auth/client";
 import { Headline } from "@northware/ui/components/headline";
-import { Button } from "@northware/ui/components/ui-registry/button";
-import { Spinner } from "@northware/ui/components/ui-registry/spinner";
+import { Button } from "@northware/ui/components/shadcn/button";
+import { Spinner } from "@northware/ui/components/shadcn/spinner";
 import Link from "next/link";
 
 export function NotFoundTemplate() {

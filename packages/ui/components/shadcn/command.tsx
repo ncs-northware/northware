@@ -11,7 +11,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@northware/ui/components/ui-registry/dialog"
+} from "@northware/ui/components/shadcn/dialog"
 
 function Command({
   className,

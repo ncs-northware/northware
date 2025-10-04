@@ -4,7 +4,7 @@ import * as React from "react"
 import { AlertDialog as AlertDialogPrimitive } from "radix-ui"
 
 import { cn } from "@northware/ui/lib/utils"
-import { buttonVariants } from "@northware/ui/components/ui-registry/button"
+import { buttonVariants } from "@northware/ui/components/shadcn/button"
 
 function AlertDialog({
   ...props

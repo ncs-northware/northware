@@ -32,6 +32,7 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.544.0",
     "next-themes": "^0.4.6",
+    "radix-ui": "latest",
     "react-day-picker": "^9.11.0",
     "react-hook-form": "^7.63.0",
     "react-resizable-panels": "^3.0.6",
@@ -39,8 +40,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
-    "zod": "^4.1.11",
-    "radix-ui": "latest"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
