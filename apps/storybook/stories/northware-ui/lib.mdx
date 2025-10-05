@@ -11,9 +11,10 @@ Unter dem Endpoint `@northware/ui/lib` werden unterstützende Funktionen bereitg
 
 ## Fonts
 
-Die Northware Apps verwenden die Schriftart [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) von Google Fonts. 
-Die Schriftart muss über die `layout.tsx` der App importiert werden und es braucht dafür die Definition einer Variable.
-Diese Variable `SourceSans` kann über `@northware/ui/lib/fonts` importiert werden.
+Die Northware Apps verwenden die Schriftart [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) und die Schriftart [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro) von Google Fonts. 
+Die Schriftarten müssen über die `layout.tsx` der App importiert werden und es braucht dafür die Definition einer Variable.
+Über die Variable `fonts` werden die beiden Schriftarten geladen und es werden die Klassen `.font-sans` und `.antialiased` auf das HTML-Attribut angewendet.
+Für die Verwendung der Schriftart Source Code Pro für einzelne Bereiche, reicht es aus, `.font-mono` auf einzelne Attribute anzuwenden.
 
 - [Mehr zu der Nutzung in einer App](?path=/docs/northware-ui-verwendung-in-einer-app--docs#die-layouttsx)
 - [Über die Verwendung von Fonts in Next.js mit Tailwind CSS](https://nextjs.org/docs/app/building-your-application/optimizing/fonts#with-tailwind-css)
