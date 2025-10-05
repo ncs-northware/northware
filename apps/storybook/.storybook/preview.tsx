@@ -3,7 +3,7 @@ import type { Preview } from "@storybook/nextjs";
 import React from "react";
 import "@northware/ui/css";
 import { ThemeProvider } from "@northware/ui/components/theme-provider";
-import { SourceSans } from "@northware/ui/lib/fonts";
+import { fonts } from "@northware/ui/lib/fonts";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
 const preview: Preview = {
@@ -44,7 +44,7 @@ const preview: Preview = {
       defaultTheme: "CockpitLight",
     }),
     (Story) => (
-      <div className={`bg-background ${SourceSans.variable} p-2 font-sans`}>
+      <div className={`bg-background ${fonts} p-2`}>
         <ThemeProvider
           defaultTheme="CockpitLight"
           enableSystem={false}
