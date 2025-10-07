@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/addon-docs/blocks"
-import { ViewSource } from "../../components/storybook-buttons"
+import { ViewSource, ShadcnDocs } from "../../components/storybook-buttons"
 
 <Meta title="Northware UI/Utilities und Funktionen" />
 
@@ -27,4 +27,11 @@ die innerhalb der Komponente definiert wurden bevorzugt werden. So lassen sich d
 auch wenn dieses Styling, dem vordefinierten Styling entgegensteht.
 
 Um dies zu ermöglichen werden de Tools [`clsx`](https://github.com/lukeed/clsx) und [`tailwind-merge`](https://github.com/dcastil/tailwind-merge) verwendet.
-Diees Vorgehen wird von shadcn/ui vorgeschlagen und die Komponenten sind auf die Verwendung der Funktion `cn` angewiesen. [Mehr dazu](https://ui.shadcn.com/docs/installation/manual#add-a-cn-helper)
+Dieses Vorgehen wird von shadcn/ui vorgeschlagen und die Komponenten sind auf die Verwendung der Funktion `cn` angewiesen. [Mehr dazu](https://ui.shadcn.com/docs/installation/manual#add-a-cn-helper)
+
+## `toast` Funktion von `sonner`
+
+<ShadcnDocs path="components/sonner" />
+
+Mithilfe der `toast()` Funktion kann ein Event-Feedback gezeigt werden. Die Funktion kann über `@northware/ui/lib/utils` importiert werden. 
+So muss nicht in jeder App die Dependency `sonner` installiert werden.

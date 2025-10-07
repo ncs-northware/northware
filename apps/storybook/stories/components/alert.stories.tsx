@@ -1,13 +1,14 @@
 import { AlertIcon, AlertWrapper } from "@northware/ui/components/custom-alert";
 import {
+  Alert,
   AlertDescription,
   AlertTitle,
 } from "@northware/ui/components/shadcn/alert";
-import { Terminal } from "@northware/ui/icons/lucide";
+import { CheckCircle2Icon, Terminal } from "@northware/ui/icons/lucide";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-  title: "Components/Panels/Alert",
+  title: "Components/Alert",
   component: AlertWrapper,
   argTypes: {
     variant: {
@@ -33,7 +34,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /**
- * Die Standard-Variante eines Alerts
+ * Die Standard-Variante eines Alerts ohne Icon
  */
 export const Default: Story = {};
 
@@ -55,7 +56,7 @@ export const Info: Story = {
 /**
  * Mit der Variante `destructive` können Alerts angezeigt werden, die einen Fehler melden
  */
-export const Danger: Story = {
+export const Destructive: Story = {
   render: (args) => (
     <AlertWrapper {...args}>
       <AlertTitle>Error</AlertTitle>
@@ -72,9 +73,10 @@ export const Danger: Story = {
 /**
  * Die Variante `success` zeigt, das eine Aktion erfolgreich war.
  */
-export const Sucess: Story = {
+export const Success: Story = {
   render: (args) => (
     <AlertWrapper {...args}>
+      <AlertIcon variant="success" />
       <AlertTitle>Super!</AlertTitle>
       <AlertDescription>
         Der Datensatz wurde erfolgreich gespeichert.
@@ -103,6 +105,10 @@ export const Warning: Story = {
   },
 };
 
+/**
+ * Dieser Alert nutzt die Komponente `AlertIcon`
+ */
+
 export const WithAlertIcon: Story = {
   render: (args) => (
     <AlertWrapper {...args}>
@@ -118,6 +124,10 @@ export const WithAlertIcon: Story = {
   },
 };
 
+/**
+ * Dieser Alert nutzt die ein anderes Icon von Lucide.
+ */
+
 export const WithCustomIcon: Story = {
   render: (args) => (
     <AlertWrapper {...args}>
@@ -131,4 +141,20 @@ export const WithCustomIcon: Story = {
   args: {
     variant: "default",
   },
+};
+
+/**
+ * Dieser Alert nutzt die `Alert` Komponente von shadcn
+ */
+
+export const ShadcnDefault: Story = {
+  render: () => (
+    <Alert>
+      <CheckCircle2Icon />
+      <AlertTitle>Super!</AlertTitle>
+      <AlertDescription>
+        Der Datensatz wurde erfolgreich gespeichert.
+      </AlertDescription>
+    </Alert>
+  ),
 };

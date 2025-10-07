@@ -2,12 +2,12 @@ import { Brand } from "@northware/ui/components/brand";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-  title: "Components/Base/Brand",
+  title: "Components/Brand",
   component: Brand,
   argTypes: {
     service: {
       control: { type: "select" },
-      options: ["cockpit", "trader", "finance", "admin"],
+      options: ["cockpit", "trader", "finance", "docs"],
     },
   },
   args: {
@@ -29,4 +29,7 @@ export const Finance: Story = {
 
 export const Trader: Story = {
   args: { service: "trader" },
+};
+export const DocsBrand: Story = {
+  args: { service: "docs" },
 };

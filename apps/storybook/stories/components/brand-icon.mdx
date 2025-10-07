@@ -1,6 +1,6 @@
 import { Meta, Canvas, Controls, Stories } from "@storybook/addon-docs/blocks"
 import * as BrandIconStories from "./brand-icon.stories"
-import { ViewSource } from "../../../components/storybook-buttons"
+import { ViewSource } from "../../components/storybook-buttons"
 
 <Meta of={BrandIconStories} />
 
@@ -8,7 +8,8 @@ import { ViewSource } from "../../../components/storybook-buttons"
 
 Die BrandIcon-Komponente zeigt das Icon der mit dem Prop `service` definierten Northware App. 
 Basierend auf dem `service` Prop werden die SVG-Icons `IconCockpit`, `IconFinance` oder `IconTrader` angezeigt.
-<ViewSource path="components/base/brand.tsx" />
+
+<ViewSource path="components/brand.tsx" />
 
 <Canvas of={BrandIconStories.Cockpit} />
 <Controls of={BrandIconStories.Cockpit} />
@@ -33,6 +34,4 @@ export default function Example({service} : {service: ServiceType}) {
 }
 ```
 
-## Varianten
-
-<Stories title="" />
+<Stories />

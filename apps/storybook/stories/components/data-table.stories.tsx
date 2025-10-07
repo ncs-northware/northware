@@ -10,7 +10,7 @@ import {
 } from "./data-table-demo";
 
 const meta = {
-  title: "Components/Panels/DataTable",
+  title: "Components/DataTable",
   component: DataTableDemo,
   subcomponents: {
     DataTablePaginationDemo,

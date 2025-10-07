@@ -1,0 +1,80 @@
+import {Meta, Story} from "@storybook/addon-docs/blocks"
+import * as AlertStories from "./alert.stories"
+import { ShadcnDocs } from "../../components/storybook-buttons"
+
+<Meta title="Components/shadcn" />
+
+# Basis-Komponenten von shadcn/ui
+
+<ShadcnDocs path="" />
+
+Als Basis für die Component-Library von `@northware/ui` wird [shadcn/ui](https://ui.shadcn.com/) verwendet.
+`shadcn/ui` liefert eine umfangreiche Anzahl von UI Komponenten, die alle in den Northware Projekten verwendet werden können.
+
+Diese unveränderten Komponenten können über den Endpoint `@northware/ui/components/shadcn/**` importiert werden.
+Eine Dokumentation für die Komponenten von shadcn ist [hier](https://ui.shadcn.com/docs/components) zu finden.
+
+`@northware/ui` nutzt das Zinc-Theme von shadcn mit CSS-Variablen und einigen Anpassungen (siehe [CSS-Theme](?path=/docs/northware-ui-css-theme--docs)).
+Die [`components.json`](https://ui.shadcn.com/docs/components-json) enthält weitere Konfigurationen für shadcn und die Nutzung der [CLI](https://ui.shadcn.com/docs/cli).
+
+## shadcn Komponenten aktualisieren
+
+Die shadcn Komponenten werden regelmäßig aktualisiert. Um immer den aktuellen Code zu verwenden, sollte der Code ebenfalls regelmäßig auf den neusten Stand gebracht werden.
+
+Um die Komponenten zu aktualisieren, kann vom Package-Root aus folgender Command ausgeführt werden:
+
+```bash
+pnpm bump-ui
+```
+
+Dieser Command führt die Aktualisierung der Komponenten mithilfe der shadcn CLI durch.
+
+```bash
+pnpm dlx shadcn@latest add --all --overwrite -c packages/ui
+```
+
+Der Command nimmt Änderungen an den Dateien unter `/components/shadcn` vor, die vor der Übernahme reviewed werden sollten. 
+Anpassungen für `@northware/ui` sollten außerdem in speziellen Dateien direkt unter /components vorgenommen werden.
+
+## Angepasste UI-Komponenten
+
+Einige shadcn Komponenten wurden für `@northware/ui` angepasst. 
+Die angepassten Versionen müssen über den Endpoint `@northware/ui/components` importiert werden, 
+da unter `@northware/ui/components/shadcn` weiterhin die unangepassten Versionen zu finden sind.
+Dieser Ansatz gewährleistet, das die shadcn Komponenten einfacher aktualisiert werden können.
+
+### Beispiel
+
+Die Komponente [Alert](https://ui.shadcn.com/docs/components/alert) von shadcn enthält nur wenige UI-Variationen, die nicht zu dem Ansatz von Northware passen.
+Unter `@northware/ui/components/custom-alert` werden daher die Komponenten `AlertWrapper` und `AlertIcon` bereitgestellt, 
+die zusammen mit den übrigen Alert-Komponenten von shadcn genutzt werden sollen.
+
+Ein Alert, der ausschließlich shadcn Komponenten verwendet, sieht so aus:
+
+<Story of={AlertStories.ShadcnDefault} />
+
+Der selbe Alert mit dem angepassten `AlertWrapper` und `AlertIcon` in der Variante `success` sieht dann so aus:
+
+<Story of={AlertStories.Success} />
+
+
+```jsx
+import {
+  AlertDescription,
+  AlertTitle,
+} from "@northware/ui/components/shadcn/alert"
+import { AlertWrapper, AlertIcon } from "@northware/ui/components/custom-alert";
+
+
+export function AlertDemo() {
+  return (
+      <AlertWrapper variant="success">
+        <AlertIcon variant="success" />
+        <AlertTitle>Success! Your changes have been saved</AlertTitle>
+        <AlertDescription>
+          This is an alert with icon, title and description.
+        </AlertDescription>
+      </AlertWrapper>
+  )
+}
+```

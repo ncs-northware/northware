@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useNamingConvention: Die Verwendung von camelCase für die Theme-Varianten führt zu einer Fehlkonfiguration in Storybook, da Name und Variable des Themes nicht übereinstimmen. */
 import type { Preview } from "@storybook/nextjs";
 // biome-ignore lint/correctness/noUnusedImports: React has to be imported to use jsx in this file.
 import React from "react";
@@ -26,6 +27,7 @@ const preview: Preview = {
             "Utilities und Funktionen",
           ],
           "Components",
+          ["shadcn"],
         ],
       },
     },
@@ -34,12 +36,12 @@ const preview: Preview = {
   decorators: [
     withThemeByClassName({
       themes: {
-        cockpitLight: "CockpitLight",
-        cockpitDark: "CockpitDark",
-        financeLight: "FinanceLight",
-        financeDark: "FinanceDark",
-        traderLight: "TraderLight",
-        traderDark: "TraderDark",
+        CockpitLight: "CockpitLight",
+        CockpitDark: "CockpitDark",
+        FinanceLight: "FinanceLight",
+        FinanceDark: "FinanceDark",
+        TraderLight: "TraderLight",
+        TraderDark: "TraderDark",
       },
       defaultTheme: "CockpitLight",
     }),

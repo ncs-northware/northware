@@ -1,16 +1,15 @@
 import { Meta, Canvas, Controls, Stories } from "@storybook/addon-docs/blocks"
 import * as BrandStories from "./brand.stories"
-import {ViewSource} from "../../../components/storybook-buttons"
+import {ViewSource} from "../../components/storybook-buttons"
 
 <Meta of={BrandStories} />
 
 # Brand
 
-Die Brand-Komponente zeigt das Logo der über den Prop Prop `service` definierten Northware App.
-
+Die Brand-Komponente zeigt das Logo der über den Prop `service` definierten Northware App.
 Diese Komponente beinhaltet die [BrandIcon Komponente](?path=/docs/components-base-brandicon--docs).
 
-<ViewSource path="components/base/brand.tsx" />
+<ViewSource path="components/brand.tsx" />
 
 <Canvas of={BrandStories.Cockpit} />
 <Controls of={BrandStories.Cockpit} />
@@ -35,6 +34,4 @@ export default function Example({service} : {service: ServiceType}) {
 }
 ```
 
-## Varianten
-
-<Stories title="" />
+<Stories/>

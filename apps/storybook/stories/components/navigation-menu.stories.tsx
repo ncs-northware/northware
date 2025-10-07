@@ -14,7 +14,7 @@ import Link from "next/link";
  * A collection of links for navigating websites.
  */
 const meta = {
-  title: "Components/Menu/NavigationMenu",
+  title: "Components/NavigationMenu",
   component: NavigationMenu,
   argTypes: {},
   render: (args) => (

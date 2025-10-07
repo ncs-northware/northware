@@ -2,7 +2,7 @@ import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-  title: "Components/Menu/ThemeSwitch",
+  title: "Components/ThemeSwitch",
   component: ThemeSwitch,
   parameters: { layout: "centered" },
 

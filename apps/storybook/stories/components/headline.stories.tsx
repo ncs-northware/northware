@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
  */
 
 const meta = {
-  title: "Components/Base/Headline",
+  title: "Components/Headline",
   component: Headline,
   tags: ["autodocs"],
   args: { children: "The quick brown fox jumps over the lazy dog." },
