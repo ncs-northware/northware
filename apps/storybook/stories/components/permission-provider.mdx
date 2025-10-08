@@ -1,0 +1,80 @@
+import {Meta} from "@storybook/addon-docs/blocks"
+import {ViewSource} from "../../components/storybook-buttons"
+
+<Meta title="Components/Berechtigungssteuerung" />
+
+# Berechtigungssteuerung über die UI
+
+Mit der Funktion `userHasPermission` und den Komponenten `AppPermissionProvider` und `PermissionProvider` wird über die UI gesteuert, ob ein Nutzer die angeforderte Seite oder eine Fehlermeldung sieht.
+
+<ViewSource path="/components/permission-provider.tsx" />
+
+Zu jedem Benutzer der Northware Apps wird in der Datenbank gespeichert, welche Berechtigungen er hat. 
+Diese Berechtigungen werden als Strings gespeichert und über das Admin Panel im Northware Cockpit zugewiesen.
+Mit der Funktion `userHasPermission` und den Komponenten `AppPermissionProvider` und `PermissionProvider` wird geprüft, 
+ob ein Nutzer die nötigen Berechtigungen hat, um die Seite zu sehen. Basierend auf dieser Information wird die UI angezeigt.
+
+## userHasPermission
+
+Die Funktion `userHasPermission` prüft, ob der Nutzer eine oder mehrere Berechtigungen hat.
+Dazu wird in der Datenbank nach den Berechtigungen des angemeldeten Users gesucht.
+Wenn der Nutzer die Berechtigungen hat, die als Property der Funktion übergeben wurden, wird `true` zurückgegeben.
+Die Funktion kann genutzt werden, um einzelne UI-Komponenten bedingt anzuzeigen.
+
+### Benutzung
+
+```tsx
+// Hier wird der Button nur angezeigt, wenn dem Nutzer die Berechtigung cockpit::user.create zugewiesen wurde.
+return (
+    ...
+    <div className="flex justify-between gap-4">
+        <Headline level="h1">Benutzerverwaltung</Headline>
+        {(await userHasPermission(["cockpit::user.create"])) && (
+            <Button asChild>
+                <Link href="user/create">
+                <PlusIcon className="sm:hidden" />
+                <span className="hidden sm:block">Benutzer hinzufügen</span>
+                </Link>
+            </Button>
+        )}
+    </div>
+    ...
+)
+```
+
+## AppPermissionProvider
+
+Die Komponente `AppPermissionProvider` prüft, ob der Nutzer die nötige Berechtigung hat, um die App zu verwenden.
+Der `AppPermissionProvider` wird über das `SidebarLayout` in die App integriert. 
+Über die Funktion `userHasPermission` wird geprüft, ob der Nutzer die nötige Basis-Berechtigung hat.
+Die `children` der Komponente werden nur angezeigt, wenn der Benutzer die Berechtigung hat. 
+Andernfalls hat der Nutzer die Möglichkeit, zu einer anderen App zu wechseln oder sich abzumelden.
+
+Der AppPermissionProvider erwartet folgende Props:
+
+- `children`: Der Inhalt der gezeigt werden soll, wenn der Nutzer die nötige Basis-Berechtigung für die App hat (Typ `ReactNode`)
+- `service`: Die App die aktuell genutzt wird (Typ `ServiceType`)
+- `apps`: Eine Liste aller Apps mit `slug`, `url` und dem Boolean `allowed`.
+
+## PermissionProvider
+
+Die Komponente `PermissionProvider` prüft, ob einem Nutzer eine übergebene Berechtigung zugewiesen wurde.
+Basierend darauf werden die `children` der Komponente oder eine Fehlermeldung gezeigt.
+
+Der `PermissionProvider` soll prüfen, ob der Nutzer eine Seite sehen kann. 
+Zuvor wird vom `AppPermissionProvider` geprüft, ob der Nutzer die App nutzen darf.
+Sollen nur einzelne Teile der App basierend auf Berechtigungen gezeigt werden, sollte die Funktion `userHasPermission` direkt genutzt werden.
+
+### Benutzung
+
+```tsx
+export default async function Page() {
+    return (
+        <SidebarLayout>
+          <PermissionProvider permissionKeys={["cockpit::user.read"]}>
+            ...
+          </PermissionProvider>
+        </SidebarLayout>
+    )
+}
+```
