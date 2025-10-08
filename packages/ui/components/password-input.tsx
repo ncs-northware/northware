@@ -4,6 +4,8 @@ import { cn } from "@northware/ui/lib/utils";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";
 
+// FIXME: Rethink Component with Radix's PasswordToggleField or InputGroups from shadcn
+
 function PasswordInput({ ...props }) {
   const [showPassword, setShowPassword] = useState(false);
 
