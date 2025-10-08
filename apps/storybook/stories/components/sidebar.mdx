@@ -1,0 +1,67 @@
+import {Meta} from "@storybook/addon-docs/blocks"
+import {ViewSource, ShadcnDocs} from "../../components/storybook-buttons"
+
+<Meta title="Components/Sidebar" />
+
+# Sidebar
+
+Die Sidebar Komponenten definieren die grundlegende UI der Northware Apps.
+
+<ShadcnDocs path="components/sidebar" />
+
+![Sidebar](/contents/sidebar.png)
+
+## SidebarLayout
+
+<ViewSource path="components/sidebar-layout.tsx"/>
+
+Die Komponente `SidebarLayout` definiert das grundlegende Gerüst einer Seite. Sie zeigt ein Menü (`MainSidebar`) und einen Page Header mit Branding und Breadcrumbs.
+Auf jeder Seite sollte der Page Content von einem `SidebarLayout` umgeben sein.
+
+Über die Properties kann auf jeder Seite definiert werden, wie die Sidebar aussieht:
+
+- `service`: Hier muss definiert werden, welche App gerade genutzt wird. Dieser Wert hat den Typ `ServiceType` und wird verwendet, um das richtige Branding (`AppSwitch`) und die richtigen Menüpunkte zu zeigen.
+- `breadcrumbs?`: Optionale Eigenschaft vom Typ `BreadcrumbType[]`, generiert mithilfe von `AutoBreadcrumbs` einen Breadcrumb Path.
+- `defaultOpen?`: Steuert, ob die Sidebar standardmäßig ausgeklappt sein soll (standardmäßig `true`). Auf Seiten mit viel Inhalt, der über die ganze Breite dargestellt werden soll kann der Wert auf `false` gesetzt werden.
+- `mainLabel?`: String der oberhalb der Hauptnavigation angezeigt werden kann. Kann zusammen mit `subLabel` und `subMenu` genutzt werden.
+- `subLabel?`: String der oberhalb eines `subMenu` angezeigt werden kann.
+- `subMenu?`: Array vom Typ `SubMenuItem[]` mit dem auf einzelnen Seiten ein Subnavigation erstellt werden kann.
+- `children` Zeigt den von der Komponente umgebenen Inhalt
+
+## MainSidebar
+
+Diese Komponente zeigt die eigentliche Sidebar Navigation incl. Branding (`AppSwitch`), Hauptnavigation (`NavMain`), Subnavigation (`SubNav`) und `UserMenu`.
+Die Komponente ruft die Menüpunkte der Hauptnavigation ab, die der Nutzer sehen kann.
+
+## NavMain
+
+Die `NavMain` zeigt die einzelnen Menüpunkte der Hauptnavigation die die `MainSidebar` von der Datenbank abruft.
+Die `NavMain` sortiert die Elemente von `menuData` so, dass Top-Level Items und auch verschachtelte Child-Items richtig dargestellt werden.
+
+## SubNav
+
+Die `SubNav` Komponente generiert aus dem Property `subMenu` eine Navigation oberhalb der `NavMain`, die die gleichen Komponenten nutzt.
+
+## MainSidebarMenuButton
+
+<ViewSource path="components/sidebar-menu-button.tsx"/>
+
+Der `MainSidebarMenuButton` ist eine Client-Komponente, die einen einzelnen Menüpunkt zeigt.
+Die Komponente erwartet die Properties `href`, `title`, `type` und optional `exactMatch` für Home-Navigationspunkte.
+Aus diesen Informationen generiert die Komponente ein Top-Level Item, oder ein Parent- oder Child-Item in einer verschachtelten Navigation.
+Die Komponente erkennt anhand des `href` Attributes und des URL-Paths ob der Nutzer sich gerade auf der entsprechenden Seite befindet. Entsprechend wird der Menüpunkt gestylet.
+
+## AppSwitch
+
+<ViewSource path="components/app-switch.tsx" />
+
+Die Komponente `AppSwitch` zeigt im Header der `MainSidebar` das Logo (`Brand` Komponente) der aktiven App.
+Die `Brand` Komponente ist von einem Dropdown umgeben, mit dem der Nutzer zu den anderen für ihn zugelassenen Apps navigieren kann.
+
+## AutoBreadcrumbs
+
+<ViewSource path="components/auto-breadcrumbs.tsx" />
+<ShadcnDocs path="components/breadcrumb" />
+
+Mithilfe der Komponente `AutoBreadcrumbs` wird im `SidebarLayout` automatisch eine Breadcrumb-Navigation aus den Properties der Komponente generiert.
+Die UI des Breadcrumbs nutzt die unterschiedlichen Komponenten von `shadcn/ui`.

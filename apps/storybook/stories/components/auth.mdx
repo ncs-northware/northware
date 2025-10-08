@@ -1,0 +1,50 @@
+import {Meta} from "@storybook/addon-docs/blocks"
+import {ViewSource} from "../../components/storybook-buttons"
+
+<Meta title="Components/Auth Components" />
+
+# Auth Components
+
+<ViewSource path="components/auth.tsx" />
+
+`@northware/ui` nutzt die UI-Komponenten von [Clerk](https://clerk.com/docs/nextjs/reference/components/overview), die über `@northware/auth/client` bereitgestellt werden.
+Die Clerk-Komponenten ermöglichen eine einfache Integration von Login- und Logout Funktionalitäten im Multisession Setup.
+
+`@northware/ui` enthält angepasste Versionen der Clerk Komponenten, die von den Northware Apps genutzt werden.
+
+## `SignInForm`
+
+Die Komponente `SignInForm` enthält neben einer angepassten Version der [SignIn Komponente](https://clerk.com/docs/nextjs/reference/components/authentication/sign-in) von Clerk
+die `Brand` Komponente der jeweiligen App und ein `<main>` Element, das so gestylet ist, das der Content der Seite vertikal und horizontal zentriert ist.
+
+![SignInForm](/contents/signin-form.png)
+
+Wenn im Multisession-Setup mehrere Nutzer angemeldet sind und einer der Benutzer abgemeldet wird, muss der Nutzer einen anderen Nutzer wählen.
+Dazu wird der Nutzer auf die Login-Seite der App weitergeleitet. Die `SignIn` Komponente ermöglicht dann den Wechsel zwischen den Accounts.
+
+![SignIn Switch Accounts](/contents/signin-switch-accounts.png)
+
+### Benutzung
+
+```tsx
+
+// app/login/[[...login]]/page.tsx
+
+"use client";
+import { SignInForm } from "@northware/ui/components/auth";
+
+export default function Page() {
+  return <SignInForm service="cockpit" />;
+}
+```
+
+## `UserMenu`
+
+Die Komponente `UserMenu` enthält eine angepasste Version der Clerk-Komponente [UserButton](https://clerk.com/docs/nextjs/reference/components/user/user-button) und ist in das `SidebarLayout` integriert.
+Mithilfe des `UserMenu` kann sich der Nutzer abmelden und das eigene Profil bearbeiten. Außerdem kann im Multisession-Setup der Nutzer gewechselt werden.
+
+![UserMenu](/contents/usermenu.png)
+
+Die Komponente `UserButton` enthält die Möglichkeit, über die [UserProfile Komponente](https://clerk.com/docs/nextjs/reference/components/user/user-profile) das eigene Profil zu bearbeiten.
+
+![UserProfile](/contents/userprofile.png)

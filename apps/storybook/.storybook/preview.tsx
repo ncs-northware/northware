@@ -1,9 +1,10 @@
+/** biome-ignore-all lint/style/useNamingConvention: Die Verwendung von camelCase für die Theme-Varianten führt zu einer Fehlkonfiguration in Storybook, da Name und Variable des Themes nicht übereinstimmen. */
 import type { Preview } from "@storybook/nextjs";
 // biome-ignore lint/correctness/noUnusedImports: React has to be imported to use jsx in this file.
 import React from "react";
 import "@northware/ui/css";
 import { ThemeProvider } from "@northware/ui/components/theme-provider";
-import { SourceSans } from "@northware/ui/lib/fonts";
+import { fonts } from "@northware/ui/lib/fonts";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
 const preview: Preview = {
@@ -26,6 +27,7 @@ const preview: Preview = {
             "Utilities und Funktionen",
           ],
           "Components",
+          ["shadcn"],
         ],
       },
     },
@@ -34,17 +36,17 @@ const preview: Preview = {
   decorators: [
     withThemeByClassName({
       themes: {
-        cockpitLight: "CockpitLight",
-        cockpitDark: "CockpitDark",
-        financeLight: "FinanceLight",
-        financeDark: "FinanceDark",
-        traderLight: "TraderLight",
-        traderDark: "TraderDark",
+        CockpitLight: "CockpitLight",
+        CockpitDark: "CockpitDark",
+        FinanceLight: "FinanceLight",
+        FinanceDark: "FinanceDark",
+        TraderLight: "TraderLight",
+        TraderDark: "TraderDark",
       },
       defaultTheme: "CockpitLight",
     }),
     (Story) => (
-      <div className={`bg-background ${SourceSans.variable} p-2 font-sans`}>
+      <div className={`bg-background ${fonts} p-2`}>
         <ThemeProvider
           defaultTheme="CockpitLight"
           enableSystem={false}

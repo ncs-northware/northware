@@ -1,0 +1,60 @@
+import { Meta, Canvas, Controls, Stories } from "@storybook/addon-docs/blocks"
+import * as AlertStories from "./alert.stories"
+import { ViewSource, ShadcnDocs } from "../../components/storybook-buttons"
+
+<Meta of={AlertStories} />
+
+# Alert
+
+<ShadcnDocs path="components/alert" />
+<ViewSource path="components/custom-alert.tsx" />
+
+<Canvas of={AlertStories.Default} />
+<Controls of={AlertStories.Default} />
+
+## Benutzung
+
+Da die Alert Komponente von shadcn nur wenige Varianten enthält, gibt es `/components/custom-alert` die Komponente `AlertWrapper` mit weiteren Farbvarianten.
+Der AlertWrapper sollte anstatt der Komponente `Alert` zusammen mit den weiteren shadcn Komponenten `AlertTitle` und `AlertDescription` genutzt werden.
+
+```tsx
+import { AlertWrapper } from "@northware/ui/components/custom-alert"
+import { AlertDescription, AlertTitle } from "@northware/ui/components/shadcn/alert"
+
+<AlertWrapper variant="default">
+  <AlertTitle>Übrigens...</AlertTitle>
+  <AlertDescription>
+    Du kannst Komponenten mit der shadcn CLI hinzufügen.
+  </AlertDescription>
+</Alert>
+```
+
+## Alerts mit Icon
+
+Die Alerts lassen sich auch mit einem Icon in der linken Ecke bauen. Dazu muss nur eine Icon-Komponente innerhalb des Alerts eingefügt werden.
+Dieses Icon kann ein beliebiges Icon von Lucide sein. Alternativ kann die Komponente `<AlertIcon />` verwendet werden.
+Diese Komponente akzeptiert den Property `variant` mit den gleichen Werten wie es die Alert Komponente tut und zeigt basierend auf diesem Wert ein vordefiniertes Icon von Lucide.
+
+```tsx
+import { AlertWrapper, AlertIcon} from "@northware/ui/components/custom-alert"
+import { AlertDescription, AlertTitle} from "@northware/ui/components/shadcn/alert"
+
+<AlertWrapper variant="default">
+  <AlertIcon variant="default">
+  <AlertTitle>Übrigens...</AlertTitle>
+  <AlertDescription>
+    Du kannst Komponenten mit der shadcn CLI hinzufügen.
+  </AlertDescription>
+</Alert>
+```
+
+### Ein Alert mit `AlertIcon`
+
+<Canvas of={AlertStories.WithAlertIcon} />
+<Controls of={AlertStories.WithAlertIcon} />
+
+### Ein Alert mit einem beliebigen Icon von Lucide
+
+<Canvas of={AlertStories.WithCustomIcon} />
+
+<Stories />

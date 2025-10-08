@@ -27,20 +27,20 @@ Unter diesem Endpoint wird das grundlegende Theme zur Verfügung gestellt. Die A
 
 Außerdem benötigt die App die Font-Konfiguration für die von Northware verwendete Schriftart, die ebenfalls von `@northware/ui` bereitgestellt wird.
 
-Weiterhin sollte die App die Komponete GeneralProvider von `@northware/ui` verwenden. Diese enthält alle für die App nötigen Provider-Komponenten (`ThemeProvider`, 
+Weiterhin sollte die App die Komponete `GeneralProvider` von `@northware/ui` verwenden. Diese enthält alle für die App nötigen Provider-Komponenten (`ThemeProvider`, 
 damit der User zwischen Light und DarkMode wechseln kann sowie `AuthProvider` von `@northware/auth` damit die User-Authentification richtig funktioniert).
 
 ```tsx
 import "@northware/ui/css";
 import { GeneralProvider } from "@northware/ui/components/providers/general-provider";
-import { SourceSans } from "@northware/ui/lib/fonts";
+import { fonts } from "@northware/ui/lib/fonts";
 ```
 
 Auch an dem Markup des Layouts müssen einige Veränderungen vorgenommen werden.
 
 - Das `<html>` Tag benötigt eine `theme-*` Klasse, damit die für die App richtige Farbgestaltung verwendet wird. [Mehr dazu](?path=/docs/northware-ui-css-theme--docs#app-theming-klassen)
 - Das `<html>` Tag benötigt das `suppressHydrationWarning` Property, da es sonst zu Problemen mit next-themes kommt. [Mehr dazu](https://github.com/pacocoursey/next-themes?tab=readme-ov-file)
-- Über das `<body>` Tag wird die Schriftart definiert. Zum einen wird hier die Schriftart von `@northware/ui` übergeben, andererseits wird diese Schriftart über die Tailwind-Klasse `.font-sans` angewendet. [Mehr dazu](?path=/docs/northware-ui-utilities-und-funktionen--docs#fonts)
+- Über das `<body>` Tag wird die Schriftart definiert. Die Variable fonts übergibt die Schriftarten in den Variablen `SourceSans` und `SourceCode` an die App und definiert, das für die App standardmäßig die Klasse `.font-sans` verwendet werden soll. [Mehr dazu](?path=/docs/northware-ui-utilities-und-funktionen--docs#fonts)
 - Die `children` von `RootLayout` müssen von `<GeneralProvider>` umgeben sein.
 
 Die fertige `layout.tsx` der App könnte dann so aussehen:
@@ -48,7 +48,7 @@ Die fertige `layout.tsx` der App könnte dann so aussehen:
 ```tsx
 import "@northware/ui/css";
 import { GeneralProvider } from "@northware/ui/components/providers/general-provider";
-import { SourceSans } from "@northware/ui/lib/fonts";
+import { fonts } from "@northware/ui/lib/fonts";
 
 export const metadata = {
   title: {
@@ -64,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html className="theme-cockpit" lang="de" suppressHydrationWarning>
-      <body className={`${SourceSans.variable} font-sans`}>
+      <body className={fonts}>
         <GeneralProvider>{children}</GeneralProvider>
       </body>
     </html>
@@ -111,34 +111,5 @@ Damit die Imports von `@northware/ui` richtig funktionieren, muss der Import von
         }
         ...
     }
-}
-```
-
-## shadcn/ui Konfiguration auf App-Level
-
-Damit die shadcn CLI auch auf App-Level funktioniert, wird eine `components.json` Datei benötigt.
-Mit dieser Konfigurationsdatei entscheidet die CLI dann, welche Komponenten, Hooks und Libs in @northware/ui und welche auf App-Level erstellt werden.
-Möglicherweise muss die Entscheidung der CLI im Einzelfall korrigiert werden. 
-
-```json
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
-  "rsc": true,
-  "tsx": true,
-  "tailwind": {
-    "config": "",
-    "css": "../../packages/ui/css/globals.css",
-    "baseColor": "zinc",
-    "cssVariables": true
-  },
-  "iconLibrary": "lucide",
-  "aliases": {
-    "components": "@/components",
-    "hooks": "@/hooks",
-    "lib": "@/lib",
-    "utils": "@northware/ui/lib/utils",
-    "ui": "@northware/ui/components"
-  }
 }
 ```

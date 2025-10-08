@@ -1,0 +1,87 @@
+import {Meta} from "@storybook/addon-docs/blocks"
+import {ViewSource} from "../../components/storybook-buttons"
+
+<Meta title="Components/Page Templates"/>
+
+# NotFoundTemplate
+
+<ViewSource path="components/error-templates.tsx" />
+
+Die Komponente `NotFoundTemplate` zeigt eine Fehlerseite, wenn die aufgerufene Seite nicht gefunden wurde.
+Dieses Template soll für die [not-found.tsx](https://nextjs.org/docs/app/api-reference/file-conventions/not-found) jeder App genutzt werden.
+
+```tsx
+import { NotFoundTemplate } from "@northware/ui/components/error-templates";
+
+export default function NotFound() {
+  return <NotFoundTemplate />;
+}
+```
+
+![NotFoundTemplate](/contents/notfound-template.png)
+
+# ErrorPageTemplate
+
+<ViewSource path="components/error-templates.tsx" />
+
+Die Komponente zeigt eine Fehlerseite, wenn ein unbekannten Fehler aufgetreten ist.
+Dieses Template soll für die [error.tsx](https://nextjs.org/docs/app/api-reference/file-conventions/error) jeder App genutzt werden.
+
+```tsx
+"use client";
+
+import { ErrorPageTemplate } from "@northware/ui/components/error-templates";
+
+export default function ErrorPage() {
+  return <ErrorPageTemplate />;
+}
+```
+
+![ErrorPageTemplate](/contents/error-template.png)
+
+# LoadingPageTemplate
+
+<ViewSource path="components/error-templates.tsx" />
+
+Die Komponente zeigt an, das die geforderte Seite geladen wird. Next.js zeigt diese Seite immer dann, wenn die UI noch geladen wird.
+Dieses Template soll für die [loading.tsx](https://nextjs.org/docs/app/api-reference/file-conventions/loading) jeder App verwendet werden.
+
+```tsx
+import { LoadingPageTemplate } from "@northware/ui/components/error-templates";
+
+export default function Loading() {
+  return <LoadingPageTemplate />;
+}
+```
+
+![LoadingPageTemplate](/contents/loading-template.png)
+
+# DataFetchError
+
+<ViewSource path="components/no-data-template.tsx"/>
+
+Die Komponente zeigt eine Fehlerseite wenn auf List-Pages ein Datenbank-Fehler aufgetreten ist.
+Auf Einzelseiten soll als Fallback die Funktion `notFound()` aufgerufen werden, sodass die `not-found.tsx` Seite gezeigt wird.
+
+## Benutzung
+
+In diesem Bespiel wird die `DataFetchError` Komponente gezeigt, wenn es zu einem Datenbank-Fehler gekommen ist.
+Andernfalls wird die vorgesehene Seite mit den Daten aus der Datenbank gezeigt.
+
+```tsx
+export default async function Page() {
+  const userArray = (await getUserList()) || [];
+  if (!userArray.success) {
+    return (
+      <DataFetchError message={userArray.error.message} service="cockpit" />
+    );
+  }
+  return (
+    <SidebarLayout>
+    ...
+    </SidebarLayout>
+  )
+}
+```
+
+![DataFetchError](/contents/datafetcherror-template.png)

@@ -1,0 +1,39 @@
+import { Meta, Stories, Canvas, Controls } from "@storybook/addon-docs/blocks"
+import * as ThemeSwitchStories from "./theme-switch.stories"
+import {ViewSource, ShadcnDocs} from "../../components/storybook-buttons"
+
+<Meta of={ThemeSwitchStories} />
+
+# ThemeSwitch
+
+Ein Button, mit dem der User zwischen Light- und Dark-Theme wechseln kann.
+Die Komponente verändert das Theme, das auf die Seite angewendet wird.
+Dazu verwendet sie `useTheme` von `next-themes` und verändert den Zustand des ihn umgebenen `html`-Elementes das wiederum den [ThemeProvider](?path=/docs/components-providers-themeprovider--docs) steuert.
+
+Die Komponente verwendet in ihrer unmodifizierten Form die Button-Variante `ghost` und ist dadurch nicht als Button erkennbar.
+
+<ShadcnDocs path="dark-mode/next#add-a-mode-toggle" />
+<ViewSource path="components/theme-switch.tsx" />
+
+<Canvas of={ThemeSwitchStories.Light} />
+<Controls of={ThemeSwitchStories.Light} />
+
+## Benutzung
+
+```tsx
+import { ThemeSwitch } from "@northware/ui/components/menu/theme-switch"
+
+<ThemeSwitch />
+```
+
+<Stories />
+
+## Anpassungen für Storybook
+
+Innerhalb der Northware Apps wird anhand der auf das `html`-Element angewendeten Klassen gesteuert, ob das `MoonIcon` (bei `html.light`) oder das `SunIcon` (bei `html.dark`) angezeigt wird. Diese Klasse wird über den `ThemeProvider` angewendet.
+Da der `ThemeProvider` für das Storybook diese Klassen aber nicht kontrolliert und die Stories Innerhalb von Storybook nicht auf das `html`-Element zugreifen können, akzeptieren die Icons spezielle Klassen die nur für Storybook gelten.
+
+In Storybook muss auf jede Story von `ThemeSwitch` die Klasse `group` angewendet werden. Außerdem benötigt die Komponente die Klasse `storybook-lightTheme` oder `storybook-darkTheme`, je nach dem welches Theme angewendet werden soll.
+Die Komponenten `MoonIcon` und `SunIcon` innerhalb des von `ThemeSwitch` gerenderten Buttons sind als `hidden` gekennzeichnet und können über `group-[.storybook-lightTheme]:block` bzw. `group-[.storybook-darkTheme]:block` getriggert werden.
+
+Der State des `ThemeSwitch` ist dabei unabhängig von dem durch die `preview.tsx` auf das Storybook angewendete Theme.
