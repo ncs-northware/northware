@@ -14,33 +14,37 @@ weiter zu geben. Der Vorteil hierbei ist, dass der Wert auch in Server-Komponent
 Um den Prop nicht immer wieder mit TypeScript zu defineren, sollte für den Prop der ServiceType verwendet werden, 
 der von `@northware/service-config` bereitgestellt wird.
 
-```tsx title="service-config/types.ts"
+```tsx title="service-config/index.ts"
 export type ServiceType = 'cockpit' | 'admin' | 'finance' | 'trader';
+...
 ```
 
 Der Type kann dann in Komponenten verwendet werden, die direkt in die App integriert werden. 
 An alle von der Komponente selbst verwendeten Komponenten kann der Wert des Props weitergegeben werden.
 
-```tsx title="ui/components/layout/container.tsx"
-import type { ServiceType } from '@northware/service-config'; //[!code highlight]
+```tsx title="ui/components/app-switch.tsx"
+"use client";
+
+import type { ServiceType } from "@northware/service-config";
+import { Brand } from "@northware/ui/components/brand";
 ...
 
-export function Container({
-  children,
-  className,
-  service, //[!code highlight]
+export function AppSwitch({
+  // [!code highlight]
+  service,
+  apps,
 }: {
-  children: ReactNode;
-  className?: string;
-  service: ServiceType; //[!code highlight]
+  // [!code highlight]
+  service: ServiceType;
+  apps: MenuApps[];
 }) {
+  ...
   return (
-    <>
-      //[!code highlight]
-      <SiteHeader service={service} />
-      <main className={cn('container pt-8', className)}>{children}</main>
-    </>
-  );
+    ...
+    // [!code highlight]
+    <Brand className="truncate text-base" service={service} />
+    ...  
+);
 }
 
 ```
@@ -97,14 +101,15 @@ export async function menuData(service: ServiceType) {
 Auch der Array für die in der Meta-Navigation verlinkten Apps wird von `@northware/service-config` bereitgestellt.
 Die Meta-Navigationen in Mobile und Desktop-Ansichten mappen dann durch diesen Array um entsprechende Links zu präsentieren.
 
-```tsx title="service-config/apps.ts"
-import type { ServiceType } from "./types";
+```tsx title="service-config/index.ts"
+
+export type ServiceType = 'cockpit' | 'admin' | 'finance' | 'trader';
 
 export const suiteApps: {
   title: string;
   slug: ServiceType;
 }[] = [
-  // Attribute der Navigationspunkte der AppSwitches in MetaNav
+  // Attribute der Navigationspunkte der AppSwitches
   {
     title: "Northware Cockpit",
     slug: "cockpit",

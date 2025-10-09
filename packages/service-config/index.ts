@@ -2,7 +2,7 @@ export const suiteApps: {
   title: string;
   slug: ServiceType;
 }[] = [
-  // Attribute der Navigationspunkte der AppSwitches in MetaNav
+  // Attribute der Navigationspunkte der AppSwitches
   {
     title: "Northware Cockpit",
     slug: "cockpit",
