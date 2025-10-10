@@ -41,7 +41,7 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
           <TableDescriptionElement className="flex flex-row items-center gap-2">
             <MailIcon className="size-4 text-primary" />
             <Link
-              className="text-primary hover:underline"
+              className="text-primary hover:underline hover:underline-offset-4"
               href={`mailto:${row.getValue("mailWork")}`}
             >
               {row.getValue("mailWork")}
@@ -87,7 +87,7 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
           <TableDescriptionElement className="flex flex-row items-center gap-2 lg:hidden">
             <MailIcon className="size-4 text-primary" />
             <Link
-              className="text-primary hover:underline"
+              className="text-primary hover:underline hover:underline-offset-4"
               href={`mailto:${row.getValue("mailWork")}`}
             >
               {row.getValue("mailWork")}
@@ -107,7 +107,7 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
     cell: ({ row }) => (
       <TableCell className="hidden lg:table-cell">
         <Link
-          className="text-primary hover:underline"
+          className="text-primary hover:underline hover:underline-offset-4"
           href={`mailto:${row.getValue("mailWork")}`}
         >
           {row.getValue("mailWork")}
@@ -145,6 +145,94 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
     cell: ({ row }) => (
       <TableCell className="hidden lg:table-cell">
         {row.getValue("department")}
+      </TableCell>
+    ),
+  },
+];
+
+export type DepartmentAddress = {
+  departmentName: string;
+  company: string | null;
+  phone: string;
+  mail: string;
+};
+
+export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
+  {
+    accessorKey: "departmentName",
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Abteilung" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell>
+        <TableDescriptionList>
+          <TableDescriptionElement>
+            {row.getValue("departmentName")}
+          </TableDescriptionElement>
+          <TableDescriptionElement className="text-muted-foreground lg:hidden">
+            {row.getValue("company")}
+          </TableDescriptionElement>
+        </TableDescriptionList>
+      </TableCell>
+    ),
+  },
+  {
+    accessorKey: "company",
+    header: ({ column }) => (
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="Firma" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell className="hidden lg:table-cell">
+        {row.getValue("company")}
+      </TableCell>
+    ),
+  },
+  {
+    accessorKey: "phone",
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Telefonnummer" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell>
+        <TableDescriptionList>
+          <TableDescriptionElement className="flex flex-row items-center gap-2">
+            <PhoneIcon className="size-4" />
+            {row.getValue("phone")}
+          </TableDescriptionElement>
+          <TableDescriptionElement className="flex flex-row items-center gap-2 md:hidden">
+            <MailIcon className="size-4 text-primary" />
+            <Link
+              className="text-primary hover:underline hover:underline-offset-4"
+              href={`mailto:${row.getValue("mail")}`}
+            >
+              {row.getValue("mail")}
+            </Link>
+          </TableDescriptionElement>
+        </TableDescriptionList>
+      </TableCell>
+    ),
+  },
+  {
+    accessorKey: "mail",
+    header: ({ column }) => (
+      <TableHead className="hidden md:table-cell">
+        <DataTableColumnHeader column={column} title="E-Mail-Adresse" />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell className="hidden md:table-cell">
+        <Link
+          className="text-primary hover:underline hover:underline-offset-4"
+          href={`mailto:${row.getValue("mail")}`}
+        >
+          {row.getValue("mail")}
+        </Link>
       </TableCell>
     ),
   },

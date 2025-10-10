@@ -5,19 +5,26 @@ import {
 } from "@northware/database/schema";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@northware/ui/components/shadcn/tabs";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { eq } from "drizzle-orm";
+import { companiesTable } from "node_modules/@northware/database/schema/companies";
 import { departmentsTable } from "node_modules/@northware/database/schema/departments";
-import { employeeColumns } from "./columns";
-import { EmployeeDataTable } from "./data-table";
+import { departmentColumns, employeeColumns } from "./columns";
+import { DataTable } from "./data-table";
 
 export const metadata = {
   title: "Adressbuch",
 };
 
-async function getEmployeeAddresses() {
+async function getAddresses() {
   try {
-    const result = await db
+    const employeeResult = await db
       .select({
         sirName: employeesPersonalTable.sirName,
         firstName: employeesPersonalTable.firstName,
@@ -36,7 +43,26 @@ async function getEmployeeAddresses() {
         eq(employeesWorkerTable.department, departmentsTable.recordId)
       )
       .orderBy(employeesPersonalTable.sirName);
-    return { success: true, addresses: result };
+
+    const departmentResult = await db
+      .select({
+        departmentName: departmentsTable.departmentName,
+        company: companiesTable.companyName,
+        phone: departmentsTable.phone,
+        mail: departmentsTable.mail,
+      })
+      .from(departmentsTable)
+      .leftJoin(
+        companiesTable,
+        eq(departmentsTable.companyId, companiesTable.companyId)
+      )
+      .orderBy(departmentsTable.recordId);
+
+    return {
+      success: true,
+      employees: employeeResult,
+      departments: departmentResult,
+    };
   } catch (error) {
     return {
       success: false,
@@ -49,7 +75,7 @@ async function getEmployeeAddresses() {
 }
 
 export default async function Page() {
-  const data = await getEmployeeAddresses();
+  const data = await getAddresses();
 
   if (!data.success) {
     return <DataFetchError message={data.error?.message} service="cockpit" />;
@@ -63,10 +89,22 @@ export default async function Page() {
       service="cockpit"
     >
       <Headline level="h1">Adressbuch</Headline>
-      <EmployeeDataTable
-        columns={employeeColumns}
-        data={data.addresses || []}
-      />
+      <Tabs defaultValue="employees">
+        <TabsList>
+          <TabsTrigger value="employees">Mitarbeiter</TabsTrigger>
+          <TabsTrigger value="departments">Abteilungen</TabsTrigger>
+        </TabsList>
+        <TabsContent value="employees">
+          <DataTable columns={employeeColumns} data={data.employees || []} />
+        </TabsContent>
+        <TabsContent value="departments">
+          <DataTable
+            columns={departmentColumns}
+            data={data.departments || []}
+            paginationPageSize={data.departments?.length}
+          />
+        </TabsContent>
+      </Tabs>
     </SidebarLayout>
   );
 }

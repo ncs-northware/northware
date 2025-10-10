@@ -18,6 +18,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  type PaginationState,
   useReactTable,
   type VisibilityState,
 } from "@tanstack/react-table";
@@ -26,27 +27,35 @@ import { Fragment, useState } from "react";
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  paginationPageSize?: number;
 };
 
-export function EmployeeDataTable<TData, TValue>({
+export function DataTable<TData, TValue>({
   columns,
   data,
+  paginationPageSize = 10,
 }: DataTableProps<TData, TValue>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [globalFilter, setGlobalFilter] = useState("");
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: paginationPageSize,
+  });
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     globalFilterFn: "includesString",
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     state: {
       globalFilter,
       columnVisibility,
+      pagination,
     },
   });
 
