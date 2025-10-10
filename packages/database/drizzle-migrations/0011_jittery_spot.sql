@@ -1,0 +1,2 @@
+ALTER TABLE "EmployeesWorkerTable" ALTER COLUMN "employeeId" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "EmployeesWorkerTable" ADD CONSTRAINT "EmployeesWorkerTable_employeeId_EmployeesPersonalTable_employeeId_fk" FOREIGN KEY ("employeeId") REFERENCES "public"."EmployeesPersonalTable"("employeeId") ON DELETE cascade ON UPDATE no action;
