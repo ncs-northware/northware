@@ -1,0 +1,1 @@
+ALTER TABLE "EmployeesWorkerTable" ALTER COLUMN "employeeId" SET DATA TYPE integer;

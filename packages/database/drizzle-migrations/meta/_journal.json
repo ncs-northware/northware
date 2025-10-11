@@ -64,6 +64,34 @@
       "when": 1749939954101,
       "tag": "0009_silent_justin_hammer",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1760017612335,
+      "tag": "0010_common_sentry",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1760017749876,
+      "tag": "0011_jittery_spot",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1760042252286,
+      "tag": "0012_big_callisto",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1760042420040,
+      "tag": "0013_watery_jocasta",
+      "breakpoints": true
     }
   ]
 }

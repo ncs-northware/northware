@@ -1,0 +1,73 @@
+import { relations } from "drizzle-orm";
+import {
+  date,
+  integer,
+  pgTable,
+  serial,
+  smallint,
+  varchar,
+} from "drizzle-orm/pg-core";
+import { companiesTable } from "./companies";
+import { departmentsTable } from "./departments";
+
+export const employeesPersonalTable = pgTable("EmployeesPersonalTable", {
+  employeeId: serial().primaryKey().notNull(),
+  sirName: varchar({ length: 75 }).notNull(),
+  firstName: varchar({ length: 75 }).notNull(),
+  sex: varchar({ length: 10 }).notNull(),
+  birthday: date(),
+  street: varchar({ length: 100 }),
+  zipcode: smallint(),
+  city: varchar({ length: 100 }),
+  meritalStatus: varchar({ length: 15 }).notNull(),
+  religion: varchar({ length: 10 }).notNull(),
+  taxClass: smallint(),
+  taxKids: smallint(),
+});
+
+export const employeesPersonalRelations = relations(
+  employeesPersonalTable,
+  ({ many }) => ({
+    employeesWorkerTable: many(employeesWorkerTable),
+  })
+);
+
+export const employeesWorkerTable = pgTable("EmployeesWorkerTable", {
+  recordId: serial().primaryKey().notNull(),
+  employeeId: integer()
+    .notNull()
+    .references(() => employeesPersonalTable.employeeId, {
+      onDelete: "cascade",
+    }),
+  position: varchar({ length: 100 }).notNull(),
+  phoneWork: varchar({ length: 50 }).notNull(),
+  mailWork: varchar({ length: 200 }).notNull(),
+  department: smallint().references(() => departmentsTable.recordId, {
+    onDelete: "set null",
+  }),
+  employer: smallint().references(() => companiesTable.companyId, {
+    onDelete: "set null",
+  }),
+  contractSince: date().notNull(),
+  paygrade: varchar({ length: 5 }).notNull(),
+  educationStage: smallint().notNull(),
+  experienceLevel: varchar({ length: 3 }).notNull(),
+});
+
+export const employeesWorkerRelations = relations(
+  employeesWorkerTable,
+  ({ one }) => ({
+    employee: one(employeesPersonalTable, {
+      fields: [employeesWorkerTable.employeeId],
+      references: [employeesPersonalTable.employeeId],
+    }),
+    department: one(departmentsTable, {
+      fields: [employeesWorkerTable.department],
+      references: [departmentsTable.recordId],
+    }),
+    company: one(companiesTable, {
+      fields: [employeesWorkerTable.employer],
+      references: [companiesTable.companyId],
+    }),
+  })
+);
