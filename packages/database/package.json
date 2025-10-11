@@ -9,7 +9,7 @@
   },
   "exports": {
     "./connection": "./db-connect.ts",
-    "./schema": "./schema/index.ts",
+    "./schema/*": "./schema/*.ts",
     "./neon-error-handling": "./neon-error-handling.ts"
   },
   "dependencies": {
