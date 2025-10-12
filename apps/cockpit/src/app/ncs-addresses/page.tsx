@@ -1,8 +1,10 @@
 import { db } from "@northware/database/connection";
+import { companiesTable } from "@northware/database/schema/companies";
+import { departmentsTable } from "@northware/database/schema/departments";
 import {
   employeesPersonalTable,
   employeesWorkerTable,
-} from "@northware/database/schema";
+} from "@northware/database/schema/hr-employees";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
@@ -13,8 +15,6 @@ import {
 } from "@northware/ui/components/shadcn/tabs";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { eq } from "drizzle-orm";
-import { companiesTable } from "node_modules/@northware/database/schema/companies";
-import { departmentsTable } from "node_modules/@northware/database/schema/departments";
 import { departmentColumns, employeeColumns } from "./columns";
 import { DataTable } from "./data-table";
 
