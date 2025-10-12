@@ -1,1 +1,0 @@
-ALTER TABLE "MainNavTable" ADD COLUMN "mainInclude" boolean;

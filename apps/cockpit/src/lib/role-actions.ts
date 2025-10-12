@@ -8,7 +8,7 @@ import {
   permissionsToRoles,
   rolesTable,
   rolesToAccounts,
-} from "@northware/database/schema";
+} from "@northware/database/schema/users";
 import { and, eq, inArray, ne } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";

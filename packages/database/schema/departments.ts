@@ -3,7 +3,7 @@ import { pgTable, serial, smallint, varchar } from "drizzle-orm/pg-core";
 import { companiesTable } from "./companies";
 import { employeesWorkerTable } from "./hr-employees";
 
-export const departmentsTable = pgTable("DepartmentsTable", {
+export const departmentsTable = pgTable("departmentsTable", {
   recordId: serial().primaryKey().notNull(),
   departmentName: varchar({ length: 50 }).notNull(),
   companyId: smallint()

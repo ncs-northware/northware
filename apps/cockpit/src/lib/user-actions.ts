@@ -6,7 +6,7 @@ import { handleNeonError } from "@northware/database/neon-error-handling";
 import {
   permissionsToAccounts,
   rolesToAccounts,
-} from "@northware/database/schema";
+} from "@northware/database/schema/users";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";

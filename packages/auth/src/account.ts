@@ -3,7 +3,7 @@ import {
   permissionsToAccounts,
   permissionsToRoles,
   rolesToAccounts,
-} from "@northware/database/schema";
+} from "@northware/database/schema/users";
 import { eq } from "drizzle-orm";
 import { cache } from "react";
 
