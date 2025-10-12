@@ -1,6 +1,6 @@
 import { getUserPermissions } from "@northware/auth/account";
 import { db } from "@northware/database/connection";
-import { mainNavTable } from "@northware/database/schema";
+import { mainNavTable } from "@northware/database/schema/main-nav";
 import type { ServiceType } from "@northware/service-config";
 import { and, eq, inArray } from "drizzle-orm";
 
