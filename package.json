@@ -1,7 +1,7 @@
 {
   "name": "northware",
   "private": true,
-  "license": "MIT"
+  "license": "MIT",
   "scripts": {
     "build": "turbo build",
     "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite -c packages/ui",
