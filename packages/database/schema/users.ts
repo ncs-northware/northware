@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { pgTable, primaryKey, serial, varchar } from "drizzle-orm/pg-core";
 
-export const permissionsTable = pgTable("PermissionsTable", {
+export const permissionsTable = pgTable("permissionsTable", {
   recordId: serial().primaryKey().notNull(),
   permissionKey: varchar().unique().notNull(),
   permissionName: varchar(),
@@ -12,7 +12,7 @@ export const permissionsRelations = relations(permissionsTable, ({ many }) => ({
   permissionsToAccounts: many(permissionsToAccounts),
 }));
 
-export const rolesTable = pgTable("RolesTable", {
+export const rolesTable = pgTable("rolesTable", {
   recordId: serial().primaryKey().notNull(),
   roleKey: varchar().unique().notNull(),
   roleName: varchar(),
@@ -24,7 +24,7 @@ export const rolesRelations = relations(rolesTable, ({ many }) => ({
 }));
 
 export const permissionsToRoles = pgTable(
-  "PermissionsToRoles",
+  "permissionsToRoles",
   {
     permissionKey: varchar()
       .notNull()
@@ -56,7 +56,7 @@ export const permissionsToRolesRelations = relations(
   })
 );
 
-export const permissionsToAccounts = pgTable("PermissionsToAccounts", {
+export const permissionsToAccounts = pgTable("permissionsToAccounts", {
   recordId: serial().primaryKey().notNull(),
   permissionKey: varchar()
     .notNull()
@@ -77,7 +77,7 @@ export const permissionsToAccountsRelations = relations(
   })
 );
 
-export const rolesToAccounts = pgTable("RolesToAccounts", {
+export const rolesToAccounts = pgTable("rolesToAccounts", {
   recordId: serial().primaryKey().notNull(),
   roleKey: varchar()
     .notNull()

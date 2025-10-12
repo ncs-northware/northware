@@ -10,7 +10,7 @@ import {
 import { companiesTable } from "./companies";
 import { departmentsTable } from "./departments";
 
-export const employeesPersonalTable = pgTable("EmployeesPersonalTable", {
+export const employeesPersonalTable = pgTable("employeesPersonalTable", {
   employeeId: serial().primaryKey().notNull(),
   sirName: varchar({ length: 75 }).notNull(),
   firstName: varchar({ length: 75 }).notNull(),
@@ -32,7 +32,7 @@ export const employeesPersonalRelations = relations(
   })
 );
 
-export const employeesWorkerTable = pgTable("EmployeesWorkerTable", {
+export const employeesWorkerTable = pgTable("employeesWorkerTable", {
   recordId: serial().primaryKey().notNull(),
   employeeId: integer()
     .notNull()
