@@ -1,1 +1,0 @@
-ALTER TABLE "MainNavTable" DROP COLUMN "mainInclude";
