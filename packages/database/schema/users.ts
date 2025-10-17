@@ -1,4 +1,5 @@
 import { relations } from "drizzle-orm";
+// biome-ignore lint/nursery/noDeprecatedImports: The definition and usage of primaryKey is still documented like this, see #601
 import { pgTable, primaryKey, serial, varchar } from "drizzle-orm/pg-core";
 
 export const permissionsTable = pgTable("permissionsTable", {
