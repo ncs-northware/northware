@@ -678,7 +678,7 @@ export function UpdatePermissionDetails({
       });
       setErrors([]);
     }
-  }, [open, permissionDetails, form.reset]);
+  }, [open, permissionDetails, form]);
 
   const onSubmit: SubmitHandler<TPermissionDetailFormSchema> = async (data) => {
     try {
