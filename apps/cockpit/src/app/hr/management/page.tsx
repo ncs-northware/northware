@@ -19,7 +19,6 @@ async function getEmployeeList() {
   try {
     const result = await db
       .select({
-        recordId: employeesWorkerTable.recordId,
         employeeId: employeesPersonalTable.employeeId,
         firstName: employeesPersonalTable.firstName,
         sirName: employeesPersonalTable.sirName,
@@ -53,11 +52,7 @@ async function getEmployeeList() {
           )
         ),
       })
-      .from(employeesWorkerTable)
-      .leftJoin(
-        employeesPersonalTable,
-        eq(employeesWorkerTable.employeeId, employeesPersonalTable.employeeId)
-      )
+      .from(employeesPersonalTable)
       .orderBy(
         employeesPersonalTable.sirName,
         employeesPersonalTable.firstName
@@ -80,7 +75,6 @@ async function getEmployeeList() {
 export default async function Page() {
   const data = await getEmployeeList();
   type Employee = {
-    recordId: number;
     employeeId: number | null;
     firstName: string | null;
     sirName: string | null;
@@ -89,7 +83,6 @@ export default async function Page() {
   };
 
   const columns: ColumnDef<Employee>[] = [
-    { accessorKey: "recordId" },
     { accessorKey: "employeeId" },
     { accessorKey: "firstName" },
     { accessorKey: "sirName" },
