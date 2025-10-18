@@ -4,6 +4,13 @@ import {
   DataTableFilter,
   DataTablePagination,
 } from "@northware/ui/components/data-table";
+import { Badge } from "@northware/ui/components/shadcn/badge";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyTitle,
+} from "@northware/ui/components/shadcn/empty";
 import {
   Item,
   ItemActions,
@@ -46,42 +53,61 @@ export default function EmployeeList<TData, TValue>({
         <DataTableFilter globalFilter={globalFilter} table={table} />
       </div>
       <ItemGroup className="gap-4">
-        {table.getRowModel().rows.map((row) => (
-          <Item
-            asChild
-            className="border border-transparent [a]:hover:border-border"
-            key={row.id}
-            variant="muted"
-          >
-            <Link href={`/hr/management/${row.getValue("employeeId")}`}>
-              <div className="flex flex-1 flex-col gap-1">
-                <ItemTitle>
-                  {row.getValue("sirName")}, {row.getValue("firstName")}
-                </ItemTitle>
-                <ItemDescription>#{row.getValue("employeeId")}</ItemDescription>
-              </div>
-              <div className="flex flex-auto flex-col gap-1">
-                <ItemDescription>
-                  {new Date(row.getValue("contractSince")).toLocaleDateString(
-                    "DE-de",
-                    {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    }
-                  )}{" "}
-                  - 31.12.2099
-                </ItemDescription>
-                <ItemDescription>
-                  {row.getValue("employerId")} / {row.getValue("employer")}
-                </ItemDescription>
-              </div>
-              <ItemActions>
-                <ChevronRightIcon className="size-4" />
-              </ItemActions>
-            </Link>
-          </Item>
-        ))}
+        {table.getRowModel().rows.length > 0 ? (
+          table.getRowModel().rows.map((row) => (
+            <Item
+              asChild
+              className="border border-transparent [a]:hover:border-border"
+              key={row.id}
+              variant="muted"
+            >
+              <Link href={`/hr/management/${row.getValue("employeeId")}`}>
+                <div className="flex flex-1 flex-col gap-1">
+                  <ItemTitle>
+                    {row.getValue("sirName")}, {row.getValue("firstName")}
+                  </ItemTitle>
+                  <ItemDescription>
+                    #{row.getValue("employeeId")}
+                  </ItemDescription>
+                </div>
+                <div className="flex flex-auto flex-col gap-1">
+                  <ItemDescription className="flex gap-1">
+                    {(row.getValue("activeContracts") as number) > 0 ? (
+                      <Badge
+                        className="bg-success text-success-foreground"
+                        variant="secondary"
+                      >
+                        {row.getValue("activeContracts")} aktive Verträge
+                      </Badge>
+                    ) : (
+                      ""
+                    )}
+                    {(row.getValue("inactiveContracts") as number) > 0 ? (
+                      <Badge variant="secondary">
+                        {row.getValue("inactiveContracts")} inaktive Verträge
+                      </Badge>
+                    ) : (
+                      ""
+                    )}
+                  </ItemDescription>
+                </div>
+                <ItemActions>
+                  <ChevronRightIcon className="size-4" />
+                </ItemActions>
+              </Link>
+            </Item>
+          ))
+        ) : (
+          <Empty className="bg-muted/50">
+            <EmptyContent>
+              <EmptyTitle>Es wurden keine Mitarbeiter gefunden.</EmptyTitle>
+              <EmptyDescription>
+                Zu diesen Suchkriterien konnten keine Ergebnisse gefunden
+                werden. Versuche es mit einem anderen Suchbegriff.
+              </EmptyDescription>
+            </EmptyContent>
+          </Empty>
+        )}
       </ItemGroup>
       <DataTablePagination table={table} />
     </div>

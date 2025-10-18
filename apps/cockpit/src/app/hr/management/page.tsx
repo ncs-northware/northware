@@ -1,5 +1,4 @@
 import { db } from "@northware/database/connection";
-import { companiesTable } from "@northware/database/schema/companies";
 import {
   employeesPersonalTable,
   employeesWorkerTable,
@@ -9,7 +8,7 @@ import { DataFetchError } from "@northware/ui/components/no-data-template";
 import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import type { ColumnDef } from "@tanstack/react-table";
-import { eq } from "drizzle-orm";
+import { and, eq, gte, isNull, lte, or } from "drizzle-orm";
 import EmployeeList from "./employee-list";
 
 export const metadata = {
@@ -24,18 +23,44 @@ async function getEmployeeList() {
         employeeId: employeesPersonalTable.employeeId,
         firstName: employeesPersonalTable.firstName,
         sirName: employeesPersonalTable.sirName,
-        contractSince: employeesWorkerTable.contractSince,
-        employerId: companiesTable.companyId,
-        employer: companiesTable.companyName,
+        activeContracts: db.$count(
+          employeesWorkerTable,
+          and(
+            eq(
+              employeesWorkerTable.employeeId,
+              employeesPersonalTable.employeeId
+            ),
+            or(
+              gte(
+                employeesWorkerTable.contractEnd,
+                new Date().toISOString().split("T")[0]
+              ),
+              isNull(employeesWorkerTable.contractEnd)
+            )
+          )
+        ),
+        inactiveContracts: db.$count(
+          employeesWorkerTable,
+          and(
+            eq(
+              employeesWorkerTable.employeeId,
+              employeesPersonalTable.employeeId
+            ),
+            lte(
+              employeesWorkerTable.contractEnd,
+              new Date().toISOString().split("T")[0]
+            )
+          )
+        ),
       })
       .from(employeesWorkerTable)
       .leftJoin(
         employeesPersonalTable,
         eq(employeesWorkerTable.employeeId, employeesPersonalTable.employeeId)
       )
-      .leftJoin(
-        companiesTable,
-        eq(employeesWorkerTable.employer, companiesTable.companyId)
+      .orderBy(
+        employeesPersonalTable.sirName,
+        employeesPersonalTable.firstName
       );
     return {
       success: true,
@@ -59,9 +84,8 @@ export default async function Page() {
     employeeId: number | null;
     firstName: string | null;
     sirName: string | null;
-    contractSince: string;
-    employerId: number | null;
-    employer: string | null;
+    activeContracts: number;
+    inactiveContracts: number;
   };
 
   const columns: ColumnDef<Employee>[] = [
@@ -69,9 +93,8 @@ export default async function Page() {
     { accessorKey: "employeeId" },
     { accessorKey: "firstName" },
     { accessorKey: "sirName" },
-    { accessorKey: "contractSince" },
-    { accessorKey: "employerId" },
-    { accessorKey: "employer" },
+    { accessorKey: "activeContracts" },
+    { accessorKey: "inactiveContracts" },
   ];
   if (!data.success) {
     return <DataFetchError message={data.error?.message} service="cockpit" />;
