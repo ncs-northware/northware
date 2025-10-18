@@ -8,6 +8,13 @@
       "when": 1760283787481,
       "tag": "0001_broken_shinko_yamashiro",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1760789958590,
+      "tag": "0002_daffy_justice",
+      "breakpoints": true
     }
   ]
 }
