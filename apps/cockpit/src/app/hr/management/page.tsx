@@ -57,6 +57,7 @@ async function getEmployeeList() {
         employeesPersonalTable.sirName,
         employeesPersonalTable.firstName
       );
+
     return {
       success: true,
       employees: result,
@@ -74,6 +75,7 @@ async function getEmployeeList() {
 
 export default async function Page() {
   const data = await getEmployeeList();
+
   type Employee = {
     employeeId: number | null;
     firstName: string | null;
@@ -89,9 +91,11 @@ export default async function Page() {
     { accessorKey: "activeContracts" },
     { accessorKey: "inactiveContracts" },
   ];
+
   if (!data.success) {
     return <DataFetchError message={data.error?.message} service="cockpit" />;
   }
+
   return (
     <SidebarLayout
       breadcrumbs={[
@@ -100,8 +104,8 @@ export default async function Page() {
       ]}
       service="cockpit"
     >
-      <PermissionProvider permissionKeys={["cockpit::hr-management:read"]}>
-        <Headline level="h1">HR Management</Headline>
+      <PermissionProvider permissionKeys={["cockpit::hr-management.read"]}>
+        <Headline level="h1">Mitarbeiter wählen</Headline>
         <EmployeeList columns={columns} data={data.employees || []} />
       </PermissionProvider>
     </SidebarLayout>

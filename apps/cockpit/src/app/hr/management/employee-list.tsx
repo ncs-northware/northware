@@ -47,6 +47,7 @@ export default function EmployeeList<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     state: { globalFilter },
   });
+
   return (
     <div>
       <div className="py-4">
