@@ -7,6 +7,7 @@ import {
   Field,
   FieldError,
   FieldLabel,
+  FieldSeparator,
 } from "@northware/ui/components/shadcn/field";
 import { Input } from "@northware/ui/components/shadcn/input";
 import {
@@ -31,20 +32,15 @@ const employeePersonalFormSchema = z.object({
   employeeId: z.number(),
   sirName: z.string().max(75),
   firstName: z.string().max(75),
-  // Select male/female/diverse with enum
   sex: z.string(),
   birthday: z.date().nullable(),
   street: z.string().max(100).nullable(),
   zipcode: z.number().nullable(),
   city: z.string().nullable(),
   meritalStatus: z.string(),
-  // Select ledig, verheiratet, geschieden, getrennt lebend
   religion: z.string(),
-  // Select ev, kath, keine, andere
-  taxClass: z.number().nullable(),
-  // Römisch oder select?
-  taxKids: z.number().nullable(),
-  // Umrechnung oder Select?
+  taxClass: z.string(),
+  taxKids: z.number(),
 });
 
 export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
@@ -65,8 +61,14 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
       taxKids: data.taxKids,
     },
   });
+  function onSubmit(formData: z.infer<typeof employeePersonalFormSchema>) {
+    console.log(formData);
+  }
   return (
-    <form>
+    <form
+      className="flex flex-col gap-6"
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
       <Controller
         control={form.control}
         name="employeeId"
@@ -83,97 +85,290 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
           </Field>
         )}
       />
+      <FieldSeparator />
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="sirName"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="sirName">Nachname</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="sirName"
+                placeholder="Mustermann"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="firstName"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="sirName">Vorname</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="firstName"
+                placeholder="Max"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="birthday"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="birthday">Geburtsdatum</FieldLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    className={cn(
+                      "w-60 pl-3 text-left font-normal",
+                      !field.value && "text-muted-foreground"
+                    )}
+                    variant={"outline"}
+                  >
+                    {field.value ? (
+                      formattedDate(field.value, "PPP", {
+                        locale: localDateDE,
+                      })
+                    ) : (
+                      <span>Geburtsdatum wählen</span>
+                    )}
+                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="start" className="w-auto p-0">
+                  <Calendar
+                    captionLayout="dropdown"
+                    defaultMonth={field.value || new Date()}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    mode="single"
+                    onSelect={field.onChange}
+                    selected={field.value || new Date()}
+                  />
+                </PopoverContent>
+              </Popover>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="sex"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="sex">Geschlecht</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value}
+              >
+                <SelectTrigger aria-invalid={fieldState.invalid} id="sex">
+                  <SelectValue placeholder="Geschlecht wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="male">männlich</SelectItem>
+                  <SelectItem value="female">weiblich</SelectItem>
+                  <SelectItem value="diverse">divers</SelectItem>
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      <FieldSeparator />
       <Controller
         control={form.control}
-        name="sirName"
+        name="street"
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="sirName">Nachname</FieldLabel>
-            <Input {...field} aria-invalid={fieldState.invalid} id="sirName" />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      <Controller
-        control={form.control}
-        name="firstName"
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="sirName">Vorname</FieldLabel>
+            <FieldLabel htmlFor="street">Straße</FieldLabel>
             <Input
               {...field}
               aria-invalid={fieldState.invalid}
-              id="firstName"
+              id="street"
+              placeholder="Musterstraße 1"
+              value={field.value || ""}
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
         )}
       />
-      <Controller
-        control={form.control}
-        name="sex"
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="sex">Geschlecht</FieldLabel>
-            <Select
-              name={field.name}
-              onValueChange={field.onChange}
-              value={field.value}
-            >
-              <SelectTrigger aria-invalid={fieldState.invalid} id="sex">
-                <SelectValue placeholder="Geschlecht wählen" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="male">männlich</SelectItem>
-                <SelectItem value="female">weiblich</SelectItem>
-                <SelectItem value="diverse">divers</SelectItem>
-              </SelectContent>
-            </Select>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      <Controller
-        control={form.control}
-        name="birthday"
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor="birthday">Geburtsdatum</FieldLabel>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  className={cn(
-                    "w-[240px] pl-3 text-left font-normal",
-                    !field.value && "text-muted-foreground"
-                  )}
-                  variant={"outline"}
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="zipcode"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="zipcode">Postleitzahl</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="zipcode"
+                placeholder="12345"
+                value={field.value || ""}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="city"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="city">Ort</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="city"
+                placeholder="Musterstadt"
+                value={field.value || ""}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      <FieldSeparator />
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="meritalStatus"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="meritalStatus">Familienstand</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value}
+              >
+                <SelectTrigger
+                  aria-invalid={fieldState.invalid}
+                  id="meritalStatus"
                 >
-                  {field.value ? (
-                    formattedDate(field.value, "PPP", {
-                      locale: localDateDE,
-                    })
-                  ) : (
-                    <span>Geburtsdatum wählen</span>
-                  )}
-                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent align="start" className="w-auto p-0">
-                <Calendar
-                  captionLayout="dropdown"
-                  disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
-                  }
-                  mode="single"
-                  onSelect={field.onChange}
-                  selected={new Date("2005-01-01")}
-                />
-              </PopoverContent>
-            </Popover>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
+                  <SelectValue placeholder="Familienstand wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ledig">ledig</SelectItem>
+                  <SelectItem value="verheiratet">verheiratet</SelectItem>
+                  <SelectItem value="geschieden">geschieden</SelectItem>
+                  <SelectItem value="verwitwet">verwitwet</SelectItem>
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="religion"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="religion">Religionszugehörigkeit</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value}
+              >
+                <SelectTrigger aria-invalid={fieldState.invalid} id="religion">
+                  <SelectValue placeholder="Religion wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ev">evangelisch</SelectItem>
+                  <SelectItem value="kath">katholisch</SelectItem>
+                  <SelectItem value="andere">andere</SelectItem>
+                  <SelectItem value="keine">keine</SelectItem>
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="taxClass"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="taxClass">Steuerklasse</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value}
+              >
+                <SelectTrigger aria-invalid={fieldState.invalid} id="taxClass">
+                  <SelectValue placeholder="Steuerklasse wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="I">
+                    StK I / ledig oder verwitwet
+                  </SelectItem>
+                  <SelectItem value="II">StK II / alleinerziehend</SelectItem>
+                  <SelectItem value="III">
+                    StK III / verheiratet, höheres Einkommen
+                  </SelectItem>
+                  <SelectItem value="IV">
+                    StK IV / verheiratet, änhliche Einkommen
+                  </SelectItem>
+                  <SelectItem value="V">
+                    StK V / verheiratet, geringeres Einkommen
+                  </SelectItem>
+                  <SelectItem value="VI">
+                    StK VI / Nebenarbeitsverhältnis
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="taxKids"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="taxKids">Kinderfreibetrag</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value.toString() || "0"}
+              >
+                <SelectTrigger aria-invalid={fieldState.invalid} id="taxKids">
+                  <SelectValue placeholder="Kinderfreibetrag wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">keine Kinderfreibeträge (0)</SelectItem>
+                  <SelectItem value="1">0,5 Kinderfreibeträge</SelectItem>
+                  <SelectItem value="2">1,0 Kinderfreibeträge</SelectItem>
+                  <SelectItem value="3">1,5 Kinderfreibeträge</SelectItem>
+                  <SelectItem value="4">2,0 Kinderfreibeträge</SelectItem>
+                  <SelectItem value="5">2,5 Kinderfreibeträge</SelectItem>
+                  <SelectItem value="6">3,0 Kinderfreibeträge</SelectItem>
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      <FieldSeparator />
+      <Field>
+        <Button type="submit">Änderungen speichern</Button>
+      </Field>
     </form>
   );
 }

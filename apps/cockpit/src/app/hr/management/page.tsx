@@ -15,7 +15,18 @@ export const metadata = {
   title: "HR Management",
 };
 
-async function getEmployeeList() {
+type EmployeeItem = {
+  employeeId: number | null;
+  firstName: string | null;
+  sirName: string | null;
+  activeContracts: number;
+  inactiveContracts: number;
+};
+
+async function getEmployeeList(): Promise<
+  | { success: true; employees: EmployeeItem[] }
+  | { success: false; error: Error }
+> {
   try {
     const result = await db
       .select({
@@ -76,15 +87,7 @@ async function getEmployeeList() {
 export default async function Page() {
   const data = await getEmployeeList();
 
-  type Employee = {
-    employeeId: number | null;
-    firstName: string | null;
-    sirName: string | null;
-    activeContracts: number;
-    inactiveContracts: number;
-  };
-
-  const columns: ColumnDef<Employee>[] = [
+  const columns: ColumnDef<EmployeeItem>[] = [
     { accessorKey: "employeeId" },
     { accessorKey: "firstName" },
     { accessorKey: "sirName" },
