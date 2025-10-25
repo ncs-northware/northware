@@ -15,14 +15,14 @@ export const employeesPersonalTable = pgTable("employeesPersonalTable", {
   sirName: varchar({ length: 75 }).notNull(),
   firstName: varchar({ length: 75 }).notNull(),
   sex: varchar({ length: 10 }).notNull(),
-  birthday: date(),
+  birthday: date({ mode: "date" }),
   street: varchar({ length: 100 }),
   zipcode: smallint(),
   city: varchar({ length: 100 }),
   meritalStatus: varchar({ length: 15 }).notNull(),
   religion: varchar({ length: 10 }).notNull(),
-  taxClass: smallint(),
-  taxKids: smallint(),
+  taxClass: varchar({ length: 3 }).notNull(),
+  taxKids: smallint().notNull(),
 });
 
 export const employeesPersonalRelations = relations(
