@@ -15,14 +15,14 @@ export const employeesPersonalTable = pgTable("employeesPersonalTable", {
   sirName: varchar({ length: 75 }).notNull(),
   firstName: varchar({ length: 75 }).notNull(),
   sex: varchar({ length: 10 }).notNull(),
-  birthday: date(),
+  birthday: date({ mode: "date" }),
   street: varchar({ length: 100 }),
-  zipcode: smallint(),
+  zipcode: varchar({ length: 10 }),
   city: varchar({ length: 100 }),
   meritalStatus: varchar({ length: 15 }).notNull(),
   religion: varchar({ length: 10 }).notNull(),
-  taxClass: smallint(),
-  taxKids: smallint(),
+  taxClass: varchar({ length: 3 }).notNull(),
+  taxKids: smallint().notNull(),
 });
 
 export const employeesPersonalRelations = relations(
@@ -48,7 +48,8 @@ export const employeesWorkerTable = pgTable("employeesWorkerTable", {
   employer: smallint().references(() => companiesTable.companyId, {
     onDelete: "set null",
   }),
-  contractSince: date().notNull(),
+  contractStart: date().notNull(),
+  contractEnd: date(),
   paygrade: varchar({ length: 5 }).notNull(),
   educationStage: smallint().notNull(),
   experienceLevel: varchar({ length: 3 }).notNull(),
