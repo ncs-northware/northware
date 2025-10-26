@@ -1,6 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { AlertDescription } from "@northware/ui/components/shadcn/alert";
 import { Button } from "@northware/ui/components/shadcn/button";
 import { Calendar } from "@northware/ui/components/shadcn/calendar";
 import {
@@ -23,28 +25,22 @@ import {
   SelectValue,
 } from "@northware/ui/components/shadcn/select";
 import { CalendarIcon } from "@northware/ui/icons/lucide";
-import { cn, formattedDate, localDateDE } from "@northware/ui/lib/utils";
+import { cn, formattedDate, localDateDE, toast } from "@northware/ui/lib/utils";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import z from "zod";
-import type { EmployeePersonal } from "@/lib/hr-actions";
-
-const employeePersonalFormSchema = z.object({
-  employeeId: z.number(),
-  sirName: z.string().max(75),
-  firstName: z.string().max(75),
-  sex: z.string(),
-  birthday: z.date().nullable(),
-  street: z.string().max(100).nullable(),
-  zipcode: z.number().nullable(),
-  city: z.string().nullable(),
-  meritalStatus: z.string(),
-  religion: z.string(),
-  taxClass: z.string(),
-  taxKids: z.number(),
-});
+import {
+  type EmployeePersonal,
+  updateEmployeePersonal,
+} from "@/lib/hr-actions";
+import {
+  employeePersonalFormSchema,
+  type TEmployeePersonalFormSchema,
+} from "@/lib/hr-schema";
+import { parseErrorMessages } from "@/lib/rbac-schema";
 
 export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
-  const form = useForm<z.infer<typeof employeePersonalFormSchema>>({
+  const [errors, setErrors] = useState<string[]>([]);
+  const form = useForm<TEmployeePersonalFormSchema>({
     resolver: zodResolver(employeePersonalFormSchema),
     defaultValues: {
       employeeId: data.employeeId,
@@ -61,8 +57,14 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
       taxKids: data.taxKids,
     },
   });
-  function onSubmit(formData: z.infer<typeof employeePersonalFormSchema>) {
-    console.log(formData);
+
+  async function onSubmit(formData: TEmployeePersonalFormSchema) {
+    try {
+      await updateEmployeePersonal(formData);
+      toast.success("Die Mitarbeiterdaten wurden aktualisiert.");
+    } catch (error) {
+      setErrors(parseErrorMessages(error));
+    }
   }
   return (
     <form
@@ -366,6 +368,17 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
         />
       </div>
       <FieldSeparator />
+      {errors.length > 0 && (
+        <AlertWrapper variant="destructive">
+          <AlertDescription>
+            <ul>
+              {errors.map((err) => (
+                <li key={err}>{err}</li>
+              ))}
+            </ul>
+          </AlertDescription>
+        </AlertWrapper>
+      )}
       <Field>
         <Button type="submit">Änderungen speichern</Button>
       </Field>

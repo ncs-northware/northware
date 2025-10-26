@@ -1,6 +1,11 @@
+"use server";
+
 import { db } from "@northware/database/connection";
+import { handleNeonError } from "@northware/database/neon-error-handling";
 import { employeesPersonalTable } from "@northware/database/schema/hr-employees";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import type { TEmployeePersonalFormSchema } from "@/lib/hr-schema";
 
 type BasicEmployee = {
   employeeId: number;
@@ -45,7 +50,7 @@ export type EmployeePersonal = {
   sex: string;
   birthday: Date | null;
   street: string | null;
-  zipcode: number | null;
+  zipcode: string | null;
   city: string | null;
   meritalStatus: string;
   religion: string;
@@ -77,5 +82,31 @@ export async function getEmployeePersonal(
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
     };
+  }
+}
+
+export async function updateEmployeePersonal(
+  formData: TEmployeePersonalFormSchema
+) {
+  try {
+    await db
+      .update(employeesPersonalTable)
+      .set({
+        sirName: formData.sirName,
+        firstName: formData.firstName,
+        sex: formData.sex,
+        birthday: formData.birthday,
+        street: formData.street,
+        zipcode: formData.zipcode,
+        city: formData.city,
+        meritalStatus: formData.meritalStatus,
+        religion: formData.religion,
+        taxClass: formData.taxClass,
+        taxKids: formData.taxKids,
+      })
+      .where(eq(employeesPersonalTable.employeeId, formData.employeeId));
+    revalidatePath("hr/management");
+  } catch (error) {
+    handleNeonError(error);
   }
 }
