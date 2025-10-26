@@ -22,6 +22,13 @@
       "when": 1761425810730,
       "tag": "0003_daily_master_mold",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1761494598703,
+      "tag": "0004_stiff_nova",
+      "breakpoints": true
     }
   ]
 }

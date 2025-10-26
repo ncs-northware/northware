@@ -1,0 +1,1 @@
+ALTER TABLE "employeesPersonalTable" ALTER COLUMN "zipcode" SET DATA TYPE varchar(10);

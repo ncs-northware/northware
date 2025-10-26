@@ -17,7 +17,7 @@ export const employeesPersonalTable = pgTable("employeesPersonalTable", {
   sex: varchar({ length: 10 }).notNull(),
   birthday: date({ mode: "date" }),
   street: varchar({ length: 100 }),
-  zipcode: smallint(),
+  zipcode: varchar({ length: 10 }),
   city: varchar({ length: 100 }),
   meritalStatus: varchar({ length: 15 }).notNull(),
   religion: varchar({ length: 10 }).notNull(),
