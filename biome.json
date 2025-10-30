@@ -1,6 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
-  "extends": ["ultracite"],
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
   "vcs": {
     "enabled": true,
     "clientKind": "git",
