@@ -19,6 +19,7 @@ import {
   ItemTitle,
 } from "@northware/ui/components/shadcn/item";
 import { ChevronRightIcon } from "@northware/ui/icons/lucide";
+import { cn, formattedDate, localDateDE } from "@northware/ui/lib/utils";
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -29,12 +30,12 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 
-export default function EmployeeList<TData, TValue>({
+export function EmployeeList<TData, TValue>({
   columns,
   data,
 }: {
-  data: TData[];
   columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }) {
   const [globalFilter, setGlobalFilter] = useState("");
   const table = useReactTable({
@@ -105,6 +106,96 @@ export default function EmployeeList<TData, TValue>({
               <EmptyDescription>
                 Zu diesen Suchkriterien konnten keine Ergebnisse gefunden
                 werden. Versuche es mit einem anderen Suchbegriff.
+              </EmptyDescription>
+            </EmptyContent>
+          </Empty>
+        )}
+      </ItemGroup>
+      <DataTablePagination table={table} />
+    </div>
+  );
+}
+
+export function EmploymentsList<TData, TValue>({
+  columns,
+  data,
+  employeeId,
+}: {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  employeeId: number;
+}) {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+  return (
+    <div>
+      <ItemGroup className="gap-4">
+        {table.getCoreRowModel().rows.length > 0 ? (
+          table.getRowModel().rows.map((row) => (
+            <Item
+              asChild
+              className={cn(
+                "border border-transparent [a]:hover:border-border",
+                row.getValue("contractEnd") != null &&
+                  (row.getValue("contractEnd") as Date) < new Date()
+                  ? "text-muted-foreground"
+                  : ""
+              )}
+              key={row.id}
+              variant="muted"
+            >
+              <Link
+                href={`/hr/management/${employeeId}/employment/${row.getValue("recordId")}`}
+              >
+                <div className="flex flex-1 flex-col gap-1">
+                  <ItemTitle>
+                    {row.getValue("position")}
+                    {row.getValue("contractEnd") != null &&
+                    (row.getValue("contractEnd") as Date) < new Date() ? (
+                      <Badge variant="secondary">
+                        Arbeitsverhältnis beendet
+                      </Badge>
+                    ) : (
+                      ""
+                    )}
+                  </ItemTitle>
+                  <ItemDescription>
+                    {row.getValue("departmentName")}
+                  </ItemDescription>
+                </div>
+                <div className="flex flex-1 flex-col gap-1">
+                  <ItemTitle className="flex gap-1">
+                    {formattedDate(row.getValue("contractStart"), "PPP", {
+                      locale: localDateDE,
+                    })}{" "}
+                    -{" "}
+                    {row.getValue("contractEnd") != null
+                      ? formattedDate(row.getValue("contractEnd"), "PPP", {
+                          locale: localDateDE,
+                        })
+                      : ""}
+                  </ItemTitle>
+                  <ItemDescription>{row.getValue("employer")}</ItemDescription>
+                </div>
+                <ItemActions>
+                  <ChevronRightIcon className="size-4" />
+                </ItemActions>
+              </Link>
+            </Item>
+          ))
+        ) : (
+          <Empty className="bg-muted/50">
+            <EmptyContent>
+              <EmptyTitle>
+                Anscheinend sind zu diesem Mitarbeiter keine Arbeitsverhältnisse
+                gespeichert.
+              </EmptyTitle>
+              <EmptyDescription>
+                Legen Sie bitte ein neues Arbeitsverhältnis an.
               </EmptyDescription>
             </EmptyContent>
           </Empty>

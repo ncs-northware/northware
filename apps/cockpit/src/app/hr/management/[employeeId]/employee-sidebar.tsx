@@ -31,8 +31,8 @@ export default async function EmployeeSidebar({
           exactMatch: true,
         },
         {
-          title: "Dienstliche Identität",
-          href: `/hr/management/${id}/work-identity`,
+          title: "Arbeitsverhältnisse",
+          href: `/hr/management/${id}/employment`,
         },
       ]}
     >

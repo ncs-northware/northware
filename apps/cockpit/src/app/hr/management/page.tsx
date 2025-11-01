@@ -9,7 +9,7 @@ import { PermissionProvider } from "@northware/ui/components/permission-provider
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import type { ColumnDef } from "@tanstack/react-table";
 import { and, eq, gte, isNull, lte, or } from "drizzle-orm";
-import EmployeeList from "./employee-list";
+import { EmployeeList } from "./employee-list";
 
 export const metadata = {
   title: "HR Management",
@@ -41,10 +41,7 @@ async function getEmployeeList(): Promise<
               employeesPersonalTable.employeeId
             ),
             or(
-              gte(
-                employeesWorkerTable.contractEnd,
-                new Date().toISOString().split("T")[0]
-              ),
+              gte(employeesWorkerTable.contractEnd, new Date()),
               isNull(employeesWorkerTable.contractEnd)
             )
           )
@@ -56,10 +53,7 @@ async function getEmployeeList(): Promise<
               employeesWorkerTable.employeeId,
               employeesPersonalTable.employeeId
             ),
-            lte(
-              employeesWorkerTable.contractEnd,
-              new Date().toISOString().split("T")[0]
-            )
+            lte(employeesWorkerTable.contractEnd, new Date())
           )
         ),
       })

@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import type { TEmployeePersonalFormSchema } from "@/lib/hr-schema";
 
-type BasicEmployee = {
+export type BasicEmployee = {
   employeeId: number;
   sirName: string;
   firstName: string;
