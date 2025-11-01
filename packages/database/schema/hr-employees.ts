@@ -48,8 +48,8 @@ export const employeesWorkerTable = pgTable("employeesWorkerTable", {
   employer: smallint().references(() => companiesTable.companyId, {
     onDelete: "set null",
   }),
-  contractStart: date().notNull(),
-  contractEnd: date(),
+  contractStart: date({ mode: "date" }).notNull(),
+  contractEnd: date({ mode: "date" }),
   paygrade: varchar({ length: 5 }).notNull(),
   educationStage: smallint().notNull(),
   experienceLevel: varchar({ length: 3 }).notNull(),
