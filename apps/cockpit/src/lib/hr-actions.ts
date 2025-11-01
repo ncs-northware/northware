@@ -2,12 +2,141 @@
 
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
-import { employeesPersonalTable } from "@northware/database/schema/hr-employees";
-import { eq } from "drizzle-orm";
+import { companiesTable } from "@northware/database/schema/companies";
+import { departmentsTable } from "@northware/database/schema/departments";
+import {
+  employeesPersonalTable,
+  employeesWorkerTable,
+} from "@northware/database/schema/hr-employees";
+import { and, desc, eq, gte, isNull, lte, or } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import type { TEmployeePersonalFormSchema } from "@/lib/hr-schema";
 
-export type BasicEmployee = {
+/**** Liste persönlicher Mitarbeiterdaten *****************************************/
+
+export type EmployeeItem = {
+  employeeId: number | null;
+  firstName: string | null;
+  sirName: string | null;
+  activeContracts: number;
+  terminatedContracts: number;
+};
+
+export async function getEmployeeList(): Promise<
+  | { success: true; employees: EmployeeItem[] }
+  | { success: false; error: Error }
+> {
+  try {
+    const result = await db
+      .select({
+        employeeId: employeesPersonalTable.employeeId,
+        firstName: employeesPersonalTable.firstName,
+        sirName: employeesPersonalTable.sirName,
+        activeContracts: db.$count(
+          employeesWorkerTable,
+          and(
+            eq(
+              employeesWorkerTable.employeeId,
+              employeesPersonalTable.employeeId
+            ),
+            or(
+              gte(employeesWorkerTable.contractEnd, new Date()),
+              isNull(employeesWorkerTable.contractEnd)
+            )
+          )
+        ),
+        terminatedContracts: db.$count(
+          employeesWorkerTable,
+          and(
+            eq(
+              employeesWorkerTable.employeeId,
+              employeesPersonalTable.employeeId
+            ),
+            lte(employeesWorkerTable.contractEnd, new Date())
+          )
+        ),
+      })
+      .from(employeesPersonalTable)
+      .orderBy(
+        employeesPersonalTable.sirName,
+        employeesPersonalTable.firstName
+      );
+
+    return {
+      success: true,
+      employees: result,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+    };
+  }
+}
+
+/**** Liste von Arbeitsverhältnissen zu einem einzelnen Mitarbeiter *************************/
+
+export type EmploymentItem = {
+  recordId: number;
+  position: string;
+  departmentName: string | null;
+  employer: string | null;
+  contractStart: Date;
+  contractEnd: Date | null;
+};
+
+export async function getEmploymentsList(
+  id: number
+): Promise<
+  | { success: true; employments: EmploymentItem[] }
+  | { success: false; error: Error }
+> {
+  try {
+    const result = await db
+      .select({
+        recordId: employeesWorkerTable.recordId,
+        position: employeesWorkerTable.position,
+        departmentName: departmentsTable.departmentName,
+        employer: companiesTable.companyName,
+        contractStart: employeesWorkerTable.contractStart,
+        contractEnd: employeesWorkerTable.contractEnd,
+      })
+      .from(employeesWorkerTable)
+      .leftJoin(
+        departmentsTable,
+        eq(employeesWorkerTable.department, departmentsTable.recordId)
+      )
+      .leftJoin(
+        companiesTable,
+        eq(employeesWorkerTable.employer, companiesTable.companyId)
+      )
+      .where(eq(employeesWorkerTable.employeeId, id))
+      .orderBy(
+        employeesWorkerTable.contractStart,
+        desc(employeesWorkerTable.contractEnd)
+      );
+
+    return {
+      success: true,
+      employments: result,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+    };
+  }
+}
+
+/**** Einzelne persönliche Mitarbeiterdaten **********************************************/
+
+type BasicEmployee = {
   employeeId: number;
   sirName: string;
   firstName: string;

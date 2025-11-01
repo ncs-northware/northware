@@ -1,76 +1,14 @@
-import { db } from "@northware/database/connection";
-import { companiesTable } from "@northware/database/schema/companies";
-import { departmentsTable } from "@northware/database/schema/departments";
-import { employeesWorkerTable } from "@northware/database/schema/hr-employees";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import type { ColumnDef } from "@tanstack/react-table";
-import { desc, eq } from "drizzle-orm";
-import { type BasicEmployee, getBasicEmployee } from "@/lib/hr-actions";
-import { EmploymentsList } from "../../employee-list";
+import { notFound } from "next/navigation";
+import { EmploymentsList } from "@/components/hr-lists";
+import {
+  type EmploymentItem,
+  getBasicEmployee,
+  getEmploymentsList,
+} from "@/lib/hr-actions";
 import EmployeeSidebar from "../employee-sidebar";
-
-type EmploymentItem = {
-  recordId: number;
-  position: string;
-  departmentName: string | null;
-  employer: string | null;
-  contractStart: Date;
-  contractEnd: Date | null;
-};
-
-async function getEmploymentsList(
-  id: number
-): Promise<
-  | { success: true; employments: EmploymentItem[]; employee: BasicEmployee }
-  | { success: false; error: Error }
-> {
-  try {
-    const result = await db
-      .select({
-        recordId: employeesWorkerTable.recordId,
-        position: employeesWorkerTable.position,
-        departmentName: departmentsTable.departmentName,
-        employer: companiesTable.companyName,
-        contractStart: employeesWorkerTable.contractStart,
-        contractEnd: employeesWorkerTable.contractEnd,
-      })
-      .from(employeesWorkerTable)
-      .leftJoin(
-        departmentsTable,
-        eq(employeesWorkerTable.department, departmentsTable.recordId)
-      )
-      .leftJoin(
-        companiesTable,
-        eq(employeesWorkerTable.employer, companiesTable.companyId)
-      )
-      .where(eq(employeesWorkerTable.employeeId, id))
-      .orderBy(
-        employeesWorkerTable.contractStart,
-        desc(employeesWorkerTable.contractEnd)
-      );
-    const employeeResult = await getBasicEmployee(id);
-    if (!employeeResult.success) {
-      throw (
-        employeeResult.error ??
-        new Error("Die Daten des Mitarbeiters konnten nicht geladen werden.")
-      );
-    }
-    return {
-      success: true,
-      employments: result,
-      employee: employeeResult.employee,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error:
-        error instanceof Error
-          ? error
-          : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
-    };
-  }
-}
 
 export async function generateMetadata({
   params,
@@ -78,12 +16,12 @@ export async function generateMetadata({
   params: Promise<{ employeeId: number }>;
 }) {
   const { employeeId } = await params;
-  const data = await getEmploymentsList(employeeId);
-  if (!data.success) {
+  const employeeData = await getBasicEmployee(employeeId);
+  if (!employeeData.success) {
     return { title: "Arbeitsverhältnisse" };
   }
   return {
-    title: `Arbeitsverhältnisse | ${data.employee?.employeeId} / ${data.employee?.sirName}, ${data.employee?.firstName}`,
+    title: `Arbeitsverhältnisse | ${employeeData.employee.employeeId} / ${employeeData.employee.sirName}, ${employeeData.employee.firstName}`,
   };
 }
 
@@ -93,7 +31,8 @@ export default async function Page({
   params: Promise<{ employeeId: number }>;
 }) {
   const { employeeId } = await params;
-  const data = await getEmploymentsList(employeeId);
+  const employmentsData = await getEmploymentsList(employeeId);
+  const employeeData = await getBasicEmployee(employeeId);
 
   const columns: ColumnDef<EmploymentItem>[] = [
     { accessorKey: "recordId" },
@@ -104,8 +43,13 @@ export default async function Page({
     { accessorKey: "employer" },
   ];
 
-  if (!data.success) {
-    return <DataFetchError message={data.error?.message} service="cockpit" />;
+  if (!employeeData.success) {
+    return (
+      <DataFetchError message={employeeData.error.message} service="cockpit" />
+    );
+  }
+  if (!employmentsData.success) {
+    notFound();
   }
 
   return (
@@ -114,7 +58,7 @@ export default async function Page({
         { label: "HR", href: "/hr" },
         { label: "HR Management", href: "/hr/management" },
         {
-          label: `${data.employee?.employeeId} / ${data.employee?.sirName}, ${data.employee?.firstName}`,
+          label: `${employeeData.employee.employeeId} / ${employeeData.employee.sirName}, ${employeeData.employee.firstName}`,
           href: `/hr/management/${employeeId}`,
         },
         {
@@ -126,12 +70,12 @@ export default async function Page({
       id={employeeId}
     >
       <Headline level="h1">
-        Arbeitsverhältnisse von {data.employee?.firstName}{" "}
-        {data.employee?.sirName}
+        Arbeitsverhältnisse von {employeeData.employee?.firstName}{" "}
+        {employeeData.employee?.sirName}
       </Headline>
       <EmploymentsList
         columns={columns}
-        data={data.employments || []}
+        data={employmentsData.employments || []}
         employeeId={employeeId}
       />
     </EmployeeSidebar>
