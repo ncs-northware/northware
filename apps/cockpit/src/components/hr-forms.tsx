@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { Headline } from "@northware/ui/components/headline";
 import { AlertDescription } from "@northware/ui/components/shadcn/alert";
 import { Button } from "@northware/ui/components/shadcn/button";
 import { Calendar } from "@northware/ui/components/shadcn/calendar";
@@ -9,7 +10,6 @@ import {
   Field,
   FieldError,
   FieldLabel,
-  FieldSeparator,
 } from "@northware/ui/components/shadcn/field";
 import { Input } from "@northware/ui/components/shadcn/input";
 import {
@@ -55,6 +55,8 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
       religion: data.religion,
       taxClass: data.taxClass,
       taxKids: data.taxKids,
+      phoneWork: data.phoneWork,
+      mailWork: data.mailWork,
     },
   });
 
@@ -69,6 +71,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
   return (
     <form
       className="flex flex-col gap-6"
+      noValidate
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <Controller
@@ -87,7 +90,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
           </Field>
         )}
       />
-      <FieldSeparator />
+      <Headline level="h3">Persönliche Daten</Headline>
       <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
         <Controller
           control={form.control}
@@ -190,7 +193,6 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
           )}
         />
       </div>
-      <FieldSeparator />
       <Controller
         control={form.control}
         name="street"
@@ -244,7 +246,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
           )}
         />
       </div>
-      <FieldSeparator />
+      <Headline level="h3">Steuerliche Daten</Headline>
       <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
         <Controller
           control={form.control}
@@ -367,7 +369,43 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
           )}
         />
       </div>
-      <FieldSeparator />
+      <Headline level="h3">Dienstliche Kontaktdaten</Headline>
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="mailWork"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="mailWork">E-Mail-Adresse</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="mailWork"
+                placeholder="mmuster@test.de"
+                type="email"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="phoneWork"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="phoneWork">Telefonnummer</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="phoneWork"
+                placeholder="0123 456789-10"
+                type="tel"
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
       {errors.length > 0 && (
         <AlertWrapper variant="destructive">
           <AlertDescription>

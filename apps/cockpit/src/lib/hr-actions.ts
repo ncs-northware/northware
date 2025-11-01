@@ -56,6 +56,8 @@ export type EmployeePersonal = {
   religion: string;
   taxClass: string;
   taxKids: number;
+  mailWork: string;
+  phoneWork: string;
 };
 
 export async function getEmployeePersonal(
@@ -103,6 +105,8 @@ export async function updateEmployeePersonal(
         religion: formData.religion,
         taxClass: formData.taxClass,
         taxKids: formData.taxKids,
+        phoneWork: formData.phoneWork,
+        mailWork: formData.mailWork,
       })
       .where(eq(employeesPersonalTable.employeeId, formData.employeeId));
     revalidatePath("hr/management");

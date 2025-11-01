@@ -26,6 +26,20 @@ export const employeePersonalFormSchema = z.object({
     .min(1, { error: "Bitte wähle eine Religionszugehörigkeit." }),
   taxClass: z.string().min(1, { error: "Bitte wähle eine Steuerklasse." }),
   taxKids: z.number(),
+  mailWork: z
+    .email({ error: "Dies ist keine gültige E-Mail-Adresse" })
+    .min(1, { error: "Die E-Mail-Adresse ist ein Pflichtfeld." })
+    .max(200, {
+      error: "Die E-Mail-Adresse darf maximal 200 Zeichen lang sein.",
+    }),
+  phoneWork: z
+    .string()
+    .regex(/^0[1-9]\d{3,4} [1-9]\d{0,8}(-\d{1,4})?$/, {
+      error:
+        "Bitte geben Sie eine gültige Telefonnummer ein (Muster 06421 123456 oder 06421 123456-789)",
+    })
+    .min(1, { error: "Die Telefonnummer ist ein Pflichtfeld." })
+    .max(50, { error: "Die Telefonnummer darf maximal 50 Zeichen lang sein." }),
 });
 
 export type TEmployeePersonalFormSchema = z.infer<
