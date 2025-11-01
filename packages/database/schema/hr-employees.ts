@@ -19,6 +19,8 @@ export const employeesPersonalTable = pgTable("employeesPersonalTable", {
   street: varchar({ length: 100 }),
   zipcode: varchar({ length: 10 }),
   city: varchar({ length: 100 }),
+  phoneWork: varchar({ length: 50 }).notNull(),
+  mailWork: varchar({ length: 200 }).notNull(),
   meritalStatus: varchar({ length: 15 }).notNull(),
   religion: varchar({ length: 10 }).notNull(),
   taxClass: varchar({ length: 3 }).notNull(),
@@ -40,8 +42,6 @@ export const employeesWorkerTable = pgTable("employeesWorkerTable", {
       onDelete: "cascade",
     }),
   position: varchar({ length: 100 }).notNull(),
-  phoneWork: varchar({ length: 50 }).notNull(),
-  mailWork: varchar({ length: 200 }).notNull(),
   department: smallint().references(() => departmentsTable.recordId, {
     onDelete: "set null",
   }),
