@@ -20,7 +20,7 @@ type EmployeeItem = {
   firstName: string | null;
   sirName: string | null;
   activeContracts: number;
-  inactiveContracts: number;
+  terminatedContracts: number;
 };
 
 async function getEmployeeList(): Promise<
@@ -49,7 +49,7 @@ async function getEmployeeList(): Promise<
             )
           )
         ),
-        inactiveContracts: db.$count(
+        terminatedContracts: db.$count(
           employeesWorkerTable,
           and(
             eq(
@@ -92,7 +92,7 @@ export default async function Page() {
     { accessorKey: "firstName" },
     { accessorKey: "sirName" },
     { accessorKey: "activeContracts" },
-    { accessorKey: "inactiveContracts" },
+    { accessorKey: "terminatedContracts" },
   ];
 
   if (!data.success) {

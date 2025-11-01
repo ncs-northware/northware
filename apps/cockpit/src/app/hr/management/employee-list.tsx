@@ -78,14 +78,14 @@ export default function EmployeeList<TData, TValue>({
                         className="bg-success text-success-foreground"
                         variant="secondary"
                       >
-                        {row.getValue("activeContracts")} aktive Verträge
+                        {row.getValue("activeContracts")} laufende Verträge
                       </Badge>
                     ) : (
                       ""
                     )}
-                    {(row.getValue("inactiveContracts") as number) > 0 ? (
+                    {(row.getValue("terminatedContracts") as number) > 0 ? (
                       <Badge variant="secondary">
-                        {row.getValue("inactiveContracts")} inaktive Verträge
+                        {row.getValue("terminatedContracts")} beendete Verträge
                       </Badge>
                     ) : (
                       ""
