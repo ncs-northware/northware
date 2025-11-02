@@ -19,7 +19,7 @@ import {
   ItemTitle,
 } from "@northware/ui/components/shadcn/item";
 import { ChevronRightIcon } from "@northware/ui/icons/lucide";
-import { cn, formattedDate, localDateDE } from "@northware/ui/lib/utils";
+import { cn } from "@northware/ui/lib/utils";
 import {
   type ColumnDef,
   getCoreRowModel,
@@ -27,9 +27,10 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { formatDate } from "date-fns";
+import { de } from "date-fns/locale";
 import Link from "next/link";
 import { useState } from "react";
-
 export function EmployeeList<TData, TValue>({
   columns,
   data,
@@ -169,13 +170,13 @@ export function EmploymentsList<TData, TValue>({
                 </div>
                 <div className="flex flex-1 flex-col gap-1">
                   <ItemTitle className="flex gap-1">
-                    {formattedDate(row.getValue("contractStart"), "PPP", {
-                      locale: localDateDE,
+                    {formatDate(row.getValue("contractStart"), "PPP", {
+                      locale: de,
                     })}{" "}
                     -{" "}
                     {row.getValue("contractEnd") != null
-                      ? formattedDate(row.getValue("contractEnd"), "PPP", {
-                          locale: localDateDE,
+                      ? formatDate(row.getValue("contractEnd"), "PPP", {
+                          locale: de,
                         })
                       : ""}
                   </ItemTitle>

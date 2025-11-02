@@ -25,7 +25,9 @@ import {
   SelectValue,
 } from "@northware/ui/components/shadcn/select";
 import { CalendarIcon } from "@northware/ui/icons/lucide";
-import { cn, formattedDate, localDateDE, toast } from "@northware/ui/lib/utils";
+import { cn, toast } from "@northware/ui/lib/utils";
+import { formatDate } from "date-fns";
+import { de } from "date-fns/locale";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -37,7 +39,6 @@ import {
   type TEmployeePersonalFormSchema,
 } from "@/lib/hr-schema";
 import { parseErrorMessages } from "@/lib/rbac-schema";
-
 export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TEmployeePersonalFormSchema>({
@@ -142,8 +143,8 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                     variant={"outline"}
                   >
                     {field.value ? (
-                      formattedDate(field.value, "PPP", {
-                        locale: localDateDE,
+                      formatDate(field.value, "PPP", {
+                        locale: de,
                       })
                     ) : (
                       <span>Geburtsdatum wählen</span>
