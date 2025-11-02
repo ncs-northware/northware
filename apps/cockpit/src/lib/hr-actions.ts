@@ -79,7 +79,7 @@ export async function getEmployeeList(): Promise<
 
 /**** Liste von Arbeitsverhältnissen zu einem einzelnen Mitarbeiter *************************/
 
-export type EmploymentItem = {
+export type EmploymentListItem = {
   recordId: number;
   position: string;
   departmentName: string | null;
@@ -91,7 +91,7 @@ export type EmploymentItem = {
 export async function getEmploymentsList(
   id: number
 ): Promise<
-  | { success: true; employments: EmploymentItem[] }
+  | { success: true; employments: EmploymentListItem[] }
   | { success: false; error: Error }
 > {
   try {
@@ -241,5 +241,65 @@ export async function updateEmployeePersonal(
     revalidatePath("hr/management");
   } catch (error) {
     handleNeonError(error);
+  }
+}
+
+/*** Einzelne Arbeitsverhältnisse ***********************************************************/
+
+type EmploymentItem = {
+  employeeId: number;
+  position: string;
+  department: string | null;
+  employerId: number | null;
+  employer: string | null;
+  contractStart: Date;
+  contractEnd: Date | null;
+  paygrade: string;
+  educationStage: number;
+  experienceLevel: string;
+};
+
+export async function getEmployment(
+  id: number
+): Promise<
+  | { success: true; employment: EmploymentItem }
+  | { success: false; error: Error }
+> {
+  try {
+    const result = await db
+      .select({
+        employeeId: employeesWorkerTable.employeeId,
+        position: employeesWorkerTable.position,
+        department: departmentsTable.departmentName,
+        employerId: companiesTable.companyId,
+        employer: companiesTable.companyName,
+        contractStart: employeesWorkerTable.contractStart,
+        contractEnd: employeesWorkerTable.contractEnd,
+        paygrade: employeesWorkerTable.paygrade,
+        educationStage: employeesWorkerTable.educationStage,
+        experienceLevel: employeesWorkerTable.experienceLevel,
+      })
+      .from(employeesWorkerTable)
+      .leftJoin(
+        departmentsTable,
+        eq(employeesWorkerTable.department, departmentsTable.recordId)
+      )
+      .leftJoin(
+        companiesTable,
+        eq(employeesWorkerTable.employer, companiesTable.companyId)
+      )
+      .where(eq(employeesWorkerTable.recordId, id));
+    return {
+      success: true,
+      employment: result[0],
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+    };
   }
 }

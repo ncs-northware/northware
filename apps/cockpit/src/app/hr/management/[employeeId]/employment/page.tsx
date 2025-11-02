@@ -4,7 +4,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { notFound } from "next/navigation";
 import { EmploymentsList } from "@/components/hr-lists";
 import {
-  type EmploymentItem,
+  type EmploymentListItem,
   getBasicEmployee,
   getEmploymentsList,
 } from "@/lib/hr-actions";
@@ -34,7 +34,7 @@ export default async function Page({
   const employmentsData = await getEmploymentsList(employeeId);
   const employeeData = await getBasicEmployee(employeeId);
 
-  const columns: ColumnDef<EmploymentItem>[] = [
+  const columns: ColumnDef<EmploymentListItem>[] = [
     { accessorKey: "recordId" },
     { accessorKey: "contractStart" },
     { accessorKey: "contractEnd" },
