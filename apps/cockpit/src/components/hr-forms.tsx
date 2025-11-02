@@ -31,14 +31,20 @@ import { de } from "date-fns/locale";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
+  type BasicCompany,
+  type BasicDepartment,
   type EmployeePersonal,
+  type EmploymentItem,
   updateEmployeePersonal,
 } from "@/lib/hr-actions";
 import {
   employeePersonalFormSchema,
   type TEmployeePersonalFormSchema,
+  type TUpdateEmploymentFormSchema,
+  updateEmploymentFormSchema,
 } from "@/lib/hr-schema";
 import { parseErrorMessages } from "@/lib/rbac-schema";
+
 export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TEmployeePersonalFormSchema>({
@@ -402,6 +408,253 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 placeholder="0123 456789-10"
                 type="tel"
               />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      {errors.length > 0 && (
+        <AlertWrapper variant="destructive">
+          <AlertDescription>
+            <ul>
+              {errors.map((err) => (
+                <li key={err}>{err}</li>
+              ))}
+            </ul>
+          </AlertDescription>
+        </AlertWrapper>
+      )}
+      <Field>
+        <Button type="submit">Änderungen speichern</Button>
+      </Field>
+    </form>
+  );
+}
+
+export function UpdateEmploymentForm({
+  data,
+  departments,
+  companies,
+}: {
+  data: EmploymentItem;
+  departments: BasicDepartment[];
+  companies: BasicCompany[];
+}) {
+  const [errors, setErrors] = useState<string[]>([]);
+  const form = useForm<TUpdateEmploymentFormSchema>({
+    resolver: zodResolver(updateEmploymentFormSchema),
+    defaultValues: {
+      position: data.position,
+      department: data.departmentId,
+      employer: data.employerId,
+      contractStart: data.contractStart,
+      contractEnd: data.contractEnd,
+      paygrade: data.paygrade,
+      educationStage: data.educationStage,
+      experienceLevel: data.experienceLevel,
+    },
+  });
+
+  function onSubmit(formData: TUpdateEmploymentFormSchema) {
+    console.log(formData);
+  }
+
+  return (
+    <form
+      className="flex flex-col gap-6"
+      noValidate
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <Headline level="h3">Position</Headline>
+      <Controller
+        control={form.control}
+        name="position"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor="position">Position</FieldLabel>
+            <Input
+              {...field}
+              aria-invalid={fieldState.invalid}
+              id="position"
+              placeholder="Sachbearbeiter"
+            />
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="department"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="department">Abteilung</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value?.toString()}
+              >
+                <SelectTrigger
+                  aria-invalid={fieldState.invalid}
+                  id="department"
+                >
+                  <SelectValue placeholder="Abteilung wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  {departments.map((dep) => (
+                    <SelectItem
+                      key={dep.recordId}
+                      value={dep.recordId.toString()}
+                    >
+                      {dep.departmentName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="employer"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="employer">Arbeitgeber</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value?.toString()}
+              >
+                <SelectTrigger aria-invalid={fieldState.invalid} id="employer">
+                  <SelectValue placeholder="Arbeitgeber wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  {companies.map((comp) => (
+                    <SelectItem
+                      key={comp.companyId}
+                      value={comp.companyId.toString()}
+                    >
+                      {comp.companyId} / {comp.companyName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      {/* TODO: Date Fields für contractStart und contractEnd */}
+      <Headline level="h3">Lohn und Gehalt</Headline>
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="paygrade"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="paygrade">Tarifgruppe</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value}
+              >
+                <SelectTrigger aria-invalid={fieldState.invalid} id="paygrade">
+                  <SelectValue placeholder="Tarifgruppe wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="A">A / Kundenservice</SelectItem>
+                  <SelectItem value="B">
+                    B / Marketing und Vertriebsmarketing
+                  </SelectItem>
+                  <SelectItem value="C">
+                    C / Buchhaltung, Personalabteilung
+                  </SelectItem>
+                  <SelectItem value="D">D / IT-Abteilung</SelectItem>
+                  <SelectItem value="E">E / Übrige Abteilungen</SelectItem>
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="educationStage"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="educationStage">Vorbildungsstufe</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value.toString()}
+              >
+                <SelectTrigger
+                  aria-invalid={fieldState.invalid}
+                  id="educationStage"
+                >
+                  <SelectValue placeholder="Vorbildungsstufe wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">
+                    1 / einfache oder fachliche Einarbeitung
+                  </SelectItem>
+                  <SelectItem value="2">
+                    2 / tätigkeitsbezogene Ausbildung
+                  </SelectItem>
+                  <SelectItem value="3">
+                    3 / umfassende Fachkenntnisse (Studium, Zusatzausbildung)
+                  </SelectItem>
+                  <SelectItem value="4">
+                    4 / Stufe 3 mit schweren fachlichen Tätigkeiten
+                  </SelectItem>
+                  <SelectItem value="5">
+                    5 / Stufe 4 mit einfacher Personalverantwortung
+                  </SelectItem>
+                  <SelectItem value="6">
+                    6 / Stufe 4 mit erheblicher Personalverantwortung
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="experienceLevel"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="experienceLevel">Erfahrungsstufe</FieldLabel>
+              <Select
+                name={field.name}
+                onValueChange={field.onChange}
+                value={field.value.toString()}
+              >
+                <SelectTrigger
+                  aria-invalid={fieldState.invalid}
+                  id="experienceLevel"
+                >
+                  <SelectValue placeholder="Erfahrungsstufe wählen" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="I">
+                    Berufserfahrung unter 5 Jahren
+                  </SelectItem>
+                  <SelectItem value="II">
+                    Berufserfahrung ab 5 Jahren
+                  </SelectItem>
+                  <SelectItem value="III">
+                    Berufserfahrung ab 10 Jahren
+                  </SelectItem>
+                  <SelectItem value="IV">
+                    Berufserfahrung ab 15 Jahren
+                  </SelectItem>
+                  <SelectItem value="V">
+                    Berufserfahrung ab 20 Jahren
+                  </SelectItem>
+                </SelectContent>
+              </Select>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}

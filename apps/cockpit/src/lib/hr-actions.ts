@@ -246,9 +246,10 @@ export async function updateEmployeePersonal(
 
 /*** Einzelne Arbeitsverhältnisse ***********************************************************/
 
-type EmploymentItem = {
+export type EmploymentItem = {
   employeeId: number;
   position: string;
+  departmentId: number | null;
   department: string | null;
   employerId: number | null;
   employer: string | null;
@@ -270,6 +271,7 @@ export async function getEmployment(
       .select({
         employeeId: employeesWorkerTable.employeeId,
         position: employeesWorkerTable.position,
+        departmentId: departmentsTable.recordId,
         department: departmentsTable.departmentName,
         employerId: companiesTable.companyId,
         employer: companiesTable.companyName,
@@ -292,6 +294,55 @@ export async function getEmployment(
     return {
       success: true,
       employment: result[0],
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+    };
+  }
+}
+
+export type BasicDepartment = {
+  recordId: number;
+  departmentName: string;
+};
+
+export type BasicCompany = {
+  companyId: number;
+  companyName: string;
+};
+
+export async function getEmploymentContext(): Promise<
+  | {
+      success: true;
+      departments: BasicDepartment[];
+      companies: BasicCompany[];
+    }
+  | { success: false; error: Error }
+> {
+  try {
+    const departmentResult = await db
+      .select({
+        recordId: departmentsTable.recordId,
+        departmentName: departmentsTable.departmentName,
+      })
+      .from(departmentsTable)
+      .orderBy(departmentsTable.recordId);
+    const companyResult = await db
+      .select({
+        companyId: companiesTable.companyId,
+        companyName: companiesTable.companyName,
+      })
+      .from(companiesTable)
+      .orderBy(companiesTable.companyId);
+    return {
+      success: true,
+      departments: departmentResult,
+      companies: companyResult,
     };
   } catch (error) {
     return {

@@ -45,3 +45,18 @@ export const employeePersonalFormSchema = z.object({
 export type TEmployeePersonalFormSchema = z.infer<
   typeof employeePersonalFormSchema
 >;
+
+export const updateEmploymentFormSchema = z.object({
+  position: z.string(),
+  department: z.number().nullable(),
+  employer: z.number().nullable(),
+  contractStart: z.date(),
+  contractEnd: z.date().nullable(),
+  paygrade: z.string(),
+  educationStage: z.number(),
+  experienceLevel: z.string(),
+});
+
+export type TUpdateEmploymentFormSchema = z.infer<
+  typeof updateEmploymentFormSchema
+>;

@@ -3,7 +3,12 @@ import { Badge } from "@northware/ui/components/shadcn/badge";
 import { differenceInCalendarMonths, formatDate } from "date-fns";
 import { de } from "date-fns/locale";
 import { notFound } from "next/navigation";
-import { getBasicEmployee, getEmployment } from "@/lib/hr-actions";
+import { UpdateEmploymentForm } from "@/components/hr-forms";
+import {
+  getBasicEmployee,
+  getEmployment,
+  getEmploymentContext,
+} from "@/lib/hr-actions";
 import EmployeeSidebar from "../../employee-sidebar";
 
 function EmploymentStatusBadge({ contractEnd }: { contractEnd: Date | null }) {
@@ -41,8 +46,10 @@ export default async function Page({
   const { employeeId, recordId } = await params;
   const employeeData = await getBasicEmployee(employeeId);
   const employmentData = await getEmployment(recordId);
-
-  if (!(employeeData.success && employmentData.success)) {
+  const contextData = await getEmploymentContext();
+  if (
+    !(employeeData.success && employmentData.success && contextData.success)
+  ) {
     notFound();
   }
 
@@ -98,6 +105,11 @@ export default async function Page({
           </div>
         </div>
       </div>
+      <UpdateEmploymentForm
+        companies={contextData.companies}
+        data={employmentData.employment}
+        departments={contextData.departments}
+      />
     </EmployeeSidebar>
   );
 }
