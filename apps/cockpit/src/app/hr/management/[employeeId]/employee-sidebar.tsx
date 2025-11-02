@@ -1,4 +1,5 @@
 import type { BreadcrumbType } from "@northware/ui/components/auto-breadcrumbs";
+import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
@@ -36,7 +37,9 @@ export default async function EmployeeSidebar({
         },
       ]}
     >
-      {children}
+      <PermissionProvider permissionKeys={["cockpit::hr-management:update"]}>
+        {children}
+      </PermissionProvider>
     </SidebarLayout>
   );
 }
