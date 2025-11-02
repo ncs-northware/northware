@@ -45,10 +45,7 @@ async function getAddresses() {
       .where(
         and(
           or(
-            gte(
-              employeesWorkerTable.contractEnd,
-              new Date().toISOString().split("T")[0]
-            ),
+            gte(employeesWorkerTable.contractEnd, new Date()),
             isNull(employeesWorkerTable.contractEnd)
           )
         )
