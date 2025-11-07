@@ -2,10 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertWrapper } from "@northware/ui/components/custom-alert";
+import { DateInput } from "@northware/ui/components/date-input";
 import { Headline } from "@northware/ui/components/headline";
 import { AlertDescription } from "@northware/ui/components/shadcn/alert";
 import { Button } from "@northware/ui/components/shadcn/button";
-import { Calendar } from "@northware/ui/components/shadcn/calendar";
 import {
   Field,
   FieldError,
@@ -13,21 +13,13 @@ import {
 } from "@northware/ui/components/shadcn/field";
 import { Input } from "@northware/ui/components/shadcn/input";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@northware/ui/components/shadcn/popover";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@northware/ui/components/shadcn/select";
-import { CalendarIcon } from "@northware/ui/icons/lucide";
-import { cn, toast } from "@northware/ui/lib/utils";
-import { formatDate } from "date-fns";
-import { de } from "date-fns/locale";
+import { toast } from "@northware/ui/lib/utils";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -139,38 +131,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="birthday">Geburtsdatum</FieldLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    className={cn(
-                      "w-60 pl-3 text-left font-normal",
-                      !field.value && "text-muted-foreground"
-                    )}
-                    variant={"outline"}
-                  >
-                    {field.value ? (
-                      formatDate(field.value, "PPP", {
-                        locale: de,
-                      })
-                    ) : (
-                      <span>Geburtsdatum wählen</span>
-                    )}
-                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent align="start" className="w-auto p-0">
-                  <Calendar
-                    captionLayout="dropdown"
-                    defaultMonth={field.value || new Date()}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
-                    mode="single"
-                    onSelect={field.onChange}
-                    selected={field.value || new Date()}
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateInput field={field} fieldState={fieldState} />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
