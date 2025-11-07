@@ -572,6 +572,12 @@ export function UpdateEmploymentForm({
                   </SelectItem>
                   <SelectItem value="D">D / IT-Abteilung</SelectItem>
                   <SelectItem value="E">E / Übrige Abteilungen</SelectItem>
+                  <SelectItem value="AT GF">
+                    Geschäftsführer primäres Unternehmen
+                  </SelectItem>
+                  <SelectItem value="AT GF2">
+                    Geschäftsführer sekundäres Unternehmen
+                  </SelectItem>
                 </SelectContent>
               </Select>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -614,6 +620,7 @@ export function UpdateEmploymentForm({
                   <SelectItem value="6">
                     6 / Stufe 4 mit erheblicher Personalverantwortung
                   </SelectItem>
+                  <SelectItem value="0">Nicht relevant</SelectItem>
                 </SelectContent>
               </Select>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -652,6 +659,9 @@ export function UpdateEmploymentForm({
                   </SelectItem>
                   <SelectItem value="V">
                     Berufserfahrung ab 20 Jahren
+                  </SelectItem>
+                  <SelectItem value="AT">
+                    Außertarifliche Eingruppierung
                   </SelectItem>
                 </SelectContent>
               </Select>
