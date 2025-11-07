@@ -45,7 +45,7 @@ function formatDateForDisplay(date: Date | null): string {
 
 type DateInputProps = {
   field: {
-    value?: Date;
+    value?: Date | null;
     onChange: (date: Date | null) => void;
     onBlur?: () => void;
     name: string;
@@ -78,16 +78,25 @@ export function DateInput({ fieldState, field }: DateInputProps) {
         className="bg-background pr-10"
         id="date"
         onBlur={() => {
-          const parsed = parseDateInput(inputText);
-          if (parsed && isValid(parsed)) {
-            field.onChange(parsed);
-            setInputText(formatDateForDisplay(parsed));
+          const trimmedInput = inputText.trim();
+          if (trimmedInput) {
+            const parsed = parseDateInput(trimmedInput);
+            if (parsed && isValid(parsed)) {
+              // Wenn ein gültiges Datum eingegeben wurde, übernehme es
+              field.onChange(parsed);
+              setInputText(formatDateForDisplay(parsed));
+            } else {
+              // Bei ungültigem Format: Stelle den letzten gültigen Wert wieder her
+              setInputText(
+                field.value && isValid(field.value)
+                  ? formatDateForDisplay(field.value)
+                  : ""
+              );
+            }
           } else {
-            setInputText(
-              field.value && isValid(field.value)
-                ? formatDateForDisplay(field.value)
-                : ""
-            );
+            // Wenn das Feld leer ist, setze das Datum auf null
+            field.onChange(null);
+            setInputText("");
           }
         }}
         onChange={(e) => {
@@ -127,7 +136,7 @@ export function DateInput({ fieldState, field }: DateInputProps) {
                 setOpen(false);
               }
             }}
-            selected={field.value}
+            selected={field.value ? field.value : undefined}
           />
         </PopoverContent>
       </Popover>
