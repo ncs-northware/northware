@@ -34,7 +34,7 @@ export const employeePersonalFormSchema = z.object({
     }),
   phoneWork: z
     .string()
-    .regex(/^0[1-9]\d{3,4} [1-9]\d{0,8}(-\d{1,4})?$/, {
+    .regex(/^0[1-9]\d{2,4} [1-9]\d{0,8}(-\d{1,4})?$/, {
       error:
         "Bitte geben Sie eine gültige Telefonnummer ein (Muster 06421 123456 oder 06421 123456-789)",
     })
