@@ -1,6 +1,10 @@
-import { Button } from "@northware/ui/components/shadcn/button";
 import { Calendar } from "@northware/ui/components/shadcn/calendar";
-import { Input } from "@northware/ui/components/shadcn/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@northware/ui/components/shadcn/input-group";
 import {
   Popover,
   PopoverContent,
@@ -13,18 +17,22 @@ import { useEffect, useState } from "react";
 import type { FieldError } from "react-hook-form";
 
 function parseDateInput(input: string): Date | null {
-  const trimmedInput = input.trim();
-  if (!trimmedInput) {
-    return null;
-  }
-
   let parsedDate: Date | null = null;
+  const formats = [
+    "ddMMyy",
+    "dd.MM.yy",
+    "ddMM",
+    "dd.MM",
+    "dd.MM.",
+    "dd.MM.yyyy",
+    "ddMMyyyy",
+  ];
 
-  const formats = ["dd.MM.yyyy", "dd.MM.yy", "ddMMyyyy", "ddMMyy"];
   for (const pattern of formats) {
     try {
       const date = parse(input, pattern, new Date(), { locale: de });
       if (isValid(date)) {
+        date.setHours(12);
         parsedDate = date;
         break;
       }
@@ -32,7 +40,6 @@ function parseDateInput(input: string): Date | null {
       // ignore parse errors
     }
   }
-
   return parsedDate;
 }
 
@@ -72,15 +79,14 @@ export function DateInput({ fieldState, field }: DateInputProps) {
   }, [field.value]);
 
   return (
-    <div className="relative flex gap-2">
-      <Input
+    <InputGroup>
+      <InputGroupInput
         aria-invalid={fieldState.invalid}
         className="bg-background pr-10"
         id="date"
         onBlur={() => {
-          const trimmedInput = inputText.trim();
-          if (trimmedInput) {
-            const parsed = parseDateInput(trimmedInput);
+          if (inputText) {
+            const parsed = parseDateInput(inputText);
             if (parsed && isValid(parsed)) {
               // Wenn ein gültiges Datum eingegeben wurde, übernehme es
               field.onChange(parsed);
@@ -107,39 +113,37 @@ export function DateInput({ fieldState, field }: DateInputProps) {
         ref={field.ref}
         value={inputText}
       />
-
-      <Popover onOpenChange={setOpen} open={open}>
-        <PopoverTrigger asChild>
-          <Button
-            className="-translate-y-1/2 absolute top-1/2 right-2 size-6"
-            id="date-picker"
-            variant="ghost"
+      <InputGroupAddon align="inline-end">
+        <Popover onOpenChange={setOpen} open={open}>
+          <PopoverTrigger asChild>
+            <InputGroupButton id="date-picker" size="icon-xs" variant="ghost">
+              <CalendarIcon className="size-3.5" />
+              <span className="sr-only">Datum auswählen</span>
+            </InputGroupButton>
+          </PopoverTrigger>
+          <PopoverContent
+            align="end"
+            alignOffset={-8}
+            className="w-auto overflow-hidden p-0"
+            sideOffset={10}
           >
-            <CalendarIcon className="size-3.5" />
-            <span className="sr-only">Datum auswählen</span>
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          align="end"
-          alignOffset={-8}
-          className="w-auto overflow-hidden p-0"
-          sideOffset={10}
-        >
-          <Calendar
-            captionLayout="dropdown"
-            defaultMonth={field.value || new Date()}
-            mode="single"
-            onSelect={(date) => {
-              if (date) {
-                field.onChange(date);
-                setInputText(formatDateForDisplay(date ?? null));
-                setOpen(false);
-              }
-            }}
-            selected={field.value ? field.value : undefined}
-          />
-        </PopoverContent>
-      </Popover>
-    </div>
+            <Calendar
+              captionLayout="dropdown"
+              defaultMonth={field.value || new Date()}
+              mode="single"
+              onSelect={(date) => {
+                if (date) {
+                  date.setHours(12);
+                  field.onChange(date);
+                  setInputText(formatDateForDisplay(date ?? null));
+                  setOpen(false);
+                }
+              }}
+              selected={field.value ? field.value : undefined}
+            />
+          </PopoverContent>
+        </Popover>
+      </InputGroupAddon>
+    </InputGroup>
   );
 }
