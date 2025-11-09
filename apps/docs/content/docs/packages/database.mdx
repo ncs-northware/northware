@@ -7,7 +7,7 @@ Innerhalb von `@northware/database` wird die Verbindung zu den Neon Databases he
 
 ## Verbindung zur Datenbank herstellen
 
-Das Package exportiert die Variablen `client` und `db` unter der Adresse `@northware/database/connect` womit die Verbindung zur Datenbank hergestellt werden kann.
+Das Package exportiert die Variable `db` unter der Adresse `@northware/database/connection` womit die Verbindung zur Datenbank hergestellt werden kann.
 
 ## Drizzle Administration
 
@@ -27,17 +27,21 @@ Das Drizzle Kit wird verwendet, um das Datenbank-Schema der [Neon Database](http
 
 Der Workflow mit Drizzle Kit und die Verbindung zur Datenbank in diesem Workflow wird in der `drizzle.config.ts` konfiguriert. 
 Hier ist definiert, dass alle Schema-Dateien im `./schema` Ordner abgelegt sind. Außerdem ist hier definiert, dass die von Drizzle generierten Migrations-Dateien im 
-Ordner `./drizzle-migrations` abgelegt werden sollen. Da diese Dateien nur temporär benötigt werden, wird der Ordner `drizzle-migrations` von Git ignoriert.
+Ordner `./drizzle-migrations` abgelegt werden sollen.
 
-Die `drizzle.config.ts` greift auf die Environment-Variable `NW_API` zu. Diese Variable muss innerhalb einer `./.env.local` im `@northware/database` Package 
+Die `drizzle.config.ts` greift auf die Environment-Variable `DATABASE_URL` zu. Diese Variable muss innerhalb einer `./.env.local` im `@northware/database` Package oder in einem anderen Environment-Kontext 
 definiert werden und die Verbindungs-URL zur Datenbank enthalten.
 
 ### Drizzle Kit
 
-Die Drizzle Migrationen werden mit der Console durchgeführt und können nicht innerhalb einer App umgesetzt werden. Die Commands müssen daher 
-im Ordner `/packages/database` ausgeführt werden.
+Die Drizzle Migrationen werden mit der Console mithilfe von `drizzle-kit` durchgeführt und können nicht alle über das Package-Root ausgeführt werden.
 
-Es gibt unterschiedliche `drizzle-kit` Commands zur Kommunikation zwischen Codebase und Database
+Im Package-Root wurden zwei häufige Commands hinterlegt und können von dort ausgeführt werden.
+
+- **`drizzle-generate`** navigiert in den Ordner `./packages/database` und führt dort `drizzle-kit generate` aus.
+- **`drizzle-migrate`** navigiert in den Ordner `./packages/database` und führt dort `drizzle-kit migrate` aus.
+
+Es gibt weitere `drizzle-kit` Commands zur Kommunikation zwischen Codebase und Database, die nur unter `./packages/database` ausgeführt werden können.
 
 - **[`drizzle-kit generate`](https://orm.drizzle.team/docs/drizzle-kit-generate):** Generiert eine `.sql` Datei, die das Datenbank-Schema als SQL-Code enthält.
 - **[`drizzle-kit migrate`](https://orm.drizzle.team/docs/drizzle-kit-migrate):** Migriert das SQL-Schema, das mit `drizzle-kit generate` erstellt wurde in die Datenbank.
