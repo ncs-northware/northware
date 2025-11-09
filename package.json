@@ -1,22 +1,4 @@
 {
-  "name": "northware",
-  "private": true,
-  "license": "MIT",
-  "scripts": {
-    "build": "turbo build",
-    "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite -c packages/ui",
-    "commit": "commit",
-    "dev": "turbo dev",
-    "format": "turbo format",
-    "format:root": "ultracite fix",
-    "generate-icons": "cd packages/ui && pnpm generate-icons",
-    "lint": "turbo lint",
-    "lint:ci": "biome ci ./",
-    "lint:root": "ultracite check",
-    "localci": "turbo build lint:ci --affected",
-    "tsc-check": "turbo tsc-check",
-    "tsc-check:root": "tsc --noEmit"
-  },
   "devDependencies": {
     "@biomejs/biome": "2.3.4",
     "@changesets/cli": "^2.29.7",
@@ -30,7 +12,27 @@
     "ultracite": "6.3.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
-  "packageManager": "pnpm@10.18.1"
+  "license": "MIT",
+  "name": "northware",
+  "packageManager": "pnpm@10.18.1",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite -c packages/ui",
+    "commit": "commit",
+    "dev": "turbo dev",
+    "drizzle-generate": "cd ./packages/database && pnpm drizzle-kit generate",
+    "drizzle-migrate": "cd ./packages/database && pnpm drizzle-kit migrate",
+    "format": "turbo format",
+    "format:root": "ultracite fix",
+    "generate-icons": "cd packages/ui && pnpm generate-icons",
+    "lint": "turbo lint",
+    "lint:ci": "biome ci ./",
+    "lint:root": "ultracite check",
+    "localci": "turbo build lint:ci --affected",
+    "tsc-check": "turbo tsc-check",
+    "tsc-check:root": "tsc --noEmit"
+  }
 }
