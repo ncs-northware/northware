@@ -14,7 +14,7 @@ import {
   TabsTrigger,
 } from "@northware/ui/components/shadcn/tabs";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
-import { eq } from "drizzle-orm";
+import { and, eq, gte, isNull, or } from "drizzle-orm";
 import { departmentColumns, employeeColumns } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -28,8 +28,8 @@ async function getAddresses() {
       .select({
         sirName: employeesPersonalTable.sirName,
         firstName: employeesPersonalTable.firstName,
-        phoneWork: employeesWorkerTable.phoneWork,
-        mailWork: employeesWorkerTable.mailWork,
+        phoneWork: employeesPersonalTable.phoneWork,
+        mailWork: employeesPersonalTable.mailWork,
         department: departmentsTable.departmentName,
         position: employeesWorkerTable.position,
       })
@@ -41,6 +41,14 @@ async function getAddresses() {
       .leftJoin(
         departmentsTable,
         eq(employeesWorkerTable.department, departmentsTable.recordId)
+      )
+      .where(
+        and(
+          or(
+            gte(employeesWorkerTable.contractEnd, new Date()),
+            isNull(employeesWorkerTable.contractEnd)
+          )
+        )
       )
       .orderBy(employeesPersonalTable.sirName);
 

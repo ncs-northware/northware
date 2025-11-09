@@ -33,7 +33,18 @@ export default async function Page({
   }
 
   return (
-    <EmployeeSidebar id={employeeId}>
+    <EmployeeSidebar
+      breadcrumbs={[
+        { label: "HR", href: "/hr" },
+        { label: "HR Management", href: "/hr/management" },
+        {
+          label: `${data.employee?.employeeId} / ${data.employee?.sirName}, ${data.employee?.firstName}`,
+          href: `/hr/management/${employeeId}`,
+          active: true,
+        },
+      ]}
+      id={employeeId}
+    >
       <PermissionProvider permissionKeys={["cockpit::hr-management.update"]}>
         <Headline level="h1">
           {data.employee?.employeeId} / {data.employee?.sirName},{" "}

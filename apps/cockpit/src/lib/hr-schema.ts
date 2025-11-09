@@ -26,8 +26,50 @@ export const employeePersonalFormSchema = z.object({
     .min(1, { error: "Bitte wähle eine Religionszugehörigkeit." }),
   taxClass: z.string().min(1, { error: "Bitte wähle eine Steuerklasse." }),
   taxKids: z.number(),
+  mailWork: z
+    .email({ error: "Dies ist keine gültige E-Mail-Adresse" })
+    .min(1, { error: "Die E-Mail-Adresse ist ein Pflichtfeld." })
+    .max(200, {
+      error: "Die E-Mail-Adresse darf maximal 200 Zeichen lang sein.",
+    }),
+  phoneWork: z
+    .string()
+    .regex(/^0[1-9]\d{2,4} [1-9]\d{0,8}(-\d{1,4})?$/, {
+      error:
+        "Bitte geben Sie eine gültige Telefonnummer ein (Muster 06421 123456 oder 06421 123456-789)",
+    })
+    .min(1, { error: "Die Telefonnummer ist ein Pflichtfeld." })
+    .max(50, { error: "Die Telefonnummer darf maximal 50 Zeichen lang sein." }),
 });
 
 export type TEmployeePersonalFormSchema = z.infer<
   typeof employeePersonalFormSchema
+>;
+
+export const updateEmploymentFormSchema = z.object({
+  position: z
+    .string()
+    .min(1, { error: "Die Position ist ein Pflichtfeld." })
+    .max(100, { error: "Die Position darf maximal 100 Zeichen lang sein." }),
+  department: z
+    .string()
+    .min(1, { error: "Bitte wählen Sie eine Abteilung." })
+    .nullable(),
+  employer: z
+    .string()
+    .min(1, { error: "Bitte wählen Sie einen Arbeitgeber." })
+    .nullable(),
+  contractStart: z.date({ error: "Der Vertragsbeginn ist ein Pflichtfeld." }),
+  contractEnd: z.date().nullable(),
+  paygrade: z.string().min(1, { error: "Bitte wählen Sie eine Tarifgruppe." }),
+  educationStage: z
+    .string()
+    .min(1, { error: "Bitte wählen Sie eine Vorbildungsstufe." }),
+  experienceLevel: z
+    .string()
+    .min(1, { error: "Bitte wählen Sie eine Erfahrungsstufe." }),
+});
+
+export type TUpdateEmploymentFormSchema = z.infer<
+  typeof updateEmploymentFormSchema
 >;

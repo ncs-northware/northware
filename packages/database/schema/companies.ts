@@ -5,7 +5,7 @@ import { employeesWorkerTable } from "./hr-employees";
 
 export const companiesTable = pgTable("companiesTable", {
   companyId: smallint().primaryKey().notNull(),
-  companyName: varchar({ length: 200 }),
+  companyName: varchar({ length: 200 }).notNull(),
   street: varchar({ length: 100 }),
   streetNumber: smallint(),
   zipcode: smallint(),
