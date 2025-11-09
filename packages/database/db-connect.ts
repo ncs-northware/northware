@@ -1,6 +1,6 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import { Pool } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-serverless";
 
 // Connection for Apps
-export const client = neon(`${process.env.DATABASE_URL || ""}?sslmode=require`);
-export const db = drizzle({ client });
+const pool = new Pool({ connectionString: process.env.DATABASE_URL || "" });
+export const db = drizzle({ client: pool });
