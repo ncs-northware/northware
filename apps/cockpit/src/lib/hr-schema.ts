@@ -47,14 +47,27 @@ export type TEmployeePersonalFormSchema = z.infer<
 >;
 
 export const updateEmploymentFormSchema = z.object({
-  position: z.string(),
-  department: z.number().nullable(),
-  employer: z.number().nullable(),
-  contractStart: z.date(),
+  position: z
+    .string()
+    .min(1, { error: "Die Position ist ein Pflichtfeld." })
+    .max(100, { error: "Die Position darf maximal 100 Zeichen lang sein." }),
+  department: z
+    .string()
+    .min(1, { error: "Bitte wählen Sie eine Abteilung." })
+    .nullable(),
+  employer: z
+    .string()
+    .min(1, { error: "Bitte wählen Sie einen Arbeitgeber." })
+    .nullable(),
+  contractStart: z.date({ error: "Der Vertragsbeginn ist ein Pflichtfeld." }),
   contractEnd: z.date().nullable(),
-  paygrade: z.string(),
-  educationStage: z.number(),
-  experienceLevel: z.string(),
+  paygrade: z.string().min(1, { error: "Bitte wählen Sie eine Tarifgruppe." }),
+  educationStage: z
+    .string()
+    .min(1, { error: "Bitte wählen Sie eine Vorbildungsstufe." }),
+  experienceLevel: z
+    .string()
+    .min(1, { error: "Bitte wählen Sie eine Erfahrungsstufe." }),
 });
 
 export type TUpdateEmploymentFormSchema = z.infer<

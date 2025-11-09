@@ -109,6 +109,8 @@ export default async function Page({
         companies={contextData.companies}
         data={employmentData.employment}
         departments={contextData.departments}
+        employeeId={employeeId}
+        recordId={recordId}
       />
     </EmployeeSidebar>
   );

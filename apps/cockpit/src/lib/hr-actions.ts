@@ -10,7 +10,10 @@ import {
 } from "@northware/database/schema/hr-employees";
 import { and, desc, eq, gte, isNull, lte, or } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import type { TEmployeePersonalFormSchema } from "@/lib/hr-schema";
+import type {
+  TEmployeePersonalFormSchema,
+  TUpdateEmploymentFormSchema,
+} from "@/lib/hr-schema";
 
 /**** Liste persönlicher Mitarbeiterdaten *****************************************/
 
@@ -352,5 +355,31 @@ export async function getEmploymentContext(): Promise<
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
     };
+  }
+}
+
+export async function updateEmployment(
+  formData: TUpdateEmploymentFormSchema,
+  employee: number,
+  recordId: number
+) {
+  try {
+    await db
+      .update(employeesWorkerTable)
+      .set({
+        employeeId: employee,
+        position: formData.position,
+        department: Number(formData.department),
+        employer: Number(formData.employer),
+        contractStart: formData.contractStart,
+        contractEnd: formData.contractEnd,
+        paygrade: formData.paygrade,
+        educationStage: Number(formData.educationStage),
+        experienceLevel: formData.experienceLevel,
+      })
+      .where(eq(employeesWorkerTable.recordId, recordId));
+    revalidatePath("hr/management");
+  } catch (error) {
+    handleNeonError(error);
   }
 }

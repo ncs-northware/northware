@@ -28,6 +28,7 @@ import {
   type EmployeePersonal,
   type EmploymentItem,
   updateEmployeePersonal,
+  updateEmployment,
 } from "@/lib/hr-actions";
 import {
   employeePersonalFormSchema,
@@ -393,31 +394,40 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
 }
 
 export function UpdateEmploymentForm({
+  companies,
   data,
   departments,
-  companies,
+  employeeId,
+  recordId,
 }: {
+  companies: BasicCompany[];
   data: EmploymentItem;
   departments: BasicDepartment[];
-  companies: BasicCompany[];
+  employeeId: number;
+  recordId: number;
 }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TUpdateEmploymentFormSchema>({
     resolver: zodResolver(updateEmploymentFormSchema),
     defaultValues: {
       position: data.position,
-      department: data.departmentId,
-      employer: data.employerId,
+      department: data.departmentId?.toString(),
+      employer: data.employerId?.toString(),
       contractStart: data.contractStart,
       contractEnd: data.contractEnd,
       paygrade: data.paygrade,
-      educationStage: data.educationStage,
+      educationStage: data.educationStage.toString(),
       experienceLevel: data.experienceLevel,
     },
   });
 
-  function onSubmit(formData: TUpdateEmploymentFormSchema) {
-    console.log(formData);
+  async function onSubmit(formData: TUpdateEmploymentFormSchema) {
+    try {
+      await updateEmployment(formData, employeeId, recordId);
+      toast.success("Die Daten zu dem Arbeitsverhältnis wurden gespeichert.");
+    } catch (err) {
+      setErrors(parseErrorMessages(err));
+    }
   }
 
   return (
@@ -506,7 +516,30 @@ export function UpdateEmploymentForm({
           )}
         />
       </div>
-      {/* TODO: Date Fields für contractStart und contractEnd */}
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
+        <Controller
+          control={form.control}
+          name="contractStart"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="contractStart">Vertragsbeginn</FieldLabel>
+              <DateInput field={field} fieldState={fieldState} />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="contractEnd"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="contractEnd">Vertragsende</FieldLabel>
+              <DateInput field={field} fieldState={fieldState} />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
       <Headline level="h3">Lohn und Gehalt</Headline>
       <div className="flex flex-col gap-6 lg:flex-row lg:gap-3">
         <Controller
