@@ -13,19 +13,19 @@
   },
   "dependencies": {
     "@northware/ui": "workspace:",
-    "fumadocs-core": "16.0.8",
-    "fumadocs-mdx": "13.0.5",
-    "fumadocs-ui": "16.0.8",
-    "next": "16.0.1",
+    "fumadocs-core": "16.0.12",
+    "fumadocs-mdx": "13.0.8",
+    "fumadocs-ui": "16.0.12",
+    "next": "16.0.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
     "@types/mdx": "^2.0.13",
-    "@types/node": "24.10.0",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@types/node": "24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
     "typescript": "^5.9.3"
   }
 }
