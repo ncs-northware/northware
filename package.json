@@ -16,7 +16,7 @@
   },
   "license": "MIT",
   "name": "northware",
-  "packageManager": "pnpm@10.18.1",
+  "packageManager": "pnpm@10.23.0",
   "private": true,
   "scripts": {
     "build": "turbo build",
