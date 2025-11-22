@@ -3,7 +3,7 @@ import { Brand } from "@northware/ui/components/brand";
 import { fonts } from "@northware/ui/lib/fonts";
 import { DocsLayout } from "fumadocs-ui/layouts/notebook";
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { RootProvider } from "fumadocs-ui/provider";
+import { RootProvider } from "fumadocs-ui/provider/next";
 import type { ReactNode } from "react";
 import { source } from "@/lib/source";
 
