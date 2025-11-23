@@ -2,7 +2,8 @@ import { Card, Cards } from "fumadocs-ui/components/card";
 import { source } from "@/lib/source";
 
 export function ChildDocs({ folder }: { folder: string }) {
-  const docs = source.pageTree.children.find((doc) => doc.$id === folder);
+  const folderId = `root:${folder}`;
+  const docs = source.pageTree.children.find((doc) => doc.$id === folderId);
 
   if (docs?.type !== "folder") {
     return;
@@ -10,7 +11,7 @@ export function ChildDocs({ folder }: { folder: string }) {
 
   const pages = docs.children
     .filter((doc) => doc.type === "page")
-    .filter((page) => page.$id !== `${folder}/index.mdx`);
+    .filter((page) => page.$id !== `${folderId}/index.mdx`);
 
   const folders = docs.children
     .filter((doc) => doc.type === "folder")
