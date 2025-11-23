@@ -36,8 +36,8 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       ultracite:
-        specifier: 6.3.5
-        version: 6.3.5(typescript@5.9.3)
+        specifier: 6.3.6
+        version: 6.3.6(typescript@5.9.3)
 
   apps/cockpit:
     dependencies:
@@ -294,8 +294,8 @@ importers:
         specifier: latest
         version: 1.4.3(@types/react-dom@19.2.3(@types/react@19.2.6))(@types/react@19.2.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-day-picker:
-        specifier: ^9.11.1
-        version: 9.11.1(react@19.2.0)
+        specifier: ^9.11.2
+        version: 9.11.2(react@19.2.0)
       react-hook-form:
         specifier: ^7.66.1
         version: 7.66.1(react@19.2.0)
@@ -5838,8 +5838,8 @@ packages:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
 
-  react-day-picker@9.11.1:
-    resolution: {integrity: sha512-l3ub6o8NlchqIjPKrRFUCkTUEq6KwemQlfv3XZzzwpUeGwmDJ+0u0Upmt38hJyd7D/vn2dQoOoLV/qAp0o3uUw==}
+  react-day-picker@9.11.2:
+    resolution: {integrity: sha512-TD/xMUGg2oiKX8jUR21MST5pj+7Y36097YtnDHQFlIcZOu3mbLLw2B2JqEByEGrR3HHveWYnKlyls6WqJgohAg==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=16.8.0'
@@ -6580,8 +6580,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ultracite@6.3.5:
-    resolution: {integrity: sha512-LCMs7FDnm6za2xTwAWykJL3vJcpCkZTmZDhQToPcuiQstCGSulHXHWB3kdJfumP/0uzJTZKHjSLNTwhydmmNfA==}
+  ultracite@6.3.6:
+    resolution: {integrity: sha512-GTDos8mpW3Z/4yMGjZj3ux8HZxznYkV+1WGtDCHE8cuLqgICjJMhbdjTN/foL3Za9Hhr2ZloKMIrj3hiwPrN8A==}
     hasBin: true
 
   undici-types@6.21.0:
@@ -12898,7 +12898,7 @@ snapshots:
 
   range-parser@1.2.1: {}
 
-  react-day-picker@9.11.1(react@19.2.0):
+  react-day-picker@9.11.2(react@19.2.0):
     dependencies:
       '@date-fns/tz': 1.4.1
       date-fns: 4.1.0
@@ -13734,7 +13734,7 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  ultracite@6.3.5(typescript@5.9.3):
+  ultracite@6.3.6(typescript@5.9.3):
     dependencies:
       '@clack/prompts': 0.11.0
       '@trpc/server': 11.7.1(typescript@5.9.3)
