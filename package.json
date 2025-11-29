@@ -20,7 +20,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite -c packages/ui",
+    "bump-ui": "cd ./packages/ui && pnpm bump-ui",
     "commit": "commit",
     "dev": "turbo dev",
     "drizzle-generate": "cd ./packages/database && pnpm drizzle-kit generate",
