@@ -46,4 +46,4 @@ jobs:
         run: pnpm turbo run build --affected
 
       - name: Lint on Root with Biome and Ultracite
-        run: pnpm turbo run ceck:root
+        run: pnpm turbo run check:root
