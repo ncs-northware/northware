@@ -6,7 +6,8 @@
     "tsc-check": "tsc --noEmit",
     "format": "ultracite fix",
     "lint": "ultracite check",
-    "generate-icons": "svgr --config-file svgr.config.js --ignore-existing -- ./icons/assets"
+    "generate-icons": "svgr --config-file svgr.config.js --ignore-existing -- ./icons/assets",
+    "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite && pnpm dlx shadcn@latest migrate radix -y"
   },
   "exports": {
     "./css": "./globals.css",
@@ -33,10 +34,10 @@
     "lucide-react": "^0.554.0",
     "next-themes": "^0.4.6",
     "radix-ui": "latest",
-    "react-day-picker": "^9.11.2",
+    "react-day-picker": "^9.12.0",
     "react-hook-form": "^7.66.1",
     "react-resizable-panels": "^3.0.6",
-    "recharts": "<=2.15.4",
+    "recharts": "2.15.4",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "vaul": "^1.1.2",
