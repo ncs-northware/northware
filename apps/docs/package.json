@@ -5,8 +5,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbo --port 40180",
-    "format": "ultracite fix",
-    "lint": "ultracite check",
+    "fix": "ultracite fix",
+    "check": "ultracite check",
     "postinstall": "fumadocs-mdx",
     "start": "next start",
     "tsc-check": "tsc --noEmit"

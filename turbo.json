@@ -19,17 +19,16 @@
       "cache": false,
       "persistent": true
     },
-    "lint": {
-      "dependsOn": ["^lint"],
+    "check": {
+      "dependsOn": ["^check"],
       "cache": false
     },
-    "//#lint:root": {},
-    "//#lint:ci": {},
-    "format": {
-      "dependsOn": ["^format"],
+    "//#check:root": {},
+    "fix": {
+      "dependsOn": ["^fix"],
       "cache": false
     },
-    "//#format:root": {},
+    "//#fix:root": {},
     "tsc-check": {
       "dependsOn": ["^tsc-check"]
     }
