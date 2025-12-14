@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "tsc-check": "tsc --noEmit",
-    "format": "ultracite fix",
-    "lint": "ultracite check",
+    "fix": "ultracite fix",
+    "check": "ultracite check",
     "generate-icons": "svgr --config-file svgr.config.js --ignore-existing -- ./icons/assets",
     "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite && pnpm dlx shadcn@latest migrate radix -y"
   },

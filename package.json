@@ -25,13 +25,12 @@
     "dev": "turbo dev",
     "drizzle-generate": "cd ./packages/database && pnpm drizzle-kit generate",
     "drizzle-migrate": "cd ./packages/database && pnpm drizzle-kit migrate",
-    "format": "turbo format",
-    "format:root": "ultracite fix",
+    "fix": "turbo fix",
+    "fix:root": "ultracite fix",
     "generate-icons": "cd packages/ui && pnpm generate-icons",
-    "lint": "turbo lint",
-    "lint:ci": "biome ci ./",
-    "lint:root": "ultracite check",
-    "localci": "turbo build lint:ci --affected",
+    "check": "turbo fix",
+    "check:root": "ultracite check",
+    "localci": "turbo build lint --affected",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"
   }
