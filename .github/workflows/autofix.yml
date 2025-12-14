@@ -32,8 +32,8 @@ jobs:
       - name: Download deps
         run: pnpm install
 
-      - name: Code formatting with Biome and Ultracite
-        run: pnpm turbo run format:root
+      - name: Code fixing with Biome and Ultracite
+        run: pnpm turbo run fix:root
 
       - name: Apply fixes
         uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27
