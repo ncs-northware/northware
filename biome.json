@@ -14,6 +14,7 @@
   },
   "linter": {
     "rules": {
+      "nursery": { "noLeakedRender": "info" },
       "performance": { "noBarrelFile": "warn" },
       "style": {
         "noMagicNumbers": "info",
