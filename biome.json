@@ -27,7 +27,6 @@
   },
   "files": {
     "includes": [
-      "**",
       "!**/node_modules",
       "!**/.turbo",
       "!**/.next",

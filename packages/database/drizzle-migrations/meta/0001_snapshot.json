@@ -1,11 +1,11 @@
 {
-  "id": "81336ba7-fa68-487d-9710-ffe34c6f0d41",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "8d1455f5-e2ee-4ebb-8e8b-4595f7420ad6",
+  "prevId": "8a8dea42-e712-430d-a7f4-900ea6ae1a95",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.companiesTable": {
-      "name": "companiesTable",
+    "public.companies": {
+      "name": "companies",
       "schema": "",
       "columns": {
         "companyId": {
@@ -18,7 +18,7 @@
           "name": "companyName",
           "type": "varchar(200)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "street": {
           "name": "street",
@@ -101,8 +101,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.departmentsTable": {
-      "name": "departmentsTable",
+    "public.departments": {
+      "name": "departments",
       "schema": "",
       "columns": {
         "recordId": {
@@ -138,10 +138,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "departmentsTable_companyId_companiesTable_companyId_fk": {
-          "name": "departmentsTable_companyId_companiesTable_companyId_fk",
-          "tableFrom": "departmentsTable",
-          "tableTo": "companiesTable",
+        "departments_companyId_companies_companyId_fk": {
+          "name": "departments_companyId_companies_companyId_fk",
+          "tableFrom": "departments",
+          "tableTo": "companies",
           "columnsFrom": [
             "companyId"
           ],
@@ -158,8 +158,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.employeesPersonalTable": {
-      "name": "employeesPersonalTable",
+    "public.employees": {
+      "name": "employees",
       "schema": "",
       "columns": {
         "employeeId": {
@@ -200,7 +200,7 @@
         },
         "zipcode": {
           "name": "zipcode",
-          "type": "smallint",
+          "type": "varchar(10)",
           "primaryKey": false,
           "notNull": false
         },
@@ -209,6 +209,18 @@
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false
+        },
+        "phoneWork": {
+          "name": "phoneWork",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mailWork": {
+          "name": "mailWork",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
         },
         "meritalStatus": {
           "name": "meritalStatus",
@@ -224,15 +236,15 @@
         },
         "taxClass": {
           "name": "taxClass",
-          "type": "smallint",
+          "type": "varchar(3)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "taxKids": {
           "name": "taxKids",
           "type": "smallint",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
@@ -243,8 +255,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.employeesWorkerTable": {
-      "name": "employeesWorkerTable",
+    "public.employments": {
+      "name": "employments",
       "schema": "",
       "columns": {
         "recordId": {
@@ -265,18 +277,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "phoneWork": {
-          "name": "phoneWork",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "mailWork": {
-          "name": "mailWork",
-          "type": "varchar(200)",
-          "primaryKey": false,
-          "notNull": true
-        },
         "department": {
           "name": "department",
           "type": "smallint",
@@ -289,11 +289,17 @@
           "primaryKey": false,
           "notNull": false
         },
-        "contractSince": {
-          "name": "contractSince",
+        "contractStart": {
+          "name": "contractStart",
           "type": "date",
           "primaryKey": false,
           "notNull": true
+        },
+        "contractEnd": {
+          "name": "contractEnd",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
         },
         "paygrade": {
           "name": "paygrade",
@@ -316,10 +322,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "employeesWorkerTable_employeeId_employeesPersonalTable_employeeId_fk": {
-          "name": "employeesWorkerTable_employeeId_employeesPersonalTable_employeeId_fk",
-          "tableFrom": "employeesWorkerTable",
-          "tableTo": "employeesPersonalTable",
+        "employments_employeeId_employees_employeeId_fk": {
+          "name": "employments_employeeId_employees_employeeId_fk",
+          "tableFrom": "employments",
+          "tableTo": "employees",
           "columnsFrom": [
             "employeeId"
           ],
@@ -329,10 +335,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "employeesWorkerTable_department_departmentsTable_recordId_fk": {
-          "name": "employeesWorkerTable_department_departmentsTable_recordId_fk",
-          "tableFrom": "employeesWorkerTable",
-          "tableTo": "departmentsTable",
+        "employments_department_departments_recordId_fk": {
+          "name": "employments_department_departments_recordId_fk",
+          "tableFrom": "employments",
+          "tableTo": "departments",
           "columnsFrom": [
             "department"
           ],
@@ -342,10 +348,10 @@
           "onDelete": "set null",
           "onUpdate": "no action"
         },
-        "employeesWorkerTable_employer_companiesTable_companyId_fk": {
-          "name": "employeesWorkerTable_employer_companiesTable_companyId_fk",
-          "tableFrom": "employeesWorkerTable",
-          "tableTo": "companiesTable",
+        "employments_employer_companies_companyId_fk": {
+          "name": "employments_employer_companies_companyId_fk",
+          "tableFrom": "employments",
+          "tableTo": "companies",
           "columnsFrom": [
             "employer"
           ],
@@ -362,18 +368,18 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.mainNavTable": {
-      "name": "mainNavTable",
+    "public.main_nav": {
+      "name": "main_nav",
       "schema": "",
       "columns": {
-        "recordId": {
-          "name": "recordId",
+        "record_id": {
+          "name": "record_id",
           "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "itemId": {
-          "name": "itemId",
+        "item_id": {
+          "name": "item_id",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
@@ -402,14 +408,14 @@
           "primaryKey": false,
           "notNull": false
         },
-        "childOf": {
-          "name": "childOf",
+        "child_of": {
+          "name": "child_of",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
-        "permissionKey": {
-          "name": "permissionKey",
+        "permission_key": {
+          "name": "permission_key",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
@@ -417,28 +423,28 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "mainNavTable_childOf_mainNavTable_itemId_fk": {
-          "name": "mainNavTable_childOf_mainNavTable_itemId_fk",
-          "tableFrom": "mainNavTable",
-          "tableTo": "mainNavTable",
+        "main_nav_child_of_main_nav_item_id_fk": {
+          "name": "main_nav_child_of_main_nav_item_id_fk",
+          "tableFrom": "main_nav",
+          "tableTo": "main_nav",
           "columnsFrom": [
-            "childOf"
+            "child_of"
           ],
           "columnsTo": [
-            "itemId"
+            "item_id"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "mainNavTable_permissionKey_permissionsTable_permissionKey_fk": {
-          "name": "mainNavTable_permissionKey_permissionsTable_permissionKey_fk",
-          "tableFrom": "mainNavTable",
-          "tableTo": "permissionsTable",
+        "main_nav_permission_key_permissions_permission_key_fk": {
+          "name": "main_nav_permission_key_permissions_permission_key_fk",
+          "tableFrom": "main_nav",
+          "tableTo": "permissions",
           "columnsFrom": [
-            "permissionKey"
+            "permission_key"
           ],
           "columnsTo": [
-            "permissionKey"
+            "permission_key"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -446,11 +452,11 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "mainNavTable_itemId_unique": {
-          "name": "mainNavTable_itemId_unique",
+        "main_nav_item_id_unique": {
+          "name": "main_nav_item_id_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "itemId"
+            "item_id"
           ]
         }
       },
@@ -458,24 +464,24 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.permissionsTable": {
-      "name": "permissionsTable",
+    "public.permissions": {
+      "name": "permissions",
       "schema": "",
       "columns": {
-        "recordId": {
-          "name": "recordId",
+        "record_id": {
+          "name": "record_id",
           "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "permissionKey": {
-          "name": "permissionKey",
+        "permission_key": {
+          "name": "permission_key",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
-        "permissionName": {
-          "name": "permissionName",
+        "permission_name": {
+          "name": "permission_name",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
@@ -485,11 +491,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "permissionsTable_permissionKey_unique": {
-          "name": "permissionsTable_permissionKey_unique",
+        "permissions_permission_key_unique": {
+          "name": "permissions_permission_key_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "permissionKey"
+            "permission_key"
           ]
         }
       },
@@ -497,24 +503,24 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.permissionsToAccounts": {
-      "name": "permissionsToAccounts",
+    "public.permissions_to_accounts": {
+      "name": "permissions_to_accounts",
       "schema": "",
       "columns": {
-        "recordId": {
-          "name": "recordId",
+        "record_id": {
+          "name": "record_id",
           "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "permissionKey": {
-          "name": "permissionKey",
+        "permission_key": {
+          "name": "permission_key",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
-        "accountUserId": {
-          "name": "accountUserId",
+        "account_user_id": {
+          "name": "account_user_id",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
@@ -522,15 +528,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "permissionsToAccounts_permissionKey_permissionsTable_permissionKey_fk": {
-          "name": "permissionsToAccounts_permissionKey_permissionsTable_permissionKey_fk",
-          "tableFrom": "permissionsToAccounts",
-          "tableTo": "permissionsTable",
+        "permissions_to_accounts_permission_key_permissions_permission_key_fk": {
+          "name": "permissions_to_accounts_permission_key_permissions_permission_key_fk",
+          "tableFrom": "permissions_to_accounts",
+          "tableTo": "permissions",
           "columnsFrom": [
-            "permissionKey"
+            "permission_key"
           ],
           "columnsTo": [
-            "permissionKey"
+            "permission_key"
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
@@ -542,18 +548,18 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.permissionsToRoles": {
-      "name": "permissionsToRoles",
+    "public.permissions_to_roles": {
+      "name": "permissions_to_roles",
       "schema": "",
       "columns": {
-        "permissionKey": {
-          "name": "permissionKey",
+        "permission_key": {
+          "name": "permission_key",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
-        "roleKey": {
-          "name": "roleKey",
+        "role_key": {
+          "name": "role_key",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
@@ -561,39 +567,39 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "permissionsToRoles_permissionKey_permissionsTable_permissionKey_fk": {
-          "name": "permissionsToRoles_permissionKey_permissionsTable_permissionKey_fk",
-          "tableFrom": "permissionsToRoles",
-          "tableTo": "permissionsTable",
+        "permissions_to_roles_permission_key_permissions_permission_key_fk": {
+          "name": "permissions_to_roles_permission_key_permissions_permission_key_fk",
+          "tableFrom": "permissions_to_roles",
+          "tableTo": "permissions",
           "columnsFrom": [
-            "permissionKey"
+            "permission_key"
           ],
           "columnsTo": [
-            "permissionKey"
+            "permission_key"
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "permissionsToRoles_roleKey_rolesTable_roleKey_fk": {
-          "name": "permissionsToRoles_roleKey_rolesTable_roleKey_fk",
-          "tableFrom": "permissionsToRoles",
-          "tableTo": "rolesTable",
+        "permissions_to_roles_role_key_roles_role_key_fk": {
+          "name": "permissions_to_roles_role_key_roles_role_key_fk",
+          "tableFrom": "permissions_to_roles",
+          "tableTo": "roles",
           "columnsFrom": [
-            "roleKey"
+            "role_key"
           ],
           "columnsTo": [
-            "roleKey"
+            "role_key"
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {
-        "permissionsToRoles_permissionKey_roleKey_pk": {
-          "name": "permissionsToRoles_permissionKey_roleKey_pk",
+        "permissions_to_roles_permission_key_role_key_pk": {
+          "name": "permissions_to_roles_permission_key_role_key_pk",
           "columns": [
-            "permissionKey",
-            "roleKey"
+            "permission_key",
+            "role_key"
           ]
         }
       },
@@ -602,24 +608,24 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.rolesTable": {
-      "name": "rolesTable",
+    "public.roles": {
+      "name": "roles",
       "schema": "",
       "columns": {
-        "recordId": {
-          "name": "recordId",
+        "record_id": {
+          "name": "record_id",
           "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "roleKey": {
-          "name": "roleKey",
+        "role_key": {
+          "name": "role_key",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
-        "roleName": {
-          "name": "roleName",
+        "role_name": {
+          "name": "role_name",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
@@ -629,11 +635,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "rolesTable_roleKey_unique": {
-          "name": "rolesTable_roleKey_unique",
+        "roles_role_key_unique": {
+          "name": "roles_role_key_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "roleKey"
+            "role_key"
           ]
         }
       },
@@ -641,24 +647,24 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.rolesToAccounts": {
-      "name": "rolesToAccounts",
+    "public.roles_to_accounts": {
+      "name": "roles_to_accounts",
       "schema": "",
       "columns": {
-        "recordId": {
-          "name": "recordId",
+        "record_id": {
+          "name": "record_id",
           "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
-        "roleKey": {
-          "name": "roleKey",
+        "role_key": {
+          "name": "role_key",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
-        "accountUserId": {
-          "name": "accountUserId",
+        "account_user_id": {
+          "name": "account_user_id",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
@@ -666,15 +672,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "rolesToAccounts_roleKey_rolesTable_roleKey_fk": {
-          "name": "rolesToAccounts_roleKey_rolesTable_roleKey_fk",
-          "tableFrom": "rolesToAccounts",
-          "tableTo": "rolesTable",
+        "roles_to_accounts_role_key_roles_role_key_fk": {
+          "name": "roles_to_accounts_role_key_roles_role_key_fk",
+          "tableFrom": "roles_to_accounts",
+          "tableTo": "roles",
           "columnsFrom": [
-            "roleKey"
+            "role_key"
           ],
           "columnsTo": [
-            "roleKey"
+            "role_key"
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"

@@ -5,8 +5,8 @@ import { handleNeonError } from "@northware/database/neon-error-handling";
 import { companiesTable } from "@northware/database/schema/companies";
 import { departmentsTable } from "@northware/database/schema/departments";
 import {
-  employeesPersonalTable,
-  employeesWorkerTable,
+  employeesTable,
+  employmentsTable,
 } from "@northware/database/schema/hr-employees";
 import { and, desc, eq, gte, isNull, lte, or } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -32,38 +32,29 @@ export async function getEmployeeList(): Promise<
   try {
     const result = await db
       .select({
-        employeeId: employeesPersonalTable.employeeId,
-        firstName: employeesPersonalTable.firstName,
-        sirName: employeesPersonalTable.sirName,
+        employeeId: employeesTable.employeeId,
+        firstName: employeesTable.firstName,
+        sirName: employeesTable.sirName,
         activeContracts: db.$count(
-          employeesWorkerTable,
+          employmentsTable,
           and(
-            eq(
-              employeesWorkerTable.employeeId,
-              employeesPersonalTable.employeeId
-            ),
+            eq(employmentsTable.employeeId, employeesTable.employeeId),
             or(
-              gte(employeesWorkerTable.contractEnd, new Date()),
-              isNull(employeesWorkerTable.contractEnd)
+              gte(employmentsTable.contractEnd, new Date()),
+              isNull(employmentsTable.contractEnd)
             )
           )
         ),
         terminatedContracts: db.$count(
-          employeesWorkerTable,
+          employmentsTable,
           and(
-            eq(
-              employeesWorkerTable.employeeId,
-              employeesPersonalTable.employeeId
-            ),
-            lte(employeesWorkerTable.contractEnd, new Date())
+            eq(employmentsTable.employeeId, employeesTable.employeeId),
+            lte(employmentsTable.contractEnd, new Date())
           )
         ),
       })
-      .from(employeesPersonalTable)
-      .orderBy(
-        employeesPersonalTable.sirName,
-        employeesPersonalTable.firstName
-      );
+      .from(employeesTable)
+      .orderBy(employeesTable.sirName, employeesTable.firstName);
 
     return {
       success: true,
@@ -100,26 +91,26 @@ export async function getEmploymentsList(
   try {
     const result = await db
       .select({
-        recordId: employeesWorkerTable.recordId,
-        position: employeesWorkerTable.position,
+        recordId: employmentsTable.recordId,
+        position: employmentsTable.position,
         departmentName: departmentsTable.departmentName,
         employer: companiesTable.companyName,
-        contractStart: employeesWorkerTable.contractStart,
-        contractEnd: employeesWorkerTable.contractEnd,
+        contractStart: employmentsTable.contractStart,
+        contractEnd: employmentsTable.contractEnd,
       })
-      .from(employeesWorkerTable)
+      .from(employmentsTable)
       .leftJoin(
         departmentsTable,
-        eq(employeesWorkerTable.department, departmentsTable.recordId)
+        eq(employmentsTable.department, departmentsTable.recordId)
       )
       .leftJoin(
         companiesTable,
-        eq(employeesWorkerTable.employer, companiesTable.companyId)
+        eq(employmentsTable.employer, companiesTable.companyId)
       )
-      .where(eq(employeesWorkerTable.employeeId, id))
+      .where(eq(employmentsTable.employeeId, id))
       .orderBy(
-        employeesWorkerTable.contractStart,
-        desc(employeesWorkerTable.contractEnd)
+        employmentsTable.contractStart,
+        desc(employmentsTable.contractEnd)
       );
 
     return {
@@ -153,12 +144,12 @@ export async function getBasicEmployee(
   try {
     const result = await db
       .select({
-        employeeId: employeesPersonalTable.employeeId,
-        firstName: employeesPersonalTable.firstName,
-        sirName: employeesPersonalTable.sirName,
+        employeeId: employeesTable.employeeId,
+        firstName: employeesTable.firstName,
+        sirName: employeesTable.sirName,
       })
-      .from(employeesPersonalTable)
-      .where(eq(employeesPersonalTable.employeeId, id));
+      .from(employeesTable)
+      .where(eq(employeesTable.employeeId, id));
 
     return {
       success: true,
@@ -201,8 +192,8 @@ export async function getEmployeePersonal(
   try {
     const result = await db
       .select()
-      .from(employeesPersonalTable)
-      .where(eq(employeesPersonalTable.employeeId, id));
+      .from(employeesTable)
+      .where(eq(employeesTable.employeeId, id));
 
     return {
       success: true,
@@ -224,7 +215,7 @@ export async function updateEmployeePersonal(
 ) {
   try {
     await db
-      .update(employeesPersonalTable)
+      .update(employeesTable)
       .set({
         sirName: formData.sirName,
         firstName: formData.firstName,
@@ -240,7 +231,7 @@ export async function updateEmployeePersonal(
         phoneWork: formData.phoneWork,
         mailWork: formData.mailWork,
       })
-      .where(eq(employeesPersonalTable.employeeId, formData.employeeId));
+      .where(eq(employeesTable.employeeId, formData.employeeId));
     revalidatePath("hr/management");
   } catch (error) {
     handleNeonError(error);
@@ -272,28 +263,28 @@ export async function getEmployment(
   try {
     const result = await db
       .select({
-        employeeId: employeesWorkerTable.employeeId,
-        position: employeesWorkerTable.position,
+        employeeId: employmentsTable.employeeId,
+        position: employmentsTable.position,
         departmentId: departmentsTable.recordId,
         department: departmentsTable.departmentName,
         employerId: companiesTable.companyId,
         employer: companiesTable.companyName,
-        contractStart: employeesWorkerTable.contractStart,
-        contractEnd: employeesWorkerTable.contractEnd,
-        paygrade: employeesWorkerTable.paygrade,
-        educationStage: employeesWorkerTable.educationStage,
-        experienceLevel: employeesWorkerTable.experienceLevel,
+        contractStart: employmentsTable.contractStart,
+        contractEnd: employmentsTable.contractEnd,
+        paygrade: employmentsTable.paygrade,
+        educationStage: employmentsTable.educationStage,
+        experienceLevel: employmentsTable.experienceLevel,
       })
-      .from(employeesWorkerTable)
+      .from(employmentsTable)
       .leftJoin(
         departmentsTable,
-        eq(employeesWorkerTable.department, departmentsTable.recordId)
+        eq(employmentsTable.department, departmentsTable.recordId)
       )
       .leftJoin(
         companiesTable,
-        eq(employeesWorkerTable.employer, companiesTable.companyId)
+        eq(employmentsTable.employer, companiesTable.companyId)
       )
-      .where(eq(employeesWorkerTable.recordId, id));
+      .where(eq(employmentsTable.recordId, id));
     return {
       success: true,
       employment: result[0],
@@ -365,7 +356,7 @@ export async function updateEmployment(
 ) {
   try {
     await db
-      .update(employeesWorkerTable)
+      .update(employmentsTable)
       .set({
         employeeId: employee,
         position: formData.position,
@@ -377,7 +368,7 @@ export async function updateEmployment(
         educationStage: Number(formData.educationStage),
         experienceLevel: formData.experienceLevel,
       })
-      .where(eq(employeesWorkerTable.recordId, recordId));
+      .where(eq(employmentsTable.recordId, recordId));
     revalidatePath("hr/management");
   } catch (error) {
     handleNeonError(error);

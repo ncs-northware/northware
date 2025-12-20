@@ -1,22 +1,22 @@
 import { relations } from "drizzle-orm";
 import { pgTable, serial, smallint, varchar } from "drizzle-orm/pg-core";
 import { companiesTable } from "./companies";
-import { employeesWorkerTable } from "./hr-employees";
+import { employmentsTable } from "./hr-employees";
 
-export const departmentsTable = pgTable("departmentsTable", {
-  recordId: serial().primaryKey().notNull(),
-  departmentName: varchar({ length: 50 }).notNull(),
-  companyId: smallint()
+export const departmentsTable = pgTable("departments", {
+  recordId: serial("record_id").primaryKey().notNull(),
+  departmentName: varchar("department_name", { length: 50 }).notNull(),
+  companyId: smallint("company_id")
     .notNull()
     .references(() => companiesTable.companyId, { onDelete: "cascade" }),
-  phone: varchar({ length: 50 }).notNull(),
-  mail: varchar({ length: 100 }).notNull(),
+  phone: varchar("phone", { length: 50 }).notNull(),
+  mail: varchar("mail", { length: 100 }).notNull(),
 });
 
 export const departmentsRelations = relations(
   departmentsTable,
   ({ many, one }) => ({
-    employeesWorkerTable: many(employeesWorkerTable),
+    employeesWorkerTable: many(employmentsTable),
     company: one(companiesTable, {
       fields: [departmentsTable.companyId],
       references: [companiesTable.companyId],
