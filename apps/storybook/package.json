@@ -11,18 +11,18 @@
   },
   "dependencies": {
     "@northware/ui": "workspace:*",
-    "@storybook/addon-docs": "^10.1.8",
+    "@storybook/addon-docs": "^10.1.10",
     "@tanstack/react-table": "^8.21.3",
-    "next": "16.0.10",
+    "next": "16.1.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-hook-form": "^7.68.0",
-    "zod": "^4.1.13"
+    "react-hook-form": "^7.69.0",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@northware/service-config": "workspace:*",
-    "@storybook/addon-themes": "10.1.8",
-    "@storybook/nextjs": "10.1.8",
+    "@storybook/addon-themes": "10.1.10",
+    "@storybook/nextjs": "10.1.10",
     "@types/node": "^24.10.4",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
