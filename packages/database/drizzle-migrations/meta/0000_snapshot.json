@@ -1,11 +1,11 @@
 {
-  "id": "00000000-0000-0000-0000-000000000000",
-  "prevId": "",
+  "id": "8a8dea42-e712-430d-a7f4-900ea6ae1a95",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.companiesTable": {
-      "name": "companiesTable",
+    "public.companies": {
+      "name": "companies",
       "schema": "",
       "columns": {
         "companyId": {
@@ -18,7 +18,7 @@
           "name": "companyName",
           "type": "varchar(200)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "street": {
           "name": "street",
@@ -97,12 +97,279 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {},
       "policies": {},
+      "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.mainNavTable": {
-      "name": "mainNavTable",
+    "public.departments": {
+      "name": "departments",
+      "schema": "",
+      "columns": {
+        "recordId": {
+          "name": "recordId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "departmentName": {
+          "name": "departmentName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "companyId": {
+          "name": "companyId",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mail": {
+          "name": "mail",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "departments_companyId_companies_companyId_fk": {
+          "name": "departments_companyId_companies_companyId_fk",
+          "tableFrom": "departments",
+          "tableTo": "companies",
+          "columnsFrom": [
+            "companyId"
+          ],
+          "columnsTo": [
+            "companyId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.employees": {
+      "name": "employees",
+      "schema": "",
+      "columns": {
+        "employeeId": {
+          "name": "employeeId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "sirName": {
+          "name": "sirName",
+          "type": "varchar(75)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "name": "firstName",
+          "type": "varchar(75)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sex": {
+          "name": "sex",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "birthday": {
+          "name": "birthday",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "street": {
+          "name": "street",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zipcode": {
+          "name": "zipcode",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phoneWork": {
+          "name": "phoneWork",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mailWork": {
+          "name": "mailWork",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "meritalStatus": {
+          "name": "meritalStatus",
+          "type": "varchar(15)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "religion": {
+          "name": "religion",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxClass": {
+          "name": "taxClass",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxKids": {
+          "name": "taxKids",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.employments": {
+      "name": "employments",
+      "schema": "",
+      "columns": {
+        "recordId": {
+          "name": "recordId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "employeeId": {
+          "name": "employeeId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "department": {
+          "name": "department",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "employer": {
+          "name": "employer",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contractStart": {
+          "name": "contractStart",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contractEnd": {
+          "name": "contractEnd",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "paygrade": {
+          "name": "paygrade",
+          "type": "varchar(5)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "educationStage": {
+          "name": "educationStage",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "experienceLevel": {
+          "name": "experienceLevel",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "employments_employeeId_employees_employeeId_fk": {
+          "name": "employments_employeeId_employees_employeeId_fk",
+          "tableFrom": "employments",
+          "tableTo": "employees",
+          "columnsFrom": [
+            "employeeId"
+          ],
+          "columnsTo": [
+            "employeeId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "employments_department_departments_recordId_fk": {
+          "name": "employments_department_departments_recordId_fk",
+          "tableFrom": "employments",
+          "tableTo": "departments",
+          "columnsFrom": [
+            "department"
+          ],
+          "columnsTo": [
+            "recordId"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "employments_employer_companies_companyId_fk": {
+          "name": "employments_employer_companies_companyId_fk",
+          "tableFrom": "employments",
+          "tableTo": "companies",
+          "columnsFrom": [
+            "employer"
+          ],
+          "columnsTo": [
+            "companyId"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.main_nav": {
+      "name": "main_nav",
       "schema": "",
       "columns": {
         "recordId": {
@@ -156,25 +423,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "mainNavTable_permissionKey_permissionsTable_permissionKey_fk": {
-          "name": "mainNavTable_permissionKey_permissionsTable_permissionKey_fk",
-          "tableFrom": "mainNavTable",
-          "tableTo": "permissionsTable",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "permissionKey"
-          ],
-          "columnsTo": [
-            "permissionKey"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "mainNavTable_childOf_mainNavTable_itemId_fk": {
-          "name": "mainNavTable_childOf_mainNavTable_itemId_fk",
-          "tableFrom": "mainNavTable",
-          "tableTo": "mainNavTable",
-          "schemaTo": "public",
+        "main_nav_childOf_main_nav_itemId_fk": {
+          "name": "main_nav_childOf_main_nav_itemId_fk",
+          "tableFrom": "main_nav",
+          "tableTo": "main_nav",
           "columnsFrom": [
             "childOf"
           ],
@@ -183,289 +435,37 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
+        },
+        "main_nav_permissionKey_permissions_permissionKey_fk": {
+          "name": "main_nav_permissionKey_permissions_permissionKey_fk",
+          "tableFrom": "main_nav",
+          "tableTo": "permissions",
+          "columnsFrom": [
+            "permissionKey"
+          ],
+          "columnsTo": [
+            "permissionKey"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "mainNavTable_itemId_unique": {
+        "main_nav_itemId_unique": {
+          "name": "main_nav_itemId_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "itemId"
-          ],
-          "nullsNotDistinct": false,
-          "name": "mainNavTable_itemId_unique"
+          ]
         }
       },
-      "checkConstraints": {},
       "policies": {},
+      "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.departmentsTable": {
-      "name": "departmentsTable",
-      "schema": "",
-      "columns": {
-        "recordId": {
-          "name": "recordId",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "departmentName": {
-          "name": "departmentName",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "companyId": {
-          "name": "companyId",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "phone": {
-          "name": "phone",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "mail": {
-          "name": "mail",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "departmentsTable_companyId_companiesTable_companyId_fk": {
-          "name": "departmentsTable_companyId_companiesTable_companyId_fk",
-          "tableFrom": "departmentsTable",
-          "tableTo": "companiesTable",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "companyId"
-          ],
-          "columnsTo": [
-            "companyId"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.employeesPersonalTable": {
-      "name": "employeesPersonalTable",
-      "schema": "",
-      "columns": {
-        "employeeId": {
-          "name": "employeeId",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "sirName": {
-          "name": "sirName",
-          "type": "varchar(75)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "firstName": {
-          "name": "firstName",
-          "type": "varchar(75)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "sex": {
-          "name": "sex",
-          "type": "varchar(10)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "birthday": {
-          "name": "birthday",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "street": {
-          "name": "street",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "zipcode": {
-          "name": "zipcode",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "city": {
-          "name": "city",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "meritalStatus": {
-          "name": "meritalStatus",
-          "type": "varchar(15)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "religion": {
-          "name": "religion",
-          "type": "varchar(10)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "taxClass": {
-          "name": "taxClass",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "taxKids": {
-          "name": "taxKids",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.employeesWorkerTable": {
-      "name": "employeesWorkerTable",
-      "schema": "",
-      "columns": {
-        "recordId": {
-          "name": "recordId",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "employeeId": {
-          "name": "employeeId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "position": {
-          "name": "position",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "phoneWork": {
-          "name": "phoneWork",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "mailWork": {
-          "name": "mailWork",
-          "type": "varchar(200)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "department": {
-          "name": "department",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "employer": {
-          "name": "employer",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "contractSince": {
-          "name": "contractSince",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "paygrade": {
-          "name": "paygrade",
-          "type": "varchar(5)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "educationStage": {
-          "name": "educationStage",
-          "type": "smallint",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "experienceLevel": {
-          "name": "experienceLevel",
-          "type": "varchar(3)",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "employeesWorkerTable_employeeId_employeesPersonalTable_employee": {
-          "name": "employeesWorkerTable_employeeId_employeesPersonalTable_employee",
-          "tableFrom": "employeesWorkerTable",
-          "tableTo": "employeesPersonalTable",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "employeeId"
-          ],
-          "columnsTo": [
-            "employeeId"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "employeesWorkerTable_department_departmentsTable_recordId_fk": {
-          "name": "employeesWorkerTable_department_departmentsTable_recordId_fk",
-          "tableFrom": "employeesWorkerTable",
-          "tableTo": "departmentsTable",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "department"
-          ],
-          "columnsTo": [
-            "recordId"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "employeesWorkerTable_employer_companiesTable_companyId_fk": {
-          "name": "employeesWorkerTable_employer_companiesTable_companyId_fk",
-          "tableFrom": "employeesWorkerTable",
-          "tableTo": "companiesTable",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "employer"
-          ],
-          "columnsTo": [
-            "companyId"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {},
-      "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.permissionsTable": {
-      "name": "permissionsTable",
+    "public.permissions": {
+      "name": "permissions",
       "schema": "",
       "columns": {
         "recordId": {
@@ -491,22 +491,28 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "permissionsTable_permissionKey_unique": {
+        "permissions_permissionKey_unique": {
+          "name": "permissions_permissionKey_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "permissionKey"
-          ],
-          "nullsNotDistinct": false,
-          "name": "permissionsTable_permissionKey_unique"
+          ]
         }
       },
-      "checkConstraints": {},
       "policies": {},
+      "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.permissionsToAccounts": {
-      "name": "permissionsToAccounts",
+    "public.permissions_to_accounts": {
+      "name": "permissions_to_accounts",
       "schema": "",
       "columns": {
+        "recordId": {
+          "name": "recordId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "permissionKey": {
           "name": "permissionKey",
           "type": "varchar",
@@ -518,21 +524,14 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
-        },
-        "recordId": {
-          "name": "recordId",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "permissionsToAccounts_permissionKey_permissionsTable_permission": {
-          "name": "permissionsToAccounts_permissionKey_permissionsTable_permission",
-          "tableFrom": "permissionsToAccounts",
-          "tableTo": "permissionsTable",
-          "schemaTo": "public",
+        "permissions_to_accounts_permissionKey_permissions_permissionKey_fk": {
+          "name": "permissions_to_accounts_permissionKey_permissions_permissionKey_fk",
+          "tableFrom": "permissions_to_accounts",
+          "tableTo": "permissions",
           "columnsFrom": [
             "permissionKey"
           ],
@@ -545,12 +544,72 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {},
       "policies": {},
+      "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.rolesTable": {
-      "name": "rolesTable",
+    "public.permissions_to_roles": {
+      "name": "permissions_to_roles",
+      "schema": "",
+      "columns": {
+        "permissionKey": {
+          "name": "permissionKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "roleKey": {
+          "name": "roleKey",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "permissions_to_roles_permissionKey_permissions_permissionKey_fk": {
+          "name": "permissions_to_roles_permissionKey_permissions_permissionKey_fk",
+          "tableFrom": "permissions_to_roles",
+          "tableTo": "permissions",
+          "columnsFrom": [
+            "permissionKey"
+          ],
+          "columnsTo": [
+            "permissionKey"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "permissions_to_roles_roleKey_roles_roleKey_fk": {
+          "name": "permissions_to_roles_roleKey_roles_roleKey_fk",
+          "tableFrom": "permissions_to_roles",
+          "tableTo": "roles",
+          "columnsFrom": [
+            "roleKey"
+          ],
+          "columnsTo": [
+            "roleKey"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "permissions_to_roles_permissionKey_roleKey_pk": {
+          "name": "permissions_to_roles_permissionKey_roleKey_pk",
+          "columns": [
+            "permissionKey",
+            "roleKey"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.roles": {
+      "name": "roles",
       "schema": "",
       "columns": {
         "recordId": {
@@ -576,22 +635,28 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "rolesTable_roleKey_unique": {
+        "roles_roleKey_unique": {
+          "name": "roles_roleKey_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "roleKey"
-          ],
-          "nullsNotDistinct": false,
-          "name": "rolesTable_roleKey_unique"
+          ]
         }
       },
-      "checkConstraints": {},
       "policies": {},
+      "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.rolesToAccounts": {
-      "name": "rolesToAccounts",
+    "public.roles_to_accounts": {
+      "name": "roles_to_accounts",
       "schema": "",
       "columns": {
+        "recordId": {
+          "name": "recordId",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "roleKey": {
           "name": "roleKey",
           "type": "varchar",
@@ -603,21 +668,14 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
-        },
-        "recordId": {
-          "name": "recordId",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "rolesToAccounts_roleKey_rolesTable_roleKey_fk": {
-          "name": "rolesToAccounts_roleKey_rolesTable_roleKey_fk",
-          "tableFrom": "rolesToAccounts",
-          "tableTo": "rolesTable",
-          "schemaTo": "public",
+        "roles_to_accounts_roleKey_roles_roleKey_fk": {
+          "name": "roles_to_accounts_roleKey_roles_roleKey_fk",
+          "tableFrom": "roles_to_accounts",
+          "tableTo": "roles",
           "columnsFrom": [
             "roleKey"
           ],
@@ -630,70 +688,8 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {},
       "policies": {},
-      "isRLSEnabled": false
-    },
-    "public.permissionsToRoles": {
-      "name": "permissionsToRoles",
-      "schema": "",
-      "columns": {
-        "permissionKey": {
-          "name": "permissionKey",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "roleKey": {
-          "name": "roleKey",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "permissionsToRoles_permissionKey_permissionsTable_permissionKey": {
-          "name": "permissionsToRoles_permissionKey_permissionsTable_permissionKey",
-          "tableFrom": "permissionsToRoles",
-          "tableTo": "permissionsTable",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "permissionKey"
-          ],
-          "columnsTo": [
-            "permissionKey"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "permissionsToRoles_roleKey_rolesTable_roleKey_fk": {
-          "name": "permissionsToRoles_roleKey_rolesTable_roleKey_fk",
-          "tableFrom": "permissionsToRoles",
-          "tableTo": "rolesTable",
-          "schemaTo": "public",
-          "columnsFrom": [
-            "roleKey"
-          ],
-          "columnsTo": [
-            "roleKey"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
-      "compositePrimaryKeys": {
-        "permissionsToRoles_permissionKey_roleKey_pk": {
-          "name": "permissionsToRoles_permissionKey_roleKey_pk",
-          "columns": [
-            "permissionKey",
-            "roleKey"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
       "checkConstraints": {},
-      "policies": {},
       "isRLSEnabled": false
     }
   },
@@ -704,11 +700,8 @@
   "policies": {},
   "views": {},
   "_meta": {
+    "columns": {},
     "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "internal": {
     "tables": {}
   }
 }
