@@ -2,8 +2,8 @@ import { db } from "@northware/database/connection";
 import { companiesTable } from "@northware/database/schema/companies";
 import { departmentsTable } from "@northware/database/schema/departments";
 import {
-  employeesPersonalTable,
-  employeesWorkerTable,
+  employeesTable,
+  employmentsTable,
 } from "@northware/database/schema/hr-employees";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
@@ -26,31 +26,31 @@ async function getAddresses() {
   try {
     const employeeResult = await db
       .select({
-        sirName: employeesPersonalTable.sirName,
-        firstName: employeesPersonalTable.firstName,
-        phoneWork: employeesPersonalTable.phoneWork,
-        mailWork: employeesPersonalTable.mailWork,
+        sirName: employeesTable.sirName,
+        firstName: employeesTable.firstName,
+        phoneWork: employeesTable.phoneWork,
+        mailWork: employeesTable.mailWork,
         department: departmentsTable.departmentName,
-        position: employeesWorkerTable.position,
+        position: employmentsTable.position,
       })
-      .from(employeesPersonalTable)
+      .from(employeesTable)
       .leftJoin(
-        employeesWorkerTable,
-        eq(employeesPersonalTable.employeeId, employeesWorkerTable.employeeId)
+        employmentsTable,
+        eq(employeesTable.employeeId, employmentsTable.employeeId)
       )
       .leftJoin(
         departmentsTable,
-        eq(employeesWorkerTable.department, departmentsTable.recordId)
+        eq(employmentsTable.department, departmentsTable.recordId)
       )
       .where(
         and(
           or(
-            gte(employeesWorkerTable.contractEnd, new Date()),
-            isNull(employeesWorkerTable.contractEnd)
+            gte(employmentsTable.contractEnd, new Date()),
+            isNull(employmentsTable.contractEnd)
           )
         )
       )
-      .orderBy(employeesPersonalTable.sirName);
+      .orderBy(employeesTable.sirName);
 
     const departmentResult = await db
       .select({
