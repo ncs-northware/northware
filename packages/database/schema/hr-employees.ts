@@ -39,9 +39,12 @@ export const employmentsTable = pgTable("employments", {
       onDelete: "cascade",
     }),
   position: varchar("position", { length: 100 }).notNull(),
-  department: smallint("department").references(() => departmentsTable.recordId, {
-    onDelete: "set null",
-  }),
+  department: smallint("department").references(
+    () => departmentsTable.recordId,
+    {
+      onDelete: "set null",
+    }
+  ),
   employer: smallint("employer").references(() => companiesTable.companyId, {
     onDelete: "set null",
   }),

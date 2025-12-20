@@ -15,8 +15,12 @@ export const mainNavTable = pgTable("main_nav", {
   href: varchar("href").notNull(),
   app: varchar("app").notNull(),
   order: smallint("order"),
-  childOf: varchar("child_of").references((): AnyPgColumn => mainNavTable.itemId),
-  permissionKey: varchar("permission_key").references(() => permissionsTable.permissionKey),
+  childOf: varchar("child_of").references(
+    (): AnyPgColumn => mainNavTable.itemId
+  ),
+  permissionKey: varchar("permission_key").references(
+    () => permissionsTable.permissionKey
+  ),
 });
 
 export const mainNavRelations = relations(mainNavTable, ({ one }) => ({
