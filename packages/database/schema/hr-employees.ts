@@ -11,20 +11,20 @@ import { companiesTable } from "./companies";
 import { departmentsTable } from "./departments";
 
 export const employeesTable = pgTable("employees", {
-  employeeId: serial().primaryKey().notNull(),
-  sirName: varchar({ length: 75 }).notNull(),
-  firstName: varchar({ length: 75 }).notNull(),
-  sex: varchar({ length: 10 }).notNull(),
-  birthday: date({ mode: "date" }),
-  street: varchar({ length: 100 }),
-  zipcode: varchar({ length: 10 }),
-  city: varchar({ length: 100 }),
-  phoneWork: varchar({ length: 50 }).notNull(),
-  mailWork: varchar({ length: 200 }).notNull(),
-  meritalStatus: varchar({ length: 15 }).notNull(),
-  religion: varchar({ length: 10 }).notNull(),
-  taxClass: varchar({ length: 3 }).notNull(),
-  taxKids: smallint().notNull(),
+  employeeId: serial("employee_id").primaryKey().notNull(),
+  sirName: varchar("sir_name", { length: 75 }).notNull(),
+  firstName: varchar("first_name", { length: 75 }).notNull(),
+  sex: varchar("sex", { length: 10 }).notNull(),
+  birthday: date("birthday", { mode: "date" }),
+  street: varchar("street", { length: 100 }),
+  zipcode: varchar("zip_code", { length: 10 }),
+  city: varchar("city", { length: 100 }),
+  phoneWork: varchar("phone_work", { length: 50 }).notNull(),
+  mailWork: varchar("mail_work", { length: 200 }).notNull(),
+  meritalStatus: varchar("merital_status", { length: 15 }).notNull(),
+  religion: varchar("religion", { length: 10 }).notNull(),
+  taxClass: varchar("tax_class", { length: 3 }).notNull(),
+  taxKids: smallint("tax_kids").notNull(),
 });
 
 export const employeesRelations = relations(employeesTable, ({ many }) => ({
@@ -32,24 +32,24 @@ export const employeesRelations = relations(employeesTable, ({ many }) => ({
 }));
 
 export const employmentsTable = pgTable("employments", {
-  recordId: serial().primaryKey().notNull(),
-  employeeId: integer()
+  recordId: serial("record_id").primaryKey().notNull(),
+  employeeId: integer("employee_id")
     .notNull()
     .references(() => employeesTable.employeeId, {
       onDelete: "cascade",
     }),
-  position: varchar({ length: 100 }).notNull(),
-  department: smallint().references(() => departmentsTable.recordId, {
+  position: varchar("position", { length: 100 }).notNull(),
+  department: smallint("department").references(() => departmentsTable.recordId, {
     onDelete: "set null",
   }),
-  employer: smallint().references(() => companiesTable.companyId, {
+  employer: smallint("employer").references(() => companiesTable.companyId, {
     onDelete: "set null",
   }),
-  contractStart: date({ mode: "date" }).notNull(),
-  contractEnd: date({ mode: "date" }),
-  paygrade: varchar({ length: 5 }).notNull(),
-  educationStage: smallint().notNull(),
-  experienceLevel: varchar({ length: 3 }).notNull(),
+  contractStart: date("contract_start", { mode: "date" }).notNull(),
+  contractEnd: date("contract_end", { mode: "date" }),
+  paygrade: varchar("paygrade", { length: 5 }).notNull(),
+  educationStage: smallint("education_stage").notNull(),
+  experienceLevel: varchar("experience_level", { length: 3 }).notNull(),
 });
 
 export const employmentsRelations = relations(employmentsTable, ({ one }) => ({

@@ -9,14 +9,14 @@ import {
 import { permissionsTable } from "./users";
 
 export const mainNavTable = pgTable("main_nav", {
-  recordId: serial().primaryKey().notNull(),
-  itemId: varchar().unique().notNull(),
-  title: varchar().notNull(),
-  href: varchar().notNull(),
-  app: varchar().notNull(),
-  order: smallint(),
-  childOf: varchar().references((): AnyPgColumn => mainNavTable.itemId),
-  permissionKey: varchar().references(() => permissionsTable.permissionKey),
+  recordId: serial("record_id").primaryKey().notNull(),
+  itemId: varchar("item_id").unique().notNull(),
+  title: varchar("title").notNull(),
+  href: varchar("href").notNull(),
+  app: varchar("app").notNull(),
+  order: smallint("order"),
+  childOf: varchar("child_of").references((): AnyPgColumn => mainNavTable.itemId),
+  permissionKey: varchar("permission_key").references(() => permissionsTable.permissionKey),
 });
 
 export const mainNavRelations = relations(mainNavTable, ({ one }) => ({
