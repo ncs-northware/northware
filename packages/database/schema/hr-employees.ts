@@ -10,7 +10,7 @@ import {
 import { companiesTable } from "./companies";
 import { departmentsTable } from "./departments";
 
-export const employeesPersonalTable = pgTable("employeesPersonalTable", {
+export const employeesTable = pgTable("employees", {
   employeeId: serial().primaryKey().notNull(),
   sirName: varchar({ length: 75 }).notNull(),
   firstName: varchar({ length: 75 }).notNull(),
@@ -27,18 +27,15 @@ export const employeesPersonalTable = pgTable("employeesPersonalTable", {
   taxKids: smallint().notNull(),
 });
 
-export const employeesPersonalRelations = relations(
-  employeesPersonalTable,
-  ({ many }) => ({
-    employeesWorkerTable: many(employeesWorkerTable),
-  })
-);
+export const employeesRelations = relations(employeesTable, ({ many }) => ({
+  employeesWorkerTable: many(employmentsTable),
+}));
 
-export const employeesWorkerTable = pgTable("employeesWorkerTable", {
+export const employmentsTable = pgTable("employments", {
   recordId: serial().primaryKey().notNull(),
   employeeId: integer()
     .notNull()
-    .references(() => employeesPersonalTable.employeeId, {
+    .references(() => employeesTable.employeeId, {
       onDelete: "cascade",
     }),
   position: varchar({ length: 100 }).notNull(),
@@ -55,20 +52,17 @@ export const employeesWorkerTable = pgTable("employeesWorkerTable", {
   experienceLevel: varchar({ length: 3 }).notNull(),
 });
 
-export const employeesWorkerRelations = relations(
-  employeesWorkerTable,
-  ({ one }) => ({
-    employee: one(employeesPersonalTable, {
-      fields: [employeesWorkerTable.employeeId],
-      references: [employeesPersonalTable.employeeId],
-    }),
-    department: one(departmentsTable, {
-      fields: [employeesWorkerTable.department],
-      references: [departmentsTable.recordId],
-    }),
-    company: one(companiesTable, {
-      fields: [employeesWorkerTable.employer],
-      references: [companiesTable.companyId],
-    }),
-  })
-);
+export const employmentsRelations = relations(employmentsTable, ({ one }) => ({
+  employee: one(employeesTable, {
+    fields: [employmentsTable.employeeId],
+    references: [employeesTable.employeeId],
+  }),
+  department: one(departmentsTable, {
+    fields: [employmentsTable.department],
+    references: [departmentsTable.recordId],
+  }),
+  company: one(companiesTable, {
+    fields: [employmentsTable.employer],
+    references: [companiesTable.companyId],
+  }),
+}));

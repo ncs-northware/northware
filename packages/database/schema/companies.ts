@@ -1,9 +1,9 @@
 import { relations } from "drizzle-orm";
 import { pgTable, smallint, varchar } from "drizzle-orm/pg-core";
 import { departmentsTable } from "./departments";
-import { employeesWorkerTable } from "./hr-employees";
+import { employmentsTable } from "./hr-employees";
 
-export const companiesTable = pgTable("companiesTable", {
+export const companiesTable = pgTable("companies", {
   companyId: smallint().primaryKey().notNull(),
   companyName: varchar({ length: 200 }).notNull(),
   street: varchar({ length: 100 }),
@@ -25,5 +25,5 @@ export const companiesTable = pgTable("companiesTable", {
 
 export const companiesRelations = relations(companiesTable, ({ many }) => ({
   departments: many(departmentsTable),
-  employeesWorkerTable: many(employeesWorkerTable),
+  employeesWorkerTable: many(employmentsTable),
 }));

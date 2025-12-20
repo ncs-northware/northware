@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { permissionsTable } from "./users";
 
-export const mainNavTable = pgTable("mainNavTable", {
+export const mainNavTable = pgTable("main_nav", {
   recordId: serial().primaryKey().notNull(),
   itemId: varchar().unique().notNull(),
   title: varchar().notNull(),
