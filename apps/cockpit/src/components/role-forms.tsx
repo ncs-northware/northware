@@ -27,21 +27,18 @@ import {
   DialogTrigger,
 } from "@northware/ui/components/shadcn/dialog";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@northware/ui/components/shadcn/form";
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@northware/ui/components/shadcn/field";
 import { Input } from "@northware/ui/components/shadcn/input";
 import { Switch } from "@northware/ui/components/shadcn/switch";
 import { EditIcon, PlusIcon, TrashIcon } from "@northware/ui/icons/lucide";
 import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 import {
   CreatePermissionDetailFormSchema,
   CreateRoleFormSchema,
@@ -114,109 +111,117 @@ export function CreateRoleForm({
   );
 
   return (
-    <Form {...form}>
-      <form
-        className="flex flex-col gap-4"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <div className="mb-5 grid grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="roleKey"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Schlüsselbezeichnung</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="roleName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rollenbezeichnung</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <Headline level="h2">Rollenberechtigungen vergeben</Headline>
-        <div className="grid gap-4">
-          <PermissionFilter
-            filterValue={filterValue}
-            setFilterValue={setFilterValue}
-          />
-          <FormField
-            control={form.control}
-            name="permissions"
-            render={() => (
-              <FormItem className="grid-cols-2">
-                {filteredPermissions.map((perm) => (
-                  <FormField
-                    control={form.control}
-                    key={perm.recordId}
-                    name="permissions"
-                    render={({ field }) => (
-                      <FormItem
-                        className="flex flex-row items-center justify-between p-3"
-                        key={perm.recordId}
-                      >
-                        <FormLabel>
-                          <span>{perm.permissionName}</span>
-                          <Badge variant="secondary">
-                            {perm.permissionKey}
-                          </Badge>
-                        </FormLabel>
-                        <FormControl>
-                          <Switch
-                            checked={field.value.includes(perm.permissionKey)}
-                            onCheckedChange={(checked) =>
-                              checked
-                                ? field.onChange([
-                                    ...field.value,
-                                    perm.permissionKey,
-                                  ])
-                                : field.onChange(
-                                    field.value.filter(
-                                      (value) => value !== perm.permissionKey
-                                    )
-                                  )
-                            }
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                ))}
-              </FormItem>
-            )}
-          />
-        </div>
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <div className="mb-5 grid grid-cols-2 gap-4">
+        <Controller
+          control={form.control}
+          name="roleKey"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="roleKey">Schlüsselbezeichnung</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="roleKey"
+              />
+              {fieldState.invalid ? (
+                <FieldError errors={[fieldState.error]} />
+              ) : (
+                ""
+              )}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="roleName"
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel htmlFor="roleName">Rollenbezeichnung</FieldLabel>
+              <Input
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="roleName"
+              />
+              {fieldState.invalid ? (
+                <FieldError errors={[fieldState.error]} />
+              ) : (
+                ""
+              )}
+            </Field>
+          )}
+        />
+      </div>
+      <Headline level="h2">Rollenberechtigungen vergeben</Headline>
+      <div className="grid gap-4">
+        <PermissionFilter
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
+        />
+        <Controller
+          control={form.control}
+          name="permissions"
+          render={() => (
+            <div className="grid grid-cols-2">
+              {filteredPermissions.map((perm) => (
+                <Controller
+                  control={form.control}
+                  key={perm.recordId}
+                  name="permissions"
+                  render={({ field, fieldState }) => (
+                    <Field
+                      className="flex flex-row items-center justify-between p-3"
+                      data-invalid={fieldState.invalid}
+                      key={perm.recordId}
+                      orientation="horizontal"
+                    >
+                      <FieldLabel>
+                        <span>{perm.permissionName}</span>
+                        <Badge variant="secondary">{perm.permissionKey}</Badge>
+                      </FieldLabel>
+                      <Switch
+                        checked={field.value.includes(perm.permissionKey)}
+                        onCheckedChange={(checked) =>
+                          checked
+                            ? field.onChange([
+                                ...field.value,
+                                perm.permissionKey,
+                              ])
+                            : field.onChange(
+                                field.value.filter(
+                                  (value) => value !== perm.permissionKey
+                                )
+                              )
+                        }
+                      />
+                    </Field>
+                  )}
+                />
+              ))}
+            </div>
+          )}
+        />
+      </div>
 
-        {errors.length > 0 && (
-          <AlertWrapper variant="destructive">
-            <AlertDescription>
-              <ul>
-                {errors.map((err) => (
-                  <li key={err}>{err}</li>
-                ))}
-              </ul>
-            </AlertDescription>
-          </AlertWrapper>
-        )}
+      {errors.length > 0 && (
+        <AlertWrapper variant="destructive">
+          <AlertDescription>
+            <ul>
+              {errors.map((err) => (
+                <li key={err}>{err}</li>
+              ))}
+            </ul>
+          </AlertDescription>
+        </AlertWrapper>
+      )}
 
-        <Button className="w-full" type="submit">
-          Rolle erstellen
-        </Button>
-      </form>
-    </Form>
+      <Button className="w-full" type="submit">
+        Rolle erstellen
+      </Button>
+    </form>
   );
 }
 
@@ -250,67 +255,76 @@ export function UpdateRoleDetailForm({
     }
   };
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mb-5 grid grid-cols-5 gap-4">
-          <FormField
-            control={form.control}
-            name="recordId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ID</FormLabel>
-                <FormControl>
-                  <Input disabled {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="roleKey"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Schlüsselbezeichnung</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="roleName"
-            render={({ field }) => (
-              <FormItem className="col-span-2">
-                <FormLabel>Rollenbezeichnung</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      <div className="mb-5 grid grid-cols-5 gap-4">
+        <Controller
+          control={form.control}
+          name="recordId"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="recordId">ID</FieldLabel>
+              <Input
+                disabled
+                {...field}
+                aria-invalid={fieldState.invalid}
+                id="recordId"
+              />
+              {fieldState.invalid ? (
+                <FieldError errors={[fieldState.error]} />
+              ) : (
+                ""
+              )}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="roleKey"
+          render={({ field, fieldState }) => (
+            <Field className="col-span-2" data-invalid={fieldState.invalid}>
+              <FieldLabel>Schlüsselbezeichnung</FieldLabel>
+              <Input {...field} aria-invalid={fieldState.invalid} />
+              {fieldState.invalid ? (
+                <FieldError errors={[fieldState.error]} />
+              ) : (
+                ""
+              )}
+            </Field>
+          )}
+        />
+        <Controller
+          control={form.control}
+          name="roleName"
+          render={({ field, fieldState }) => (
+            <Field className="col-span-2" data-invalid={fieldState.invalid}>
+              <FieldLabel>Rollenbezeichnung</FieldLabel>
+              <Input {...field} aria-invalid={fieldState.invalid} />
+              {fieldState.invalid ? (
+                <FieldError errors={[fieldState.error]} />
+              ) : (
+                ""
+              )}
+            </Field>
+          )}
+        />
+      </div>
 
-        {errors.length > 0 && (
-          <AlertWrapper variant="destructive">
-            <AlertDescription>
-              <ul>
-                {errors.map((err) => (
-                  <li key={err}>{err}</li>
-                ))}
-              </ul>
-            </AlertDescription>
-          </AlertWrapper>
-        )}
+      {errors.length > 0 && (
+        <AlertWrapper variant="destructive">
+          <AlertDescription>
+            <ul>
+              {errors.map((err) => (
+                <li key={err}>{err}</li>
+              ))}
+            </ul>
+          </AlertDescription>
+        </AlertWrapper>
+      )}
 
-        <Button className="w-full" type="submit">
-          Rolle speichern
-        </Button>
-      </form>
-    </Form>
+      <Button className="w-full" type="submit">
+        Rolle speichern
+      </Button>
+    </form>
   );
 }
 
@@ -410,53 +424,53 @@ export function RolePermissionsForm({
   );
 
   return (
-    <Form {...form}>
+    <div>
       <PermissionFilter
         filterValue={filterValue}
         setFilterValue={setFilterValue}
       />
       <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
+        <Controller
           control={form.control}
           name="permissions"
           render={() => (
-            <FormItem className="grid-cols-2">
+            <div className="grid grid-cols-2">
               {filteredPermissions.map((perm) => (
-                <FormField
+                <Controller
                   control={form.control}
                   key={perm.recordId}
                   name="permissions"
-                  render={({ field }) => (
-                    <FormItem
+                  render={({ field, fieldState }) => (
+                    <Field
                       className="flex flex-row items-center justify-between p-3"
+                      data-invalid={fieldState.invalid}
                       key={perm.recordId}
+                      orientation="horizontal"
                     >
-                      <FormLabel>
+                      <FieldLabel>
                         <span>{perm.permissionName}</span>
                         <Badge variant="secondary">{perm.permissionKey}</Badge>
-                      </FormLabel>
-                      <FormControl>
-                        <Switch
-                          checked={field.value.includes(perm.permissionKey)}
-                          onCheckedChange={(checked) =>
-                            checked
-                              ? field.onChange([
-                                  ...field.value,
-                                  perm.permissionKey,
-                                ])
-                              : field.onChange(
-                                  field.value.filter(
-                                    (value) => value !== perm.permissionKey
-                                  )
+                      </FieldLabel>
+                      <Switch
+                        checked={field.value.includes(perm.permissionKey)}
+                        onCheckedChange={(checked) =>
+                          checked
+                            ? field.onChange([
+                                ...field.value,
+                                perm.permissionKey,
+                              ])
+                            : field.onChange(
+                                field.value.filter(
+                                  (value) => value !== perm.permissionKey
                                 )
-                          }
-                        />
-                      </FormControl>
-                    </FormItem>
+                              )
+                        }
+                      />
+                    </Field>
                   )}
                 />
               ))}
-            </FormItem>
+            </div>
           )}
         />
 
@@ -476,7 +490,7 @@ export function RolePermissionsForm({
           Rollenberechtigungen aktualisieren
         </Button>
       </form>
-    </Form>
+    </div>
   );
 }
 
@@ -596,57 +610,60 @@ export function CreatePermissionDetails() {
         <DialogHeader>
           <DialogTitle>Berechtigungsschlüssel hinzufügen</DialogTitle>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4">
-              <FormField
-                control={form.control}
-                name="permissionKey"
-                render={({ field }) => (
-                  <FormItem className="grid gap-3">
-                    <FormLabel>Berechtigungsschlüssel</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="app::feature:subfeature.permission"
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Der Berechtigungsschlüssel sollte folgendem Muster folgen:
-                      app::feature:subfeature.permission
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="permissionName"
-                render={({ field }) => (
-                  <FormItem className="grid gap-3">
-                    <FormLabel>Bezeichnung</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {errors.length > 0 && (
-                <AlertWrapper variant="destructive">
-                  <AlertDescription>
-                    <ul>
-                      {errors.map((err) => (
-                        <li key={err}>{err}</li>
-                      ))}
-                    </ul>
-                  </AlertDescription>
-                </AlertWrapper>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid gap-4">
+            <Controller
+              control={form.control}
+              name="permissionKey"
+              render={({ field, fieldState }) => (
+                <Field className="grid gap-3" data-invalid={fieldState.invalid}>
+                  <FieldLabel>Berechtigungsschlüssel</FieldLabel>
+                  <Input
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="app::feature:subfeature.permission"
+                  />
+                  <FieldDescription>
+                    Der Berechtigungsschlüssel sollte folgendem Muster folgen:
+                    app::feature:subfeature.permission
+                  </FieldDescription>
+                  {fieldState.invalid ? (
+                    <FieldError errors={[fieldState.error]} />
+                  ) : (
+                    ""
+                  )}
+                </Field>
               )}
-              <Button type="submit">Berechtigungsschlüssel hinzufügen</Button>
-            </div>
-          </form>
-        </Form>
+            />
+            <Controller
+              control={form.control}
+              name="permissionName"
+              render={({ field, fieldState }) => (
+                <Field className="grid gap-3" data-invalid={fieldState.invalid}>
+                  <FieldLabel>Bezeichnung</FieldLabel>
+                  <Input {...field} aria-invalid={fieldState.invalid} />
+                  {fieldState.invalid ? (
+                    <FieldError errors={[fieldState.error]} />
+                  ) : (
+                    ""
+                  )}
+                </Field>
+              )}
+            />
+            {errors.length > 0 && (
+              <AlertWrapper variant="destructive">
+                <AlertDescription>
+                  <ul>
+                    {errors.map((err) => (
+                      <li key={err}>{err}</li>
+                    ))}
+                  </ul>
+                </AlertDescription>
+              </AlertWrapper>
+            )}
+            <Button type="submit">Berechtigungsschlüssel hinzufügen</Button>
+          </div>
+        </form>
       </DialogContent>
     </Dialog>
   );
@@ -701,65 +718,72 @@ export function UpdatePermissionDetails({
         <DialogHeader>
           <DialogTitle>Berechtigungsschlüssel bearbeiten</DialogTitle>
         </DialogHeader>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4">
-              <FormField
-                control={form.control}
-                name="recordId"
-                render={({ field }) => (
-                  <FormItem className="grid gap-3">
-                    <FormLabel>ID</FormLabel>
-                    <FormControl>
-                      <Input disabled {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="permissionKey"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Berechtigungsschlüssel</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="permissionName"
-                render={({ field }) => (
-                  <FormItem className="grid gap-3">
-                    <FormLabel>Bezeichnung</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {errors.length > 0 && (
-                <AlertWrapper variant="destructive">
-                  <AlertDescription>
-                    <ul>
-                      {errors.map((err) => (
-                        <li key={err}>{err}</li>
-                      ))}
-                    </ul>
-                  </AlertDescription>
-                </AlertWrapper>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid gap-4">
+            <Controller
+              control={form.control}
+              name="recordId"
+              render={({ field, fieldState }) => (
+                <Field className="grid gap-3" data-invalid={fieldState.invalid}>
+                  <FieldLabel>ID</FieldLabel>
+                  <Input
+                    disabled
+                    {...field}
+                    aria-invalid={fieldState.invalid}
+                  />
+                  {fieldState.invalid ? (
+                    <FieldError errors={[fieldState.error]} />
+                  ) : (
+                    ""
+                  )}
+                </Field>
               )}
-              <Button type="submit">Speichern</Button>
-            </div>
-          </form>
-        </Form>
+            />
+            <Controller
+              control={form.control}
+              name="permissionKey"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Berechtigungsschlüssel</FieldLabel>
+                  <Input {...field} aria-invalid={fieldState.invalid} />
+                  {fieldState.invalid ? (
+                    <FieldError errors={[fieldState.error]} />
+                  ) : (
+                    ""
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="permissionName"
+              render={({ field, fieldState }) => (
+                <Field className="grid gap-3" data-invalid={fieldState.invalid}>
+                  <FieldLabel>Bezeichnung</FieldLabel>
+                  <Input {...field} aria-invalid={fieldState.invalid} />
+                  {fieldState.invalid ? (
+                    <FieldError errors={[fieldState.error]} />
+                  ) : (
+                    ""
+                  )}
+                </Field>
+              )}
+            />
+
+            {errors.length > 0 && (
+              <AlertWrapper variant="destructive">
+                <AlertDescription>
+                  <ul>
+                    {errors.map((err) => (
+                      <li key={err}>{err}</li>
+                    ))}
+                  </ul>
+                </AlertDescription>
+              </AlertWrapper>
+            )}
+            <Button type="submit">Speichern</Button>
+          </div>
+        </form>
       </DialogContent>
     </Dialog>
   );

@@ -41,13 +41,10 @@ import {
   DropdownMenuTrigger,
 } from "@northware/ui/components/shadcn/dropdown-menu";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@northware/ui/components/shadcn/form";
+  Field,
+  FieldError,
+  FieldLabel,
+} from "@northware/ui/components/shadcn/field";
 import { Input } from "@northware/ui/components/shadcn/input";
 import { Switch } from "@northware/ui/components/shadcn/switch";
 import {
@@ -74,7 +71,7 @@ import { toast } from "@northware/ui/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 import { PermissionFilter } from "@/components/role-forms";
 import {
   CreateEMailAddressFormSchema,
@@ -133,95 +130,120 @@ export default function CreateUserForm() {
   };
 
   return (
-    <Form {...form}>
-      <form
-        className="mb-5 grid gap-4 sm:grid-cols-2"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Vorname</FormLabel>
-              <FormControl>
-                <Input placeholder="Max" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nachname</FormLabel>
-              <FormControl>
-                <Input placeholder="Mustermann" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="emailAddress"
-          render={({ field }) => (
-            <FormItem className="sm:col-span-2">
-              <FormLabel>E-Mail</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="mmuster@northware.de"
-                  type="email"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem className="sm:col-span-2">
-              <FormLabel>Benutzername</FormLabel>
-              <FormControl>
-                <Input placeholder="mmuster" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem className="sm:col-span-2">
-              <FormLabel>Passwort</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {errors.length > 0 && (
-          <AlertWrapper className="sm:col-span-2" variant="destructive">
-            <ul className="w-max">
-              {errors.map((error) => (
-                <li key={error}>{error}</li>
-              ))}
-            </ul>
-          </AlertWrapper>
+    <form
+      className="mb-5 grid gap-4 sm:grid-cols-2"
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <Controller
+        control={form.control}
+        name="firstName"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Vorname</FieldLabel>
+            <Input
+              placeholder="Max"
+              {...field}
+              aria-invalid={fieldState.invalid}
+            />
+            {fieldState.invalid ? (
+              <FieldError errors={[fieldState.error]} />
+            ) : (
+              ""
+            )}
+          </Field>
         )}
+      />
+      <Controller
+        control={form.control}
+        name="lastName"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Nachname</FieldLabel>
+            <Input
+              placeholder="Mustermann"
+              {...field}
+              aria-invalid={fieldState.invalid}
+            />
+            {fieldState.invalid ? (
+              <FieldError errors={[fieldState.error]} />
+            ) : (
+              ""
+            )}
+          </Field>
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="emailAddress"
+        render={({ field, fieldState }) => (
+          <Field className="sm:col-span-2" data-invalid={fieldState.invalid}>
+            <FieldLabel>E-Mail</FieldLabel>
+            <Input
+              placeholder="mmuster@northware.de"
+              type="email"
+              {...field}
+              aria-invalid={fieldState.invalid}
+            />
+            {fieldState.invalid ? (
+              <FieldError errors={[fieldState.error]} />
+            ) : (
+              ""
+            )}
+          </Field>
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="username"
+        render={({ field, fieldState }) => (
+          <Field className="sm:col-span-2" data-invalid={fieldState.invalid}>
+            <FieldLabel>Benutzername</FieldLabel>
+            <Input
+              placeholder="mmuster"
+              {...field}
+              aria-invalid={fieldState.invalid}
+            />
+            {fieldState.invalid ? (
+              <FieldError errors={[fieldState.error]} />
+            ) : (
+              ""
+            )}
+          </Field>
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="password"
+        render={({ field, fieldState }) => (
+          <Field className="sm:col-span-2" data-invalid={fieldState.invalid}>
+            <FieldLabel>Passwort</FieldLabel>
+            <Input
+              type="password"
+              {...field}
+              aria-invalid={fieldState.invalid}
+            />
+            {fieldState.invalid ? (
+              <FieldError errors={[fieldState.error]} />
+            ) : (
+              ""
+            )}
+          </Field>
+        )}
+      />
+      {errors.length > 0 && (
+        <AlertWrapper className="sm:col-span-2" variant="destructive">
+          <ul className="w-max">
+            {errors.map((error) => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </AlertWrapper>
+      )}
 
-        <Button className="sm:col-span-2" type="submit">
-          Speichern und Weiter
-        </Button>
-      </form>
-    </Form>
+      <Button className="sm:col-span-2" type="submit">
+        Speichern und Weiter
+      </Button>
+    </form>
   );
 }
 
@@ -247,68 +269,84 @@ export function UpdateUserForm({ user }: { user?: TSingleUser }) {
   };
 
   return (
-    <Form {...form}>
-      <form
-        className="mb-5 grid grid-cols-2 gap-4"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Vorname</FormLabel>
-              <FormControl>
-                <Input placeholder="Max" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nachname</FormLabel>
-              <FormControl>
-                <Input placeholder="Mustermann" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem className="col-span-2">
-              <FormLabel>Benutzername</FormLabel>
-              <FormControl>
-                <Input placeholder="mmuster" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {errors.length > 0 && (
-          <AlertWrapper className="col-span-2" variant="destructive">
-            <AlertDescription>
-              <ul className="w-max">
-                {errors.map((error) => (
-                  <li key={error}>{error}</li>
-                ))}
-              </ul>
-            </AlertDescription>
-          </AlertWrapper>
+    <form
+      className="mb-5 grid grid-cols-2 gap-4"
+      onSubmit={form.handleSubmit(onSubmit)}
+    >
+      <Controller
+        control={form.control}
+        name="firstName"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Vorname</FieldLabel>
+            <Input
+              placeholder="Max"
+              {...field}
+              aria-invalid={fieldState.invalid}
+            />
+            {fieldState.invalid ? (
+              <FieldError errors={[fieldState.error]} />
+            ) : (
+              ""
+            )}
+          </Field>
         )}
+      />
+      <Controller
+        control={form.control}
+        name="lastName"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Nachname</FieldLabel>
+            <Input
+              placeholder="Mustermann"
+              {...field}
+              aria-invalid={fieldState.invalid}
+            />
+            {fieldState.invalid ? (
+              <FieldError errors={[fieldState.error]} />
+            ) : (
+              ""
+            )}
+          </Field>
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="username"
+        render={({ field, fieldState }) => (
+          <Field className="col-span-2" data-invalid={fieldState.invalid}>
+            <FieldLabel>Benutzername</FieldLabel>
+            <Input
+              placeholder="mmuster"
+              {...field}
+              aria-invalid={fieldState.invalid}
+            />
+            {fieldState.invalid ? (
+              <FieldError errors={[fieldState.error]} />
+            ) : (
+              ""
+            )}
+          </Field>
+        )}
+      />
 
-        <Button className="col-span-2" type="submit" variant="default">
-          Speichern
-        </Button>
-      </form>
-    </Form>
+      {errors.length > 0 && (
+        <AlertWrapper className="col-span-2" variant="destructive">
+          <AlertDescription>
+            <ul className="w-max">
+              {errors.map((error) => (
+                <li key={error}>{error}</li>
+              ))}
+            </ul>
+          </AlertDescription>
+        </AlertWrapper>
+      )}
+
+      <Button className="col-span-2" type="submit" variant="default">
+        Speichern
+      </Button>
+    </form>
   );
 }
 
@@ -499,74 +537,80 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
         <DialogHeader>
           <DialogTitle>Neue E-Mail Adresse hinzufügen</DialogTitle>
           <div>
-            <Form {...form}>
-              <form
-                className="grid gap-4 py-4"
-                onSubmit={form.handleSubmit(onSubmit)}
-              >
-                <FormField
-                  control={form.control}
-                  name="emailAddress"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>E-Mail Adresse</FormLabel>
-                      <FormControl>
-                        <Input placeholder="kunde@northware.de" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="primary"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Als primär kennzeichnen</FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="verified"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Als verifiziert kennzeichnen</FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                {errors.length > 0 && (
-                  <AlertWrapper variant="destructive">
-                    <AlertDescription>
-                      <ul className="w-max">
-                        {errors.map((error) => (
-                          <li key={error}>{error}</li>
-                        ))}
-                      </ul>
-                    </AlertDescription>
-                  </AlertWrapper>
+            <form
+              className="grid gap-4 py-4"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
+              <Controller
+                control={form.control}
+                name="emailAddress"
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel>E-Mail Adresse</FieldLabel>
+                    <Input
+                      placeholder="kunde@northware.de"
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                    />
+                    {fieldState.invalid ? (
+                      <FieldError errors={[fieldState.error]} />
+                    ) : (
+                      ""
+                    )}
+                  </Field>
                 )}
-                <Button type="submit" variant="default">
-                  E-Mail Adresse hinzufügen
-                </Button>
-              </form>
-            </Form>
+              />
+              <Controller
+                control={form.control}
+                name="primary"
+                render={({ field, fieldState }) => (
+                  <Field
+                    className="flex flex-row items-start space-x-3 space-y-0"
+                    data-invalid={fieldState.invalid}
+                    orientation="horizontal"
+                  >
+                    <Checkbox
+                      aria-invalid={fieldState.invalid}
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FieldLabel>Als primär kennzeichnen</FieldLabel>
+                  </Field>
+                )}
+              />
+              <Controller
+                control={form.control}
+                name="verified"
+                render={({ field, fieldState }) => (
+                  <Field
+                    className="flex flex-row items-start space-x-3 space-y-0"
+                    data-invalid={fieldState.invalid}
+                    orientation="horizontal"
+                  >
+                    <Checkbox
+                      aria-invalid={fieldState.invalid}
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FieldLabel>Als verifiziert kennzeichnen</FieldLabel>
+                  </Field>
+                )}
+              />
+              {errors.length > 0 && (
+                <AlertWrapper variant="destructive">
+                  <AlertDescription>
+                    <ul className="w-max">
+                      {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                      ))}
+                    </ul>
+                  </AlertDescription>
+                </AlertWrapper>
+              )}
+              <Button type="submit" variant="default">
+                E-Mail Adresse hinzufügen
+              </Button>
+            </form>
           </div>
         </DialogHeader>
       </DialogContent>
@@ -619,87 +663,93 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
         <DialogHeader>
           <DialogTitle>Passwort ändern</DialogTitle>
           <div>
-            <Form {...form}>
-              <form
-                className="grid gap-4 py-4"
-                onSubmit={form.handleSubmit(onSubmit)}
-              >
-                <FormField
-                  control={form.control}
-                  name="newPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Neues Passwort</FormLabel>
-                      <FormControl>
-                        <PasswordInput {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Passwort bestätigen</FormLabel>
-                      <FormControl>
-                        <PasswordInput {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="signOutSessions"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Von allen Sitzungen abmelden</FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="skipChecks"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Passwort-Prüfungen überspringen</FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                {errors.length > 0 && (
-                  <AlertWrapper variant="destructive">
-                    <AlertDescription>
-                      <ul className="w-max">
-                        {errors.map((error) => (
-                          <li key={error}>{error}</li>
-                        ))}
-                      </ul>
-                    </AlertDescription>
-                  </AlertWrapper>
+            <form
+              className="grid gap-4 py-4"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
+              <Controller
+                control={form.control}
+                name="newPassword"
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel>Neues Passwort</FieldLabel>
+                    <PasswordInput
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                    />
+                    {fieldState.invalid ? (
+                      <FieldError errors={[fieldState.error]} />
+                    ) : (
+                      ""
+                    )}
+                  </Field>
                 )}
-                <Button type="submit" variant="default">
-                  Passwort ändern
-                </Button>
-              </form>
-            </Form>
+              />
+              <Controller
+                control={form.control}
+                name="confirmPassword"
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel>Passwort bestätigen</FieldLabel>
+                    <PasswordInput
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                    />
+                    {fieldState.invalid ? (
+                      <FieldError errors={[fieldState.error]} />
+                    ) : (
+                      ""
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                control={form.control}
+                name="signOutSessions"
+                render={({ field }) => (
+                  <Field
+                    className="flex flex-row items-start space-x-3 space-y-0"
+                    orientation="horizontal"
+                  >
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FieldLabel>Von allen Sitzungen abmelden</FieldLabel>
+                  </Field>
+                )}
+              />
+              <Controller
+                control={form.control}
+                name="skipChecks"
+                render={({ field }) => (
+                  <Field
+                    className="flex flex-row items-start space-x-3 space-y-0"
+                    orientation="horizontal"
+                  >
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FieldLabel>Passwort-Prüfungen überspringen</FieldLabel>
+                  </Field>
+                )}
+              />
+              {errors.length > 0 && (
+                <AlertWrapper variant="destructive">
+                  <AlertDescription>
+                    <ul className="w-max">
+                      {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                      ))}
+                    </ul>
+                  </AlertDescription>
+                </AlertWrapper>
+              )}
+              <Button type="submit" variant="default">
+                Passwort ändern
+              </Button>
+            </form>
           </div>
         </DialogHeader>
       </DialogContent>
@@ -814,27 +864,27 @@ export function UpdateUserRolesForm({
   });
 
   return (
-    <Form {...form}>
+    <div className="flex flex-col gap-4">
       <PermissionFilter
         filterValue={filterValue}
         setFilterValue={setFilterValue}
       />
       <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
+        <Controller
           control={form.control}
           name="roles"
           render={() => (
-            <FormItem className="lg:grid-cols-2">
+            <Field className="grid gap-2 lg:grid-cols-2">
               {filteredRoles.map((role) => (
-                <FormField
+                <Controller
                   control={form.control}
                   key={role.roleKey}
                   name="roles"
                   render={({ field }) => (
-                    <FormItem className="p-3" key={role.roleKey}>
-                      <Collapsible>
-                        <div className="flex flex-row items-center justify-between">
-                          <FormLabel>
+                    <Field key={role.roleKey} orientation="horizontal">
+                      <Collapsible className="w-full">
+                        <div className="flex w-full flex-row items-center justify-between p-3">
+                          <FieldLabel>
                             <span>{role.roleName}</span>
                             <Badge variant="secondary">{role.roleKey}</Badge>
                             <CollapsibleTrigger asChild>
@@ -847,25 +897,19 @@ export function UpdateUserRolesForm({
                                 <ChevronDownIcon />
                               </Button>
                             </CollapsibleTrigger>
-                          </FormLabel>
-
-                          <FormControl>
-                            <Switch
-                              checked={field.value.includes(role.roleKey)}
-                              onCheckedChange={(checked) =>
-                                checked
-                                  ? field.onChange([
-                                      ...field.value,
-                                      role.roleKey,
-                                    ])
-                                  : field.onChange(
-                                      field.value.filter(
-                                        (value) => value !== role.roleKey
-                                      )
+                          </FieldLabel>
+                          <Switch
+                            checked={field.value.includes(role.roleKey)}
+                            onCheckedChange={(checked) =>
+                              checked
+                                ? field.onChange([...field.value, role.roleKey])
+                                : field.onChange(
+                                    field.value.filter(
+                                      (value) => value !== role.roleKey
                                     )
-                              }
-                            />
-                          </FormControl>
+                                  )
+                            }
+                          />
                         </div>
                         <CollapsibleContent>
                           <ul className="text-muted-foreground text-sm">
@@ -894,12 +938,11 @@ export function UpdateUserRolesForm({
                           </ul>
                         </CollapsibleContent>
                       </Collapsible>
-                    </FormItem>
+                    </Field>
                   )}
                 />
               ))}
-              <FormMessage />
-            </FormItem>
+            </Field>
           )}
         />
         {errors.length > 0 && (
@@ -917,7 +960,7 @@ export function UpdateUserRolesForm({
           Rollen aktualisieren
         </Button>
       </form>
-    </Form>
+    </div>
   );
 }
 
@@ -961,27 +1004,27 @@ export function CreateUserRolesForm({
   });
 
   return (
-    <Form {...form}>
+    <div className="grid gap-4">
       <PermissionFilter
         filterValue={filterValue}
         setFilterValue={setFilterValue}
       />
       <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
+        <Controller
           control={form.control}
           name="roles"
           render={() => (
-            <FormItem className="lg:grid-cols-2">
+            <Field className="grid gap-4 lg:grid-cols-2">
               {filteredRoles.map((role) => (
-                <FormField
+                <Controller
                   control={form.control}
                   key={role.roleKey}
                   name="roles"
                   render={({ field }) => (
-                    <FormItem className="p-3" key={role.roleKey}>
+                    <Field className="p-3" key={role.roleKey}>
                       <Collapsible>
                         <div className="flex flex-row items-center justify-between">
-                          <FormLabel>
+                          <FieldLabel>
                             <span>{role.roleName}</span>
                             <Badge variant="secondary">{role.roleKey}</Badge>
                             <CollapsibleTrigger asChild>
@@ -994,25 +1037,19 @@ export function CreateUserRolesForm({
                                 <ChevronDownIcon />
                               </Button>
                             </CollapsibleTrigger>
-                          </FormLabel>
-
-                          <FormControl>
-                            <Switch
-                              checked={field.value.includes(role.roleKey)}
-                              onCheckedChange={(checked) =>
-                                checked
-                                  ? field.onChange([
-                                      ...field.value,
-                                      role.roleKey,
-                                    ])
-                                  : field.onChange(
-                                      field.value.filter(
-                                        (value) => value !== role.roleKey
-                                      )
+                          </FieldLabel>
+                          <Switch
+                            checked={field.value.includes(role.roleKey)}
+                            onCheckedChange={(checked) =>
+                              checked
+                                ? field.onChange([...field.value, role.roleKey])
+                                : field.onChange(
+                                    field.value.filter(
+                                      (value) => value !== role.roleKey
                                     )
-                              }
-                            />
-                          </FormControl>
+                                  )
+                            }
+                          />
                         </div>
                         <CollapsibleContent>
                           <ul className="text-muted-foreground text-sm">
@@ -1041,12 +1078,11 @@ export function CreateUserRolesForm({
                           </ul>
                         </CollapsibleContent>
                       </Collapsible>
-                    </FormItem>
+                    </Field>
                   )}
                 />
               ))}
-              <FormMessage />
-            </FormItem>
+            </Field>
           )}
         />
         {errors.length > 0 && (
@@ -1071,7 +1107,7 @@ export function CreateUserRolesForm({
           </Button>
         </div>
       </form>
-    </Form>
+    </div>
   );
 }
 
@@ -1132,53 +1168,52 @@ export function UpdateUserPermissionsForm({
   );
 
   return (
-    <Form {...form}>
+    <div className="grid gap-4">
       <PermissionFilter
         filterValue={filterValue}
         setFilterValue={setFilterValue}
       />
       <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
+        <Controller
           control={form.control}
           name="permissions"
           render={() => (
-            <FormItem className="lg:grid-cols-2">
+            <Field className="grid gap-2 lg:grid-cols-2">
               {filteredPermissions.map((perm) => (
-                <FormField
+                <Controller
                   control={form.control}
                   key={perm.recordId}
                   name="permissions"
                   render={({ field }) => (
-                    <FormItem
+                    <Field
                       className="flex flex-row items-center justify-between p-3"
                       key={perm.recordId}
+                      orientation="horizontal"
                     >
-                      <FormLabel>
+                      <FieldLabel>
                         <span>{perm.permissionName}</span>
                         <Badge variant="secondary">{perm.permissionKey}</Badge>
-                      </FormLabel>
-                      <FormControl>
-                        <Switch
-                          checked={field.value.includes(perm.permissionKey)}
-                          onCheckedChange={(checked) =>
-                            checked
-                              ? field.onChange([
-                                  ...field.value,
-                                  perm.permissionKey,
-                                ])
-                              : field.onChange(
-                                  field.value.filter(
-                                    (value) => value !== perm.permissionKey
-                                  )
+                      </FieldLabel>
+                      <Switch
+                        checked={field.value.includes(perm.permissionKey)}
+                        onCheckedChange={(checked) =>
+                          checked
+                            ? field.onChange([
+                                ...field.value,
+                                perm.permissionKey,
+                              ])
+                            : field.onChange(
+                                field.value.filter(
+                                  (value) => value !== perm.permissionKey
                                 )
-                          }
-                        />
-                      </FormControl>
-                    </FormItem>
+                              )
+                        }
+                      />
+                    </Field>
                   )}
                 />
               ))}
-            </FormItem>
+            </Field>
           )}
         />
 
@@ -1197,7 +1232,7 @@ export function UpdateUserPermissionsForm({
           Zusätzliche Berechtigungen aktualisieren
         </Button>
       </form>
-    </Form>
+    </div>
   );
 }
 
@@ -1253,53 +1288,52 @@ export function CreateUserPermissionsForm({
   );
 
   return (
-    <Form {...form}>
+    <div className="grid gap-4">
       <PermissionFilter
         filterValue={filterValue}
         setFilterValue={setFilterValue}
       />
       <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
+        <Controller
           control={form.control}
           name="permissions"
           render={() => (
-            <FormItem className="lg:grid-cols-2">
+            <Field className="grid gap-4 lg:grid-cols-2">
               {filteredPermissions.map((perm) => (
-                <FormField
+                <Controller
                   control={form.control}
                   key={perm.recordId}
                   name="permissions"
                   render={({ field }) => (
-                    <FormItem
+                    <Field
                       className="flex flex-row items-center justify-between p-3"
                       key={perm.recordId}
+                      orientation="horizontal"
                     >
-                      <FormLabel>
+                      <FieldLabel>
                         <span>{perm.permissionName}</span>
                         <Badge variant="secondary">{perm.permissionKey}</Badge>
-                      </FormLabel>
-                      <FormControl>
-                        <Switch
-                          checked={field.value.includes(perm.permissionKey)}
-                          onCheckedChange={(checked) =>
-                            checked
-                              ? field.onChange([
-                                  ...field.value,
-                                  perm.permissionKey,
-                                ])
-                              : field.onChange(
-                                  field.value.filter(
-                                    (value) => value !== perm.permissionKey
-                                  )
+                      </FieldLabel>
+                      <Switch
+                        checked={field.value.includes(perm.permissionKey)}
+                        onCheckedChange={(checked) =>
+                          checked
+                            ? field.onChange([
+                                ...field.value,
+                                perm.permissionKey,
+                              ])
+                            : field.onChange(
+                                field.value.filter(
+                                  (value) => value !== perm.permissionKey
                                 )
-                          }
-                        />
-                      </FormControl>
-                    </FormItem>
+                              )
+                        }
+                      />
+                    </Field>
                   )}
                 />
               ))}
-            </FormItem>
+            </Field>
           )}
         />
 
@@ -1330,6 +1364,6 @@ export function CreateUserPermissionsForm({
           </Button>
         </div>
       </form>
-    </Form>
+    </div>
   );
 }
