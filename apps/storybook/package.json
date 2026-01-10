@@ -23,8 +23,8 @@
     "@northware/service-config": "workspace:*",
     "@storybook/addon-themes": "10.1.11",
     "@storybook/nextjs": "10.1.11",
-    "@types/node": "^24.10.4",
-    "@types/react": "^19.2.7",
+    "@types/node": "^24.10.6",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "storybook": "10.1.11",
     "typescript": "^5.9.3"
