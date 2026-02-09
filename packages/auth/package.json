@@ -13,17 +13,17 @@
     "./account": "./src/account.ts"
   },
   "dependencies": {
-    "@clerk/localizations": "^3.35.2",
-    "@clerk/nextjs": "^6.36.10",
-    "@clerk/themes": "^2.4.50",
+    "@clerk/localizations": "^3.35.3",
+    "@clerk/nextjs": "^6.37.3",
+    "@clerk/themes": "^2.4.51",
     "@northware/database": "workspace:*",
     "drizzle-orm": "^0.45.1",
-    "react": "^19.2.3",
+    "react": "^19.2.4",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
-    "@types/react": "^19.2.9",
+    "@types/react": "^19.2.13",
     "typescript": "^5.9.3"
   }
 }
