@@ -11,22 +11,22 @@
   },
   "dependencies": {
     "@northware/ui": "workspace:*",
-    "@storybook/addon-docs": "^10.2.0",
+    "@storybook/addon-docs": "^10.2.7",
     "@tanstack/react-table": "^8.21.3",
-    "next": "16.1.5",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "next": "16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "react-hook-form": "^7.71.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@northware/service-config": "workspace:*",
-    "@storybook/addon-themes": "10.2.0",
-    "@storybook/nextjs": "10.2.0",
-    "@types/node": "^24.10.9",
-    "@types/react": "^19.2.9",
+    "@storybook/addon-themes": "10.2.7",
+    "@storybook/nextjs": "10.2.7",
+    "@types/node": "^24.10.12",
+    "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
-    "storybook": "10.2.0",
+    "storybook": "10.2.7",
     "typescript": "^5.9.3"
   }
 }
