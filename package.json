@@ -9,7 +9,7 @@
     "@northware/tsconfig": "workspace:",
     "turbo": "^2.8.9",
     "typescript": "^5.9.3",
-    "ultracite": "6.5.1"
+    "ultracite": "7.2.3"
   },
   "engines": {
     "node": ">=22"
