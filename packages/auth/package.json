@@ -13,9 +13,9 @@
     "./account": "./src/account.ts"
   },
   "dependencies": {
-    "@clerk/localizations": "^3.37.0",
-    "@clerk/nextjs": "^6.38.1",
-    "@clerk/themes": "^2.4.55",
+    "@clerk/localizations": "^3.37.2",
+    "@clerk/nextjs": "^6.39.0",
+    "@clerk/themes": "^2.4.57",
     "@northware/database": "workspace:*",
     "drizzle-orm": "^0.45.1",
     "react": "^19.2.4",
