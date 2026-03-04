@@ -192,8 +192,8 @@ importers:
   packages/auth:
     dependencies:
       '@clerk/localizations':
-        specifier: ^3.37.2
-        version: 3.37.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^4.0.0
+        version: 4.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@clerk/nextjs':
         specifier: ^6.39.0
         version: 6.39.0(next@16.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1094,13 +1094,14 @@ packages:
   '@clerk/clerk-react@5.61.3':
     resolution: {integrity: sha512-W21aNEeHtqh3xJLuW5g2ydben/1D5pSnxsl/kCnv0IY1zma7lO+aIJ7Br2bR4FKKkiu695mPnjtY+fvkQmCXBg==}
     engines: {node: '>=18.17.0'}
+    deprecated: 'This package is no longer supported. Please use @clerk/react instead. See the upgrade guide for more info: https://clerk.com/docs/guides/development/upgrading/upgrade-guides/core-3'
     peerDependencies:
       react: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
       react-dom: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
 
-  '@clerk/localizations@3.37.2':
-    resolution: {integrity: sha512-JiFHZqrXLH1Xk24R4ti8ga8DHLsdfVv3xisqDdQTVdGNBtuwq7mjdJyMPkeQMDejOiowVp+O+HXX6vocf+oVlQ==}
-    engines: {node: '>=18.17.0'}
+  '@clerk/localizations@4.0.0':
+    resolution: {integrity: sha512-lGCJ36GKk+s8tJdsn7Rol9IyZQ62WVra85JxmeDyRlKgnSYuwXHAleTpNvJZDYjWzeNJalMj8I2aquveZSRTIQ==}
+    engines: {node: '>=20.9.0'}
 
   '@clerk/nextjs@6.39.0':
     resolution: {integrity: sha512-T9LS/C0lly5eHmyH79RFi1afF45IHWZw7CZkudRK2zsJaxn7SjrHURYDNp6O5Cdcm/OmjYrND0PC0eKZh/jfRA==}
@@ -1122,6 +1123,18 @@ packages:
       react-dom:
         optional: true
 
+  '@clerk/shared@4.0.0':
+    resolution: {integrity: sha512-Z3QhVud7FM9SBgSGxyUdC+nDg6vro+5zJ5gDO1To3FDzRLWKW4xIGd5y8UBqWZMMMHWaSDiZvYlUynb+gs8PnQ==}
+    engines: {node: '>=20.9.0'}
+    peerDependencies:
+      react: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+      react-dom: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   '@clerk/themes@2.4.57':
     resolution: {integrity: sha512-Nb3bO79rMTU/MPVTC/dde6LG27/IgOMKIYi5KSvAmO4ZUHlj0OWufu6CMvz5OYVZ0YdyMnTBU2aPGRUiRzO+2w==}
     engines: {node: '>=18.17.0'}
@@ -1129,6 +1142,7 @@ packages:
   '@clerk/types@4.101.20':
     resolution: {integrity: sha512-MHvr1tGL5lwxD6zdzzixkHICbbZz/S1LChONKR52Qeu0yRGChZomPknsgqBMG9J3yNeyhaj0SWa5phQgQUk0lg==}
     engines: {node: '>=18.17.0'}
+    deprecated: 'This package is no longer supported. Please import types from @clerk/shared/types instead. See the upgrade guide for more info: https://clerk.com/docs/guides/development/upgrading/upgrade-guides/core-3'
 
   '@commitlint/cli@20.4.2':
     resolution: {integrity: sha512-YjYSX2yj/WsVoxh9mNiymfFS2ADbg2EK4+1WAsMuckwKMCqJ5PDG0CJU/8GvmHWcv4VRB2V02KqSiecRksWqZQ==}
@@ -3108,6 +3122,9 @@ packages:
 
   '@tailwindcss/postcss@4.2.1':
     resolution: {integrity: sha512-OEwGIBnXnj7zJeonOh6ZG9woofIjGrd2BORfvE5p9USYKDCZoQmfqLcfNiRWoJlRWLdNPn2IgVZuWAOM4iTYMw==}
+
+  '@tanstack/query-core@5.90.16':
+    resolution: {integrity: sha512-MvtWckSVufs/ja463/K4PyJeqT+HMlJWtw6PrCpywznd2NSgO3m4KwO9RqbFqGg6iDE8vVMFWMeQI4Io3eEYww==}
 
   '@tanstack/react-table@8.21.3':
     resolution: {integrity: sha512-5nNMTSETP4ykGegmVkhjcS8tTLW6Vl4axfEGQN3v0zdHYbK4UfoqfPChclTrJ4EoK9QynqAu9oUf8VEmrpZ5Ww==}
@@ -7891,9 +7908,9 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
       tslib: 2.8.1
 
-  '@clerk/localizations@3.37.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@clerk/localizations@4.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@clerk/types': 4.101.20(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@clerk/shared': 4.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     transitivePeerDependencies:
       - react
       - react-dom
@@ -7918,6 +7935,17 @@ snapshots:
       js-cookie: 3.0.5
       std-env: 3.9.0
       swr: 2.3.4(react@19.2.4)
+    optionalDependencies:
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+
+  '@clerk/shared@4.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@tanstack/query-core': 5.90.16
+      dequal: 2.0.3
+      glob-to-regexp: 0.4.1
+      js-cookie: 3.0.5
+      std-env: 3.9.0
     optionalDependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -9820,6 +9848,8 @@ snapshots:
       '@tailwindcss/oxide': 4.2.1
       postcss: 8.5.6
       tailwindcss: 4.2.1
+
+  '@tanstack/query-core@5.90.16': {}
 
   '@tanstack/react-table@8.21.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
