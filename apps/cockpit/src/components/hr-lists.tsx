@@ -174,11 +174,11 @@ export function EmploymentsList<TData, TValue>({
                       locale: de,
                     })}{" "}
                     -{" "}
-                    {row.getValue("contractEnd") != null
-                      ? formatDate(row.getValue("contractEnd"), "PPP", {
+                    {row.getValue("contractEnd") == null
+                      ? ""
+                      : formatDate(row.getValue("contractEnd"), "PPP", {
                           locale: de,
-                        })
-                      : ""}
+                        })}
                   </ItemTitle>
                   <ItemDescription>{row.getValue("employer")}</ItemDescription>
                 </div>
