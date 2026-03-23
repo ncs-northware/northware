@@ -8,7 +8,7 @@
     "@commitlint/types": "^20.4.3",
     "@northware/tsconfig": "workspace:",
     "turbo": "^2.8.14",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "ultracite": "6.5.1"
   },
   "engines": {
