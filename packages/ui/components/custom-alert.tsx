@@ -68,4 +68,4 @@ const AlertIcon = ({
   return icons[variant] ?? icons.default;
 };
 
-export { AlertWrapper, AlertIcon, customAlertVariants };
+export { AlertIcon, AlertWrapper, customAlertVariants };
