@@ -68,11 +68,11 @@ export default async function Page({
         },
         {
           label: `${employmentData.employment.position} (${formatDate(employmentData.employment.contractStart, "PPP", { locale: de })} - ${
-            employmentData.employment.contractEnd != null
-              ? formatDate(employmentData.employment.contractEnd, "PPP", {
+            employmentData.employment.contractEnd == null
+              ? ""
+              : formatDate(employmentData.employment.contractEnd, "PPP", {
                   locale: de,
                 })
-              : ""
           })`,
           href: `hr/management/${employeeId}/employment/${recordId}`,
         },
