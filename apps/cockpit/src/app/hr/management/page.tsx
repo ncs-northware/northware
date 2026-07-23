@@ -22,20 +22,20 @@ export default async function Page() {
   ];
 
   if (!data.success) {
-    return <DataFetchError message={data.error?.message} service="cockpit" />;
+    return <DataFetchError message={data.error.message} service="cockpit" />;
   }
 
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "HR", href: "/hr" },
-        { label: "HR Management", href: "hr/management", active: true },
+        { href: "/hr", label: "HR" },
+        { active: true, href: "hr/management", label: "HR Management" },
       ]}
       service="cockpit"
     >
       <PermissionProvider permissionKeys={["cockpit::hr-management.read"]}>
         <Headline level="h1">Mitarbeiter wählen</Headline>
-        <EmployeeList columns={columns} data={data.employees || []} />
+        <EmployeeList columns={columns} data={data.employees} />
       </PermissionProvider>
     </SidebarLayout>
   );

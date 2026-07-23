@@ -3,9 +3,13 @@ import { z } from "zod";
 /************** User Form Schema  **************************************************************/
 
 export const CreateUserFormSchema = z.object({
+  emailAddress: z.email("Bitte geben Sie eine gültige E-Mail Adresse an."),
   firstName: z.string().optional(),
   lastName: z.string().optional(),
-  emailAddress: z.email("Bitte geben Sie eine gültige E-Mail Adresse an."),
+  password: z
+    .string()
+    .min(8, { error: "Das Passwort muss mindestens 8 Zeichen lang sein." })
+    .max(72, { error: "Das Passwort darf maximal 72 Zeichen lang sein." }),
   username: z
     .string()
     .min(4, {
@@ -14,10 +18,6 @@ export const CreateUserFormSchema = z.object({
     .max(64, {
       error: "Der Benutzername darf maximal 64 Zeichen lang sein.",
     }),
-  password: z
-    .string()
-    .min(8, { error: "Das Passwort muss mindestens 8 Zeichen lang sein." })
-    .max(72, { error: "Das Passwort darf maximal 72 Zeichen lang sein." }),
 });
 export type TCreateUserFormSchema = z.infer<typeof CreateUserFormSchema>;
 
@@ -39,8 +39,8 @@ export const CreateEMailAddressFormSchema = z.object({
   emailAddress: z.email({
     error: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
   }),
-  verified: z.boolean().default(true).optional(),
   primary: z.boolean().default(false).optional(),
+  verified: z.boolean().default(true).optional(),
 });
 export type TCreateEMailAddressFormSchema = z.infer<
   typeof CreateEMailAddressFormSchema
@@ -48,11 +48,11 @@ export type TCreateEMailAddressFormSchema = z.infer<
 
 export const UpdatePasswordFormSchema = z
   .object({
+    confirmPassword: z.string(),
     newPassword: z
       .string()
       .min(8, { error: "Das Passwort muss mindestens 8 Zeichen lang sein." })
       .max(72, { error: "Das Passwort darf maximal 72 Zeichen lang sein." }),
-    confirmPassword: z.string(),
     signOutSessions: z.boolean(),
     skipChecks: z.boolean(),
   })
@@ -84,6 +84,7 @@ export type TUpdatePermissionSchema = z.infer<
 /************************** Role Managment Form Schema ****************************************************/
 
 export const CreateRoleFormSchema = z.object({
+  permissions: z.array(z.string()),
   roleKey: z
     .string()
     .regex(
@@ -91,7 +92,6 @@ export const CreateRoleFormSchema = z.object({
       "Ungültiges Format des Rollenschlüssels. Erwartet wird app::rolestring:subrole"
     ),
   roleName: z.string(),
-  permissions: z.array(z.string()),
 });
 
 export type TCreateRoleFormData = z.infer<typeof CreateRoleFormSchema>;
@@ -112,7 +112,6 @@ export type TRoleDetailFormSchema = z.infer<typeof RoleDetailFormSchema>;
 /************************Permission Management Form Schema ******************************************/
 
 export const PermissionDetailFormSchema = z.object({
-  recordId: z.number(),
   permissionKey: z
     .string()
     .regex(
@@ -121,6 +120,7 @@ export const PermissionDetailFormSchema = z.object({
     )
     .or(z.literal("all-access")),
   permissionName: z.string(),
+  recordId: z.number(),
 });
 
 export const CreatePermissionDetailFormSchema = z.object({

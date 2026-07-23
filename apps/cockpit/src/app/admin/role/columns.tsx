@@ -13,11 +13,6 @@ import type { TRoleWithPermissions } from "@/lib/rbac-types";
 export const columns: ColumnDef<TRoleWithPermissions>[] = [
   {
     accessorKey: "roleKey",
-    header: ({ column }) => (
-      <TableHead>
-        <DataTableColumnHeader column={column} title="Schlüsselbezeichnung" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell>
         <span className="font-mono text-muted-foreground sm:text-foreground">
@@ -31,18 +26,23 @@ export const columns: ColumnDef<TRoleWithPermissions>[] = [
         </TableDescriptionList>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Schlüsselbezeichnung" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "roleName",
-    header: ({ column }) => (
-      <TableHead className="hidden sm:table-cell">
-        <DataTableColumnHeader column={column} title="Rollenbezeichnung" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden sm:table-cell">
         {row.original.roleName}
       </TableCell>
+    ),
+    header: ({ column }) => (
+      <TableHead className="hidden sm:table-cell">
+        <DataTableColumnHeader column={column} title="Rollenbezeichnung" />
+      </TableHead>
     ),
   },
 ];

@@ -35,13 +35,13 @@ export default async function Page({
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Admin Panel", href: "/admin" },
-        { label: "Benutzerverwaltung", href: "/admin/user" },
-        { label: "Benutzer erstellen", href: "admin/user/create" },
+        { href: "/admin", label: "Admin Panel" },
+        { href: "/admin/user", label: "Benutzerverwaltung" },
+        { href: "admin/user/create", label: "Benutzer erstellen" },
         {
-          label: `Zusätzliche Berechtigungen von ${user.response.fullName || user.response.emailAddresses[0].emailAddress}`,
-          href: `admin/user/${user.response.id}/permissions`,
           active: true,
+          href: `admin/user/${user.response.id}/permissions`,
+          label: `Zusätzliche Berechtigungen von ${user.response.fullName || user.response.emailAddresses[0].emailAddress}`,
         },
       ]}
       service="cockpit"

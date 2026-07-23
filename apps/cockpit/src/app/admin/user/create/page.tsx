@@ -9,9 +9,9 @@ export default function Page() {
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Admin Panel", href: "/admin" },
-        { label: "Benutzerverwaltung", href: "/admin/user" },
-        { label: "Benutzer hinzufügen", href: "create", active: true },
+        { href: "/admin", label: "Admin Panel" },
+        { href: "/admin/user", label: "Benutzerverwaltung" },
+        { active: true, href: "create", label: "Benutzer hinzufügen" },
       ]}
       service="cockpit"
     >

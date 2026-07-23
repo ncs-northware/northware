@@ -30,7 +30,7 @@ export default async function Page({
         <Headline level="h1">Benutzerdaten</Headline>
         <div className="flex gap-2">
           <UpdatePasswordFormDialog id={user?.response.id} />
-          {(await userHasPermission(["cockpit::user.delete"])) && (
+          {(await userHasPermission(["cockpit::user.delete"])) === true && (
             <UserDeleteButton mode="page" userId={user?.response.id || ""} />
           )}
         </div>

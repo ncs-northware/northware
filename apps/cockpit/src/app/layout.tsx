@@ -4,8 +4,8 @@ import { fonts } from "@northware/ui/lib/fonts";
 
 export const metadata = {
   title: {
-    template: "%s | Northware Cockpit",
     default: "Northware Cockpit",
+    template: "%s | Northware Cockpit",
   },
 };
 

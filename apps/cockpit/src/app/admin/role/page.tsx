@@ -24,8 +24,8 @@ export default async function Page() {
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Admin Panel", href: "/admin" },
-        { label: "Rollenverwaltung", href: "/admin/roles", active: true },
+        { href: "/admin", label: "Admin Panel" },
+        { active: true, href: "/admin/roles", label: "Rollenverwaltung" },
       ]}
       defaultOpen={false}
       service="cockpit"
@@ -33,7 +33,7 @@ export default async function Page() {
       <PermissionProvider permissionKeys={["cockpit::role.read"]}>
         <div className="flex justify-between gap-4">
           <Headline level="h1">Rollenverwaltung</Headline>
-          {(await userHasPermission(["cockpit::role.create"])) && (
+          {(await userHasPermission(["cockpit::role.create"])) === true && (
             <Button asChild>
               <Link href="/admin/role/create">
                 <PlusIcon className="sm:hidden" />
@@ -52,8 +52,8 @@ export default async function Page() {
           columns={columns}
           data={roleList.roleList}
           permissions={{
-            update: await userHasPermission(["cockpit::role.update"]),
             delete: await userHasPermission(["cockpit::role.delete"]),
+            update: await userHasPermission(["cockpit::role.update"]),
           }}
         />
       </PermissionProvider>

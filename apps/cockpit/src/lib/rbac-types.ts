@@ -1,49 +1,49 @@
-export type TSingleUser = {
-  id: string;
-  firstName: string | null;
-  lastName: string | null;
-  fullName: string | null;
-  username: string | null;
+export interface TSingleUser {
   emailAddresses: {
     id: string;
     emailAddress: string;
     verificationStatus: string | undefined;
   }[];
+  firstName: string | null;
+  fullName: string | null;
+  id: string;
+  lastName: string | null;
   primaryEmailAddressId: string | null;
-};
+  username: string | null;
+}
 
-export type TRoleWithPermissions = {
-  recordId: number;
-  roleKey: string;
-  roleName: string | null;
+export interface TRoleWithPermissions {
   permissions: Array<{
     permissionKey: string | null;
     permissionName: string | null;
   }>;
-};
+  recordId: number;
+  roleKey: string;
+  roleName: string | null;
+}
 
 export type TRoleListResponse =
   | { success: true; roleList: TRoleWithPermissions[] }
   | { success: false; error: Error };
 
-export type TPermissionType = {
-  recordId: number;
+export interface TPermissionType {
   permissionKey: string;
   permissionName: string | null;
-};
+  recordId: number;
+}
 
 export type TPermissionListResponse =
   | { success: true; permissionList: TPermissionType[] }
   | { success: false; error: Error };
 
-export type TUpdateRolesParams = {
+export interface TUpdateRolesParams {
   data: { roles: string[] };
-  userRolesResponse: (string | undefined)[];
   userId: string;
-};
+  userRolesResponse: (string | undefined)[];
+}
 
-export type TUpdatePermissionsParams = {
+export interface TUpdatePermissionsParams {
   data: { permissions: string[] };
   extraPermissionsResponse: (string | undefined)[];
   userId: string;
-};
+}

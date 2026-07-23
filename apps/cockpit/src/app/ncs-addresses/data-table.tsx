@@ -24,11 +24,11 @@ import {
 } from "@tanstack/react-table";
 import { Fragment, useState } from "react";
 
-type DataTableProps<TData, TValue> = {
+interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   paginationPageSize?: number;
-};
+}
 
 export function DataTable<TData, TValue>({
   columns,
@@ -43,18 +43,18 @@ export function DataTable<TData, TValue>({
   });
 
   const table = useReactTable({
-    data,
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
-    globalFilterFn: "includesString",
-    getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
-    onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    globalFilterFn: "includesString",
     onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
     state: {
-      globalFilter,
       columnVisibility,
+      globalFilter,
       pagination,
     },
   });

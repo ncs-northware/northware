@@ -28,11 +28,11 @@ import {
   UpdatePermissionDetails,
 } from "@/components/role-forms";
 
-type DataTableProps<TData extends { recordId: number }, TValue> = {
+interface DataTableProps<TData extends { recordId: number }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   permissions: { update: boolean; delete: boolean };
-};
+}
 
 export function DataTable<
   TData extends {
@@ -46,16 +46,16 @@ export function DataTable<
   const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
-    data,
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     globalFilterFn: "includesString",
     onGlobalFilterChange: setGlobalFilter,
-    getFilteredRowModel: getFilteredRowModel(),
-    state: { sorting, globalFilter },
+    onSortingChange: setSorting,
+    state: { globalFilter, sorting },
   });
   return (
     <div>
@@ -98,12 +98,12 @@ export function DataTable<
                   ))}
                   <TableCell>
                     <div className="flex justify-end">
-                      {permissions.update && (
+                      {permissions.update === true && (
                         <UpdatePermissionDetails
                           permissionDetails={row.original}
                         />
                       )}
-                      {permissions.delete && (
+                      {permissions.delete === true && (
                         <PermissionDeleteButton
                           recordId={row.original.recordId}
                         />

@@ -24,16 +24,16 @@ export default async function EmployeeSidebar({
     <SidebarLayout
       breadcrumbs={breadcrumbs}
       service="cockpit"
-      subLabel={`${data.employee?.employeeId} / ${data.employee?.sirName}, ${data.employee?.firstName}`}
+      subLabel={`${data.employee.employeeId} / ${data.employee.sirName}, ${data.employee.firstName}`}
       subMenu={[
         {
-          title: "Persönliche Daten",
-          href: `/hr/management/${id}`,
           exactMatch: true,
+          href: `/hr/management/${id}`,
+          title: "Persönliche Daten",
         },
         {
-          title: "Arbeitsverhältnisse",
           href: `/hr/management/${id}/employment`,
+          title: "Arbeitsverhältnisse",
         },
       ]}
     >

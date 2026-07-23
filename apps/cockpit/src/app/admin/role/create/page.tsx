@@ -11,9 +11,9 @@ export default async function Page() {
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Admin Panel", href: "/admin" },
-        { label: "Rollenverwaltung", href: "/admin/role" },
-        { label: "Neue Rolle", href: "/admin/role/create", active: true },
+        { href: "/admin", label: "Admin Panel" },
+        { href: "/admin/role", label: "Rollenverwaltung" },
+        { active: true, href: "/admin/role/create", label: "Neue Rolle" },
       ]}
       service="cockpit"
     >

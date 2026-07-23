@@ -25,10 +25,10 @@ export default async function Page() {
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Admin Panel", href: "/admin" },
+        { href: "/admin", label: "Admin Panel" },
         {
-          label: "Berechtigungsschlüssel verwalten",
           href: "/admin/permission",
+          label: "Berechtigungsschlüssel verwalten",
         },
       ]}
       defaultOpen={false}
@@ -40,9 +40,8 @@ export default async function Page() {
             Berechtigungsschlüssel verwalten
           </Headline>
 
-          {(await userHasPermission(["cockpit::permission.create"])) && (
-            <CreatePermissionDetails />
-          )}
+          {(await userHasPermission(["cockpit::permission.create"])) ===
+            true && <CreatePermissionDetails />}
         </div>
         <p className="mb-4 text-justify font-medium text-muted-foreground">
           Berechtigungsschlüssel sind Strings, die innerhalb der Northware Apps
@@ -55,8 +54,8 @@ export default async function Page() {
           columns={columns}
           data={permissionList.permissionList}
           permissions={{
-            update: await userHasPermission(["cockpit::permission.update"]),
             delete: await userHasPermission(["cockpit::permission.delete"]),
+            update: await userHasPermission(["cockpit::permission.update"]),
           }}
         />
       </PermissionProvider>

@@ -74,12 +74,12 @@ export function CreateRoleForm({
   const [filterValue, setFilterValue] = useState<string>("");
 
   const form = useForm<TCreateRoleFormData>({
-    resolver: zodResolver(CreateRoleFormSchema),
     defaultValues: {
+      permissions: [],
       roleKey: "",
       roleName: "",
-      permissions: [],
     },
+    resolver: zodResolver(CreateRoleFormSchema),
   });
 
   const router = useRouter();
@@ -225,11 +225,11 @@ export function CreateRoleForm({
   );
 }
 
-type TRoleDetails = {
+interface TRoleDetails {
   recordId: number;
   roleKey: string;
   roleName: string | null;
-};
+}
 
 export function UpdateRoleDetailForm({
   roleDetails,
@@ -239,12 +239,12 @@ export function UpdateRoleDetailForm({
   const [errors, setErrors] = useState<string[]>([]);
 
   const form = useForm<TRoleDetailFormSchema>({
-    resolver: zodResolver(RoleDetailFormSchema),
     defaultValues: {
       recordId: roleDetails?.recordId,
       roleKey: roleDetails?.roleKey,
       roleName: roleDetails?.roleName || "",
     },
+    resolver: zodResolver(RoleDetailFormSchema),
   });
   const onSubmit: SubmitHandler<TRoleDetailFormSchema> = async (data) => {
     try {
@@ -381,8 +381,8 @@ export function RolePermissionsForm({
   const [filterValue, setFilterValue] = useState<string>(""); // Filter-Value State
 
   const form = useForm<TUpdatePermissionSchema>({
-    resolver: zodResolver(UserUpdatePermissionsFormSchema),
     defaultValues: { permissions: rolePermissions },
+    resolver: zodResolver(UserUpdatePermissionsFormSchema),
   });
 
   if (!permissionsResponse.success) {
@@ -402,7 +402,7 @@ export function RolePermissionsForm({
 
   async function onSubmit(data: TUpdatePermissionSchema) {
     try {
-      await updateRolePermissions({ data, rolePermissions, roleKey });
+      await updateRolePermissions({ data, roleKey, rolePermissions });
       toast.success("Die Rollenberechtigungen wurden aktualisiert.");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -569,11 +569,11 @@ export function CreatePermissionDetails() {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TCreatePermissionDetailFormSchema>({
-    resolver: zodResolver(CreatePermissionDetailFormSchema),
     defaultValues: {
       permissionKey: "",
       permissionName: "",
     },
+    resolver: zodResolver(CreatePermissionDetailFormSchema),
   });
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -677,21 +677,21 @@ export function UpdatePermissionDetails({
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TPermissionDetailFormSchema>({
-    resolver: zodResolver(PermissionDetailFormSchema),
     defaultValues: {
-      recordId: permissionDetails.recordId,
       permissionKey: permissionDetails.permissionKey,
       permissionName: permissionDetails.permissionName || "",
+      recordId: permissionDetails.recordId,
     },
+    resolver: zodResolver(PermissionDetailFormSchema),
   });
 
   // Formularwerte zurücksetzen, wenn Dialog geöffnet wird oder permissionDetails sich ändern
   useEffect(() => {
     if (open) {
       form.reset({
-        recordId: permissionDetails.recordId,
         permissionKey: permissionDetails.permissionKey,
         permissionName: permissionDetails.permissionName || "",
+        recordId: permissionDetails.recordId,
       });
       setErrors([]);
     }
