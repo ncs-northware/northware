@@ -2,14 +2,14 @@ import { cn } from "@northware/ui/lib/utils";
 import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 
 export const SourceSans = Source_Sans_3({
-  subsets: ["latin"],
   display: "swap",
+  subsets: ["latin"],
   variable: "--font-sourcesans",
 });
 
 export const SourceCode = Source_Code_Pro({
-  subsets: ["latin"],
   display: "optional",
+  subsets: ["latin"],
   variable: "--font-sourcecode",
 });
 

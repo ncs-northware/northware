@@ -8,11 +8,11 @@ export async function menuData(service: ServiceType, userId?: string) {
   const userPermissions = await getUserPermissions(userId);
   const result = await db
     .select({
-      itemId: mainNavTable.itemId,
-      title: mainNavTable.title,
-      href: mainNavTable.href,
       childOf: mainNavTable.childOf,
+      href: mainNavTable.href,
+      itemId: mainNavTable.itemId,
       permissionKey: mainNavTable.permissionKey,
+      title: mainNavTable.title,
     })
     .from(mainNavTable)
     .where(
@@ -25,10 +25,10 @@ export async function menuData(service: ServiceType, userId?: string) {
     )
     .orderBy(mainNavTable.order);
 
-  const topLevelItems = result.filter((item) => item.childOf == null);
+  const topLevelItems = result.filter((item) => item.childOf === null);
   const childItems = (parent: string) => {
     const children = result.filter((item) => item.childOf === parent);
     return children;
   };
-  return { topLevelItems, childItems };
+  return { childItems, topLevelItems };
 }

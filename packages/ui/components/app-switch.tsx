@@ -17,11 +17,11 @@ import {
 import { ChevronsUpDown } from "@northware/ui/icons/lucide";
 import Link from "next/link";
 
-export type MenuApps = {
+export interface MenuApps {
+  allowed: boolean;
   slug: ServiceType;
   url: string | undefined;
-  allowed: boolean;
-};
+}
 
 export function AppSwitch({
   service,
@@ -31,10 +31,6 @@ export function AppSwitch({
   apps: MenuApps[];
 }) {
   const { isMobile } = useSidebar();
-  if (!service) {
-    return null;
-  }
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>

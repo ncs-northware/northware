@@ -37,9 +37,9 @@ import {
 } from "lucide-react";
 import type React from "react";
 
-type DataTableViewOptionsProps<TData> = {
+interface DataTableViewOptionsProps<TData> {
   table: TableType<TData>;
-};
+}
 
 export function DataTableViewOptions<TData>({
   table,
@@ -56,7 +56,7 @@ export function DataTableViewOptions<TData>({
           <ChevronDownIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px]">
+      <DropdownMenuContent align="end" className="w-37.5">
         {table
           .getAllColumns()
           .filter(
@@ -78,9 +78,9 @@ export function DataTableViewOptions<TData>({
   );
 }
 
-type DataTablePaginationProps<TData> = {
+interface DataTablePaginationProps<TData> {
   table: TableType<TData>;
-};
+}
 
 export function DataTablePagination<TData>({
   table,
@@ -95,7 +95,7 @@ export function DataTablePagination<TData>({
           }}
           value={`${table.getState().pagination.pageSize}`}
         >
-          <SelectTrigger className="h-8 w-[70px]">
+          <SelectTrigger className="h-8 w-17.5">
             <SelectValue placeholder={table.getState().pagination.pageSize} />
           </SelectTrigger>
           <SelectContent side="top">
@@ -108,7 +108,7 @@ export function DataTablePagination<TData>({
           </SelectContent>
         </Select>
       </div>
-      <div className="flex w-[100px] items-center justify-center font-medium text-sm">
+      <div className="flex w-25 items-center justify-center font-medium text-sm">
         Seite {table.getState().pagination.pageIndex + 1} von{" "}
         {table.getPageCount()}
       </div>
@@ -209,10 +209,10 @@ export function DataTableColumnHeader<TData, TValue>({
   );
 }
 
-type DataTableFilterProps<TData> = {
-  table: TableType<TData>;
+interface DataTableFilterProps<TData> {
   globalFilter: string;
-};
+  table: TableType<TData>;
+}
 
 export function DataTableFilter<TData>({
   table,
