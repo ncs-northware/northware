@@ -1,6 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
+  "$schema": "https://biomejs.dev/schemas/2.5.5/schema.json",
+  "extends": ["ultracite/biome/core", "ultracite/biome/react", "ultracite/biome/next"],
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -14,7 +14,6 @@
   },
   "linter": {
     "rules": {
-      "nursery": { "noLeakedRender": "info" },
       "performance": { "noBarrelFile": "warn" },
       "style": {
         "noMagicNumbers": "info",
