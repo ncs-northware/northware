@@ -30,6 +30,7 @@
   },
   "files": {
     "includes": [
+      "!**/*.svg",
       "!**/node_modules",
       "!**/.turbo",
       "!**/.next",
