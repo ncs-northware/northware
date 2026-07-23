@@ -44,74 +44,69 @@ import { Fragment, useState } from "react";
 
 const data: Payment[] = [
   {
-    id: "m5gr84i9",
     amount: 316,
-    status: "success",
     email: "ken99@example.com",
+    id: "m5gr84i9",
+    status: "success",
   },
   {
-    id: "3u1reuv4",
     amount: 242,
-    status: "success",
     email: "Abe45@example.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@example.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
+    id: "3u1reuv4",
     status: "success",
-    email: "Silas22@example.com",
   },
   {
-    id: "bhqecj4p",
+    amount: 837,
+    email: "Monserrat44@example.com",
+    id: "derv1ws0",
+    status: "processing",
+  },
+  {
+    amount: 874,
+    email: "Silas22@example.com",
+    id: "5kma53ae",
+    status: "success",
+  },
+  {
     amount: 721,
-    status: "failed",
     email: "carmella@example.com",
+    id: "bhqecj4p",
+    status: "failed",
   },
 ];
 
-export type Payment = {
-  id: string;
+export interface Payment {
   amount: number;
-  status: "pending" | "processing" | "success" | "failed";
   email: string;
-};
+  id: string;
+  status: "pending" | "processing" | "success" | "failed";
+}
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <TableHead>
-        <DataTableSelectHeader table={table} />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell>
         <DataTableSelectCell row={row} />
       </TableCell>
     ),
-    enableSorting: false,
     enableHiding: false,
+    enableSorting: false,
+    header: ({ table }) => (
+      <TableHead>
+        <DataTableSelectHeader table={table} />
+      </TableHead>
+    ),
+    id: "select",
   },
   {
     accessorKey: "status",
-    header: ({ column }) => (
-      <TableHead>
-        <DataTableColumnHeader column={column} title="Status" />
-      </TableHead>
-    ),
     cell: ({ row }) => {
       const amount = Number.parseFloat(row.getValue("amount"));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
         currency: "USD",
+        style: "currency",
       }).format(amount);
       return (
         <TableCell>
@@ -129,14 +124,14 @@ export const columns: ColumnDef<Payment>[] = [
         </TableCell>
       );
     },
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Status" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "email",
-    header: ({ column }) => (
-      <TableHead className="hidden lg:table-cell">
-        <DataTableColumnHeader column={column} title="Email" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell>
         <div className="hidden lowercase lg:table-cell">
@@ -144,9 +139,29 @@ export const columns: ColumnDef<Payment>[] = [
         </div>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="Email" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "amount",
+    cell: ({ row }) => {
+      const amount = Number.parseFloat(row.getValue("amount"));
+
+      // Format the amount as a dollar amount
+      const formatted = new Intl.NumberFormat("en-US", {
+        currency: "USD",
+        style: "currency",
+      }).format(amount);
+
+      return (
+        <TableCell className="hidden sm:table-cell">
+          <div className="text-right font-medium">{formatted}</div>
+        </TableCell>
+      );
+    },
     header: ({ column }) => (
       <TableHead className="hidden sm:table-cell">
         <DataTableColumnHeader
@@ -156,30 +171,8 @@ export const columns: ColumnDef<Payment>[] = [
         />
       </TableHead>
     ),
-    cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue("amount"));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return (
-        <TableCell className="hidden sm:table-cell">
-          <div className="text-right font-medium">{formatted}</div>
-        </TableCell>
-      );
-    },
   },
   {
-    id: "actions",
-    enableHiding: false,
-    header: () => (
-      <TableHead className="relative">
-        <span className="sr-only">Edit</span>
-      </TableHead>
-    ),
     cell: ({ row }) => {
       const payment = row.original;
 
@@ -207,6 +200,13 @@ export const columns: ColumnDef<Payment>[] = [
         </TableCell>
       );
     },
+    enableHiding: false,
+    header: () => (
+      <TableHead className="relative">
+        <span className="sr-only">Edit</span>
+      </TableHead>
+    ),
+    id: "actions",
   },
 ];
 export function DataTableDemo() {
@@ -216,22 +216,22 @@ export function DataTableDemo() {
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
-    data,
     columns,
-    onSortingChange: setSorting,
+    data,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     globalFilterFn: "includesString",
-    onGlobalFilterChange: setGlobalFilter,
-    getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
     onRowSelectionChange: setRowSelection,
+    onSortingChange: setSorting,
     state: {
-      globalFilter,
-      sorting,
       columnVisibility,
+      globalFilter,
       rowSelection,
+      sorting,
     },
   });
 
@@ -303,8 +303,8 @@ export function DataTableDemo() {
 
 export function DataTablePaginationDemo() {
   const table = useReactTable({
-    data,
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
@@ -314,8 +314,8 @@ export function DataTablePaginationDemo() {
 export function DataTableFilterDemo() {
   const [globalFilter, setGlobalFilter] = useState("");
   const table = useReactTable({
-    data,
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: "includesString",
@@ -328,8 +328,8 @@ export function DataTableFilterDemo() {
 export function DataTableViewOptionsDemo() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const table = useReactTable({
-    data,
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     state: { columnVisibility },
@@ -351,11 +351,11 @@ export function DataTableColumnHeaderDemo() {
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
-    data,
     columns: demoColumn,
+    data,
     getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
     state: {
       sorting,
     },
@@ -408,17 +408,17 @@ export function DataTableSelectDemo() {
   const [rowSelection, setRowSelection] = useState({});
   const demoColumn: ColumnDef<Payment>[] = [
     {
-      id: "select",
-      header: () => (
-        <TableHead>
-          <DataTableSelectHeader table={table} />
-        </TableHead>
-      ),
       cell: ({ row }) => (
         <TableCell>
           <DataTableSelectCell row={row} />
         </TableCell>
       ),
+      header: () => (
+        <TableHead>
+          <DataTableSelectHeader table={table} />
+        </TableHead>
+      ),
+      id: "select",
     },
     {
       accessorKey: "email",

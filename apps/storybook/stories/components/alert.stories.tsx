@@ -8,17 +8,16 @@ import { CheckCircle2Icon, Terminal } from "@northware/ui/icons/lucide";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-  title: "Components/Alert",
-  component: AlertWrapper,
-  argTypes: {
-    variant: {
-      options: ["default", "destructive", "info", "success", "warning"],
-      control: { type: "select" },
-    },
-  },
   args: {
     variant: "default",
   },
+  argTypes: {
+    variant: {
+      control: { type: "select" },
+      options: ["default", "destructive", "info", "success", "warning"],
+    },
+  },
+  component: AlertWrapper,
 
   render: (args) => (
     <AlertWrapper {...args}>
@@ -28,6 +27,7 @@ const meta = {
       </AlertDescription>
     </AlertWrapper>
   ),
+  title: "Components/Alert",
 } satisfies Meta<typeof AlertWrapper>;
 
 export default meta;
@@ -42,21 +42,24 @@ export const Default: Story = {};
  * Mit der Variante `info` können informative Alerts angezeigt werden
  */
 export const Info: Story = {
+  args: {
+    variant: "info",
+  },
   render: (args) => (
     <AlertWrapper {...args}>
       <AlertTitle>Nur zu deiner Information</AlertTitle>
       <AlertDescription>Es wurden 15 Ergebnisse gefunden.</AlertDescription>
     </AlertWrapper>
   ),
-  args: {
-    variant: "info",
-  },
 };
 
 /**
  * Mit der Variante `destructive` können Alerts angezeigt werden, die einen Fehler melden
  */
 export const Destructive: Story = {
+  args: {
+    variant: "destructive",
+  },
   render: (args) => (
     <AlertWrapper {...args}>
       <AlertTitle>Error</AlertTitle>
@@ -65,15 +68,15 @@ export const Destructive: Story = {
       </AlertDescription>
     </AlertWrapper>
   ),
-  args: {
-    variant: "destructive",
-  },
 };
 
 /**
  * Die Variante `success` zeigt, das eine Aktion erfolgreich war.
  */
 export const Success: Story = {
+  args: {
+    variant: "success",
+  },
   render: (args) => (
     <AlertWrapper {...args}>
       <AlertIcon variant="success" />
@@ -83,15 +86,15 @@ export const Success: Story = {
       </AlertDescription>
     </AlertWrapper>
   ),
-  args: {
-    variant: "success",
-  },
 };
 
 /**
  * Mit der Variante `warning` kann der Nutzer gewarnt werden.
  */
 export const Warning: Story = {
+  args: {
+    variant: "warning",
+  },
   render: (args) => (
     <AlertWrapper {...args}>
       <AlertTitle>Achtung!</AlertTitle>
@@ -100,9 +103,6 @@ export const Warning: Story = {
       </AlertDescription>
     </AlertWrapper>
   ),
-  args: {
-    variant: "warning",
-  },
 };
 
 /**
@@ -110,6 +110,9 @@ export const Warning: Story = {
  */
 
 export const WithAlertIcon: Story = {
+  args: {
+    variant: "default",
+  },
   render: (args) => (
     <AlertWrapper {...args}>
       <AlertIcon variant={args.variant || "default"} />
@@ -119,9 +122,6 @@ export const WithAlertIcon: Story = {
       </AlertDescription>
     </AlertWrapper>
   ),
-  args: {
-    variant: "default",
-  },
 };
 
 /**
@@ -129,6 +129,9 @@ export const WithAlertIcon: Story = {
  */
 
 export const WithCustomIcon: Story = {
+  args: {
+    variant: "default",
+  },
   render: (args) => (
     <AlertWrapper {...args}>
       <Terminal className="size-4" />
@@ -138,9 +141,6 @@ export const WithCustomIcon: Story = {
       </AlertDescription>
     </AlertWrapper>
   ),
-  args: {
-    variant: "default",
-  },
 };
 
 /**

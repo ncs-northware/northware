@@ -10,15 +10,15 @@ import {
 } from "./data-table-demo";
 
 const meta = {
-  title: "Components/DataTable",
   component: DataTableDemo,
   subcomponents: {
-    DataTablePaginationDemo,
-    DataTableFilterDemo,
-    DataTableViewOptionsDemo,
     DataTableColumnHeaderDemo,
+    DataTableFilterDemo,
+    DataTablePaginationDemo,
     DataTableSelectDemo,
+    DataTableViewOptionsDemo,
   },
+  title: "Components/DataTable",
 } satisfies Meta<typeof DataTableDemo>;
 
 export default meta;

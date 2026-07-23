@@ -7,10 +7,10 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
  */
 
 const meta = {
-  title: "Components/Headline",
+  args: { children: "The quick brown fox jumps over the lazy dog." },
   component: Headline,
   tags: ["autodocs"],
-  args: { children: "The quick brown fox jumps over the lazy dog." },
+  title: "Components/Headline",
 } satisfies Meta<typeof Headline>;
 
 export default meta;

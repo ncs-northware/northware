@@ -2,13 +2,12 @@ import { ThemeSwitch } from "@northware/ui/components/theme-switch";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-  title: "Components/ThemeSwitch",
-  component: ThemeSwitch,
-  parameters: { layout: "centered" },
-
   args: {
     className: "group storybook-lightTheme",
   },
+  component: ThemeSwitch,
+  parameters: { layout: "centered" },
+  title: "Components/ThemeSwitch",
 } satisfies Meta<typeof ThemeSwitch>;
 
 export default meta;
@@ -23,11 +22,11 @@ export const Light: Story = {
   argTypes: {
     className: {
       control: {
-        type: "radio",
         labels: {
-          "group storybook-lightTheme": "Light Theme",
           "group storybook-darkTheme": "Dark Theme",
+          "group storybook-lightTheme": "Light Theme",
         },
+        type: "radio",
       },
       options: ["group storybook-lightTheme", "group storybook-darkTheme"],
     },
@@ -39,6 +38,6 @@ export const Light: Story = {
  */
 
 export const Dark: Story = {
-  argTypes: { ...Light.argTypes },
   args: { className: "group storybook-darkTheme" },
+  argTypes: { ...Light.argTypes },
 };

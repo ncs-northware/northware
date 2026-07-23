@@ -13,10 +13,6 @@ const getAbsolutePath = (value: string) =>
   dirname(require.resolve(join(value, "package.json")));
 
 const config: StorybookConfig = {
-  stories: [
-    "../stories/**/*.mdx",
-    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-  ],
   addons: [
     getAbsolutePath("@storybook/addon-docs"),
     getAbsolutePath("@storybook/addon-themes"),
@@ -26,5 +22,9 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ["../public"],
+  stories: [
+    "../stories/**/*.mdx",
+    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+  ],
 };
 export default config;

@@ -2,21 +2,21 @@ import { BrandIcon } from "@northware/ui/components/brand";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-  title: "Components/BrandIcon",
-  component: BrandIcon,
+  args: {
+    className: "h-20",
+    service: "cockpit",
+  },
   argTypes: {
     service: {
       control: { type: "select" },
       options: ["cockpit", "trader", "finance", "docs"],
     },
   },
-  args: {
-    service: "cockpit",
-    className: "h-20",
-  },
+  component: BrandIcon,
   parameters: {
     layout: "centered",
   },
+  title: "Components/BrandIcon",
 } satisfies Meta<typeof BrandIcon>;
 
 export default meta;

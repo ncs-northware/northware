@@ -8,6 +8,37 @@ import { fonts } from "@northware/ui/lib/fonts";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
 const preview: Preview = {
+  decorators: [
+    withThemeByClassName({
+      defaultTheme: "CockpitLight",
+      themes: {
+        CockpitDark: "CockpitDark",
+        CockpitLight: "CockpitLight",
+        FinanceDark: "FinanceDark",
+        FinanceLight: "FinanceLight",
+        TraderDark: "TraderDark",
+        TraderLight: "TraderLight",
+      },
+    }),
+    (Story) => (
+      <div className={`bg-background ${fonts} p-2`}>
+        <ThemeProvider
+          defaultTheme="CockpitLight"
+          enableSystem={false}
+          themes={[
+            "CockpitLight",
+            "CockpitDark",
+            "FinanceLight",
+            "FinanceDark",
+            "TraderLight",
+            "TraderDark",
+          ]}
+        >
+          <Story />
+        </ThemeProvider>
+      </div>
+    ),
+  ],
   parameters: {
     controls: {
       matchers: {
@@ -32,38 +63,6 @@ const preview: Preview = {
       },
     },
   },
-
-  decorators: [
-    withThemeByClassName({
-      themes: {
-        CockpitLight: "CockpitLight",
-        CockpitDark: "CockpitDark",
-        FinanceLight: "FinanceLight",
-        FinanceDark: "FinanceDark",
-        TraderLight: "TraderLight",
-        TraderDark: "TraderDark",
-      },
-      defaultTheme: "CockpitLight",
-    }),
-    (Story) => (
-      <div className={`bg-background ${fonts} p-2`}>
-        <ThemeProvider
-          defaultTheme="CockpitLight"
-          enableSystem={false}
-          themes={[
-            "CockpitLight",
-            "CockpitDark",
-            "FinanceLight",
-            "FinanceDark",
-            "TraderLight",
-            "TraderDark",
-          ]}
-        >
-          <Story />
-        </ThemeProvider>
-      </div>
-    ),
-  ],
 };
 
 export default preview;
