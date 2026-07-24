@@ -13,6 +13,7 @@
   "vulnerabilityAlerts": {
     "labels": ["security", "dependencies"]
   },
+  "minimumReleaseAge": "1440 minutes",
   "dependencyDashboardLabels": ["dependencies", "github-management"],
   "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard",
   "packageRules": [
