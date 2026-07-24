@@ -1,13 +1,13 @@
 {
   "devDependencies": {
-    "@biomejs/biome": "2.4.6",
-    "@changesets/cli": "^2.30.0",
-    "@commitlint/cli": "^20.4.3",
-    "@commitlint/config-conventional": "^20.4.3",
-    "@commitlint/prompt-cli": "^20.4.3",
-    "@commitlint/types": "^20.4.3",
+    "@biomejs/biome": "2.5.5",
+    "@changesets/cli": "^2.31.1",
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "@commitlint/prompt-cli": "^20.5.3",
+    "@commitlint/types": "^20.5.0",
     "@northware/tsconfig": "workspace:",
-    "turbo": "^2.8.14",
+    "turbo": "^2.10.6",
     "typescript": "^5.9.3",
     "ultracite": "6.5.1"
   },
