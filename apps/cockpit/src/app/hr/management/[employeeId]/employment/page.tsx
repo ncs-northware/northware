@@ -55,27 +55,27 @@ export default async function Page({
   return (
     <EmployeeSidebar
       breadcrumbs={[
-        { label: "HR", href: "/hr" },
-        { label: "HR Management", href: "/hr/management" },
+        { href: "/hr", label: "HR" },
+        { href: "/hr/management", label: "HR Management" },
         {
-          label: `${employeeData.employee.employeeId} / ${employeeData.employee.sirName}, ${employeeData.employee.firstName}`,
           href: `/hr/management/${employeeId}`,
+          label: `${employeeData.employee.employeeId} / ${employeeData.employee.sirName}, ${employeeData.employee.firstName}`,
         },
         {
-          label: "Arbeitsverhältnisse",
-          href: `/hr/management/${employeeId}/employment`,
           active: true,
+          href: `/hr/management/${employeeId}/employment`,
+          label: "Arbeitsverhältnisse",
         },
       ]}
       id={employeeId}
     >
       <Headline level="h1">
-        Arbeitsverhältnisse von {employeeData.employee?.firstName}{" "}
-        {employeeData.employee?.sirName}
+        Arbeitsverhältnisse von {employeeData.employee.firstName}{" "}
+        {employeeData.employee.sirName}
       </Headline>
       <EmploymentsList
         columns={columns}
-        data={employmentsData.employments || []}
+        data={employmentsData.employments}
         employeeId={employeeId}
       />
     </EmployeeSidebar>

@@ -60,12 +60,13 @@ export async function SidebarLayout({
       const url = process.env[envKey as keyof typeof process.env];
 
       return {
+        allowed: await userHasPermission([`${app.slug}::app.read`]),
         slug: app.slug,
         url,
-        allowed: await userHasPermission([`${app.slug}::app.read`]),
       };
     })
   );
+
   return (
     <AppPermissionProvider apps={apps} service={service}>
       <SidebarProvider defaultOpen={defaultOpen}>
@@ -81,12 +82,14 @@ export async function SidebarLayout({
             <div className="flex w-full justify-between px-4">
               <div className="flex items-center gap-2">
                 <SidebarTrigger
-                  className={buttonVariants({ variant: "ghost", size: "icon" })}
+                  className={buttonVariants({ size: "icon", variant: "ghost" })}
                 />
-                {breadcrumbs && (
+                {breadcrumbs && breadcrumbs.length > 0 && (
                   <Separator className="mr-2 h-4" orientation="vertical" />
                 )}
-                {breadcrumbs && <AutoBreadcrumbs breadcrumbs={breadcrumbs} />}
+                {breadcrumbs && breadcrumbs.length > 0 && (
+                  <AutoBreadcrumbs breadcrumbs={breadcrumbs} />
+                )}
               </div>
               <ThemeSwitch />
             </div>
@@ -99,11 +102,11 @@ export async function SidebarLayout({
 }
 
 interface MainSidebarType extends React.ComponentProps<typeof Sidebar> {
-  service: ServiceType;
+  apps: MenuApps[];
   mainLabel?: string;
+  service: ServiceType;
   subLabel?: string;
   subMenu?: SubMenuItem[];
-  apps: MenuApps[];
 }
 
 async function MainSidebar({
@@ -122,7 +125,9 @@ async function MainSidebar({
         <AppSwitch apps={apps} service={service} />
       </SidebarHeader>
       <SidebarContent>
-        {subMenu && <SubNav subLabel={subLabel} subMenu={subMenu} />}
+        {subMenu && subMenu.length > 0 && (
+          <SubNav subLabel={subLabel} subMenu={subMenu} />
+        )}
         <NavMain mainLabel={mainLabel} menuItems={menuItems} />
       </SidebarContent>
       <SidebarFooter>
@@ -133,18 +138,18 @@ async function MainSidebar({
   );
 }
 
-type MenuItem = {
-  itemId: string;
-  title: string;
-  href: string;
+interface MenuItem {
   childOf: string | null;
+  href: string;
+  itemId: string;
   permissionKey: string | null;
-};
+  title: string;
+}
 
-type MenuType = {
-  topLevelItems: MenuItem[];
+interface MenuType {
   childItems: (parent: string) => MenuItem[];
-};
+  topLevelItems: MenuItem[];
+}
 
 function NavMain({
   menuItems,
@@ -155,7 +160,9 @@ function NavMain({
 }) {
   return (
     <SidebarGroup>
-      {mainLabel && <SidebarGroupLabel>{mainLabel}</SidebarGroupLabel>}
+      {mainLabel !== undefined && (
+        <SidebarGroupLabel>{mainLabel}</SidebarGroupLabel>
+      )}
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -212,11 +219,11 @@ function NavMain({
   );
 }
 
-type SubMenuItem = {
-  title: string;
-  href: string;
+interface SubMenuItem {
   exactMatch?: boolean;
-};
+  href: string;
+  title: string;
+}
 
 function SubNav({
   subLabel,

@@ -20,17 +20,17 @@ import type {
 import type { TSingleUser } from "@/lib/rbac-types";
 
 /****************** Clerk User **********************/
-type ClerkError = {
+interface ClerkError {
   errors: Array<{
     code: string;
     message: string;
     meta: { paramName: string };
   }>;
-};
+}
 
 function handleClerkError(typesafeError: ClerkError) {
   const errorMessages: string[] = [];
-  if (typesafeError.errors) {
+  if (typesafeError.errors.length > 0) {
     for (const error of typesafeError.errors) {
       switch (error.code) {
         case "form_password_length_too_short":
@@ -102,20 +102,20 @@ export async function getUserList(): Promise<
           (email) => email.id === user.primaryEmailAddressId
         )?.emailAddress;
         return {
-          id: user.id,
-          fullName: user.fullName,
           email: primaryEmail,
+          fullName: user.fullName,
+          id: user.id,
           username: user.username,
         };
       });
     return { success: true, users };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
@@ -131,8 +131,8 @@ export const getSingleUser = cache(
       const response = await client.users.getUser(id);
       const userEmailAddresses = response.emailAddresses
         .map((email) => ({
-          id: email.id,
           emailAddress: email.emailAddress,
+          id: email.id,
           verificationStatus: email.verification?.status,
         }))
         .sort((a, b) => {
@@ -146,24 +146,24 @@ export const getSingleUser = cache(
           return a.emailAddress.localeCompare(b.emailAddress);
         });
       return {
-        success: true,
         response: {
-          id: response.id,
-          firstName: response.firstName,
-          lastName: response.lastName,
-          fullName: response.fullName,
-          username: response.username,
           emailAddresses: userEmailAddresses,
+          firstName: response.firstName,
+          fullName: response.fullName,
+          id: response.id,
+          lastName: response.lastName,
           primaryEmailAddressId: response.primaryEmailAddressId,
+          username: response.username,
         },
+        success: true,
       };
     } catch (error: unknown) {
       return {
-        success: false,
         error:
           error instanceof Error
             ? error
             : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+        success: false,
       };
     }
   }
@@ -174,11 +174,11 @@ export async function createUser(formData: TCreateUserFormSchema) {
   try {
     const client = await clerkClient();
     const user = await client.users.createUser({
+      emailAddress: [emailAddress],
       firstName,
       lastName,
-      username,
-      emailAddress: [emailAddress],
       password,
+      username,
     });
     return user.id;
   } catch (error) {
@@ -189,24 +189,24 @@ export async function createUser(formData: TCreateUserFormSchema) {
 
 export async function updateUser(formData: TUpdateUserFormSchema, id?: string) {
   if (typeof id === "undefined") {
-    new Error(
+    throw new Error(
       "Beim Aufruf der Funktion wurde nicht angegeben, welche Id der User hat."
     );
-  } else {
-    const { username, firstName, lastName } = formData;
+  }
 
-    try {
-      const client = await clerkClient();
-      await client.users.updateUser(id, {
-        username,
-        firstName,
-        lastName,
-      });
-      revalidatePath("/user");
-    } catch (error) {
-      const typesafeError = error as ClerkError;
-      handleClerkError(typesafeError);
-    }
+  const { username, firstName, lastName } = formData;
+
+  try {
+    const client = await clerkClient();
+    await client.users.updateUser(id, {
+      firstName,
+      lastName,
+      username,
+    });
+    revalidatePath("/user");
+  } catch (error) {
+    const typesafeError = error as ClerkError;
+    handleClerkError(typesafeError);
   }
 }
 
@@ -235,24 +235,24 @@ export async function createEmailAddress(
   userId?: string
 ) {
   if (typeof userId === "undefined") {
-    new Error(
+    throw new Error(
       "Beim Aufruf der Funktion wurde nicht angegeben, welche Id der User hat."
     );
-  } else {
-    const { emailAddress, verified, primary } = formData;
-    try {
-      const client = await clerkClient();
-      await client.emailAddresses.createEmailAddress({
-        userId,
-        emailAddress,
-        verified,
-        primary,
-      });
-      revalidatePath("/user");
-    } catch (error) {
-      const typesafeError = error as ClerkError;
-      handleClerkError(typesafeError);
-    }
+  }
+
+  const { emailAddress, verified, primary } = formData;
+  try {
+    const client = await clerkClient();
+    await client.emailAddresses.createEmailAddress({
+      emailAddress,
+      primary,
+      userId,
+      verified,
+    });
+    revalidatePath("/user");
+  } catch (error) {
+    const typesafeError = error as ClerkError;
+    handleClerkError(typesafeError);
   }
 }
 
@@ -296,23 +296,25 @@ export async function updatePassword(
   formData: TUpdatePasswordFormSchema
 ) {
   if (typeof id === "undefined") {
-    new Error(
+    throw new Error(
       "Beim Aufruf der Funktion wurde nicht angegeben, welche ID der User hat."
     );
-  } else if (formData.newPassword === formData.confirmPassword) {
-    try {
-      const client = await clerkClient();
-      await client.users.updateUser(id, {
-        password: formData.newPassword,
-        skipPasswordChecks: formData.skipChecks,
-        signOutOfOtherSessions: formData.signOutSessions,
-      });
-      revalidatePath("/user");
-    } catch (error) {
-      const typesafeError = error as ClerkError;
-      handleClerkError(typesafeError);
-    }
-  } else {
-    new Error("Die eingegebenen Passwörter stimmen nicht überein.");
+  }
+
+  if (formData.newPassword !== formData.confirmPassword) {
+    throw new Error("Die eingegebenen Passwörter stimmen nicht überein.");
+  }
+
+  try {
+    const client = await clerkClient();
+    await client.users.updateUser(id, {
+      password: formData.newPassword,
+      signOutOfOtherSessions: formData.signOutSessions,
+      skipPasswordChecks: formData.skipChecks,
+    });
+    revalidatePath("/user");
+  } catch (error) {
+    const typesafeError = error as ClerkError;
+    handleClerkError(typesafeError);
   }
 }

@@ -40,13 +40,13 @@ export function EmployeeList<TData, TValue>({
 }) {
   const [globalFilter, setGlobalFilter] = useState("");
   const table = useReactTable({
-    data,
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
-    globalFilterFn: "includesString",
-    getPaginationRowModel: getPaginationRowModel(),
-    onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    globalFilterFn: "includesString",
+    onGlobalFilterChange: setGlobalFilter,
     state: { globalFilter },
   });
 
@@ -127,8 +127,8 @@ export function EmploymentsList<TData, TValue>({
   employeeId: number;
 }) {
   const table = useReactTable({
-    data,
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
@@ -141,7 +141,7 @@ export function EmploymentsList<TData, TValue>({
               asChild
               className={cn(
                 "border border-transparent [a]:hover:border-border",
-                row.getValue("contractEnd") != null &&
+                row.getValue("contractEnd") !== null &&
                   (row.getValue("contractEnd") as Date) < new Date()
                   ? "text-muted-foreground"
                   : ""
@@ -155,7 +155,7 @@ export function EmploymentsList<TData, TValue>({
                 <div className="flex flex-1 flex-col gap-1">
                   <ItemTitle>
                     {row.getValue("position")}
-                    {row.getValue("contractEnd") != null &&
+                    {row.getValue("contractEnd") !== null &&
                     (row.getValue("contractEnd") as Date) < new Date() ? (
                       <Badge variant="secondary">
                         Arbeitsverhältnis beendet
@@ -174,7 +174,7 @@ export function EmploymentsList<TData, TValue>({
                       locale: de,
                     })}{" "}
                     -{" "}
-                    {row.getValue("contractEnd") == null
+                    {row.getValue("contractEnd") === null
                       ? ""
                       : formatDate(row.getValue("contractEnd"), "PPP", {
                           locale: de,

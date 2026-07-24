@@ -9,11 +9,11 @@ import { source } from "@/lib/source";
 
 const baseOptions: BaseLayoutProps = {
   githubUrl: "https://github.com/ncs-northware/northware",
+  // see https://fumadocs.dev/docs/ui/navigation/links
+  links: [],
   nav: {
     title: <Brand service="docs" />,
   },
-  // see https://fumadocs.dev/docs/ui/navigation/links
-  links: [],
 };
 
 export default function Layout({ children }: { readonly children: ReactNode }) {

@@ -109,14 +109,14 @@ export default function CreateUserForm() {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TCreateUserFormSchema>({
-    resolver: zodResolver(CreateUserFormSchema),
     defaultValues: {
+      emailAddress: "",
       firstName: "",
       lastName: "",
-      emailAddress: "",
-      username: "",
       password: "",
+      username: "",
     },
+    resolver: zodResolver(CreateUserFormSchema),
   });
 
   const onSubmit: SubmitHandler<TCreateUserFormSchema> = async (data) => {
@@ -250,12 +250,12 @@ export default function CreateUserForm() {
 export function UpdateUserForm({ user }: { user?: TSingleUser }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TUpdateUserFormSchema>({
-    resolver: zodResolver(UpdateUserFromSchema),
     defaultValues: {
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
       username: user?.username || "",
     },
+    resolver: zodResolver(UpdateUserFromSchema),
   });
 
   const onSubmit: SubmitHandler<TUpdateUserFormSchema> = async (data) => {
@@ -498,12 +498,12 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const form = useForm<TCreateEMailAddressFormSchema>({
-    resolver: zodResolver(CreateEMailAddressFormSchema),
     defaultValues: {
       emailAddress: "",
-      verified: true,
       primary: false,
+      verified: true,
     },
+    resolver: zodResolver(CreateEMailAddressFormSchema),
   });
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -623,13 +623,13 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<TUpdatePasswordFormSchema>({
-    resolver: zodResolver(UpdatePasswordFormSchema),
     defaultValues: {
-      newPassword: "",
       confirmPassword: "",
+      newPassword: "",
       signOutSessions: false,
       skipChecks: false,
     },
+    resolver: zodResolver(UpdatePasswordFormSchema),
   });
 
   const handleOpenChange = (isOpen: boolean) => {
@@ -819,11 +819,11 @@ export function UserDeleteButton({
 
 /********************* User Roles *******************************************/
 
-type RolesFormProps = {
+interface RolesFormProps {
   rolesResponse: TRoleListResponse;
-  userRolesResponse: (string | undefined)[];
   userId: string;
-};
+  userRolesResponse: (string | undefined)[];
+}
 
 export function UpdateUserRolesForm({
   rolesResponse,
@@ -833,10 +833,10 @@ export function UpdateUserRolesForm({
   const [errors, setErrors] = useState<string[]>([]);
   const [filterValue, setFilterValue] = useState<string>("");
   const form = useForm<TUpdateRoleSchema>({
-    resolver: zodResolver(UpdateUserRoleFormSchema),
     defaultValues: {
       roles: userRolesResponse,
     },
+    resolver: zodResolver(UpdateUserRoleFormSchema),
   });
 
   if (!rolesResponse.success) {
@@ -845,7 +845,7 @@ export function UpdateUserRolesForm({
 
   async function onSubmit(data: TUpdateRoleSchema) {
     try {
-      await updateUserRoles({ data, userRolesResponse, userId });
+      await updateUserRoles({ data, userId, userRolesResponse });
       toast.success("Die Rollen des Benutzers wurden aktualisiert.");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -973,10 +973,10 @@ export function CreateUserRolesForm({
   const [errors, setErrors] = useState<string[]>([]);
   const [filterValue, setFilterValue] = useState<string>("");
   const form = useForm<TUpdateRoleSchema>({
-    resolver: zodResolver(UpdateUserRoleFormSchema),
     defaultValues: {
       roles: userRolesResponse,
     },
+    resolver: zodResolver(UpdateUserRoleFormSchema),
   });
 
   if (!rolesResponse.success) {
@@ -985,7 +985,7 @@ export function CreateUserRolesForm({
 
   async function onSubmit(data: TUpdateRoleSchema) {
     try {
-      await updateUserRoles({ data, userRolesResponse, userId });
+      await updateUserRoles({ data, userId, userRolesResponse });
       router.push(`/admin/user/create/${userId}/permissions`);
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -1111,11 +1111,11 @@ export function CreateUserRolesForm({
   );
 }
 
-type PermissionsFormProps = {
-  permissionsResponse: TPermissionListResponse;
+interface PermissionsFormProps {
   extraPermissionsResponse: (string | undefined)[];
+  permissionsResponse: TPermissionListResponse;
   userId: string;
-};
+}
 
 export function UpdateUserPermissionsForm({
   permissionsResponse,
@@ -1126,8 +1126,8 @@ export function UpdateUserPermissionsForm({
   const [filterValue, setFilterValue] = useState<string>("");
 
   const form = useForm<TUpdatePermissionSchema>({
-    resolver: zodResolver(UserUpdatePermissionsFormSchema),
     defaultValues: { permissions: extraPermissionsResponse },
+    resolver: zodResolver(UserUpdatePermissionsFormSchema),
   });
 
   if (!permissionsResponse.success) {
@@ -1246,8 +1246,8 @@ export function CreateUserPermissionsForm({
   const [filterValue, setFilterValue] = useState<string>("");
 
   const form = useForm<TUpdatePermissionSchema>({
-    resolver: zodResolver(UserUpdatePermissionsFormSchema),
     defaultValues: { permissions: extraPermissionsResponse },
+    resolver: zodResolver(UserUpdatePermissionsFormSchema),
   });
 
   if (!permissionsResponse.success) {

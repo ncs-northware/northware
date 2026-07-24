@@ -17,13 +17,13 @@ import type {
 
 /**** Liste persönlicher Mitarbeiterdaten *****************************************/
 
-export type EmployeeItem = {
+export interface EmployeeItem {
+  activeContracts: number;
   employeeId: number | null;
   firstName: string | null;
   sirName: string | null;
-  activeContracts: number;
   terminatedContracts: number;
-};
+}
 
 export async function getEmployeeList(): Promise<
   | { success: true; employees: EmployeeItem[] }
@@ -32,9 +32,6 @@ export async function getEmployeeList(): Promise<
   try {
     const result = await db
       .select({
-        employeeId: employeesTable.employeeId,
-        firstName: employeesTable.firstName,
-        sirName: employeesTable.sirName,
         activeContracts: db.$count(
           employmentsTable,
           and(
@@ -45,6 +42,9 @@ export async function getEmployeeList(): Promise<
             )
           )
         ),
+        employeeId: employeesTable.employeeId,
+        firstName: employeesTable.firstName,
+        sirName: employeesTable.sirName,
         terminatedContracts: db.$count(
           employmentsTable,
           and(
@@ -57,30 +57,30 @@ export async function getEmployeeList(): Promise<
       .orderBy(employeesTable.sirName, employeesTable.firstName);
 
     return {
-      success: true,
       employees: result,
+      success: true,
     };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
 
 /**** Liste von Arbeitsverhältnissen zu einem einzelnen Mitarbeiter *************************/
 
-export type EmploymentListItem = {
-  recordId: number;
-  position: string;
+export interface EmploymentListItem {
+  contractEnd: Date | null;
+  contractStart: Date;
   departmentName: string | null;
   employer: string | null;
-  contractStart: Date;
-  contractEnd: Date | null;
-};
+  position: string;
+  recordId: number;
+}
 
 export async function getEmploymentsList(
   id: number
@@ -91,12 +91,12 @@ export async function getEmploymentsList(
   try {
     const result = await db
       .select({
-        recordId: employmentsTable.recordId,
-        position: employmentsTable.position,
+        contractEnd: employmentsTable.contractEnd,
+        contractStart: employmentsTable.contractStart,
         departmentName: departmentsTable.departmentName,
         employer: companiesTable.companyName,
-        contractStart: employmentsTable.contractStart,
-        contractEnd: employmentsTable.contractEnd,
+        position: employmentsTable.position,
+        recordId: employmentsTable.recordId,
       })
       .from(employmentsTable)
       .leftJoin(
@@ -114,27 +114,27 @@ export async function getEmploymentsList(
       );
 
     return {
-      success: true,
       employments: result,
+      success: true,
     };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
 
 /**** Einzelne persönliche Mitarbeiterdaten **********************************************/
 
-type BasicEmployee = {
+interface BasicEmployee {
   employeeId: number;
-  sirName: string;
   firstName: string;
-};
+  sirName: string;
+}
 
 export async function getBasicEmployee(
   id: number
@@ -152,36 +152,36 @@ export async function getBasicEmployee(
       .where(eq(employeesTable.employeeId, id));
 
     return {
-      success: true,
       employee: result[0],
+      success: true,
     };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
 
-export type EmployeePersonal = {
-  employeeId: number;
-  sirName: string;
-  firstName: string;
-  sex: string;
+export interface EmployeePersonal {
   birthday: Date | null;
-  street: string | null;
-  zipcode: string | null;
   city: string | null;
+  employeeId: number;
+  firstName: string;
+  mailWork: string;
   meritalStatus: string;
+  phoneWork: string;
   religion: string;
+  sex: string;
+  sirName: string;
+  street: string | null;
   taxClass: string;
   taxKids: number;
-  mailWork: string;
-  phoneWork: string;
-};
+  zipcode: string | null;
+}
 
 export async function getEmployeePersonal(
   id: number
@@ -196,16 +196,16 @@ export async function getEmployeePersonal(
       .where(eq(employeesTable.employeeId, id));
 
     return {
-      success: true,
       employee: result[0],
+      success: true,
     };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
@@ -217,19 +217,19 @@ export async function updateEmployeePersonal(
     await db
       .update(employeesTable)
       .set({
-        sirName: formData.sirName,
-        firstName: formData.firstName,
-        sex: formData.sex,
         birthday: formData.birthday,
-        street: formData.street,
-        zipcode: formData.zipcode,
         city: formData.city,
+        firstName: formData.firstName,
+        mailWork: formData.mailWork,
         meritalStatus: formData.meritalStatus,
+        phoneWork: formData.phoneWork,
         religion: formData.religion,
+        sex: formData.sex,
+        sirName: formData.sirName,
+        street: formData.street,
         taxClass: formData.taxClass,
         taxKids: formData.taxKids,
-        phoneWork: formData.phoneWork,
-        mailWork: formData.mailWork,
+        zipcode: formData.zipcode,
       })
       .where(eq(employeesTable.employeeId, formData.employeeId));
     revalidatePath("hr/management");
@@ -240,19 +240,19 @@ export async function updateEmployeePersonal(
 
 /*** Einzelne Arbeitsverhältnisse ***********************************************************/
 
-export type EmploymentItem = {
-  employeeId: number;
-  position: string;
-  departmentId: number | null;
-  department: string | null;
-  employerId: number | null;
-  employer: string | null;
-  contractStart: Date;
+export interface EmploymentItem {
   contractEnd: Date | null;
-  paygrade: string;
+  contractStart: Date;
+  department: string | null;
+  departmentId: number | null;
   educationStage: number;
+  employeeId: number;
+  employer: string | null;
+  employerId: number | null;
   experienceLevel: string;
-};
+  paygrade: string;
+  position: string;
+}
 
 export async function getEmployment(
   id: number
@@ -263,17 +263,17 @@ export async function getEmployment(
   try {
     const result = await db
       .select({
-        employeeId: employmentsTable.employeeId,
-        position: employmentsTable.position,
-        departmentId: departmentsTable.recordId,
-        department: departmentsTable.departmentName,
-        employerId: companiesTable.companyId,
-        employer: companiesTable.companyName,
-        contractStart: employmentsTable.contractStart,
         contractEnd: employmentsTable.contractEnd,
-        paygrade: employmentsTable.paygrade,
+        contractStart: employmentsTable.contractStart,
+        department: departmentsTable.departmentName,
+        departmentId: departmentsTable.recordId,
         educationStage: employmentsTable.educationStage,
+        employeeId: employmentsTable.employeeId,
+        employer: companiesTable.companyName,
+        employerId: companiesTable.companyId,
         experienceLevel: employmentsTable.experienceLevel,
+        paygrade: employmentsTable.paygrade,
+        position: employmentsTable.position,
       })
       .from(employmentsTable)
       .leftJoin(
@@ -286,29 +286,29 @@ export async function getEmployment(
       )
       .where(eq(employmentsTable.recordId, id));
     return {
-      success: true,
       employment: result[0],
+      success: true,
     };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
 
-export type BasicDepartment = {
-  recordId: number;
+export interface BasicDepartment {
   departmentName: string;
-};
+  recordId: number;
+}
 
-export type BasicCompany = {
+export interface BasicCompany {
   companyId: number;
   companyName: string;
-};
+}
 
 export async function getEmploymentContext(): Promise<
   | {
@@ -321,8 +321,8 @@ export async function getEmploymentContext(): Promise<
   try {
     const departmentResult = await db
       .select({
-        recordId: departmentsTable.recordId,
         departmentName: departmentsTable.departmentName,
+        recordId: departmentsTable.recordId,
       })
       .from(departmentsTable)
       .orderBy(departmentsTable.recordId);
@@ -334,17 +334,17 @@ export async function getEmploymentContext(): Promise<
       .from(companiesTable)
       .orderBy(companiesTable.companyId);
     return {
-      success: true,
-      departments: departmentResult,
       companies: companyResult,
+      departments: departmentResult,
+      success: true,
     };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
@@ -358,15 +358,15 @@ export async function updateEmployment(
     await db
       .update(employmentsTable)
       .set({
-        employeeId: employee,
-        position: formData.position,
-        department: Number(formData.department),
-        employer: Number(formData.employer),
-        contractStart: formData.contractStart,
         contractEnd: formData.contractEnd,
-        paygrade: formData.paygrade,
+        contractStart: formData.contractStart,
+        department: Number(formData.department),
         educationStage: Number(formData.educationStage),
+        employeeId: employee,
+        employer: Number(formData.employer),
         experienceLevel: formData.experienceLevel,
+        paygrade: formData.paygrade,
+        position: formData.position,
       })
       .where(eq(employmentsTable.recordId, recordId));
     revalidatePath("hr/management");

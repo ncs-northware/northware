@@ -9,21 +9,16 @@ import {
 import { TableCell, TableHead } from "@northware/ui/components/shadcn/table";
 import type { ColumnDef } from "@tanstack/react-table";
 
-export type UserRow = {
-  id: string;
-  fullName: string | null;
+export interface UserRow {
   email: string | undefined;
+  fullName: string | null;
+  id: string;
   username: string | null;
-};
+}
 
 export const columns: ColumnDef<UserRow>[] = [
   {
     accessorKey: "fullName",
-    header: ({ column }) => (
-      <TableHead>
-        <DataTableColumnHeader column={column} title="Name" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="w-full max-w-0 font-medium sm:w-auto sm:max-w-none">
         {row.original.fullName}
@@ -39,31 +34,36 @@ export const columns: ColumnDef<UserRow>[] = [
         </TableDescriptionList>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Name" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "email",
-    header: ({ column }) => (
-      <TableHead className="hidden lg:table-cell">
-        <DataTableColumnHeader column={column} title="E-Mail Adresse" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden truncate lg:table-cell">
         {row.original.email}
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="E-Mail Adresse" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "username",
-    header: ({ column }) => (
-      <TableHead className="hidden sm:table-cell">
-        <DataTableColumnHeader column={column} title="Benutzername" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden sm:table-cell">
         {row.original.username}
       </TableCell>
+    ),
+    header: ({ column }) => (
+      <TableHead className="hidden sm:table-cell">
+        <DataTableColumnHeader column={column} title="Benutzername" />
+      </TableHead>
     ),
   },
 ];

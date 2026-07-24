@@ -41,23 +41,23 @@ import { parseErrorMessages } from "@/lib/rbac-schema";
 export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TEmployeePersonalFormSchema>({
-    resolver: zodResolver(employeePersonalFormSchema),
     defaultValues: {
-      employeeId: data.employeeId,
-      sirName: data.sirName,
-      firstName: data.firstName,
-      sex: data.sex,
       birthday: data.birthday,
-      street: data.street,
-      zipcode: data.zipcode,
       city: data.city,
+      employeeId: data.employeeId,
+      firstName: data.firstName,
+      mailWork: data.mailWork,
       meritalStatus: data.meritalStatus,
+      phoneWork: data.phoneWork,
       religion: data.religion,
+      sex: data.sex,
+      sirName: data.sirName,
+      street: data.street,
       taxClass: data.taxClass,
       taxKids: data.taxKids,
-      phoneWork: data.phoneWork,
-      mailWork: data.mailWork,
+      zipcode: data.zipcode,
     },
+    resolver: zodResolver(employeePersonalFormSchema),
   });
 
   async function onSubmit(formData: TEmployeePersonalFormSchema) {
@@ -86,7 +86,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
               disabled
               id="employeeId"
             />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            {fieldState.invalid === true && (
+              <FieldError errors={[fieldState.error]} />
+            )}
           </Field>
         )}
       />
@@ -104,7 +106,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 id="sirName"
                 placeholder="Mustermann"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -120,7 +124,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 id="firstName"
                 placeholder="Max"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -133,7 +139,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="birthday">Geburtsdatum</FieldLabel>
               <DateInput field={field} fieldState={fieldState} />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -157,7 +165,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                   <SelectItem value="diverse">divers</SelectItem>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -175,7 +185,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
               placeholder="Musterstraße 1"
               value={field.value || ""}
             />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            {fieldState.invalid === true && (
+              <FieldError errors={[fieldState.error]} />
+            )}
           </Field>
         )}
       />
@@ -193,7 +205,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 placeholder="12345"
                 value={field.value || ""}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -210,7 +224,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 placeholder="Musterstadt"
                 value={field.value || ""}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -241,7 +257,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                   <SelectItem value="verwitwet">verwitwet</SelectItem>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -266,7 +284,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                   <SelectItem value="keine">keine</SelectItem>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -305,7 +325,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                   </SelectItem>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -333,7 +355,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                   <SelectItem value="6">3,0 Kinderfreibeträge</SelectItem>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -353,7 +377,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 placeholder="mmuster@test.de"
                 type="email"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -370,7 +396,9 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 placeholder="0123 456789-10"
                 type="tel"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -408,17 +436,17 @@ export function UpdateEmploymentForm({
 }) {
   const [errors, setErrors] = useState<string[]>([]);
   const form = useForm<TUpdateEmploymentFormSchema>({
-    resolver: zodResolver(updateEmploymentFormSchema),
     defaultValues: {
-      position: data.position,
-      department: data.departmentId?.toString(),
-      employer: data.employerId?.toString(),
-      contractStart: data.contractStart,
       contractEnd: data.contractEnd,
-      paygrade: data.paygrade,
+      contractStart: data.contractStart,
+      department: data.departmentId?.toString(),
       educationStage: data.educationStage.toString(),
+      employer: data.employerId?.toString(),
       experienceLevel: data.experienceLevel,
+      paygrade: data.paygrade,
+      position: data.position,
     },
+    resolver: zodResolver(updateEmploymentFormSchema),
   });
 
   async function onSubmit(formData: TUpdateEmploymentFormSchema) {
@@ -449,7 +477,9 @@ export function UpdateEmploymentForm({
               id="position"
               placeholder="Sachbearbeiter"
             />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            {fieldState.invalid === true && (
+              <FieldError errors={[fieldState.error]} />
+            )}
           </Field>
         )}
       />
@@ -482,7 +512,9 @@ export function UpdateEmploymentForm({
                   ))}
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -511,7 +543,9 @@ export function UpdateEmploymentForm({
                   ))}
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -524,7 +558,9 @@ export function UpdateEmploymentForm({
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="contractStart">Vertragsbeginn</FieldLabel>
               <DateInput field={field} fieldState={fieldState} />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -535,7 +571,9 @@ export function UpdateEmploymentForm({
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="contractEnd">Vertragsende</FieldLabel>
               <DateInput field={field} fieldState={fieldState} />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -574,7 +612,9 @@ export function UpdateEmploymentForm({
                   </SelectItem>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -617,7 +657,9 @@ export function UpdateEmploymentForm({
                   <SelectItem value="0">Nicht relevant</SelectItem>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -659,7 +701,9 @@ export function UpdateEmploymentForm({
                   </SelectItem>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {fieldState.invalid === true && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />

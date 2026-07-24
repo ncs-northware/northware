@@ -26,11 +26,14 @@ function EmploymentStatusBadge({ contractEnd }: { contractEnd: Date | null }) {
   }
 
   if (monthsUntilEnd <= 3) {
+    const endText =
+      monthsUntilEnd === 0
+        ? "diesem Monat"
+        : `in ${monthsUntilEnd} Monat${monthsUntilEnd > 1 ? "en" : ""}`;
+
     return (
       <Badge className="bg-warning text-warning-foreground">
-        Das Arbeitsverhältnis endet in{" "}
-        {monthsUntilEnd === 0 ? "diesem" : monthsUntilEnd} Monat
-        {monthsUntilEnd > 1 ? "en" : ""}
+        Das Arbeitsverhältnis endet {endText}
       </Badge>
     );
   }
@@ -56,25 +59,25 @@ export default async function Page({
   return (
     <EmployeeSidebar
       breadcrumbs={[
-        { label: "HR", href: "/hr" },
-        { label: "HR Management", href: "/hr/management" },
+        { href: "/hr", label: "HR" },
+        { href: "/hr/management", label: "HR Management" },
         {
-          label: `${employeeData.employee.employeeId} / ${employeeData.employee.sirName}, ${employeeData.employee.firstName}`,
           href: `/hr/management/${employeeId}`,
+          label: `${employeeData.employee.employeeId} / ${employeeData.employee.sirName}, ${employeeData.employee.firstName}`,
         },
         {
-          label: "Arbeitsverhältnisse",
           href: `/hr/management/${employeeId}/employment`,
+          label: "Arbeitsverhältnisse",
         },
         {
+          href: `hr/management/${employeeId}/employment/${recordId}`,
           label: `${employmentData.employment.position} (${formatDate(employmentData.employment.contractStart, "PPP", { locale: de })} - ${
-            employmentData.employment.contractEnd == null
+            employmentData.employment.contractEnd === null
               ? ""
               : formatDate(employmentData.employment.contractEnd, "PPP", {
                   locale: de,
                 })
           })`,
-          href: `hr/management/${employeeId}/employment/${recordId}`,
         },
       ]}
       id={employeeId}
@@ -93,7 +96,7 @@ export default async function Page({
               locale: de,
             })}{" "}
             -{" "}
-            {employmentData.employment.contractEnd != null &&
+            {employmentData.employment.contractEnd !== null &&
               formatDate(employmentData.employment.contractEnd, "PPP", {
                 locale: de,
               })}

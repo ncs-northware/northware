@@ -21,16 +21,16 @@ export function Brand({
 }) {
   const brandColors = {
     cockpit: "text-cockpit",
+    docs: "text-cockpit",
     finance: "text-finance",
     trader: "text-trader",
-    docs: "text-cockpit",
   };
 
   const subBrand = {
     cockpit: "Cockpit",
+    docs: "Docs",
     finance: "Finance",
     trader: "Trader",
-    docs: "Docs",
   };
 
   return (

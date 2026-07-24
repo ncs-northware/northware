@@ -2,8 +2,8 @@ import { PasswordInput } from "@northware/ui/components/password-input";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 const meta = {
-  title: "Components/PasswordInput",
   component: PasswordInput,
+  title: "Components/PasswordInput",
 } satisfies Meta<typeof PasswordInput>;
 export default meta;
 

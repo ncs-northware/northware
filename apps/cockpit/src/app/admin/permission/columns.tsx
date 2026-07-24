@@ -13,11 +13,6 @@ import type { TPermissionType } from "@/lib/rbac-types";
 export const columns: ColumnDef<TPermissionType>[] = [
   {
     accessorKey: "permissionKey",
-    header: ({ column }) => (
-      <TableHead>
-        <DataTableColumnHeader column={column} title="Berechtigungsschlüssel" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell>
         <span className="font-mono text-muted-foreground sm:text-foreground">
@@ -31,18 +26,23 @@ export const columns: ColumnDef<TPermissionType>[] = [
         </TableDescriptionList>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Berechtigungsschlüssel" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "permissionName",
-    header: ({ column }) => (
-      <TableHead className="hidden sm:table-cell">
-        <DataTableColumnHeader column={column} title="Bezeichnung" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden sm:table-cell">
         {row.original.permissionName}
       </TableCell>
+    ),
+    header: ({ column }) => (
+      <TableHead className="hidden sm:table-cell">
+        <DataTableColumnHeader column={column} title="Bezeichnung" />
+      </TableHead>
     ),
   },
 ];

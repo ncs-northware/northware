@@ -35,20 +35,20 @@ export default async function Page({
   return (
     <EmployeeSidebar
       breadcrumbs={[
-        { label: "HR", href: "/hr" },
-        { label: "HR Management", href: "/hr/management" },
+        { href: "/hr", label: "HR" },
+        { href: "/hr/management", label: "HR Management" },
         {
-          label: `${data.employee?.employeeId} / ${data.employee?.sirName}, ${data.employee?.firstName}`,
-          href: `/hr/management/${employeeId}`,
           active: true,
+          href: `/hr/management/${employeeId}`,
+          label: `${data.employee.employeeId} / ${data.employee.sirName}, ${data.employee.firstName}`,
         },
       ]}
       id={employeeId}
     >
       <PermissionProvider permissionKeys={["cockpit::hr-management.update"]}>
         <Headline level="h1">
-          {data.employee?.employeeId} / {data.employee?.sirName},{" "}
-          {data.employee?.firstName}
+          {data.employee.employeeId} / {data.employee.sirName},{" "}
+          {data.employee.firstName}
         </Headline>
         <EmployeePersonalForm data={data.employee} />
       </PermissionProvider>

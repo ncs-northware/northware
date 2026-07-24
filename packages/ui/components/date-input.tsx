@@ -50,7 +50,7 @@ function formatDateForDisplay(date: Date | null): string {
   return formatDate(date, "dd.MM.yyyy", { locale: de });
 }
 
-type DateInputProps = {
+interface DateInputProps {
   field: {
     value?: Date | null;
     onChange: (date: Date | null) => void;
@@ -62,7 +62,7 @@ type DateInputProps = {
     invalid?: boolean;
     error?: FieldError;
   };
-};
+}
 
 export function DateInput({ fieldState, field }: DateInputProps) {
   const [open, setOpen] = useState(false);

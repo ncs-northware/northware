@@ -14,8 +14,8 @@ export function SignInForm({ service }: { service: ServiceType }) {
         appearance={{
           elements: {
             card: "bg-background text-card-foreground rounded-xl border shadow-sm",
-            formFieldAction__password: "hidden",
             footerAction__havingTrouble: "hidden",
+            formFieldAction__password: "hidden",
             // The Clerk Branding and Development Banner of the SignIn Component are hidden through the globals.css
           },
         }}
@@ -32,9 +32,9 @@ export function UserMenu() {
         elements: {
           rootBox: "w-full",
           userButtonBox: "justify-between w-full",
-          userButtonTrigger: "w-full shadow-none",
           userButtonOuterIdentifier: "text-sm font-medium",
           userButtonPopoverFooter: "hidden",
+          userButtonTrigger: "w-full shadow-none",
         },
         layout: { shimmer: false },
       }}

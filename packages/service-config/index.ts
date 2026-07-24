@@ -4,16 +4,16 @@ export const suiteApps: {
 }[] = [
   // Attribute der Navigationspunkte der AppSwitches
   {
-    title: "Northware Cockpit",
     slug: "cockpit",
+    title: "Northware Cockpit",
   },
   {
-    title: "Northware Finance",
     slug: "finance",
+    title: "Northware Finance",
   },
   {
-    title: "Northware Trader",
     slug: "trader",
+    title: "Northware Trader",
   },
 ];
 

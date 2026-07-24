@@ -9,18 +9,18 @@ import {
 import { permissionsTable } from "./users";
 
 export const mainNavTable = pgTable("main_nav", {
-  recordId: serial("record_id").primaryKey().notNull(),
-  itemId: varchar("item_id").unique().notNull(),
-  title: varchar("title").notNull(),
-  href: varchar("href").notNull(),
   app: varchar("app").notNull(),
-  order: smallint("order"),
   childOf: varchar("child_of").references(
     (): AnyPgColumn => mainNavTable.itemId
   ),
+  href: varchar("href").notNull(),
+  itemId: varchar("item_id").unique().notNull(),
+  order: smallint("order"),
   permissionKey: varchar("permission_key").references(
     () => permissionsTable.permissionKey
   ),
+  recordId: serial("record_id").primaryKey().notNull(),
+  title: varchar("title").notNull(),
 });
 
 export const mainNavRelations = relations(mainNavTable, ({ one }) => ({

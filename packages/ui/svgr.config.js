@@ -1,13 +1,11 @@
 module.exports = {
   dimensions: true,
-  outDir: "./icons/output",
-  svgProps: { fill: "currentcolor" },
-  jsxRuntime: "classic",
-  ref: true,
-  typescript: true,
-  prettier: false,
   filenameCase: "kebab",
-  titleProp: true,
+  jsxRuntime: "classic",
+  outDir: "./icons/output",
+  prettier: false,
+  ref: true,
+  svgProps: { fill: "currentcolor" },
   template: (variables, { tpl }) => tpl`
       ${variables.imports};
       
@@ -22,4 +20,6 @@ module.exports = {
 
       ${variables.exports}
     `,
+  titleProp: true,
+  typescript: true,
 };

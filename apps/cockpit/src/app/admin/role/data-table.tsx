@@ -30,11 +30,11 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { RoleDeleteButton } from "@/components/role-forms";
 
-type DataTableProps<TData extends { recordId: number }, TValue> = {
+interface DataTableProps<TData extends { recordId: number }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   permissions: { update: boolean; delete: boolean };
-};
+}
 
 export function DataTable<TData extends { recordId: number }, TValue>({
   columns,
@@ -46,17 +46,17 @@ export function DataTable<TData extends { recordId: number }, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const table = useReactTable({
-    data,
     columns,
+    data,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     globalFilterFn: "includesString",
-    onGlobalFilterChange: setGlobalFilter,
-    getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    state: { sorting, columnVisibility, globalFilter },
+    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: setSorting,
+    state: { columnVisibility, globalFilter, sorting },
   });
   return (
     <div>
@@ -100,14 +100,14 @@ export function DataTable<TData extends { recordId: number }, TValue>({
                   ))}
                   <TableCell>
                     <div className="flex justify-end">
-                      {permissions.update && (
+                      {permissions.update === true && (
                         <Button asChild variant="ghost">
                           <Link href={`role/${row.original.recordId}`}>
                             <EditIcon />
                           </Link>
                         </Button>
                       )}
-                      {permissions.delete && (
+                      {permissions.delete === true && (
                         <RoleDeleteButton recordId={row.original.recordId} />
                       )}
                     </div>

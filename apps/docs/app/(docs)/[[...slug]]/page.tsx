@@ -10,9 +10,9 @@ import { notFound } from "next/navigation";
 import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
-type PageProps = {
+interface PageProps {
   params: Promise<{ slug?: string[] }>;
-};
+}
 
 export default async function Page(props: PageProps) {
   const params = await props.params;
@@ -51,7 +51,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   }
 
   return {
-    title: page.data.title,
     description: page.data.description,
+    title: page.data.title,
   };
 }

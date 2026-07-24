@@ -29,8 +29,8 @@ export default async function Page() {
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Admin Panel", href: "/admin" },
-        { label: "Benutzerverwaltung", href: "/admin/user", active: true },
+        { href: "/admin", label: "Admin Panel" },
+        { active: true, href: "/admin/user", label: "Benutzerverwaltung" },
       ]}
       defaultOpen={false}
       service="cockpit"
@@ -38,7 +38,7 @@ export default async function Page() {
       <PermissionProvider permissionKeys={["cockpit::user.read"]}>
         <div className="flex justify-between gap-4">
           <Headline level="h1">Benutzerverwaltung</Headline>
-          {(await userHasPermission(["cockpit::user.create"])) && (
+          {(await userHasPermission(["cockpit::user.create"])) === true && (
             <Button asChild>
               <Link href="user/create">
                 <PlusIcon className="sm:hidden" />
@@ -55,8 +55,8 @@ export default async function Page() {
           columns={columns}
           data={userArray.users}
           permissions={{
-            update: await userHasPermission(["cockpit::user.update"]),
             delete: await userHasPermission(["cockpit::user.delete"]),
+            update: await userHasPermission(["cockpit::user.update"]),
           }}
         />
         <AlertWrapper>

@@ -32,11 +32,11 @@ export async function getRoleList(): Promise<TRoleListResponse> {
   try {
     const response = await db
       .select({
+        permissionKey: permissionsTable.permissionKey,
+        permissionName: permissionsTable.permissionName,
         recordId: rolesTable.recordId,
         roleKey: rolesTable.roleKey,
         roleName: rolesTable.roleName,
-        permissionKey: permissionsTable.permissionKey,
-        permissionName: permissionsTable.permissionName,
       })
       .from(rolesTable)
       .leftJoin(
@@ -53,10 +53,10 @@ export async function getRoleList(): Promise<TRoleListResponse> {
     for (const item of response) {
       if (!result[item.roleKey]) {
         result[item.roleKey] = {
+          permissions: [],
           recordId: item.recordId,
           roleKey: item.roleKey,
           roleName: item.roleName,
-          permissions: [],
         };
       }
 
@@ -67,14 +67,14 @@ export async function getRoleList(): Promise<TRoleListResponse> {
         });
       }
     }
-    return { success: true, roleList: Object.values(result) };
+    return { roleList: Object.values(result), success: true };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
@@ -97,7 +97,7 @@ export async function updateUserRoles({
 
   const insertRoles: { roleKey: string; accountUserId: string }[] = [];
   rolesToAdd.forEach((role, i) => {
-    insertRoles[i] = { roleKey: role, accountUserId: userId };
+    insertRoles[i] = { accountUserId: userId, roleKey: role };
   });
 
   try {
@@ -152,6 +152,7 @@ export const getRole = cache(
         throw new Error("Es wurde keine Rolle gefunden."); // Gebe null zurück, wenn keine Rolle gefunden wurde
       }
 
+      // biome-ignore lint/style/useDestructuring: How to fix this with drizzle?
       const role = roleResponse[0];
 
       const permissionsResponse = await db
@@ -166,17 +167,17 @@ export const getRole = cache(
       ];
 
       return {
-        success: true,
-        role: roleResponse[0],
         permissions,
+        role: roleResponse[0],
+        success: true,
       };
     } catch (error) {
       return {
-        success: false,
         error:
           error instanceof Error
             ? error
             : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+        success: false,
       };
     }
   }
@@ -285,22 +286,22 @@ export async function getPermissionList(): Promise<TPermissionListResponse> {
   try {
     const response = await db
       .select({
-        recordId: permissionsTable.recordId,
         permissionKey: permissionsTable.permissionKey,
         permissionName: permissionsTable.permissionName,
+        recordId: permissionsTable.recordId,
       })
       .from(permissionsTable)
       .where(ne(permissionsTable.permissionKey, "all-access"))
       .orderBy(permissionsTable.permissionKey);
 
-    return { success: true, permissionList: response };
+    return { permissionList: response, success: true };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
@@ -325,7 +326,7 @@ export async function updateUserPermissions({
   const insertPermissions: { permissionKey: string; accountUserId: string }[] =
     [];
   permissionsToAdd.forEach((permission, i) => {
-    insertPermissions[i] = { permissionKey: permission, accountUserId: userId };
+    insertPermissions[i] = { accountUserId: userId, permissionKey: permission };
   });
 
   try {

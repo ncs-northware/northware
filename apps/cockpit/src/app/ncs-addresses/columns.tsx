@@ -10,23 +10,18 @@ import { MailIcon, PhoneIcon } from "@northware/ui/icons/lucide";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 
-export type EmployeeAddress = {
-  sirName: string;
-  firstName: string;
-  phoneWork: string | null;
-  mailWork: string | null;
+export interface EmployeeAddress {
   department: string | null;
+  firstName: string;
+  mailWork: string | null;
+  phoneWork: string | null;
   position: string | null;
-};
+  sirName: string;
+}
 
 export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
   {
     accessorKey: "sirName",
-    header: ({ column }) => (
-      <TableHead>
-        <DataTableColumnHeader column={column} title="Nachname" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell>
         <div className="hidden md:table-cell">{row.getValue("sirName")}</div>
@@ -56,27 +51,27 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         </TableDescriptionList>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Nachname" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "firstName",
-    header: ({ column }) => (
-      <TableHead className="hidden md:table-cell">
-        <DataTableColumnHeader column={column} title="Vorname" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden md:table-cell">
         {row.getValue("firstName")}
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead className="hidden md:table-cell">
+        <DataTableColumnHeader column={column} title="Vorname" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "phoneWork",
-    header: ({ column }) => (
-      <TableHead className="hidden md:table-cell">
-        <DataTableColumnHeader column={column} title="Telefonnummer" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden md:table-cell">
         <TableDescriptionList>
@@ -96,14 +91,14 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         </TableDescriptionList>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead className="hidden md:table-cell">
+        <DataTableColumnHeader column={column} title="Telefonnummer" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "mailWork",
-    header: ({ column }) => (
-      <TableHead className="hidden lg:table-cell">
-        <DataTableColumnHeader column={column} title="E-Mail-Adresse" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden lg:table-cell">
         <Link
@@ -114,14 +109,14 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         </Link>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="E-Mail-Adresse" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "position",
-    header: ({ column }) => (
-      <TableHead className="hidden md:table-cell">
-        <DataTableColumnHeader column={column} title="Position" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden md:table-cell">
         <TableDescriptionList>
@@ -134,37 +129,37 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         </TableDescriptionList>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead className="hidden md:table-cell">
+        <DataTableColumnHeader column={column} title="Position" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "department",
-    header: ({ column }) => (
-      <TableHead className="hidden lg:table-cell">
-        <DataTableColumnHeader column={column} title="Abteilung" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden lg:table-cell">
         {row.getValue("department")}
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="Abteilung" />
+      </TableHead>
+    ),
   },
 ];
 
-export type DepartmentAddress = {
-  departmentName: string;
+export interface DepartmentAddress {
   company: string | null;
-  phone: string;
+  departmentName: string;
   mail: string;
-};
+  phone: string;
+}
 
 export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
   {
     accessorKey: "departmentName",
-    header: ({ column }) => (
-      <TableHead>
-        <DataTableColumnHeader column={column} title="Abteilung" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell>
         <TableDescriptionList>
@@ -177,27 +172,27 @@ export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
         </TableDescriptionList>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Abteilung" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "company",
-    header: ({ column }) => (
-      <TableHead className="hidden lg:table-cell">
-        <DataTableColumnHeader column={column} title="Firma" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden lg:table-cell">
         {row.getValue("company")}
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="Firma" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "phone",
-    header: ({ column }) => (
-      <TableHead>
-        <DataTableColumnHeader column={column} title="Telefonnummer" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell>
         <TableDescriptionList>
@@ -217,14 +212,14 @@ export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
         </TableDescriptionList>
       </TableCell>
     ),
+    header: ({ column }) => (
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Telefonnummer" />
+      </TableHead>
+    ),
   },
   {
     accessorKey: "mail",
-    header: ({ column }) => (
-      <TableHead className="hidden md:table-cell">
-        <DataTableColumnHeader column={column} title="E-Mail-Adresse" />
-      </TableHead>
-    ),
     cell: ({ row }) => (
       <TableCell className="hidden md:table-cell">
         <Link
@@ -234,6 +229,11 @@ export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
           {row.getValue("mail")}
         </Link>
       </TableCell>
+    ),
+    header: ({ column }) => (
+      <TableHead className="hidden md:table-cell">
+        <DataTableColumnHeader column={column} title="E-Mail-Adresse" />
+      </TableHead>
     ),
   },
 ];

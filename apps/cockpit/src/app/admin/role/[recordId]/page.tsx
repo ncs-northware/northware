@@ -39,11 +39,11 @@ export default async function Page({
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Admin Panel", href: "/admin" },
-        { label: "Rollenverwaltung", href: "/admin/role" },
+        { href: "/admin", label: "Admin Panel" },
+        { href: "/admin/role", label: "Rollenverwaltung" },
         {
-          label: details?.role.roleName || "Rolle",
           href: `/admin/role/${recordId}`,
+          label: details?.role.roleName || "Rolle",
         },
       ]}
       service="cockpit"
@@ -51,7 +51,7 @@ export default async function Page({
       <PermissionProvider permissionKeys={["cockpit::role.update"]}>
         <div className="flex justify-between gap-4">
           <Headline level="h1">{details?.role.roleName}</Headline>
-          {(await userHasPermission(["cockpit::role.delete"])) && (
+          {(await userHasPermission(["cockpit::role.delete"])) === true && (
             <RoleDeleteButton mode="page" recordId={recordId} />
           )}
         </div>

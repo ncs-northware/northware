@@ -35,15 +35,15 @@ export default async function EditUserLayout({
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Admin Panel", href: "/admin" },
-        { label: "Benutzerverwaltung", href: "/admin/user" },
+        { href: "/admin", label: "Admin Panel" },
+        { href: "/admin/user", label: "Benutzerverwaltung" },
         {
+          active: true,
+          href: `/admin/user/${userId}`,
           label:
             user?.response.fullName ||
             user?.response.emailAddresses[0].emailAddress ||
             "Benutzer",
-          href: `/admin/user/${userId}`,
-          active: true,
         },
       ]}
       mainLabel="Hauptnavigation"
@@ -51,17 +51,17 @@ export default async function EditUserLayout({
       subLabel={user?.response.fullName || "Benutzer"}
       subMenu={[
         {
-          title: "Persönliche Daten",
-          href: `/admin/user/${userId}`,
           exactMatch: true,
+          href: `/admin/user/${userId}`,
+          title: "Persönliche Daten",
         },
         {
-          title: "Rollen",
           href: `/admin/user/${userId}/roles`,
+          title: "Rollen",
         },
         {
-          title: "Zusätzliche Berechtigungen",
           href: `/admin/user/${userId}/permissions`,
+          title: "Zusätzliche Berechtigungen",
         },
       ]}
     >

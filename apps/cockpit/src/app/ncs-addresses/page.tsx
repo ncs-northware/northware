@@ -26,12 +26,12 @@ async function getAddresses() {
   try {
     const employeeResult = await db
       .select({
-        sirName: employeesTable.sirName,
-        firstName: employeesTable.firstName,
-        phoneWork: employeesTable.phoneWork,
-        mailWork: employeesTable.mailWork,
         department: departmentsTable.departmentName,
+        firstName: employeesTable.firstName,
+        mailWork: employeesTable.mailWork,
+        phoneWork: employeesTable.phoneWork,
         position: employmentsTable.position,
+        sirName: employeesTable.sirName,
       })
       .from(employeesTable)
       .leftJoin(
@@ -54,10 +54,10 @@ async function getAddresses() {
 
     const departmentResult = await db
       .select({
-        departmentName: departmentsTable.departmentName,
         company: companiesTable.companyName,
-        phone: departmentsTable.phone,
+        departmentName: departmentsTable.departmentName,
         mail: departmentsTable.mail,
+        phone: departmentsTable.phone,
       })
       .from(departmentsTable)
       .leftJoin(
@@ -67,17 +67,17 @@ async function getAddresses() {
       .orderBy(departmentsTable.recordId);
 
     return {
-      success: true,
-      employees: employeeResult,
       departments: departmentResult,
+      employees: employeeResult,
+      success: true,
     };
   } catch (error) {
     return {
-      success: false,
       error:
         error instanceof Error
           ? error
           : new Error("Es ist ein unerwarteter Fehler aufgetreten."),
+      success: false,
     };
   }
 }
@@ -86,12 +86,17 @@ export default async function Page() {
   const data = await getAddresses();
 
   if (!data.success) {
-    return <DataFetchError message={data.error?.message} service="cockpit" />;
+    const message =
+      data.error instanceof Error
+        ? data.error.message
+        : "Es ist ein unerwarteter Fehler aufgetreten.";
+
+    return <DataFetchError message={message} service="cockpit" />;
   }
   return (
     <SidebarLayout
       breadcrumbs={[
-        { label: "Adressbuch", href: "/ncs-addresses", active: true },
+        { active: true, href: "/ncs-addresses", label: "Adressbuch" },
       ]}
       defaultOpen={false}
       service="cockpit"
