@@ -5,7 +5,7 @@
 import { SignOutButton } from "@northware/auth/client";
 import { Button } from "./shadcn/button";
 
-export function AppPermissionSignOutButton() {
+export function ClientSignOutButton() {
   return (
     <SignOutButton>
       <Button variant="outline">Abmelden</Button>

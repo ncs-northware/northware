@@ -1,8 +1,8 @@
-import { SignOutButton } from "@northware/auth/client";
 import { Headline } from "@northware/ui/components/headline";
 import { Button } from "@northware/ui/components/shadcn/button";
 import { Spinner } from "@northware/ui/components/shadcn/spinner";
 import Link from "next/link";
+import { ClientSignOutButton } from "./client-signout-button";
 
 export function NotFoundTemplate() {
   return (
@@ -40,9 +40,7 @@ export function ErrorPageTemplate() {
       <Button size="lg">
         <Link href="/">Zurück zur Startseite</Link>
       </Button>
-      <SignOutButton>
-        <Button variant="outline">Abmelden</Button>
-      </SignOutButton>
+      <ClientSignOutButton />
     </div>
   );
 }
@@ -52,9 +50,7 @@ export function LoadingPageTemplate() {
     <div className="flex h-svh flex-col items-center justify-center gap-4">
       <Spinner />
       <p className="text-muted-foreground text-xl">Die Seite wird geladen...</p>
-      <SignOutButton>
-        <Button variant="outline">Abmelden</Button>
-      </SignOutButton>
+      <ClientSignOutButton />
     </div>
   );
 }

@@ -8,8 +8,8 @@ import { Card, CardContent } from "@northware/ui/components/shadcn/card";
 import { ShieldXIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { AppPermissionSignOutButton } from "./app-permission-signout-button";
 import type { MenuApps } from "./app-switch";
+import { ClientSignOutButton } from "./client-signout-button";
 
 export async function userHasPermission(permissionKeys: string[]) {
   const user = await currentUser();
@@ -112,7 +112,7 @@ export async function AppPermissionProvider({
           </div>
         </>
       )}
-      <AppPermissionSignOutButton />
+      <ClientSignOutButton />
     </div>
   );
 }
