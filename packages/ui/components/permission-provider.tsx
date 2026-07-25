@@ -1,5 +1,4 @@
 import { getUserPermissions } from "@northware/auth/account";
-import { SignOutButton } from "@northware/auth/client";
 import { currentUser } from "@northware/auth/server";
 import type { ServiceType } from "@northware/service-config";
 import { Brand } from "@northware/ui/components/brand";
@@ -9,6 +8,7 @@ import { Card, CardContent } from "@northware/ui/components/shadcn/card";
 import { ShieldXIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { AppPermissionSignOutButton } from "./app-permission-signout-button";
 import type { MenuApps } from "./app-switch";
 
 export async function userHasPermission(permissionKeys: string[]) {
@@ -112,9 +112,7 @@ export async function AppPermissionProvider({
           </div>
         </>
       )}
-      <SignOutButton>
-        <Button variant="outline">Abmelden</Button>
-      </SignOutButton>
+      <AppPermissionSignOutButton />
     </div>
   );
 }
