@@ -11,7 +11,7 @@
     "fix": "ultracite fix"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.4.0",
+    "@hookform/resolvers": "^5.4.3",
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:*",
     "@northware/ui": "workspace:*",
@@ -21,7 +21,7 @@
     "next": "16.1.6",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-hook-form": "^7.82.0",
+    "react-hook-form": "^7.83.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
