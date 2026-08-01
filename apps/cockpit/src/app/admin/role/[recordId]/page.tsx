@@ -22,7 +22,7 @@ export async function generateMetadata({
   if (!details.success) {
     return "Rolle bearbeiten";
   }
-  return { title: details?.role.roleName };
+  return { title: details.role.roleName };
 }
 
 export default async function Page({
@@ -43,27 +43,27 @@ export default async function Page({
         { href: "/admin/role", label: "Rollenverwaltung" },
         {
           href: `/admin/role/${recordId}`,
-          label: details?.role.roleName || "Rolle",
+          label: details.role.roleName || "Rolle",
         },
       ]}
       service="cockpit"
     >
       <PermissionProvider permissionKeys={["cockpit::role.update"]}>
         <div className="flex justify-between gap-4">
-          <Headline level="h1">{details?.role.roleName}</Headline>
+          <Headline level="h1">{details.role.roleName}</Headline>
           {(await userHasPermission(["cockpit::role.delete"])) === true && (
             <RoleDeleteButton mode="page" recordId={recordId} />
           )}
         </div>
-        <UpdateRoleDetailForm roleDetails={details?.role} />
+        <UpdateRoleDetailForm roleDetails={details.role} />
 
         <Headline className="mt-5" level="h2">
           Rollenberechtigungen
         </Headline>
         <RolePermissionsForm
           permissionsResponse={permissionsList}
-          roleKey={details?.role.roleKey}
-          rolePermissions={details?.permissions || []}
+          roleKey={details.role.roleKey}
+          rolePermissions={details.permissions}
         />
       </PermissionProvider>
     </SidebarLayout>

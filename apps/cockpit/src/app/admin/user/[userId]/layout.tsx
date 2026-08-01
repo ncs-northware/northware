@@ -15,7 +15,7 @@ export async function generateMetadata({
     return { title: "Benutzerprofil" };
   }
 
-  return { title: user?.response.fullName };
+  return { title: user.response.fullName };
 }
 
 export default async function EditUserLayout({
@@ -41,14 +41,14 @@ export default async function EditUserLayout({
           active: true,
           href: `/admin/user/${userId}`,
           label:
-            user?.response.fullName ||
-            user?.response.emailAddresses[0].emailAddress ||
+            user.response.fullName ||
+            user.response.emailAddresses[0].emailAddress ||
             "Benutzer",
         },
       ]}
       mainLabel="Hauptnavigation"
       service="cockpit"
-      subLabel={user?.response.fullName || "Benutzer"}
+      subLabel={user.response.fullName || "Benutzer"}
       subMenu={[
         {
           exactMatch: true,
