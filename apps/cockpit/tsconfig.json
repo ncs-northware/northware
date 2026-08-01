@@ -1,7 +1,6 @@
 {
   "extends": "@northware/tsconfig/nextjs.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@northware/ui/*": ["../../packages/ui/*"]
