@@ -1,8 +1,5 @@
 {
   "extends": "@northware/tsconfig/react-library.json",
   "include": ["."],
-  "exclude": ["node_modules"],
-  "compilerOptions": {
-    "baseUrl": "."
-  }
+  "exclude": ["node_modules"]
 }

@@ -1,7 +1,6 @@
 {
   "extends": "@northware/tsconfig/react-library.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@northware/ui/*": ["./*"]
     }
