@@ -20,9 +20,9 @@
     "**/*.css"
   ],
   "dependencies": {
-    "@clerk/localizations": "^4.13.9",
-    "@clerk/nextjs": "^7.6.3",
-    "@clerk/ui": "^1.27.1",
+    "@clerk/localizations": "^4.13.10",
+    "@clerk/nextjs": "^7.6.4",
+    "@clerk/ui": "^1.27.2",
     "@northware/database": "workspace:*",
     "drizzle-orm": "^0.45.2",
     "react": "^19.2.8",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*",
-    "@types/react": "^19.2.17",
+    "@types/react": "^19.2.18",
     "typescript": "^5.9.3"
   }
 }
