@@ -29,9 +29,9 @@ export default async function Page({
       <div className="justify-between gap-4 sm:flex">
         <Headline level="h1">Benutzerdaten</Headline>
         <div className="flex gap-2">
-          <UpdatePasswordFormDialog id={user?.response.id} />
+          <UpdatePasswordFormDialog id={user.response.id} />
           {(await userHasPermission(["cockpit::user.delete"])) === true && (
-            <UserDeleteButton mode="page" userId={user?.response.id || ""} />
+            <UserDeleteButton mode="page" userId={user.response.id || ""} />
           )}
         </div>
       </div>
@@ -45,9 +45,9 @@ export default async function Page({
       <UpdateUserForm user={user.response} />
       <Headline level="h2">E-Mail Adressen</Headline>
       <UserEmailList
-        data={user?.response.emailAddresses}
-        primaryEmailAddressId={user?.response.primaryEmailAddressId}
-        userId={user?.response.id}
+        data={user.response.emailAddresses}
+        primaryEmailAddressId={user.response.primaryEmailAddressId}
+        userId={user.response.id}
       />
     </PermissionProvider>
   );
