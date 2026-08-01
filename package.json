@@ -30,7 +30,7 @@
     "generate-icons": "cd packages/ui && pnpm generate-icons",
     "check": "turbo fix",
     "check:root": "ultracite check",
-    "localci": "turbo build lint --affected",
+    "localci": "turbo build check --affected",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"
   }
