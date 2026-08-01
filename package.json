@@ -12,7 +12,7 @@
     "ultracite": "7.9.4"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "license": "MIT",
   "name": "northware",
@@ -30,7 +30,7 @@
     "generate-icons": "cd packages/ui && pnpm generate-icons",
     "check": "turbo fix",
     "check:root": "ultracite check",
-    "localci": "turbo build lint --affected",
+    "localci": "turbo build check --affected",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"
   }

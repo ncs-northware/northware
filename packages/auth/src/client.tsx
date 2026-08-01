@@ -2,7 +2,7 @@
 
 import { deDE } from "@clerk/localizations";
 import { ClerkProvider, useSession } from "@clerk/nextjs";
-import { shadcn } from "@clerk/themes";
+import { shadcn } from "@clerk/ui/themes";
 import { Fragment, type ReactNode } from "react";
 
 export * from "@clerk/nextjs";
@@ -17,7 +17,10 @@ function MultisessionProvider({ children }: { children: ReactNode }) {
 export function AuthProvider({ ...props }) {
   return (
     <ClerkProvider
-      appearance={{ theme: shadcn }}
+      appearance={{
+        cssLayerName: "clerk",
+        theme: shadcn,
+      }}
       {...props}
       localization={deDE}
     >

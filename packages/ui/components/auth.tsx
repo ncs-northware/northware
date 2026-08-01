@@ -36,7 +36,7 @@ export function UserMenu() {
           userButtonPopoverFooter: "hidden",
           userButtonTrigger: "w-full shadow-none",
         },
-        layout: { shimmer: false },
+        options: { shimmer: false },
       }}
       showName
     />
