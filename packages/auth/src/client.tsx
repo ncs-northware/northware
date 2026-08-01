@@ -17,7 +17,10 @@ function MultisessionProvider({ children }: { children: ReactNode }) {
 export function AuthProvider({ ...props }) {
   return (
     <ClerkProvider
-      appearance={{ theme: shadcn }}
+      appearance={{
+        cssLayerName: "clerk",
+        theme: shadcn,
+      }}
       {...props}
       localization={deDE}
     >

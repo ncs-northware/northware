@@ -10,8 +10,15 @@
   "exports": {
     "./client": "./src/client.tsx",
     "./server": "./src/server.tsx",
-    "./account": "./src/account.ts"
+    "./account": "./src/account.ts",
+    "./theme.css": {
+      "style": "./src/theme.css",
+      "default": "./src/theme.css"
+    }
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "dependencies": {
     "@clerk/localizations": "^4.13.9",
     "@clerk/nextjs": "^7.6.3",
