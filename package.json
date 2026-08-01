@@ -12,7 +12,7 @@
     "ultracite": "7.9.4"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "license": "MIT",
   "name": "northware",
