@@ -10,7 +10,11 @@
     "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite && pnpm dlx shadcn@latest migrate radix -y"
   },
   "exports": {
-    "./css": "./globals.css",
+    "./css": {
+      "import": "./globals.css",
+      "default": "./globals.css",
+      "types": "./css.d.ts"
+    },
     "./lib/*": "./lib/*.ts",
     "./components/*": "./components/*.tsx",
     "./icons": "./icons/output/index.ts",
