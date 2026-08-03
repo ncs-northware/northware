@@ -2,11 +2,9 @@
   "name": "@northware/auth",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "tsc-check": "tsc --noEmit",
-    "fix": "ultracite fix",
-    "check": "ultracite check"
-  },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
     "./client": "./src/client.tsx",
     "./server": "./src/server.tsx",
@@ -16,9 +14,11 @@
       "default": "./src/theme.css"
     }
   },
-  "sideEffects": [
-    "**/*.css"
-  ],
+  "scripts": {
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "tsc-check": "tsc --noEmit"
+  },
   "dependencies": {
     "@clerk/localizations": "^4.13.10",
     "@clerk/nextjs": "^7.6.4",

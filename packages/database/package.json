@@ -2,15 +2,15 @@
   "name": "@northware/database",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "tsc-check": "tsc --noEmit",
-    "check": "ultracite check",
-    "fix": "ultracite fix"
-  },
   "exports": {
     "./connection": "./db-connect.ts",
     "./schema/*": "./schema/*.ts",
     "./neon-error-handling": "./neon-error-handling.ts"
+  },
+  "scripts": {
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "tsc-check": "tsc --noEmit"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
