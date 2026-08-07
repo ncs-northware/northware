@@ -14,6 +14,9 @@
     "labels": ["security", "dependencies"]
   },
   "minimumReleaseAge": "1440 minutes",
+  "gitIgnoredAuthors": [
+    "autofix-ci[bot] <114827586+autofix-ci[bot]@users.noreply.github.com>"
+  ],
   "dependencyDashboardLabels": ["dependencies", "github-management"],
   "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard",
   "packageRules": [
