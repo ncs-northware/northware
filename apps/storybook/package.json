@@ -1,6 +1,6 @@
 {
   "name": "storybook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "build": "storybook build",
@@ -26,7 +26,7 @@
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "storybook": "10.5.7",
+    "storybook": "0.1.1",
     "typescript": "^6.0.3"
   }
 }
