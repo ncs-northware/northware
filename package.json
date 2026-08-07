@@ -1,4 +1,23 @@
 {
+  "name": "northware",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "turbo build",
+    "bump-ui": "cd ./packages/ui && pnpm bump-ui",
+    "check": "turbo fix",
+    "check:root": "ultracite check",
+    "commit": "commit",
+    "dev": "turbo dev",
+    "drizzle-generate": "cd ./packages/database && pnpm drizzle-kit generate",
+    "drizzle-migrate": "cd ./packages/database && pnpm drizzle-kit migrate",
+    "fix": "turbo fix",
+    "fix:root": "ultracite fix",
+    "generate-icons": "cd packages/ui && pnpm generate-icons",
+    "localci": "turbo build check --affected",
+    "tsc-check": "turbo tsc-check",
+    "tsc-check:root": "tsc --noEmit"
+  },
   "devDependencies": {
     "@biomejs/biome": "2.5.6",
     "@changesets/cli": "^2.31.1",
@@ -9,29 +28,10 @@
     "@northware/tsconfig": "workspace:^",
     "turbo": "^2.10.8",
     "typescript": "^6.0.3",
-    "ultracite": "7.9.4"
+    "ultracite": "7.10.0"
   },
+  "packageManager": "pnpm@11.16.0",
   "engines": {
     "node": ">=24"
-  },
-  "license": "MIT",
-  "name": "northware",
-  "packageManager": "pnpm@11.16.0",
-  "private": true,
-  "scripts": {
-    "build": "turbo build",
-    "bump-ui": "cd ./packages/ui && pnpm bump-ui",
-    "commit": "commit",
-    "dev": "turbo dev",
-    "drizzle-generate": "cd ./packages/database && pnpm drizzle-kit generate",
-    "drizzle-migrate": "cd ./packages/database && pnpm drizzle-kit migrate",
-    "fix": "turbo fix",
-    "fix:root": "ultracite fix",
-    "generate-icons": "cd packages/ui && pnpm generate-icons",
-    "check": "turbo fix",
-    "check:root": "ultracite check",
-    "localci": "turbo build check --affected",
-    "tsc-check": "turbo tsc-check",
-    "tsc-check:root": "tsc --noEmit"
   }
 }

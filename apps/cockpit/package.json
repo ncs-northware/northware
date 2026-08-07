@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack --port 40110",
     "build": "next build",
-    "start": "next start",
-    "tsc-check": "tsc --noEmit",
     "check": "ultracite check",
-    "fix": "ultracite fix"
+    "dev": "next dev --turbopack --port 40110",
+    "fix": "ultracite fix",
+    "start": "next start",
+    "tsc-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.5.7",
+    "@hookform/resolvers": "^5.7.1",
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:*",
     "@northware/ui": "workspace:*",
@@ -21,7 +21,7 @@
     "next": "16.2.12",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-hook-form": "^7.83.0",
+    "react-hook-form": "^7.84.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

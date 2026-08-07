@@ -2,18 +2,11 @@
   "name": "@northware/ui",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "tsc-check": "tsc --noEmit",
-    "fix": "ultracite fix",
-    "check": "ultracite check",
-    "generate-icons": "svgr --config-file svgr.config.js --ignore-existing -- ./icons/assets",
-    "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite && pnpm dlx shadcn@latest migrate radix -y"
-  },
   "exports": {
     "./css": {
+      "types": "./css.d.ts",
       "import": "./globals.css",
-      "default": "./globals.css",
-      "types": "./css.d.ts"
+      "default": "./globals.css"
     },
     "./lib/*": "./lib/*.ts",
     "./components/*": "./components/*.tsx",
@@ -22,9 +15,16 @@
     "./hooks/*": "./hooks/*.ts",
     "./postcss.config": "./postcss.config.mjs"
   },
+  "scripts": {
+    "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite && pnpm dlx shadcn@latest migrate radix -y",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "generate-icons": "svgr --config-file svgr.config.js --ignore-existing -- ./icons/assets",
+    "tsc-check": "tsc --noEmit"
+  },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
-    "@hookform/resolvers": "^5.5.7",
+    "@hookform/resolvers": "^5.7.1",
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:",
     "@northware/service-config": "workspace:",
@@ -41,7 +41,7 @@
     "next-themes": "^0.4.6",
     "radix-ui": "1.6.7",
     "react-day-picker": "^10.0.1",
-    "react-hook-form": "^7.83.0",
+    "react-hook-form": "^7.84.0",
     "react-resizable-panels": "^4.12.2",
     "recharts": "3.10.1",
     "sonner": "^2.0.7",

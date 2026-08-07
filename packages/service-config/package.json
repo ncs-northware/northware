@@ -2,12 +2,12 @@
   "name": "@northware/service-config",
   "version": "0.0.0",
   "private": true,
+  "exports": {
+    ".": "./index.ts"
+  },
   "scripts": {
     "check": "ultracite check",
     "fix": "ultracite fix"
-  },
-  "exports": {
-    ".": "./index.ts"
   },
   "devDependencies": {
     "@northware/tsconfig": "workspace:*"
