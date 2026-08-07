@@ -29,7 +29,7 @@
     "@northware/database": "workspace:",
     "@northware/service-config": "workspace:",
     "@shadcn/react": "^0.3.0",
-    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-table": "^9.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
