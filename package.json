@@ -26,9 +26,9 @@
     "@commitlint/prompt-cli": "^21.2.0",
     "@commitlint/types": "^21.2.0",
     "@northware/tsconfig": "workspace:^",
-    "turbo": "^2.10.8",
+    "turbo": "^2.10.9",
     "typescript": "^6.0.3",
-    "ultracite": "7.10.1"
+    "ultracite": "7.10.2"
   },
   "packageManager": "pnpm@11.20.0",
   "engines": {
