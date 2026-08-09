@@ -2,10 +2,20 @@ packages:
   - "apps/*"
   - "packages/*"
 allowBuilds:
-  '@clerk/shared': true
+  # Build-Scripts that are allowed here may run durring Package-Installs and Builds through the dependencies to improove and enable insalls and builds.
+  
+  # Build-Scripts that can affect installation or build processes. Currently those Scripts are not needed.
+  # esbuild is part of Turbo, Next.js and Storybook but has a never-ending security vulnerability (#12).
+  # Since installs and builds work correctly, the build script can be deactivated for now
+  esbuild: false
+  # sharp is optional for image-processing in Next.js and Storybook. Since Images are no big topic here, the script can be deactivated
+  sharp: false
+
+  # Build-Scripts that improove package sizes in WebSocket/Storybook
   bufferutil: true
-  core-js: true
-  core-js-pure: true
-  esbuild: true
-  sharp: true
   utf-8-validate: true
+
+  # Build-Scripts that are not needed
+  '@clerk/shared': false
+  core-js: false
+  core-js-pure: false
