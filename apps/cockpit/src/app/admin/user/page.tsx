@@ -9,7 +9,7 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@northware/ui/components/shadcn/alert";
-import { Button } from "@northware/ui/components/shadcn/button";
+import { buttonVariants } from "@northware/ui/components/shadcn/button";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { LightbulbIcon, PlusIcon } from "@northware/ui/icons/lucide";
 import Link from "next/link";
@@ -39,12 +39,10 @@ export default async function Page() {
         <div className="flex justify-between gap-4">
           <Headline level="h1">Benutzerverwaltung</Headline>
           {(await userHasPermission(["cockpit::user.create"])) === true && (
-            <Button asChild>
-              <Link href="user/create">
-                <PlusIcon className="sm:hidden" />
-                <span className="hidden sm:block">Benutzer hinzufügen</span>
-              </Link>
-            </Button>
+            <Link className={buttonVariants()} href="user/create">
+              <PlusIcon className="sm:hidden" />
+              <span className="hidden sm:block">Benutzer hinzufügen</span>
+            </Link>
           )}
         </div>
         <p className="mb-4 text-justify font-medium text-muted-foreground">

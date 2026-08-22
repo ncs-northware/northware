@@ -5,7 +5,7 @@ import {
   DataTablePagination,
   DataTableViewOptions,
 } from "@northware/ui/components/data-table";
-import { Button } from "@northware/ui/components/shadcn/button";
+import { buttonVariants } from "@northware/ui/components/shadcn/button";
 import {
   Table,
   TableBody,
@@ -101,11 +101,12 @@ export function DataTable<TData extends { recordId: number }, TValue>({
                   <TableCell>
                     <div className="flex justify-end">
                       {permissions.update === true && (
-                        <Button asChild variant="ghost">
-                          <Link href={`role/${row.original.recordId}`}>
-                            <EditIcon />
-                          </Link>
-                        </Button>
+                        <Link
+                          className={buttonVariants({ variant: "ghost" })}
+                          href={`role/${row.original.recordId}`}
+                        >
+                          <EditIcon />
+                        </Link>
                       )}
                       {permissions.delete === true && (
                         <RoleDeleteButton recordId={row.original.recordId} />
