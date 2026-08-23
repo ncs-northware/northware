@@ -38,12 +38,14 @@ export function MainSidebarMenuButton({
   }
   if (type === "parent") {
     return (
-      <CollapsibleTrigger asChild>
-        <SidebarMenuButton isActive={isActive()} tooltip={title}>
-          <span>{title}</span>
-          <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-        </SidebarMenuButton>
-      </CollapsibleTrigger>
+      <CollapsibleTrigger
+        render={
+          <SidebarMenuButton isActive={isActive()} tooltip={title}>
+            <span>{title}</span>
+            <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+          </SidebarMenuButton>
+        }
+      />
     );
   }
   if (type === "child") {

@@ -186,31 +186,31 @@ function NavMain({
             return (
               // Top-Level-Element mit Unterpunkten
               <Collapsible
-                asChild
                 className="group/collapsible"
                 key={item.itemId}
-              >
-                <SidebarMenuItem>
-                  <MainSidebarMenuButton
-                    href={item.href}
-                    title={item.title}
-                    type="parent"
-                  />
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      {ItemChildren.map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.itemId}>
-                          <MainSidebarMenuButton
-                            href={subItem.href}
-                            title={subItem.title}
-                            type="child"
-                          />
-                        </SidebarMenuSubItem>
-                      ))}
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </SidebarMenuItem>
-              </Collapsible>
+                render={
+                  <SidebarMenuItem>
+                    <MainSidebarMenuButton
+                      href={item.href}
+                      title={item.title}
+                      type="parent"
+                    />
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {ItemChildren.map((subItem) => (
+                          <SidebarMenuSubItem key={subItem.itemId}>
+                            <MainSidebarMenuButton
+                              href={subItem.href}
+                              title={subItem.title}
+                              type="child"
+                            />
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                }
+              />
             );
           })}
         </SidebarMenu>
