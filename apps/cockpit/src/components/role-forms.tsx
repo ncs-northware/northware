@@ -521,23 +521,27 @@ export function RoleDeleteButton({
   return (
     <AlertDialog>
       {mode === "list" && (
-        <AlertDialogTrigger asChild>
-          <Button
-            className="text-destructive hover:text-destructive"
-            size="icon"
-            variant="ghost"
-          >
-            <TrashIcon className="size-4" />
-          </Button>
-        </AlertDialogTrigger>
+        <AlertDialogTrigger
+          render={
+            <Button
+              className="text-destructive hover:text-destructive"
+              size="icon"
+              variant="ghost"
+            >
+              <TrashIcon className="size-4" />
+            </Button>
+          }
+        />
       )}
       {mode === "page" && (
-        <AlertDialogTrigger asChild>
-          <Button variant="destructive">
-            <TrashIcon className="size-4" />
-            <span>Rolle löschen</span>
-          </Button>
-        </AlertDialogTrigger>
+        <AlertDialogTrigger
+          render={
+            <Button variant="destructive">
+              <TrashIcon className="size-4" />
+              <span>Rolle löschen</span>
+            </Button>
+          }
+        />
       )}
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -556,9 +560,10 @@ export function RoleDeleteButton({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction asChild onClick={() => submitRoleDeletion()}>
-            <Button variant="destructive">Rolle löschen</Button>
-          </AlertDialogAction>
+          <AlertDialogAction
+            onClick={() => submitRoleDeletion()}
+            render={<Button variant="destructive">Rolle löschen</Button>}
+          />
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -598,14 +603,16 @@ export function CreatePermissionDetails() {
   };
   return (
     <Dialog onOpenChange={handleOpenChange} open={open}>
-      <DialogTrigger asChild>
-        <Button>
-          <PlusIcon className="sm:hidden" />
-          <span className="hidden sm:block">
-            Berechtigungsschlüssel hinzufügen
-          </span>
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button>
+            <PlusIcon className="sm:hidden" />
+            <span className="hidden sm:block">
+              Berechtigungsschlüssel hinzufügen
+            </span>
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Berechtigungsschlüssel hinzufügen</DialogTitle>
@@ -709,11 +716,13 @@ export function UpdatePermissionDetails({
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogTrigger asChild>
-        <Button type="button" variant="ghost">
-          <EditIcon />
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button type="button" variant="ghost">
+            <EditIcon />
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Berechtigungsschlüssel bearbeiten</DialogTitle>
@@ -816,23 +825,27 @@ export function PermissionDeleteButton({
   return (
     <AlertDialog>
       {mode === "list" && (
-        <AlertDialogTrigger asChild>
-          <Button
-            className="text-destructive hover:text-destructive"
-            size="icon"
-            variant="ghost"
-          >
-            <TrashIcon />
-          </Button>
-        </AlertDialogTrigger>
+        <AlertDialogTrigger
+          render={
+            <Button
+              className="text-destructive hover:text-destructive"
+              size="icon"
+              variant="ghost"
+            >
+              <TrashIcon />
+            </Button>
+          }
+        />
       )}
       {mode === "page" && (
-        <AlertDialogTrigger asChild>
-          <Button variant="destructive">
-            <TrashIcon className="size-4" />
-            <span>Rolle löschen</span>
-          </Button>
-        </AlertDialogTrigger>
+        <AlertDialogTrigger
+          render={
+            <Button variant="destructive">
+              <TrashIcon className="size-4" />
+              <span>Rolle löschen</span>
+            </Button>
+          }
+        />
       )}
       <AlertDialogContent>
         <AlertDialogHeader>

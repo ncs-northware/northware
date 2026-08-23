@@ -449,11 +449,13 @@ export function UserEmailList({
               </TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button size="icon" variant="ghost">
-                      <EllipsisIcon className="size-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
+                  <DropdownMenuTrigger
+                    render={
+                      <Button size="icon" variant="ghost">
+                        <EllipsisIcon className="size-4" />
+                      </Button>
+                    }
+                  />
                   <DropdownMenuContent>
                     {primaryEmailAddressId !== row.id && (
                       <DropdownMenuItem onClick={() => setPrimaryEmail(row.id)}>
@@ -528,11 +530,13 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={open}>
-      <DialogTrigger asChild>
-        <Button size="sm" variant="outline">
-          E-Mail Adresse hinzufügen
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button size="sm" variant="outline">
+            E-Mail Adresse hinzufügen
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Neue E-Mail Adresse hinzufügen</DialogTitle>
@@ -654,11 +658,13 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={open}>
-      <DialogTrigger asChild>
-        <Button size="sm" variant="outline">
-          Passwort ändern
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button size="sm" variant="outline">
+            Passwort ändern
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Passwort ändern</DialogTitle>
@@ -781,18 +787,20 @@ export function UserDeleteButton({
   }
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button
-          className={
-            mode === "list" ? "text-destructive hover:text-destructive" : ""
-          }
-          size={mode === "page" ? "sm" : "icon"}
-          variant={mode === "page" ? "destructive" : "ghost"}
-        >
-          <TrashIcon />
-          {mode === "page" && <span>Benutzer löschen</span>}
-        </Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger
+        render={
+          <Button
+            className={
+              mode === "list" ? "text-destructive hover:text-destructive" : ""
+            }
+            size={mode === "page" ? "sm" : "icon"}
+            variant={mode === "page" ? "destructive" : "ghost"}
+          >
+            <TrashIcon />
+            {mode === "page" && <span>Benutzer löschen</span>}
+          </Button>
+        }
+      />
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
@@ -808,9 +816,10 @@ export function UserDeleteButton({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction asChild onClick={() => submitUserDeletion()}>
-            <Button variant="destructive">Benutzer löschen</Button>
-          </AlertDialogAction>
+          <AlertDialogAction
+            onClick={() => submitUserDeletion()}
+            render={<Button variant="destructive">Benutzer löschen</Button>}
+          />
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -887,16 +896,18 @@ export function UpdateUserRolesForm({
                           <FieldLabel>
                             <span>{role.roleName}</span>
                             <Badge variant="secondary">{role.roleKey}</Badge>
-                            <CollapsibleTrigger asChild>
-                              <Button
-                                className="size-8"
-                                size="icon"
-                                type="button"
-                                variant="ghost"
-                              >
-                                <ChevronDownIcon />
-                              </Button>
-                            </CollapsibleTrigger>
+                            <CollapsibleTrigger
+                              render={
+                                <Button
+                                  className="size-8"
+                                  size="icon"
+                                  type="button"
+                                  variant="ghost"
+                                >
+                                  <ChevronDownIcon />
+                                </Button>
+                              }
+                            />
                           </FieldLabel>
                           <Switch
                             checked={field.value.includes(role.roleKey)}
@@ -1027,16 +1038,18 @@ export function CreateUserRolesForm({
                           <FieldLabel>
                             <span>{role.roleName}</span>
                             <Badge variant="secondary">{role.roleKey}</Badge>
-                            <CollapsibleTrigger asChild>
-                              <Button
-                                className="size-8"
-                                size="icon"
-                                type="button"
-                                variant="ghost"
-                              >
-                                <ChevronDownIcon />
-                              </Button>
-                            </CollapsibleTrigger>
+                            <CollapsibleTrigger
+                              render={
+                                <Button
+                                  className="size-8"
+                                  size="icon"
+                                  type="button"
+                                  variant="ghost"
+                                >
+                                  <ChevronDownIcon />
+                                </Button>
+                              }
+                            />
                           </FieldLabel>
                           <Switch
                             checked={field.value.includes(role.roleKey)}

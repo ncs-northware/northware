@@ -115,12 +115,14 @@ export function DateInput({ fieldState, field }: DateInputProps) {
       />
       <InputGroupAddon align="inline-end">
         <Popover onOpenChange={setOpen} open={open}>
-          <PopoverTrigger asChild>
-            <InputGroupButton id="date-picker" size="icon-xs" variant="ghost">
-              <CalendarIcon className="size-3.5" />
-              <span className="sr-only">Datum auswählen</span>
-            </InputGroupButton>
-          </PopoverTrigger>
+          <PopoverTrigger
+            render={
+              <InputGroupButton id="date-picker" size="icon-xs" variant="ghost">
+                <CalendarIcon className="size-3.5" />
+                <span className="sr-only">Datum auswählen</span>
+              </InputGroupButton>
+            }
+          />
           <PopoverContent
             align="end"
             alignOffset={-8}

@@ -179,12 +179,14 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <TableCell>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="h-8 w-8 p-0" variant="ghost">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontalIcon />
-              </Button>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger
+              render={
+                <Button className="h-8 w-8 p-0" variant="ghost">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontalIcon />
+                </Button>
+              }
+            />
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem

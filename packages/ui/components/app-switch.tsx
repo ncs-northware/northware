@@ -35,15 +35,17 @@ export function AppSwitch({
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              size="lg"
-            >
-              <Brand className="truncate text-base" service={service} />
-              <ChevronsUpDown className="ml-auto" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
+          <DropdownMenuTrigger
+            render={
+              <SidebarMenuButton
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                size="lg"
+              >
+                <Brand className="truncate text-base" service={service} />
+                <ChevronsUpDown className="ml-auto" />
+              </SidebarMenuButton>
+            }
+          />
           <DropdownMenuContent
             align="start"
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
