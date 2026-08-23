@@ -528,11 +528,13 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={open}>
-      <DialogTrigger asChild>
-        <Button size="sm" variant="outline">
-          E-Mail Adresse hinzufügen
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button size="sm" variant="outline">
+            E-Mail Adresse hinzufügen
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Neue E-Mail Adresse hinzufügen</DialogTitle>
@@ -654,11 +656,13 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={open}>
-      <DialogTrigger asChild>
-        <Button size="sm" variant="outline">
-          Passwort ändern
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button size="sm" variant="outline">
+            Passwort ändern
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Passwort ändern</DialogTitle>

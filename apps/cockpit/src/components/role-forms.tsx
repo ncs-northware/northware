@@ -603,14 +603,16 @@ export function CreatePermissionDetails() {
   };
   return (
     <Dialog onOpenChange={handleOpenChange} open={open}>
-      <DialogTrigger asChild>
-        <Button>
-          <PlusIcon className="sm:hidden" />
-          <span className="hidden sm:block">
-            Berechtigungsschlüssel hinzufügen
-          </span>
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button>
+            <PlusIcon className="sm:hidden" />
+            <span className="hidden sm:block">
+              Berechtigungsschlüssel hinzufügen
+            </span>
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Berechtigungsschlüssel hinzufügen</DialogTitle>
@@ -714,11 +716,13 @@ export function UpdatePermissionDetails({
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogTrigger asChild>
-        <Button type="button" variant="ghost">
-          <EditIcon />
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger
+        render={
+          <Button type="button" variant="ghost">
+            <EditIcon />
+          </Button>
+        }
+      />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Berechtigungsschlüssel bearbeiten</DialogTitle>
