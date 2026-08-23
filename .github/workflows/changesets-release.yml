@@ -36,7 +36,7 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v2
         with:
-          commit: "chore(release): New Package Versions"
-          title: "chore(release): New Package Versions"
+          commit-message: "chore(release): New Package Versions"
+          pr-title: "chore(release): New Package Versions"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
