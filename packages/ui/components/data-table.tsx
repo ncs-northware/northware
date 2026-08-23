@@ -46,16 +46,19 @@ export function DataTableViewOptions<TData>({
 }: DataTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          className="ml-auto hidden h-8 lg:flex"
-          size="sm"
-          variant="outline"
-        >
-          Spalten
-          <ChevronDownIcon />
-        </Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            className="ml-auto hidden h-8 lg:flex"
+            size="sm"
+            variant="outline"
+          >
+            Spalten
+            <ChevronDownIcon />
+          </Button>
+        }
+      />
+
       <DropdownMenuContent align="end" className="w-37.5">
         {table
           .getAllColumns()
@@ -172,23 +175,25 @@ export function DataTableColumnHeader<TData, TValue>({
   return (
     <div className={cn("flex items-center space-x-2", className)}>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            className="-ml-3 h-8 data-[state=open]:bg-accent"
-            size="sm"
-            variant="ghost"
-          >
-            <span>{title}</span>
-            {column.getIsSorted() === "desc" ? (
-              <ArrowDownIcon />
-              // biome-ignore lint/style/noNestedTernary: shadcn internal
-            ) : column.getIsSorted() === "asc" ? (
-              <ArrowUpIcon />
-            ) : (
-              <ChevronsUpDownIcon />
-            )}
-          </Button>
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              className="-ml-3 h-8 data-[state=open]:bg-accent"
+              size="sm"
+              variant="ghost"
+            >
+              <span>{title}</span>
+              {column.getIsSorted() === "desc" ? (
+                <ArrowDownIcon />
+                // biome-ignore lint/style/noNestedTernary: shadcn internal
+              ) : column.getIsSorted() === "asc" ? (
+                <ArrowUpIcon />
+              ) : (
+                <ChevronsUpDownIcon />
+              )}
+            </Button>
+          }
+        />
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
             <ArrowUpIcon className="h-3.5 w-3.5 text-muted-foreground/70" />
