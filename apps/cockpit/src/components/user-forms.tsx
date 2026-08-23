@@ -890,16 +890,18 @@ export function UpdateUserRolesForm({
                           <FieldLabel>
                             <span>{role.roleName}</span>
                             <Badge variant="secondary">{role.roleKey}</Badge>
-                            <CollapsibleTrigger asChild>
-                              <Button
-                                className="size-8"
-                                size="icon"
-                                type="button"
-                                variant="ghost"
-                              >
-                                <ChevronDownIcon />
-                              </Button>
-                            </CollapsibleTrigger>
+                            <CollapsibleTrigger
+                              render={
+                                <Button
+                                  className="size-8"
+                                  size="icon"
+                                  type="button"
+                                  variant="ghost"
+                                >
+                                  <ChevronDownIcon />
+                                </Button>
+                              }
+                            />
                           </FieldLabel>
                           <Switch
                             checked={field.value.includes(role.roleKey)}
@@ -1030,16 +1032,18 @@ export function CreateUserRolesForm({
                           <FieldLabel>
                             <span>{role.roleName}</span>
                             <Badge variant="secondary">{role.roleKey}</Badge>
-                            <CollapsibleTrigger asChild>
-                              <Button
-                                className="size-8"
-                                size="icon"
-                                type="button"
-                                variant="ghost"
-                              >
-                                <ChevronDownIcon />
-                              </Button>
-                            </CollapsibleTrigger>
+                            <CollapsibleTrigger
+                              render={
+                                <Button
+                                  className="size-8"
+                                  size="icon"
+                                  type="button"
+                                  variant="ghost"
+                                >
+                                  <ChevronDownIcon />
+                                </Button>
+                              }
+                            />
                           </FieldLabel>
                           <Switch
                             checked={field.value.includes(role.roleKey)}
