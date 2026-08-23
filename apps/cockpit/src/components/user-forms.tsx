@@ -781,18 +781,20 @@ export function UserDeleteButton({
   }
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button
-          className={
-            mode === "list" ? "text-destructive hover:text-destructive" : ""
-          }
-          size={mode === "page" ? "sm" : "icon"}
-          variant={mode === "page" ? "destructive" : "ghost"}
-        >
-          <TrashIcon />
-          {mode === "page" && <span>Benutzer löschen</span>}
-        </Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger
+        render={
+          <Button
+            className={
+              mode === "list" ? "text-destructive hover:text-destructive" : ""
+            }
+            size={mode === "page" ? "sm" : "icon"}
+            variant={mode === "page" ? "destructive" : "ghost"}
+          >
+            <TrashIcon />
+            {mode === "page" && <span>Benutzer löschen</span>}
+          </Button>
+        }
+      />
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Benutzer löschen</AlertDialogTitle>
@@ -808,9 +810,10 @@ export function UserDeleteButton({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction asChild onClick={() => submitUserDeletion()}>
-            <Button variant="destructive">Benutzer löschen</Button>
-          </AlertDialogAction>
+          <AlertDialogAction
+            onClick={() => submitUserDeletion()}
+            render={<Button variant="destructive">Benutzer löschen</Button>}
+          />
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
