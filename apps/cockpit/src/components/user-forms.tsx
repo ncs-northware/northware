@@ -449,11 +449,13 @@ export function UserEmailList({
               </TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button size="icon" variant="ghost">
-                      <EllipsisIcon className="size-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
+                  <DropdownMenuTrigger
+                    render={
+                      <Button size="icon" variant="ghost">
+                        <EllipsisIcon className="size-4" />
+                      </Button>
+                    }
+                  />
                   <DropdownMenuContent>
                     {primaryEmailAddressId !== row.id && (
                       <DropdownMenuItem onClick={() => setPrimaryEmail(row.id)}>
