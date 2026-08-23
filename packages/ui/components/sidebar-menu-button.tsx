@@ -29,11 +29,14 @@ export function MainSidebarMenuButton({
 
   if (type === "topLevel") {
     return (
-      <SidebarMenuButton asChild isActive={isActive()}>
-        <Link href={href}>
-          <span>{title}</span>
-        </Link>
-      </SidebarMenuButton>
+      <SidebarMenuButton
+        isActive={isActive()}
+        render={
+          <Link href={href}>
+            <span>{title}</span>
+          </Link>
+        }
+      />
     );
   }
   if (type === "parent") {
@@ -50,11 +53,14 @@ export function MainSidebarMenuButton({
   }
   if (type === "child") {
     return (
-      <SidebarMenuSubButton asChild isActive={isActive()}>
-        <Link href={href}>
-          <span>{title}</span>
-        </Link>
-      </SidebarMenuSubButton>
+      <SidebarMenuSubButton
+        isActive={isActive()}
+        render={
+          <Link href={href}>
+            <span>{title}</span>
+          </Link>
+        }
+      />
     );
   }
 }
