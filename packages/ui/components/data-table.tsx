@@ -19,10 +19,25 @@ import {
   SelectValue,
 } from "@northware/ui/components/shadcn/select";
 import { cn } from "@northware/ui/lib/utils";
-import type {
-  Column as ColumnType,
-  Row as RowType,
-  Table as TableType,
+import {
+  type Column,
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
+  filterFn_includesString,
+  globalFilteringFeature,
+  type ReactTable,
+  type Row,
+  type RowData,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  sortFn_alphanumeric,
+  sortFn_text,
+  type Table,
+  tableFeatures,
 } from "@tanstack/react-table";
 import {
   ArrowDownIcon,
@@ -35,15 +50,29 @@ import {
   ChevronsUpDownIcon,
   EyeOffIcon,
 } from "lucide-react";
-import type React from "react";
+import type { ComponentProps, HTMLAttributes } from "react";
 
-interface DataTableViewOptionsProps<TData> {
-  table: TableType<TData>;
-}
+export const features = tableFeatures({
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  filteredRowModel: createFilteredRowModel(),
+  filterFns: { includesString: filterFn_includesString },
+  globalFilteringFeature,
+  paginatedRowModel: createPaginatedRowModel(),
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  sortedRowModel: createSortedRowModel(),
+  sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
+});
 
-export function DataTableViewOptions<TData>({
+export type DataTableFeatures = typeof features;
+
+export function DataTableViewOptions<TData extends RowData>({
   table,
-}: DataTableViewOptionsProps<TData>) {
+}: {
+  table: ReactTable<DataTableFeatures, TData>;
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -81,13 +110,11 @@ export function DataTableViewOptions<TData>({
   );
 }
 
-interface DataTablePaginationProps<TData> {
-  table: TableType<TData>;
-}
-
-export function DataTablePagination<TData>({
+export function DataTablePagination<TData extends RowData>({
   table,
-}: DataTablePaginationProps<TData>) {
+}: {
+  table: ReactTable<DataTableFeatures, TData>;
+}) {
   return (
     <div className="flex items-center justify-between px-2 py-4">
       <div className="flex items-center space-x-2">
@@ -96,10 +123,10 @@ export function DataTablePagination<TData>({
           onValueChange={(value) => {
             table.setPageSize(Number(value));
           }}
-          value={`${table.getState().pagination.pageSize}`}
+          value={`${table.state.pagination.pageSize}`}
         >
           <SelectTrigger className="h-8 w-17.5">
-            <SelectValue placeholder={table.getState().pagination.pageSize} />
+            <SelectValue placeholder={table.state.pagination.pageSize} />
           </SelectTrigger>
           <SelectContent side="top">
             {/** biome-ignore lint/style/noMagicNumbers: shadcn internals */}
@@ -112,8 +139,7 @@ export function DataTablePagination<TData>({
         </Select>
       </div>
       <div className="flex w-25 items-center justify-center font-medium text-sm">
-        Seite {table.getState().pagination.pageIndex + 1} von{" "}
-        {table.getPageCount()}
+        Seite {table.state.pagination.pageIndex + 1} von {table.getPageCount()}
       </div>
       <div className="flex items-center space-x-2">
         <Button
@@ -157,13 +183,13 @@ export function DataTablePagination<TData>({
   );
 }
 
-interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
-  column: ColumnType<TData, TValue>;
+interface DataTableColumnHeaderProps<TData extends RowData, TValue>
+  extends HTMLAttributes<HTMLDivElement> {
+  column: Column<DataTableFeatures, TData, TValue>;
   title: string;
 }
 
-export function DataTableColumnHeader<TData, TValue>({
+export function DataTableColumnHeader<TData extends RowData, TValue>({
   column,
   title,
   className,
@@ -214,28 +240,24 @@ export function DataTableColumnHeader<TData, TValue>({
   );
 }
 
-interface DataTableFilterProps<TData> {
-  globalFilter: string;
-  table: TableType<TData>;
-}
-
-export function DataTableFilter<TData>({
+export function DataTableFilter<TData extends RowData>({
   table,
-  globalFilter,
-}: DataTableFilterProps<TData>) {
+}: {
+  table: ReactTable<DataTableFeatures, TData>;
+}) {
   return (
     <Input
       onChange={(event) => table.setGlobalFilter(String(event.target.value))}
       placeholder="Tabelle durchsuchen..."
-      value={globalFilter}
+      value={table.state.globalFilter}
     />
   );
 }
 
-export function DataTableSelectHeader<TData>({
+export function DataTableSelectHeader<TData extends RowData>({
   table,
 }: {
-  table: TableType<TData>;
+  table: Table<DataTableFeatures, TData>;
 }) {
   return (
     <Checkbox
@@ -249,7 +271,11 @@ export function DataTableSelectHeader<TData>({
   );
 }
 
-export function DataTableSelectCell<TData>({ row }: { row: RowType<TData> }) {
+export function DataTableSelectCell<TData extends RowData>({
+  row,
+}: {
+  row: Row<DataTableFeatures, TData>;
+}) {
   return (
     <Checkbox
       aria-label="Zeile auswählen"
@@ -262,20 +288,20 @@ export function DataTableSelectCell<TData>({ row }: { row: RowType<TData> }) {
 export function TableDescriptionList({
   className,
   ...props
-}: React.ComponentProps<"dl">) {
+}: ComponentProps<"dl">) {
   return <dl className={className} {...props} />;
 }
 
 export function TableDescriptionTerm({
   className,
   ...props
-}: React.ComponentProps<"dt">) {
+}: ComponentProps<"dt">) {
   return <dt className={cn("sr-only", className)} {...props} />;
 }
 
 export function TableDescriptionElement({
   className,
   ...props
-}: React.ComponentProps<"dd">) {
+}: ComponentProps<"dd">) {
   return <dd className={className} {...props} />;
 }
