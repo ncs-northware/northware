@@ -17,12 +17,11 @@ import {
 import {
   type ColumnDef,
   type ColumnVisibilityState,
-  flexRender,
   type PaginationState,
   type RowData,
   useTable,
 } from "@tanstack/react-table";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
 interface DataTableProps<TData extends RowData> {
   columns: ColumnDef<DataTableFeatures, TData>[];
@@ -70,12 +69,7 @@ export function DataTable<TData extends RowData>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Fragment key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </Fragment>
+                  <table.FlexRender header={header} key={header.id} />
                 ))}
               </TableRow>
             ))}
@@ -85,12 +79,7 @@ export function DataTable<TData extends RowData>({
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <Fragment key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Fragment>
+                    <table.FlexRender cell={cell} key={cell.id} />
                   ))}
                 </TableRow>
               ))

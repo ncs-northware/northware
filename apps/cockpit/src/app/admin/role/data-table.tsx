@@ -20,13 +20,12 @@ import { EditIcon } from "@northware/ui/icons/lucide";
 import {
   type ColumnDef,
   type ColumnVisibilityState,
-  flexRender,
   type RowData,
   type SortingState,
   useTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { RoleDeleteButton } from "@/components/role-forms";
 
 interface DataTableProps<TData extends RowData & { recordId: number }> {
@@ -67,12 +66,7 @@ export function DataTable<TData extends RowData & { recordId: number }>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Fragment key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </Fragment>
+                  <table.FlexRender header={header} key={header.id} />
                 ))}
                 <TableHead className="relative">
                   <span className="sr-only">Aktionen</span>
@@ -88,12 +82,7 @@ export function DataTable<TData extends RowData & { recordId: number }>({
                   key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <Fragment key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Fragment>
+                    <table.FlexRender cell={cell} key={cell.id} />
                   ))}
                   <TableCell>
                     <div className="flex justify-end">
