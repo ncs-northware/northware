@@ -2,12 +2,13 @@
 
 import {
   DataTableColumnHeader,
+  type DataTableFeatures,
   TableDescriptionElement,
   TableDescriptionList,
   TableDescriptionTerm,
 } from "@northware/ui/components/data-table";
 import { TableCell, TableHead } from "@northware/ui/components/shadcn/table";
-import type { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 
 export interface UserRow {
   email: string | undefined;
@@ -16,9 +17,10 @@ export interface UserRow {
   username: string | null;
 }
 
-export const columns: ColumnDef<UserRow>[] = [
-  {
-    accessorKey: "fullName",
+const columnHelper = createColumnHelper<DataTableFeatures, UserRow>();
+
+export const columns = columnHelper.columns([
+  columnHelper.accessor("fullName", {
     cell: ({ row }) => (
       <TableCell className="w-full max-w-0 font-medium sm:w-auto sm:max-w-none">
         {row.original.fullName}
@@ -39,9 +41,8 @@ export const columns: ColumnDef<UserRow>[] = [
         <DataTableColumnHeader column={column} title="Name" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "email",
+  }),
+  columnHelper.accessor("email", {
     cell: ({ row }) => (
       <TableCell className="hidden truncate lg:table-cell">
         {row.original.email}
@@ -52,9 +53,8 @@ export const columns: ColumnDef<UserRow>[] = [
         <DataTableColumnHeader column={column} title="E-Mail Adresse" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "username",
+  }),
+  columnHelper.accessor("username", {
     cell: ({ row }) => (
       <TableCell className="hidden sm:table-cell">
         {row.original.username}
@@ -65,5 +65,5 @@ export const columns: ColumnDef<UserRow>[] = [
         <DataTableColumnHeader column={column} title="Benutzername" />
       </TableHead>
     ),
-  },
-];
+  }),
+]);

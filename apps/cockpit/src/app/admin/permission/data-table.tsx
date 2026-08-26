@@ -1,8 +1,10 @@
 "use client";
 
 import {
+  type DataTableFeatures,
   DataTableFilter,
   DataTablePagination,
+  features,
 } from "@northware/ui/components/data-table";
 import {
   Table,
@@ -15,43 +17,34 @@ import {
 import {
   type ColumnDef,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   type SortingState,
-  useReactTable,
+  useTable,
 } from "@tanstack/react-table";
 import { Fragment, useState } from "react";
 import {
   PermissionDeleteButton,
   UpdatePermissionDetails,
 } from "@/components/role-forms";
+import type { TPermissionType } from "@/lib/rbac-types";
 
-interface DataTableProps<TData extends { recordId: number }, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData extends TPermissionType> {
+  columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[];
   permissions: { update: boolean; delete: boolean };
 }
 
-export function DataTable<
-  TData extends {
-    recordId: number;
-    permissionKey: string;
-    permissionName: string | null;
-  },
-  TValue,
->({ columns, data, permissions }: DataTableProps<TData, TValue>) {
+export function DataTable<TData extends TPermissionType>({
+  columns,
+  data,
+  permissions,
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    features,
     globalFilterFn: "includesString",
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
@@ -60,7 +53,7 @@ export function DataTable<
   return (
     <div>
       <div className="flex items-center gap-2 py-4">
-        <DataTableFilter globalFilter={globalFilter} table={table} />
+        <DataTableFilter table={table} />
       </div>
       <div className="rounded-md border">
         <Table className="min-w-full">

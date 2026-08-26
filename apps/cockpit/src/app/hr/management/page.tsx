@@ -1,8 +1,9 @@
+import type { DataTableFeatures } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
-import type { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { EmployeeList } from "@/components/hr-lists";
 import { type EmployeeItem, getEmployeeList } from "@/lib/hr-actions";
 
@@ -13,13 +14,15 @@ export const metadata = {
 export default async function Page() {
   const data = await getEmployeeList();
 
-  const columns: ColumnDef<EmployeeItem>[] = [
-    { accessorKey: "employeeId" },
-    { accessorKey: "firstName" },
-    { accessorKey: "sirName" },
-    { accessorKey: "activeContracts" },
-    { accessorKey: "terminatedContracts" },
-  ];
+  const columnHelper = createColumnHelper<DataTableFeatures, EmployeeItem>();
+
+  const columns = columnHelper.columns([
+    columnHelper.accessor("employeeId", {}),
+    columnHelper.accessor("firstName", {}),
+    columnHelper.accessor("sirName", {}),
+    columnHelper.accessor("activeContracts", {}),
+    columnHelper.accessor("terminatedContracts", {}),
+  ]);
 
   if (!data.success) {
     return <DataFetchError message={data.error.message} service="cockpit" />;

@@ -1,9 +1,11 @@
 "use client";
 
 import {
+  type DataTableFeatures,
   DataTableFilter,
   DataTablePagination,
   DataTableViewOptions,
+  features,
 } from "@northware/ui/components/data-table";
 import { buttonVariants } from "@northware/ui/components/shadcn/button";
 import {
@@ -17,41 +19,35 @@ import {
 import { EditIcon } from "@northware/ui/icons/lucide";
 import {
   type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
+  type ColumnVisibilityState,
+  type RowData,
   type SortingState,
-  useReactTable,
-  type VisibilityState,
+  useTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { UserDeleteButton } from "@/components/user-forms";
 
-interface DataTableProps<TData extends { id: string }, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData extends RowData & { id: string }> {
+  columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[];
   permissions: { update: boolean; delete: boolean };
 }
 
-export function DataTable<TData extends { id: string }, TValue>({
+export function DataTable<TData extends RowData & { id: string }>({
   columns,
   data,
   permissions,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] =
+    useState<ColumnVisibilityState>({});
 
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    features,
     globalFilterFn: "includesString",
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
@@ -61,7 +57,7 @@ export function DataTable<TData extends { id: string }, TValue>({
   return (
     <div>
       <div className="flex items-center gap-2 py-4">
-        <DataTableFilter globalFilter={globalFilter} table={table} />
+        <DataTableFilter table={table} />
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
@@ -70,12 +66,7 @@ export function DataTable<TData extends { id: string }, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Fragment key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </Fragment>
+                  <table.FlexRender header={header} key={header.id} />
                 ))}
                 <TableHead className="relative">
                   <span className="sr-only">Aktionen</span>
@@ -91,12 +82,7 @@ export function DataTable<TData extends { id: string }, TValue>({
                   key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <Fragment key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Fragment>
+                    <table.FlexRender cell={cell} key={cell.id} />
                   ))}
                   <TableCell>
                     <div className="flex justify-end">

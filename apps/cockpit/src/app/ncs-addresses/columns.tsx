@@ -2,12 +2,13 @@
 
 import {
   DataTableColumnHeader,
+  type DataTableFeatures,
   TableDescriptionElement,
   TableDescriptionList,
 } from "@northware/ui/components/data-table";
 import { TableCell, TableHead } from "@northware/ui/components/shadcn/table";
 import { MailIcon, PhoneIcon } from "@northware/ui/icons/lucide";
-import type { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
 
 export interface EmployeeAddress {
@@ -19,9 +20,13 @@ export interface EmployeeAddress {
   sirName: string;
 }
 
-export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
-  {
-    accessorKey: "sirName",
+const employeeColumnHelper = createColumnHelper<
+  DataTableFeatures,
+  EmployeeAddress
+>();
+
+export const employeeColumns = employeeColumnHelper.columns([
+  employeeColumnHelper.accessor("sirName", {
     cell: ({ row }) => (
       <TableCell>
         <div className="hidden md:table-cell">{row.getValue("sirName")}</div>
@@ -56,9 +61,8 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         <DataTableColumnHeader column={column} title="Nachname" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "firstName",
+  }),
+  employeeColumnHelper.accessor("firstName", {
     cell: ({ row }) => (
       <TableCell className="hidden md:table-cell">
         {row.getValue("firstName")}
@@ -69,9 +73,8 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         <DataTableColumnHeader column={column} title="Vorname" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "phoneWork",
+  }),
+  employeeColumnHelper.accessor("phoneWork", {
     cell: ({ row }) => (
       <TableCell className="hidden md:table-cell">
         <TableDescriptionList>
@@ -96,9 +99,8 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         <DataTableColumnHeader column={column} title="Telefonnummer" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "mailWork",
+  }),
+  employeeColumnHelper.accessor("mailWork", {
     cell: ({ row }) => (
       <TableCell className="hidden lg:table-cell">
         <Link
@@ -114,9 +116,8 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         <DataTableColumnHeader column={column} title="E-Mail-Adresse" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "position",
+  }),
+  employeeColumnHelper.accessor("position", {
     cell: ({ row }) => (
       <TableCell className="hidden md:table-cell">
         <TableDescriptionList>
@@ -134,9 +135,8 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         <DataTableColumnHeader column={column} title="Position" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "department",
+  }),
+  employeeColumnHelper.accessor("department", {
     cell: ({ row }) => (
       <TableCell className="hidden lg:table-cell">
         {row.getValue("department")}
@@ -147,8 +147,8 @@ export const employeeColumns: ColumnDef<EmployeeAddress>[] = [
         <DataTableColumnHeader column={column} title="Abteilung" />
       </TableHead>
     ),
-  },
-];
+  }),
+]);
 
 export interface DepartmentAddress {
   company: string | null;
@@ -157,9 +157,13 @@ export interface DepartmentAddress {
   phone: string;
 }
 
-export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
-  {
-    accessorKey: "departmentName",
+const departmentColumnHelper = createColumnHelper<
+  DataTableFeatures,
+  DepartmentAddress
+>();
+
+export const departmentColumns = departmentColumnHelper.columns([
+  departmentColumnHelper.accessor("departmentName", {
     cell: ({ row }) => (
       <TableCell>
         <TableDescriptionList>
@@ -177,9 +181,8 @@ export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
         <DataTableColumnHeader column={column} title="Abteilung" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "company",
+  }),
+  departmentColumnHelper.accessor("company", {
     cell: ({ row }) => (
       <TableCell className="hidden lg:table-cell">
         {row.getValue("company")}
@@ -190,9 +193,8 @@ export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
         <DataTableColumnHeader column={column} title="Firma" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "phone",
+  }),
+  departmentColumnHelper.accessor("phone", {
     cell: ({ row }) => (
       <TableCell>
         <TableDescriptionList>
@@ -217,9 +219,8 @@ export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
         <DataTableColumnHeader column={column} title="Telefonnummer" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "mail",
+  }),
+  departmentColumnHelper.accessor("mail", {
     cell: ({ row }) => (
       <TableCell className="hidden md:table-cell">
         <Link
@@ -235,5 +236,5 @@ export const departmentColumns: ColumnDef<DepartmentAddress>[] = [
         <DataTableColumnHeader column={column} title="E-Mail-Adresse" />
       </TableHead>
     ),
-  },
-];
+  }),
+]);

@@ -1,8 +1,10 @@
 "use client";
 
 import {
+  type DataTableFeatures,
   DataTableFilter,
   DataTablePagination,
+  features,
 } from "@northware/ui/components/data-table";
 import { Badge } from "@northware/ui/components/shadcn/badge";
 import {
@@ -20,31 +22,24 @@ import {
 } from "@northware/ui/components/shadcn/item";
 import { ChevronRightIcon } from "@northware/ui/icons/lucide";
 import { cn } from "@northware/ui/lib/utils";
-import {
-  type ColumnDef,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { type ColumnDef, type RowData, useTable } from "@tanstack/react-table";
 import { formatDate } from "date-fns";
 import { de } from "date-fns/locale";
 import Link from "next/link";
 import { useState } from "react";
-export function EmployeeList<TData, TValue>({
+
+export function EmployeeList<TData extends RowData>({
   columns,
   data,
 }: {
-  columns: ColumnDef<TData, TValue>[];
+  columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[];
 }) {
   const [globalFilter, setGlobalFilter] = useState("");
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    features,
     globalFilterFn: "includesString",
     onGlobalFilterChange: setGlobalFilter,
     state: { globalFilter },
@@ -53,7 +48,7 @@ export function EmployeeList<TData, TValue>({
   return (
     <div>
       <div className="py-4">
-        <DataTableFilter globalFilter={globalFilter} table={table} />
+        <DataTableFilter table={table} />
       </div>
       <ItemGroup className="gap-4">
         {table.getRowModel().rows.length > 0 ? (
@@ -118,20 +113,19 @@ export function EmployeeList<TData, TValue>({
   );
 }
 
-export function EmploymentsList<TData, TValue>({
+export function EmploymentsList<TData extends RowData>({
   columns,
   data,
   employeeId,
 }: {
-  columns: ColumnDef<TData, TValue>[];
+  columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[];
   employeeId: number;
 }) {
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    features,
   });
   return (
     <div>

@@ -1,9 +1,11 @@
 "use client";
 
 import {
+  type DataTableFeatures,
   DataTableFilter,
   DataTablePagination,
   DataTableViewOptions,
+  features,
 } from "@northware/ui/components/data-table";
 import { buttonVariants } from "@northware/ui/components/shadcn/button";
 import {
@@ -17,41 +19,36 @@ import {
 import { EditIcon } from "@northware/ui/icons/lucide";
 import {
   type ColumnDef,
+  type ColumnVisibilityState,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
+  type RowData,
   type SortingState,
-  useReactTable,
-  type VisibilityState,
+  useTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { RoleDeleteButton } from "@/components/role-forms";
 
-interface DataTableProps<TData extends { recordId: number }, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData extends RowData & { recordId: number }> {
+  columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[];
   permissions: { update: boolean; delete: boolean };
 }
 
-export function DataTable<TData extends { recordId: number }, TValue>({
+export function DataTable<TData extends RowData & { recordId: number }>({
   columns,
   data,
   permissions,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] =
+    useState<ColumnVisibilityState>({});
 
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    features,
     globalFilterFn: "includesString",
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
@@ -61,7 +58,7 @@ export function DataTable<TData extends { recordId: number }, TValue>({
   return (
     <div>
       <div className="flex items-center gap-2 py-4">
-        <DataTableFilter globalFilter={globalFilter} table={table} />
+        <DataTableFilter table={table} />
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
