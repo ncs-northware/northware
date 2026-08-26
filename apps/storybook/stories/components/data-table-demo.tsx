@@ -2,11 +2,13 @@
 
 import {
   DataTableColumnHeader,
+  type DataTableFeatures,
   DataTableFilter,
   DataTablePagination,
   DataTableSelectCell,
   DataTableSelectHeader,
   DataTableViewOptions,
+  features,
   TableDescriptionElement,
   TableDescriptionList,
   TableDescriptionTerm,
@@ -30,17 +32,12 @@ import {
 } from "@northware/ui/components/shadcn/table";
 import { MoreHorizontalIcon } from "@northware/ui/icons/lucide";
 import {
-  type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
+  type ColumnVisibilityState,
+  createColumnHelper,
   type SortingState,
-  useReactTable,
-  type VisibilityState,
+  useTable,
 } from "@tanstack/react-table";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
 const data: Payment[] = [
   {
@@ -82,8 +79,10 @@ export interface Payment {
   status: "pending" | "processing" | "success" | "failed";
 }
 
-export const columns: ColumnDef<Payment>[] = [
-  {
+const columnHelper = createColumnHelper<DataTableFeatures, Payment>();
+
+export const columns = columnHelper.columns([
+  columnHelper.display({
     cell: ({ row }) => (
       <TableCell>
         <DataTableSelectCell row={row} />
@@ -97,9 +96,8 @@ export const columns: ColumnDef<Payment>[] = [
       </TableHead>
     ),
     id: "select",
-  },
-  {
-    accessorKey: "status",
+  }),
+  columnHelper.accessor("status", {
     cell: ({ row }) => {
       const amount = Number.parseFloat(row.getValue("amount"));
 
@@ -129,9 +127,8 @@ export const columns: ColumnDef<Payment>[] = [
         <DataTableColumnHeader column={column} title="Status" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "email",
+  }),
+  columnHelper.accessor("email", {
     cell: ({ row }) => (
       <TableCell>
         <div className="hidden lowercase lg:table-cell">
@@ -144,9 +141,8 @@ export const columns: ColumnDef<Payment>[] = [
         <DataTableColumnHeader column={column} title="Email" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "amount",
+  }),
+  columnHelper.accessor("amount", {
     cell: ({ row }) => {
       const amount = Number.parseFloat(row.getValue("amount"));
 
@@ -171,8 +167,8 @@ export const columns: ColumnDef<Payment>[] = [
         />
       </TableHead>
     ),
-  },
-  {
+  }),
+  columnHelper.display({
     cell: ({ row }) => {
       const payment = row.original;
 
@@ -209,21 +205,20 @@ export const columns: ColumnDef<Payment>[] = [
       </TableHead>
     ),
     id: "actions",
-  },
-];
+  }),
+]);
+
 export function DataTableDemo() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] =
+    useState<ColumnVisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    features,
     globalFilterFn: "includesString",
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
@@ -240,7 +235,7 @@ export function DataTableDemo() {
   return (
     <div className="w-full">
       <div className="flex items-center gap-2 py-4">
-        <DataTableFilter globalFilter={globalFilter} table={table} />
+        <DataTableFilter table={table} />
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
@@ -248,14 +243,11 @@ export function DataTableDemo() {
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <Fragment key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </Fragment>
-                ))}
+                {headerGroup.headers.map((header) =>
+                  header.isPlaceholder ? null : (
+                    <table.FlexRender header={header} key={header.id} />
+                  )
+                )}
                 <TableHead className="relative">
                   <span className="sr-only">Aktionen</span>
                 </TableHead>
@@ -270,12 +262,7 @@ export function DataTableDemo() {
                   key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <Fragment key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Fragment>
+                    <table.FlexRender cell={cell} key={cell.id} />
                   ))}
                 </TableRow>
               ))
@@ -304,35 +291,34 @@ export function DataTableDemo() {
 }
 
 export function DataTablePaginationDemo() {
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    features,
   });
   return <DataTablePagination table={table} />;
 }
 
 export function DataTableFilterDemo() {
   const [globalFilter, setGlobalFilter] = useState("");
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    features,
     globalFilterFn: "includesString",
     onGlobalFilterChange: setGlobalFilter,
     state: { globalFilter },
   });
-  return <DataTableFilter globalFilter={globalFilter} table={table} />;
+  return <DataTableFilter table={table} />;
 }
 
 export function DataTableViewOptionsDemo() {
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const table = useReactTable({
+  const [columnVisibility, setColumnVisibility] =
+    useState<ColumnVisibilityState>({});
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
+    features,
     onColumnVisibilityChange: setColumnVisibility,
     state: { columnVisibility },
   });
@@ -340,23 +326,21 @@ export function DataTableViewOptionsDemo() {
 }
 
 export function DataTableColumnHeaderDemo() {
-  const demoColumn: ColumnDef<Payment>[] = [
-    {
-      accessorKey: "email",
+  const demoColumn = columnHelper.columns([
+    columnHelper.accessor("email", {
       header: ({ column }) => (
         <TableHead>
           <DataTableColumnHeader column={column} title="Email" />
         </TableHead>
       ),
-    },
-  ];
+    }),
+  ]);
 
   const [sorting, setSorting] = useState<SortingState>([]);
-  const table = useReactTable({
+  const table = useTable({
     columns: demoColumn,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    features,
     onSortingChange: setSorting,
     state: {
       sorting,
@@ -369,12 +353,7 @@ export function DataTableColumnHeaderDemo() {
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <Fragment key={header.id}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </Fragment>
+                <table.FlexRender header={header} key={header.id} />
               ))}
             </TableRow>
           ))}
@@ -387,9 +366,7 @@ export function DataTableColumnHeaderDemo() {
                 key={row.id}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <Fragment key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Fragment>
+                  <table.FlexRender cell={cell} key={cell.id} />
                 ))}
               </TableRow>
             ))
@@ -408,33 +385,34 @@ export function DataTableColumnHeaderDemo() {
 
 export function DataTableSelectDemo() {
   const [rowSelection, setRowSelection] = useState({});
-  const demoColumn: ColumnDef<Payment>[] = [
-    {
+  const demoColumn = columnHelper.columns([
+    columnHelper.display({
       cell: ({ row }) => (
         <TableCell>
           <DataTableSelectCell row={row} />
         </TableCell>
       ),
+      enableHiding: false,
+      enableSorting: false,
       header: () => (
         <TableHead>
           <DataTableSelectHeader table={table} />
         </TableHead>
       ),
       id: "select",
-    },
-    {
-      accessorKey: "email",
+    }),
+    columnHelper.accessor("email", {
       header: ({ column }) => (
         <TableHead>
           <DataTableColumnHeader column={column} title="Email" />
         </TableHead>
       ),
-    },
-  ];
-  const table = useReactTable({
+    }),
+  ]);
+  const table = useTable({
     columns: demoColumn,
     data,
-    getCoreRowModel: getCoreRowModel(),
+    features,
     onRowSelectionChange: setRowSelection,
     state: { rowSelection },
   });
@@ -446,12 +424,7 @@ export function DataTableSelectDemo() {
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <Fragment key={header.id}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </Fragment>
+                <table.FlexRender header={header} key={header.id} />
               ))}
             </TableRow>
           ))}
@@ -464,9 +437,7 @@ export function DataTableSelectDemo() {
                 key={row.id}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <Fragment key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Fragment>
+                  <table.FlexRender cell={cell} key={cell.id} />
                 ))}
               </TableRow>
             ))

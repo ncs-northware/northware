@@ -2,17 +2,22 @@
 
 import {
   DataTableColumnHeader,
+  type DataTableFeatures,
   TableDescriptionElement,
   TableDescriptionList,
   TableDescriptionTerm,
 } from "@northware/ui/components/data-table";
 import { TableCell, TableHead } from "@northware/ui/components/shadcn/table";
-import type { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import type { TRoleWithPermissions } from "@/lib/rbac-types";
 
-export const columns: ColumnDef<TRoleWithPermissions>[] = [
-  {
-    accessorKey: "roleKey",
+const columnHelper = createColumnHelper<
+  DataTableFeatures,
+  TRoleWithPermissions
+>();
+
+export const columns = columnHelper.columns([
+  columnHelper.accessor("roleKey", {
     cell: ({ row }) => (
       <TableCell>
         <span className="font-mono text-muted-foreground sm:text-foreground">
@@ -31,9 +36,8 @@ export const columns: ColumnDef<TRoleWithPermissions>[] = [
         <DataTableColumnHeader column={column} title="Schlüsselbezeichnung" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "roleName",
+  }),
+  columnHelper.accessor("roleName", {
     cell: ({ row }) => (
       <TableCell className="hidden sm:table-cell">
         {row.original.roleName}
@@ -44,5 +48,5 @@ export const columns: ColumnDef<TRoleWithPermissions>[] = [
         <DataTableColumnHeader column={column} title="Rollenbezeichnung" />
       </TableHead>
     ),
-  },
-];
+  }),
+]);

@@ -1,6 +1,7 @@
+import type { DataTableFeatures } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
-import type { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { notFound } from "next/navigation";
 import { EmploymentsList } from "@/components/hr-lists";
 import {
@@ -34,14 +35,19 @@ export default async function Page({
   const employmentsData = await getEmploymentsList(employeeId);
   const employeeData = await getBasicEmployee(employeeId);
 
-  const columns: ColumnDef<EmploymentListItem>[] = [
-    { accessorKey: "recordId" },
-    { accessorKey: "contractStart" },
-    { accessorKey: "contractEnd" },
-    { accessorKey: "position" },
-    { accessorKey: "departmentName" },
-    { accessorKey: "employer" },
-  ];
+  const columnHelper = createColumnHelper<
+    DataTableFeatures,
+    EmploymentListItem
+  >();
+
+  const columns = columnHelper.columns([
+    columnHelper.accessor("recordId", {}),
+    columnHelper.accessor("contractStart", {}),
+    columnHelper.accessor("contractEnd", {}),
+    columnHelper.accessor("position", {}),
+    columnHelper.accessor("departmentName", {}),
+    columnHelper.accessor("employer", {}),
+  ]);
 
   if (!employeeData.success) {
     return (

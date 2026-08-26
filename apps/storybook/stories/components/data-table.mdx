@@ -7,16 +7,16 @@ import { ViewSource, ShadcnDocs } from "../../components/storybook-buttons"
 # DataTable
 
 Mit den DataTable Komponenten lassen sich leistungsstarkte Tabellen und Datagrids erstellen.
-Die DataTable basiert auf [TanStack Table](https://tanstack.com/table/v8/docs/introduction), erweitert durch shadcn/ui
+Die DataTable basiert auf [TanStack Table](https://tanstack.com/table/latest/docs/overview), erweitert durch shadcn/ui
 
 <ShadcnDocs path="components/data-table" />
 <ViewSource path="components/data-table.tsx" />
 
 <Canvas of={DataTableStories.Default} />
 
-Da jede Tabelle unterschiedliche Anforderungen haben und auf unterschiedliche Weise funktioniert, 
+Da jede Tabelle unterschiedliche Anforderungen hat und auf unterschiedliche Weise funktioniert, 
 wird die `DataTable` nicht in einer einzelnen Komponente zusammengefasst.
-Ich folge hier dem Ansatz von `shadcn/ui`. Demnach sollte für jede Seite (oder für einen Teil der App), die `DataTables` verwenden eine eigene Komponente erstellt.
+Ich folge hier dem Ansatz von `shadcn/ui`. Demnach sollte für jede Seite (oder für einen Teil der App), die `DataTables` verwenden eine eigene Komponente erstellt werden.
 
 In dieser Dokumentation wird beschrieben, wie eine DataTable erstellt werden kann. 
 Dieser Guide ist auf die individuelle Verwendung von `DataTables` im Northware Ökosystem abgestimmt.
@@ -38,22 +38,24 @@ app
 - Die `columns.tsx` ist eine Client-Komponente, die die einzelnen Spalten und Zellen definiert.
 - Die `data-table.tsx` ist ebenfalls eine Client-Komponente, die die eigentliche `<DataTable />` Komponente enthält.
 - Die `page.tsx` ist eine Server-Komponente, in der Daten gefetched werden können und in der die `<DataTable />` gerendert wird.
+- Bei `shadcn` ist außerdem eine `data-table-features.ts` für jede DataTable vorgesehen. Das Objekt `features` mit dem dazugehörigen Typ `DataTableFeatures` sagt TansStack Table, welche Features verwendet werden sollen. In meinem Setup sind `features` und `DataTableFeatures` im Component-Code von `@northware/ui` enthalten. Somit können alle Tabellen die gleichen Features verwenden, sofern die UI daruaf zugreift.
 
 ### Column Definitions
 
-In der `columns.tsx` wird definiert welchen TypeScript Type die Daten folgen (`Payment`).
+In der `columns.tsx` wird definiert welchem TypeScript Type die Daten folgen (`Payment`).
 Außerdem werden die Spalten definiert. 
 
-Der einfachste Weg ist ein `accessorKey`, der einem Objekt im Type folgt und ein `header` mit einem String nach dem die Spalte benannt ist:
+Der einfachste Weg ist ein `accessor`, der einem Objekt im Type folgt und ein `header` mit einem String nach dem die Spalte benannt ist:
 
 ```tsx
-export const columns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "status",
+const columnHelper = createColumnHelper<DataTableFeatures, Payment>()
+
+export const columns = columnHelper.columns([
+  columnHelper.accessor("status", {
     header: "Status",
-  },
-  // ...
-]
+  }),
+  //...
+])
 ```
 
 Der `header` (Inhalt des `<TableHead />` Elements) und auch die `cell` (Inhalt der `<TableCell />`) kann auch noch komplexer definiert werden.
@@ -75,8 +77,7 @@ import {
 } from "@northware/ui/components/data-table";
 // ...
 
-import { ColumnDef } from "@tanstack/react-table";
-
+import { createColumnHelper } from "@tanstack/react-table";
 
 export type Payment = {
   id: string;
@@ -85,8 +86,10 @@ export type Payment = {
   email: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
-  {
+const columnHelper = createColumnHelper<DataTableFeatures, Payment>()
+
+export const columns = columnHelper.columns([
+  columnHelper.display({
     id: "select",
     header: ({ table }) => (
       <TableHead>
@@ -100,9 +103,8 @@ export const columns: ColumnDef<Payment>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-  },
-  {
-    accessorKey: "status",
+  }),
+  columnHelper.accessor("status", {
     header: ({ column }) => (
       <TableHead>
         <DataTableColumnHeader column={column} title="Status" />
@@ -131,10 +133,9 @@ export const columns: ColumnDef<Payment>[] = [
           </TableDescriptionList>
         </TableCell>
       );
-    },
-  },
-  {
-    accessorKey: "email",
+    }
+  }),
+  columnHelper.accessor("email", {
     header: ({ column }) => (
       <TableHead className="hidden lg:table-cell">
         <DataTableColumnHeader column={column} title="Email" />
@@ -146,10 +147,9 @@ export const columns: ColumnDef<Payment>[] = [
           {row.getValue("email")}
         </div>
       </TableCell>
-    ),
-  },
-  {
-    accessorKey: "amount",
+    )
+  }),
+  columnHelper.accessor("amount", {
     header: ({ column }) => (
       <TableHead className="hidden sm:table-cell">
         <DataTableColumnHeader
@@ -174,8 +174,8 @@ export const columns: ColumnDef<Payment>[] = [
         </TableCell>
       );
     },
-  },
-  {
+  }),
+  columnHelper.display({
     id: "actions",
     enableHiding: false,
     header: () => (
@@ -208,10 +208,8 @@ export const columns: ColumnDef<Payment>[] = [
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>
-      );
-    },
   },
-];
+]);
 
 ```
 
@@ -220,16 +218,18 @@ export const columns: ColumnDef<Payment>[] = [
 In der `data-table.tsx` wird die eigentliche Komponente erstellt.
 
 Innerhalb einer Konstanten wie `table` geschieht die Magie von TanStack Table.
-Hier werden die Funktionen integriert auf die innerhalb der Komponente abgerufen werden (z.B. die Basis-Tabelle, Sorting, Filter, Pagination, Select usw.).
+Hier werden über das Objekt `features` die Funktionen integriert, die innerhalb der Komponente abgerufen werden.
 Die Komponente gibt dann neben der eigentlichen Tabelle auch die weiteren Controls zurück.
 
 In diesem Bespiel entsteht die obige responsive Tabelle mit Pagination, Sorting, Filtern und der Möglichkeit Spalten ein- und auszublenden.
 
 ```tsx
 import {
+  type DataTableFeatures
   DataTableFilter,
   DataTablePagination,
   DataTableViewOptions,
+  features
 } from "@northware/ui/components/data-table";
 import {
   Table,
@@ -238,42 +238,34 @@ import {
   TableRow,
 } from "@northware/ui/components/shadcn/table";
 import {
-  ColumnDef
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   type SortingState,
-  useReactTable,
-  type VisibilityState,
+  useTable,
+  type ColumnVisibilityState,
+  type RowData
 } from "@tanstack/react-table";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+interface DataTableProps<TData extends RowData> {
+  columns: ColumnDef<DataTableFeatures, TData>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const table = useReactTable({
+  const table = useTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
+    features
     onSortingChange: setSorting,
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     globalFilterFn: "includesString",
     onGlobalFilterChange: setGlobalFilter,
-    getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     state: {
@@ -287,7 +279,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full">
       <div className="flex items-center gap-2 py-4">
-        <DataTableFilter globalFilter={globalFilter} table={table} />
+        <DataTableFilter table={table} />
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
@@ -296,12 +288,7 @@ export function DataTable<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Fragment key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </Fragment>
+                  <table.FlexRender header={header} key={header.id}>
                 ))}
                 <TableHead className="relative">
                   <span className="sr-only">Aktionen</span>
@@ -317,12 +304,7 @@ export function DataTable<TData, TValue>({
                   key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <Fragment key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Fragment>
+                    <table.FlexRender cell={cell} key={cell.id}>
                   ))}
                 </TableRow>
               ))
@@ -353,33 +335,55 @@ export function DataTable<TData, TValue>({
 ```
 
 Da es sich hier um eine responsive Tabelle handelt, werden die eigentlichen `<TableHead />` und `<TableCell />` in der `columns.tsx` 
-und nicht in der `data-table.tsx` definiert. Aus diesem Grund ist die Verwendung eines `<Fragments />` nötig.
+und nicht in der `data-table.tsx` definiert. `<table.FlexRender>` ist daher jeweils das einzige und direkte Child der `Array.map()` Abfragen und braucht ein `key` Element.
 
 ## Komponenten, um DataTables zu gestalten
 
 Einige häufig verwendete Teile der `DataTables` und der weiteren Controls sind als spezielle Komponenten verfügbar, 
 um die Erstellung der individuellen DataTables zu verweinfachen.
 
+### features bzw. DataTableFeatures
+
+Folgende Features sind über das Objekt `features` bzw. den abgeleiteten Typ `DataTabeleFeatures` eingebunden:
+
+```ts
+export const features = tableFeatures({
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  filteredRowModel: createFilteredRowModel(),
+  filterFns: { includesString: filterFn_includesString },
+  globalFilteringFeature,
+  paginatedRowModel: createPaginatedRowModel(),
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  sortedRowModel: createSortedRowModel(),
+  sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
+});
+
+export type DataTableFeatures = typeof features;
+```
+
 ### DataTablePagination
 
 Mit der DataTablePagination werden die Tabellenzeilen automatisch auf mehrere Seiten mit je 10 Einträgen aufgeteilt.
-Über die Toggles der Komponente kann zwischen den Seite gewechselt und die Anzahl gezeigter Einträge angepasst werden. 
-Es gibt auch noch weitere Anpassungsmöglichkeiten. [Pagination API Docs](https://tanstack.com/table/v8/docs/api/features/pagination)
+Über die Toggles der Komponente kann zwischen den Seite gewechselt und die Anzahl gezeigter Einträge angepasst werden.
+
+Die Pagination ist über `createPaginationRowModel` in `features` bereits aktiviert
+
+Es gibt auch noch weitere Anpassungsmöglichkeiten. [Pagination Docs](https://tanstack.com/table/latest/docs/framework/react/guide/pagination)
 
 <Canvas of={DataTableStories.Pagination}  />
 
-Für die Verwendung der Pagination muss innerhalb von `useReactTable` `getPaginationRowModel` verwendet werden. Die Komponente erwartet `table` als Property.
-
 ```tsx
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
+}: DataTableProps<TData>) {
+  const table = useTable({
       data,
       columns,
-      getCoreRowModel: getCoreRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
+      features,
       //...
   })
   // ...
@@ -389,43 +393,39 @@ export function DataTable<TData, TValue>({
 
 ### DataTableFilter
 
-Die Komponente `<DataTableFilter />` fügt der `DataTable` ein Filter-Input hinzu. Über dieses Eingabefeld kann die Tabelle über alle Spalten hinweg durchsucht.
+Die Komponente `<DataTableFilter />` fügt der `DataTable` ein Filter-Input hinzu. Über dieses Eingabefeld kann die Tabelle über alle Spalten hinweg durchsucht werden.
 
 <Canvas of={DataTableStories.Filter} />
 
-Für die Verwendung der Komponente muss `useReactTable` einige Definitionen enthalten. 
+Für die Verwendung der Komponente muss `useTable` zusätzlich zu den `features` einige Definitionen enthalten. 
 Hier die Minimal-Definition für die Verwendung eines Global Filters und der Base Table:
 
 ```tsx
 const [globalFilter, setGlobalFilter] = useState("");
-const table = useReactTable({
+const table = useTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    features,
     globalFilterFn: "includesString",
     onGlobalFilterChange: setGlobalFilter,
     state: { globalFilter },
-
   });
 ```
 
 Der aktuelle Inhalt des Input-Feldes wird hier in einem React-State verwaltet und an die `table` Definition übergeben.
 
-Die Komponente `DataTableFilter` erwartet die Poperties `globalFilter` (aktueller Wert des Inputs) und `table`:
+Die Komponente `DataTableFilter` erwartet das Poperty `table` und greift darüber auch den State von `globalFilter` ab:
 
 ```tsx
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [globalFilter, setGlobalFilter] = useState("");
-  const table = useReactTable({
+  const table = useTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    features,
     globalFilterFn: "includesString",
     onGlobalFilterChange: setGlobalFilter,
     //...
@@ -435,14 +435,14 @@ export function DataTable<TData, TValue>({
     },
   })
   // ...
-  <DataTableFilter globalFilter={globalFilter} table={table} />
+  <DataTableFilter table={table} />
 }
 ```
 
-Mehr zu [Global Filtering in der TanStack Table](https://tanstack.com/table/latest/docs/guide/global-filtering)
+Mehr zu [Global Filtering in der TanStack Table](https://tanstack.com/table/latest/docs/framework/react/guide/global-filtering)
 
 Es gibt auch die Möglichkeit, die Filter-Funktion nur für einzelne Spalten einzurichten. 
-Mehr dazu bei [shadcn](https://ui.shadcn.com/docs/components/data-table#filtering) und bei [TanStack Table](https://tanstack.com/table/v8/docs/guide/filters).
+Mehr dazu bei [shadcn](https://ui.shadcn.com/docs/components/base/data-table#filtering) und bei [TanStack Table](https://tanstack.com/table/latest/docs/framework/react/guide/column-filtering).
 
 ### DataTableViewOptions
 
@@ -451,19 +451,19 @@ welche Spalten der Tabelle angezeigt werden.
 
 <Canvas of={DataTableStories.ViewOptions} />
 
-Für die Verwendung der `DataTableViewOptions` muss `useReactTable` den State der sichtbaren Spalten verwalten.
+Für die Verwendung der `DataTableViewOptions` muss `useTable` den State der sichtbaren Spalten verwalten.
 Die Komponente erwartet `table` als Property.
 
 ```tsx
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const table = useReactTable({
+}: DataTableProps<TData>) {
+  const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>({});
+  const table = useTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
+    features,
     onColumnVisibilityChange: setColumnVisibility,
     // ...
     state: { 
@@ -482,21 +482,19 @@ Mit dem `DataColumnHeader` kann die Tabelle über jede Spaltenüberschrift sorti
 
 <Canvas of={DataTableStories.ColumnHeader} />
 
-Um das sortieren über die Spaltenüberschriften zu ermöglichen, muss in `useReactTable` die Funktion `getSortedRowModel` 
-verwendet werden und der Sorting State muss kontrolliert werden.
+Um das sortieren über die Spaltenüberschriften zu ermöglichen, muss in `useTable` der Sorting State kontrolliert werden.
 
 ```tsx
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([])
-  const table = useReactTable({
+  const table = useTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
+    features
     onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     // ...
     state: { 
       sorting,
@@ -517,17 +515,16 @@ export function DataTable<TData, TValue>({
 Die eigentliche Komponente `DataColumnHeader` wird dann in der `columns.tsx` verwendet.
 
 ```tsx
-export const columns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "email",
+export const columns = columnHelper([
+  columnHelper.accessor("email", {
     header: ({ column }) => (
       <TableHead>
         <DataTableColumnHeader column={column} title="Email" />
       </TableHead>
     ),
-  },
+  })
   // ...
-]
+])
 ```
 
 
@@ -537,18 +534,17 @@ Mit den Komponenten `DataTableSelectHeader` und `DataTableSelectCell` lassen sic
 
 <Canvas of={DataTableStories.RowSelect}/>
 
-Das `useReactTable` Objekt muss den Select State kontrollieren.
+Das `useTable` Objekt muss den Select State kontrollieren.
 
 ```tsx
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
-  const table = useReactTable({
+  const table = useTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setRowSelection,
     // ...
     state: { 
@@ -568,24 +564,27 @@ export function DataTable<TData, TValue>({
 ```
 
 Die Komponenten `DataTableSelectHeader` und `DataTableSelectCell` werden über die `columns.tsx` eingefügt.
+Die Spalte, die einen Selector enthält, enthält keine Daten. Daher muss hier `columnHelper.display()` statt `columnHelper.accessor()` verwendet werden.
 
 ```tsx
-const columns: ColumnDef<Payment>[] = [
-    {
-      id: "select",
-      header: () => (
-        <TableHead>
-          <DataTableSelectHeader table={table} />
-        </TableHead>
-      ),
-      cell: ({ row }) => (
-        <TableCell>
-          <DataTableSelectCell row={row} />
-        </TableCell>
-      ),
-    },
-    // ...
-  ];
+const columns = columnHelper([
+  columnHelper.display({
+    id: "select",
+    header: () => (
+      <TableHead>
+        <DataTableSelectHeader table={table} />
+      </TableHead>
+    ),
+    cell: ({ row }) => (
+      <TableCell>
+        <DataTableSelectCell row={row} />
+      </TableCell>
+    ),
+    enableHiding: false,
+    enableSorting: false
+  }),
+  // ...
+]);
 ```
 
 Es ist auch möglich, anzuzeigen, wie viele der angezeigten Tabellenzeilen ausgewählt sind. [Docs](https://ui.shadcn.com/docs/components/data-table#show-selected-rows)
@@ -615,12 +614,7 @@ So ist es möglich, das die `TableHeads` und `TableCells` nur auf bestimmten Bre
     {table.getHeaderGroups().map((headerGroup) => (
       <TableRow key={headerGroup.id}>
         {headerGroup.headers.map((header) => (
-          <Fragment key={header.id}>
-            {flexRender(
-              header.column.columnDef.header,
-              header.getContext()
-            )}
-          </Fragment>
+          <table.FlexRender header={header} key={header.id} />
         ))}
       </TableRow>
     ))}
@@ -632,9 +626,7 @@ So ist es möglich, das die `TableHeads` und `TableCells` nur auf bestimmten Bre
         key={row.id}
       >
         {row.getVisibleCells().map((cell) => (
-          <Fragment key={cell.id}>
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </Fragment>
+          <table.FlexRender cell={cell} key={cell.id} />
         ))}
       </TableRow>
       ))
@@ -650,33 +642,27 @@ In der `columns.tsx` muss für jede Spalte der `header` und die `cell` angepasst
 Jeder `header` enthält dann ein `TableHead` Element mit CSS-Klassen, die die Anzeige auf unterschidlichen Devices steuern.
 Ebenso enthält jede `cell` ein `TableCell` Element mit den passenden CSS-Klassen.
 
-Eine der Spalten muss auf allen Geräten angezeigt werden. Hier enthält das die `cell` eine `TableDescriptionList` die alle Daten anzeigt, 
+Eine der Spalten müssen auf allen Geräten angezeigt werden. Hier enthält die `cell` eine `TableDescriptionList` die alle Daten anzeigt, 
 die auch auf kleineren Tablets und Mobilgeräten gezeigt wird.
 
 ```tsx
-export const columns: ColumnDef<Payment>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <TableHead>
-        <DataTableSelectHeader table={table} />
-      </TableHead>
-    ),
+export const columns = columnHelper.columns([
+  columnHelper.display({
     cell: ({ row }) => (
       <TableCell>
         <DataTableSelectCell row={row} />
       </TableCell>
     ),
-    enableSorting: false,
     enableHiding: false,
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => (
+    enableSorting: false,
+    header: ({ table }) => (
       <TableHead>
-        <DataTableColumnHeader column={column} title="Status" />
+        <DataTableSelectHeader table={table} />
       </TableHead>
     ),
+    id: "select",
+  }),
+  columnHelper.accessor("status", {
     cell: ({ row }) => {
       // ...
       return (
@@ -695,14 +681,13 @@ export const columns: ColumnDef<Payment>[] = [
         </TableCell>
       );
     },
-  },
-  {
-    accessorKey: "email",
     header: ({ column }) => (
-      <TableHead className="hidden lg:table-cell">
-        <DataTableColumnHeader column={column} title="Email" />
+      <TableHead>
+        <DataTableColumnHeader column={column} title="Status" />
       </TableHead>
     ),
+  }),
+  columnHelper.accessor("email", {
     cell: ({ row }) => (
       <TableCell>
         <div className="hidden lowercase lg:table-cell">
@@ -710,21 +695,25 @@ export const columns: ColumnDef<Payment>[] = [
         </div>
       </TableCell>
     ),
-  },
-  // ...
-  {
-    id: "actions",
+    header: ({ column }) => (
+      <TableHead className="hidden lg:table-cell">
+        <DataTableColumnHeader column={column} title="Email" />
+      </TableHead>
+    ),
+  }),
+  columnHelper.display({
+    cell: ({ row }) => {
+      ...
+    },
     enableHiding: false,
     header: () => (
       <TableHead className="relative">
         <span className="sr-only">Edit</span>
       </TableHead>
     ),
-    cell: ({ row }) => {
-      ...
-    }
-  }
-];
+    id: "actions",
+  }),
+]);
 ```
 
 ### Angepasste Description List Komponenten

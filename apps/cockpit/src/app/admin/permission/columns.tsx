@@ -2,17 +2,19 @@
 
 import {
   DataTableColumnHeader,
+  type DataTableFeatures,
   TableDescriptionElement,
   TableDescriptionList,
   TableDescriptionTerm,
 } from "@northware/ui/components/data-table";
 import { TableCell, TableHead } from "@northware/ui/components/shadcn/table";
-import type { ColumnDef } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import type { TPermissionType } from "@/lib/rbac-types";
 
-export const columns: ColumnDef<TPermissionType>[] = [
-  {
-    accessorKey: "permissionKey",
+const columnHelper = createColumnHelper<DataTableFeatures, TPermissionType>();
+
+export const columns = columnHelper.columns([
+  columnHelper.accessor("permissionKey", {
     cell: ({ row }) => (
       <TableCell>
         <span className="font-mono text-muted-foreground sm:text-foreground">
@@ -31,9 +33,8 @@ export const columns: ColumnDef<TPermissionType>[] = [
         <DataTableColumnHeader column={column} title="Berechtigungsschlüssel" />
       </TableHead>
     ),
-  },
-  {
-    accessorKey: "permissionName",
+  }),
+  columnHelper.accessor("permissionName", {
     cell: ({ row }) => (
       <TableCell className="hidden sm:table-cell">
         {row.original.permissionName}
@@ -44,5 +45,5 @@ export const columns: ColumnDef<TPermissionType>[] = [
         <DataTableColumnHeader column={column} title="Bezeichnung" />
       </TableHead>
     ),
-  },
-];
+  }),
+]);

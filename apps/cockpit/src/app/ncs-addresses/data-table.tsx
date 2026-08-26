@@ -1,9 +1,11 @@
 "use client";
 
 import {
+  type DataTableFeatures,
   DataTableFilter,
   DataTablePagination,
   DataTableViewOptions,
+  features,
 } from "@northware/ui/components/data-table";
 import {
   Table,
@@ -14,40 +16,36 @@ import {
 } from "@northware/ui/components/shadcn/table";
 import {
   type ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
+  type ColumnVisibilityState,
   type PaginationState,
-  useReactTable,
-  type VisibilityState,
+  type RowData,
+  useTable,
 } from "@tanstack/react-table";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData extends RowData> {
+  columns: ColumnDef<DataTableFeatures, TData>[];
   data: TData[];
   paginationPageSize?: number;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
   paginationPageSize = 10,
-}: DataTableProps<TData, TValue>) {
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+}: DataTableProps<TData>) {
+  const [columnVisibility, setColumnVisibility] =
+    useState<ColumnVisibilityState>({});
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: paginationPageSize,
   });
 
-  const table = useReactTable({
+  const table = useTable({
     columns,
     data,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    features,
     globalFilterFn: "includesString",
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
@@ -62,7 +60,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full">
       <div className="flex items-center gap-2 py-4">
-        <DataTableFilter globalFilter={globalFilter} table={table} />
+        <DataTableFilter table={table} />
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
@@ -71,12 +69,7 @@ export function DataTable<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Fragment key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </Fragment>
+                  <table.FlexRender header={header} key={header.id} />
                 ))}
               </TableRow>
             ))}
@@ -86,12 +79,7 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <Fragment key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Fragment>
+                    <table.FlexRender cell={cell} key={cell.id} />
                   ))}
                 </TableRow>
               ))
