@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { notFound } from "next/navigation";
@@ -25,6 +26,7 @@ export default async function Page({
 }: {
   params: Promise<{ employeeId: number }>;
 }) {
+  await auth.protect();
   const { employeeId } = await params;
   const data = await getEmployeePersonal(employeeId);
 

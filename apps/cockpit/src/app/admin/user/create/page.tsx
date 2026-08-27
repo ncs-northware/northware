@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
@@ -5,7 +6,8 @@ import CreateUserForm from "@/components/user-forms";
 
 export const metadata = { title: "Benutzer hinzufügen" };
 
-export default function Page() {
+export default async function Page() {
+  await auth.protect();
   return (
     <SidebarLayout
       breadcrumbs={[

@@ -1,4 +1,5 @@
 import { getExtraPermissions } from "@northware/auth/account";
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { UpdateUserPermissionsForm } from "@/components/user-forms";
@@ -8,6 +9,7 @@ export default async function Page({
 }: {
   params: Promise<{ userId: string }>;
 }) {
+  await auth.protect();
   const { userId } = await params;
   const permissionList = await getPermissionList();
   const extraPermissions = await getExtraPermissions(userId);

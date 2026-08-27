@@ -28,6 +28,7 @@
       "dependsOn": ["^fix"],
       "cache": false
     },
+    "//#lint:clerk": {},
     "//#fix:root": {},
     "tsc-check": {
       "dependsOn": ["^tsc-check"]

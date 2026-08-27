@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import { Badge } from "@northware/ui/components/shadcn/badge";
 import { differenceInCalendarMonths, formatDate } from "date-fns";
@@ -46,6 +47,7 @@ export default async function Page({
 }: {
   params: Promise<{ employeeId: number; recordId: number }>;
 }) {
+  await auth.protect();
   const { employeeId, recordId } = await params;
   const employeeData = await getBasicEmployee(employeeId);
   const employmentData = await getEmployment(recordId);

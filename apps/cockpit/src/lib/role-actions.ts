@@ -1,4 +1,5 @@
 "use server";
+import { auth } from "@northware/auth/server";
 
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
@@ -29,6 +30,7 @@ import type {
 /************ Role Management **************************************/
 
 export async function getRoleList(): Promise<TRoleListResponse> {
+  await auth.protect();
   try {
     const response = await db
       .select({
@@ -84,9 +86,9 @@ export async function updateUserRoles({
   userRolesResponse,
   userId,
 }: TUpdateRolesParams) {
+  await auth.protect();
   // filtert aus den übergebenen Formulardaten die roleKeys der aktiven Switches heraus
-
-  // enthält roleKeys, die in selecctedRoles aber nicht in userRolesResponse enthalten sind
+  // enthält roleKeys, die in selectedRoles aber nicht in userRolesResponse enthalten sind
   const rolesToAdd = data.roles.filter(
     (role) => !userRolesResponse.includes(role)
   );
@@ -137,6 +139,7 @@ export const getRole = cache(
       }
     | { success: false; error: Error }
   > => {
+    await auth.protect();
     try {
       const roleResponse = await db
         .select({
@@ -184,6 +187,7 @@ export const getRole = cache(
 );
 
 export async function createRole(data: TCreateRoleFormData) {
+  await auth.protect();
   const insertPermissions: { permissionKey: string; roleKey: string }[] = [];
   data.permissions.forEach((permission, i) => {
     insertPermissions[i] = {
@@ -208,6 +212,7 @@ export async function createRole(data: TCreateRoleFormData) {
 }
 
 export async function updateRoleDetails(data: TRoleDetailFormSchema) {
+  await auth.protect();
   try {
     await db
       .update(rolesTable)
@@ -229,6 +234,7 @@ export async function updateRolePermissions({
   roleKey?: string;
 }) {
   // enthält permissionKeys, die in selecctedPermissions aber nicht in extraPermissionsResponse enthalten sind
+  await auth.protect();
   const permissionsToAdd = data.permissions.filter(
     (selectedPermission) => !rolePermissions.includes(selectedPermission)
   );
@@ -273,6 +279,7 @@ export async function updateRolePermissions({
 }
 
 export async function deleteRole(recordId: number) {
+  await auth.protect();
   try {
     await db.delete(rolesTable).where(eq(rolesTable.recordId, recordId));
   } catch (error) {
@@ -283,6 +290,7 @@ export async function deleteRole(recordId: number) {
 /************ Permission Management *************************************/
 
 export async function getPermissionList(): Promise<TPermissionListResponse> {
+  await auth.protect();
   try {
     const response = await db
       .select({
@@ -312,6 +320,7 @@ export async function updateUserPermissions({
   userId,
 }: TUpdatePermissionsParams) {
   // enthält permissionKeys, die in selecctedPermissions aber nicht in extraPermissionsResponse enthalten sind
+  await auth.protect();
   const permissionsToAdd = data.permissions.filter(
     (selectedPermission) =>
       !extraPermissionsResponse.includes(selectedPermission)
@@ -356,6 +365,7 @@ export async function updateUserPermissions({
 }
 
 export async function deletePermission(recordId: number) {
+  await auth.protect();
   try {
     await db
       .delete(permissionsTable)
@@ -369,6 +379,7 @@ export async function deletePermission(recordId: number) {
 export async function createPermDetails(
   data: TCreatePermissionDetailFormSchema
 ) {
+  await auth.protect();
   try {
     await db.insert(permissionsTable).values({
       permissionKey: data.permissionKey,
@@ -381,6 +392,7 @@ export async function createPermDetails(
 }
 
 export async function updatePermDetails(data: TPermissionDetailFormSchema) {
+  await auth.protect();
   try {
     await db
       .update(permissionsTable)
