@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
@@ -15,6 +16,7 @@ import { DataTable } from "./data-table";
 export const metadata = { title: "Rollenverwaltung" };
 
 export default async function Page() {
+  await auth.protect();
   const roleList = (await getRoleList()) || [];
   if (!roleList.success) {
     return (

@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import type { DataTableFeatures } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
@@ -31,6 +32,7 @@ export default async function Page({
 }: {
   params: Promise<{ employeeId: number }>;
 }) {
+  await auth.protect();
   const { employeeId } = await params;
   const employmentsData = await getEmploymentsList(employeeId);
   const employeeData = await getBasicEmployee(employeeId);

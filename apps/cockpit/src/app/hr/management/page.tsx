@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import type { DataTableFeatures } from "@northware/ui/components/data-table";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
@@ -12,6 +13,7 @@ export const metadata = {
 };
 
 export default async function Page() {
+  await auth.protect();
   const data = await getEmployeeList();
 
   const columnHelper = createColumnHelper<DataTableFeatures, EmployeeItem>();

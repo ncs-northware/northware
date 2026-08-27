@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import {
   PermissionProvider,
@@ -17,6 +18,7 @@ export default async function Page({
 }: {
   params: Promise<{ userId: string }>;
 }) {
+  await auth.protect();
   const { userId } = await params;
   const user = await getSingleUser(userId);
 

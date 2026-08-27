@@ -1,6 +1,5 @@
 "use server";
-
-import { clerkClient, currentUser } from "@northware/auth/server";
+import { auth, clerkClient, currentUser } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
 import {
@@ -91,6 +90,7 @@ function handleClerkError(typesafeError: ClerkError) {
 export async function getUserList(): Promise<
   { success: true; users: UserRow[] } | { success: false; error: Error }
 > {
+  await auth.protect();
   try {
     const loggedInUser = await currentUser();
     const client = await clerkClient();
@@ -126,6 +126,7 @@ export const getSingleUser = cache(
   ): Promise<
     { success: true; response: TSingleUser } | { success: false; error: Error }
   > => {
+    await auth.protect();
     try {
       const client = await clerkClient();
       const response = await client.users.getUser(id);
@@ -170,6 +171,7 @@ export const getSingleUser = cache(
 );
 
 export async function createUser(formData: TCreateUserFormSchema) {
+  await auth.protect();
   const { firstName, lastName, username, emailAddress, password } = formData;
   try {
     const client = await clerkClient();
@@ -188,6 +190,7 @@ export async function createUser(formData: TCreateUserFormSchema) {
 }
 
 export async function updateUser(formData: TUpdateUserFormSchema, id?: string) {
+  await auth.protect();
   if (typeof id === "undefined") {
     throw new Error(
       "Beim Aufruf der Funktion wurde nicht angegeben, welche Id der User hat."
@@ -211,6 +214,7 @@ export async function updateUser(formData: TUpdateUserFormSchema, id?: string) {
 }
 
 export async function deleteUser(id: string) {
+  await auth.protect();
   try {
     // Rollen und zusätzliche Berechtigungen löschen
     await db
@@ -234,6 +238,7 @@ export async function createEmailAddress(
   formData: TCreateEMailAddressFormSchema,
   userId?: string
 ) {
+  await auth.protect();
   if (typeof userId === "undefined") {
     throw new Error(
       "Beim Aufruf der Funktion wurde nicht angegeben, welche Id der User hat."
@@ -261,6 +266,7 @@ export async function updateEmailAddress(
   mode: "primary" | "verification",
   verification?: boolean
 ) {
+  await auth.protect();
   try {
     const client = await clerkClient();
     if (mode === "primary") {
@@ -281,6 +287,7 @@ export async function updateEmailAddress(
 }
 
 export async function deleteEmailAddress(addressId: string) {
+  await auth.protect();
   try {
     const client = await clerkClient();
     await client.emailAddresses.deleteEmailAddress(addressId);
@@ -295,6 +302,7 @@ export async function updatePassword(
   id: string | undefined,
   formData: TUpdatePasswordFormSchema
 ) {
+  await auth.protect();
   if (typeof id === "undefined") {
     throw new Error(
       "Beim Aufruf der Funktion wurde nicht angegeben, welche ID der User hat."

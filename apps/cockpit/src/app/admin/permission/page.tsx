@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
 import {
@@ -13,6 +14,7 @@ import { DataTable } from "./data-table";
 export const metadata = { title: "Berechtigungsschlüssel verwalten" };
 
 export default async function Page() {
+  await auth.protect();
   const permissionList = await getPermissionList();
   if (!permissionList.success) {
     return (

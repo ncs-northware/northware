@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { AlertWrapper } from "@northware/ui/components/custom-alert";
 import { Headline } from "@northware/ui/components/headline";
 import { DataFetchError } from "@northware/ui/components/no-data-template";
@@ -20,6 +21,7 @@ import { DataTable } from "./data-table";
 export const metadata = { title: "Benutzerverwaltung" };
 
 export default async function Page() {
+  await auth.protect();
   const userArray = (await getUserList()) || [];
   if (!userArray.success) {
     return (

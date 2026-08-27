@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { db } from "@northware/database/connection";
 import { companiesTable } from "@northware/database/schema/companies";
 import { departmentsTable } from "@northware/database/schema/departments";
@@ -83,6 +84,7 @@ async function getAddresses() {
 }
 
 export default async function Page() {
+  await auth.protect();
   const data = await getAddresses();
 
   if (!data.success) {

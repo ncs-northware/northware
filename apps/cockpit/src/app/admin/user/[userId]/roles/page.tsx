@@ -1,4 +1,5 @@
 import { getUserRoles } from "@northware/auth/account";
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { UpdateUserRolesForm } from "@/components/user-forms";
@@ -9,6 +10,7 @@ export default async function Page({
 }: {
   params: Promise<{ userId: string }>;
 }) {
+  await auth.protect();
   const { userId } = await params;
   const roleList = await getRoleList();
   const userRoles = await getUserRoles(userId);

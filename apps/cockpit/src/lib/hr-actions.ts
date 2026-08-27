@@ -1,4 +1,5 @@
 "use server";
+import { auth } from "@northware/auth/server";
 
 import { db } from "@northware/database/connection";
 import { handleNeonError } from "@northware/database/neon-error-handling";
@@ -29,6 +30,7 @@ export async function getEmployeeList(): Promise<
   | { success: true; employees: EmployeeItem[] }
   | { success: false; error: Error }
 > {
+  await auth.protect();
   try {
     const result = await db
       .select({
@@ -88,6 +90,7 @@ export async function getEmploymentsList(
   | { success: true; employments: EmploymentListItem[] }
   | { success: false; error: Error }
 > {
+  await auth.protect();
   try {
     const result = await db
       .select({
@@ -141,6 +144,7 @@ export async function getBasicEmployee(
 ): Promise<
   { success: true; employee: BasicEmployee } | { success: false; error: Error }
 > {
+  await auth.protect();
   try {
     const result = await db
       .select({
@@ -189,6 +193,7 @@ export async function getEmployeePersonal(
   | { success: true; employee: EmployeePersonal }
   | { success: false; error: Error }
 > {
+  await auth.protect();
   try {
     const result = await db
       .select()
@@ -213,6 +218,7 @@ export async function getEmployeePersonal(
 export async function updateEmployeePersonal(
   formData: TEmployeePersonalFormSchema
 ) {
+  await auth.protect();
   try {
     await db
       .update(employeesTable)
@@ -260,6 +266,7 @@ export async function getEmployment(
   | { success: true; employment: EmploymentItem }
   | { success: false; error: Error }
 > {
+  await auth.protect();
   try {
     const result = await db
       .select({
@@ -318,6 +325,7 @@ export async function getEmploymentContext(): Promise<
     }
   | { success: false; error: Error }
 > {
+  await auth.protect();
   try {
     const departmentResult = await db
       .select({
@@ -354,6 +362,7 @@ export async function updateEmployment(
   employee: number,
   recordId: number
 ) {
+  await auth.protect();
   try {
     await db
       .update(employmentsTable)

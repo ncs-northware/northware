@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
 import { notFound } from "next/navigation";
 import { getSingleUser } from "@/lib/user-actions";
@@ -25,6 +26,7 @@ export default async function EditUserLayout({
   params: Promise<{ userId: string }>;
   children: React.ReactNode;
 }) {
+  await auth.protect();
   const { userId } = await params;
   const user = await getSingleUser(userId);
 

@@ -1,3 +1,4 @@
+import { auth } from "@northware/auth/server";
 import { Headline } from "@northware/ui/components/headline";
 import { PermissionProvider } from "@northware/ui/components/permission-provider";
 import { SidebarLayout } from "@northware/ui/components/sidebar-layout";
@@ -7,6 +8,7 @@ import { getPermissionList } from "@/lib/role-actions";
 export const metadata = { title: "Neue Rolle" };
 
 export default async function Page() {
+  await auth.protect();
   const permissionList = await getPermissionList();
   return (
     <SidebarLayout
