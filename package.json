@@ -14,7 +14,7 @@
     "fix": "turbo fix",
     "fix:root": "ultracite fix",
     "generate-icons": "cd packages/ui && pnpm generate-icons",
-    "lint:clerk": "eslint . --config eslint.config.mts",
+    "lint:clerk": "eslint . --config eslint.config.mjs",
     "localci": "turbo build check --affected",
     "tsc-check": "turbo tsc-check",
     "tsc-check:root": "tsc --noEmit"
