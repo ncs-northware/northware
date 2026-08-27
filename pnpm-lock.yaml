@@ -15,7 +15,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       '@clerk/eslint-plugin':
-        specifier: ^0.2.0
+        specifier: 0.2.0
         version: 0.2.0(eslint@10.9.1(jiti@2.7.0)(supports-color@8.1.1))
       '@commitlint/cli':
         specifier: ^21.2.2
