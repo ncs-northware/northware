@@ -20,7 +20,7 @@ export default defineConfig([
     ],
   },
   {
-    files: ["apps/cockpit/**/*.{ts,tsx}"],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       parser: tsParser.parser,
     },
