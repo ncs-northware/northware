@@ -244,9 +244,8 @@
 }
 
 /******************************************** Clerk Customization **********************************************************************/
-.cl-signIn-root .cl-internal-x289u0,
 .cl-userProfile-root .cl-internal-57atez,
 .cl-userProfile-root .cl-internal-r93pb5 {
-  /* Hide Clerk Branding and Development Mode Banner from SignIn and UserProfile Component */
+  /* Hide Clerk Branding and Development Mode Banner from UserProfile Component */
   display: none;
 }

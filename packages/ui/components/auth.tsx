@@ -15,8 +15,8 @@ export function SignInForm({ service }: { service: ServiceType }) {
           elements: {
             card: "bg-background text-card-foreground rounded-xl border shadow-sm",
             footerAction__havingTrouble: "hidden",
+            footerItem: "hidden",
             formFieldAction__password: "hidden",
-            // The Clerk Branding and Development Banner of the SignIn Component are hidden through the globals.css
           },
         }}
         fallback={<Spinner />}
