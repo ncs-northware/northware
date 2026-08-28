@@ -15,10 +15,10 @@
     "@northware/auth": "workspace:*",
     "@northware/database": "workspace:*",
     "@northware/ui": "workspace:*",
-    "@tanstack/react-table": "^9.1.2",
+    "@tanstack/react-table": "^9.2.3",
     "date-fns": "^4.4.0",
     "drizzle-orm": "^0.45.2",
-    "next": "16.3.2",
+    "next": "16.3.3",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.86.0",
@@ -28,7 +28,7 @@
     "@northware/tsconfig": "workspace:*",
     "@types/node": "24.13.3",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
+    "@types/react-dom": "^19.2.5",
     "typescript": "^6.0.3"
   }
 }
