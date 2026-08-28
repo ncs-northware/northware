@@ -13,16 +13,16 @@ export function PasswordInput({ ...props }) {
   return (
     <InputGroup className={cn(props.className)} {...props}>
       <InputGroupInput type={showPassword ? "text" : "password"} />
-        <InputGroupAddon align="inline-end">
-          <InputGroupButton
-            aria-label="Passwort anzeigen/verbergen"
-            onClick={() => setShowPassword(!showPassword)}
-            size="icon-xs"
-            title="Passwort anzeigen/verbergen"
-          >
-            {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
-          </InputGroupButton>
-        </InputGroupAddon>
+      <InputGroupAddon align="inline-end">
+        <InputGroupButton
+          aria-label="Passwort anzeigen/verbergen"
+          onClick={() => setShowPassword(!showPassword)}
+          size="icon-xs"
+          title="Passwort anzeigen/verbergen"
+        >
+          {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
+        </InputGroupButton>
+      </InputGroupAddon>
     </InputGroup>
   );
 }
