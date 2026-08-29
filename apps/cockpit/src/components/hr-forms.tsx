@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@northware/ui/components/shadcn/select";
-import { toast } from "@northware/ui/lib/utils";
+import { toast } from "@northware/ui/components/shadcn/toast";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -111,7 +111,10 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
     try {
       console.log(formData);
       await updateEmployeePersonal(formData);
-      toast.success("Die Mitarbeiterdaten wurden aktualisiert.");
+      toast.add({
+        description: "Die Mitarbeiterdaten wurden aktualisiert.",
+        type: "success",
+      });
     } catch (error) {
       setErrors(parseErrorMessages(error));
     }
@@ -551,7 +554,10 @@ export function UpdateEmploymentForm({
   async function onSubmit(formData: TUpdateEmploymentFormSchema) {
     try {
       await updateEmployment(formData, employeeId, recordId);
-      toast.success("Die Daten zu dem Arbeitsverhältnis wurden gespeichert.");
+      toast.add({
+        description: "Die Daten zu dem Arbeitsverhältnis wurden gespeichert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
