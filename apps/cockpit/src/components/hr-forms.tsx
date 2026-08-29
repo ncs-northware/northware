@@ -109,6 +109,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
 
   async function onSubmit(formData: TEmployeePersonalFormSchema) {
     try {
+      console.log(formData);
       await updateEmployeePersonal(formData);
       toast.success("Die Mitarbeiterdaten wurden aktualisiert.");
     } catch (error) {
@@ -337,7 +338,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 <SelectContent>
                   <SelectGroup>
                     {religionItems.map((item) => (
-                      <SelectItem key={item.value} value={item.label}>
+                      <SelectItem key={item.value} value={item.value}>
                         {item.label}
                       </SelectItem>
                     ))}
