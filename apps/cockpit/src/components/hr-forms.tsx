@@ -209,7 +209,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="sex">
-                  <SelectValue />
+                  <SelectValue placeholder="Geschlecht wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -305,7 +305,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                   aria-invalid={fieldState.invalid}
                   id="meritalStatus"
                 >
-                  <SelectValue />
+                  <SelectValue placeholder="Familienstand wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -336,7 +336,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="religion">
-                  <SelectValue />
+                  <SelectValue placeholder="Religion wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -369,7 +369,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="taxClass">
-                  <SelectValue />
+                  <SelectValue placeholder="Steuerklasse wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -400,7 +400,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="taxKids">
-                  <SelectValue />
+                  <SelectValue placeholder="Kinderfreibetrag wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -492,25 +492,25 @@ export const paygradeItems = [
 
 export const educationStageItems = [
   { label: "Vorbildungsstufe wählen", value: null },
-  { label: "1 / einfache oder fachliche Einarbeitung", value: "1" },
-  { label: "2 / tätigkeitsbezogene Ausbildung", value: "2" },
+  { label: "1 / einfache oder fachliche Einarbeitung", value: 1 },
+  { label: "2 / tätigkeitsbezogene Ausbildung", value: 2 },
   {
     label: "3 / umfassende Fachkenntnisse (Studium, Zusatzausbildung)",
-    value: "3",
+    value: 3,
   },
   {
     label: "4 / Stufe 3 mit schweren fachlichen Tätigkeiten",
-    value: "4",
+    value: 4,
   },
   {
     label: "5 / Stufe 4 mit einfacher Personalverantwortung",
-    value: "5",
+    value: 5,
   },
   {
     label: "6 / Stufe 4 mit erheblicher Personalverantwortung",
-    value: "6",
+    value: 6,
   },
-  { label: "Nicht relevant", value: "0" },
+  { label: "Nicht relevant", value: 0 },
 ];
 
 export const experienceLevelItems = [
@@ -541,9 +541,9 @@ export function UpdateEmploymentForm({
     defaultValues: {
       contractEnd: data.contractEnd,
       contractStart: data.contractStart,
-      department: data.departmentId?.toString(),
-      educationStage: data.educationStage.toString(),
-      employer: data.employerId?.toString(),
+      department: data.departmentId ?? undefined,
+      educationStage: data.educationStage,
+      employer: data.employerId ?? undefined,
       experienceLevel: data.experienceLevel,
       paygrade: data.paygrade,
       position: data.position,
@@ -567,14 +567,14 @@ export function UpdateEmploymentForm({
     { label: "Abteilung wählen", value: null },
     ...departments.map((department) => ({
       label: department.departmentName,
-      value: department.recordId.toString(),
+      value: department.recordId,
     })),
   ];
   const employerItems = [
     { label: "Arbeitgeber wählen", value: null },
     ...companies.map((company) => ({
       label: `${company.companyId} / ${company.companyName}`,
-      value: company.companyId.toString(),
+      value: company.companyId,
     })),
   ];
 
@@ -614,13 +614,13 @@ export function UpdateEmploymentForm({
                 items={departmentItems}
                 name={field.name}
                 onValueChange={field.onChange}
-                value={field.value?.toString()}
+                value={field.value}
               >
                 <SelectTrigger
                   aria-invalid={fieldState.invalid}
                   id="department"
                 >
-                  <SelectValue />
+                  <SelectValue placeholder="Abteilung wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -648,10 +648,10 @@ export function UpdateEmploymentForm({
                 items={employerItems}
                 name={field.name}
                 onValueChange={field.onChange}
-                value={field.value?.toString()}
+                value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="employer">
-                  <SelectValue />
+                  <SelectValue placeholder="Arbeitgeber wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -713,7 +713,7 @@ export function UpdateEmploymentForm({
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="paygrade">
-                  <SelectValue />
+                  <SelectValue placeholder="Tarifgruppe wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -741,13 +741,13 @@ export function UpdateEmploymentForm({
                 items={educationStageItems}
                 name={field.name}
                 onValueChange={field.onChange}
-                value={field.value.toString()}
+                value={field.value}
               >
                 <SelectTrigger
                   aria-invalid={fieldState.invalid}
                   id="educationStage"
                 >
-                  <SelectValue />
+                  <SelectValue placeholder="Vorbildungsstufe wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -775,13 +775,13 @@ export function UpdateEmploymentForm({
                 items={experienceLevelItems}
                 name={field.name}
                 onValueChange={field.onChange}
-                value={field.value.toString()}
+                value={field.value}
               >
                 <SelectTrigger
                   aria-invalid={fieldState.invalid}
                   id="experienceLevel"
                 >
-                  <SelectValue />
+                  <SelectValue placeholder="Erfahrungsstufe wählen" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
