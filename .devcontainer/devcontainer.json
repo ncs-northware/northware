@@ -1,5 +1,5 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/typescript-node",
+  "image": "mcr.microsoft.com/devcontainers/universal:linux",
   "features": {
     "ghcr.io/devcontainers-extra/features/bun:1": {}
   }
