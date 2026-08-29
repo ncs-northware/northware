@@ -34,8 +34,8 @@ import {
 } from "@northware/ui/components/shadcn/field";
 import { Input } from "@northware/ui/components/shadcn/input";
 import { Switch } from "@northware/ui/components/shadcn/switch";
+import { toast } from "@northware/ui/components/shadcn/toast";
 import { EditIcon, PlusIcon, TrashIcon } from "@northware/ui/icons/lucide";
-import { toast } from "@northware/ui/lib/utils";
 import { useRouter } from "next/navigation";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
@@ -249,7 +249,10 @@ export function UpdateRoleDetailForm({
   const onSubmit: SubmitHandler<TRoleDetailFormSchema> = async (data) => {
     try {
       await updateRoleDetails(data);
-      toast.success("Die Rollendetails wurden aktualisiert.");
+      toast.add({
+        description: "Die Rollendetails wurden aktualisiert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -403,7 +406,10 @@ export function RolePermissionsForm({
   async function onSubmit(data: TUpdatePermissionSchema) {
     try {
       await updateRolePermissions({ data, roleKey, rolePermissions });
-      toast.success("Die Rollenberechtigungen wurden aktualisiert.");
+      toast.add({
+        description: "Die Rollenberechtigungen wurden aktualisiert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -503,9 +509,12 @@ export function RoleDeleteButton({
 }) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+
   async function submitRoleDeletion() {
     try {
       await deleteRole(recordId);
+      setOpen(false);
       router.push("/admin/role");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -514,12 +523,12 @@ export function RoleDeleteButton({
 
   useEffect(() => {
     if (errors.length > 0) {
-      toast.error(errors.join("\n"));
+      toast.add({ description: errors.join("\n"), type: "error" });
     }
   }, [errors]);
 
   return (
-    <AlertDialog>
+    <AlertDialog onOpenChange={setOpen} open={open}>
       {mode === "list" && (
         <AlertDialogTrigger
           render={
@@ -596,7 +605,10 @@ export function CreatePermissionDetails() {
       await createPermDetails(data);
       setOpen(false);
       form.reset(); // Formular nach Submit zurücksetzen
-      toast.success("Es wurde ein neuer Berechtigungsschlüssel hinzugefügt.");
+      toast.add({
+        description: "Es wurde ein neuer Berechtigungsschlüssel hinzugefügt.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -708,7 +720,10 @@ export function UpdatePermissionDetails({
     try {
       await updatePermDetails(data);
       setOpen(false);
-      toast.success("Der Berechtigungsschlüssel wurde aktualisiert.");
+      toast.add({
+        description: "Der Berechtigungsschlüssel wurde aktualisiert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -807,9 +822,12 @@ export function PermissionDeleteButton({
 }) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+
   async function submitPermDeletion() {
     try {
       await deletePermission(recordId);
+      setOpen(false);
       router.push("/admin/permission");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -818,12 +836,12 @@ export function PermissionDeleteButton({
 
   useEffect(() => {
     if (errors.length > 0) {
-      toast.error(errors.join("\n"));
+      toast.add({ description: errors.join("\n"), type: "error" });
     }
   }, [errors]);
 
   return (
-    <AlertDialog>
+    <AlertDialog onOpenChange={setOpen} open={open}>
       {mode === "list" && (
         <AlertDialogTrigger
           render={
@@ -863,7 +881,7 @@ export function PermissionDeleteButton({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction onClick={() => submitPermDeletion()}>
+          <AlertDialogAction onClick={submitPermDeletion}>
             Berechtigungsschlüssel löschen
           </AlertDialogAction>
         </AlertDialogFooter>

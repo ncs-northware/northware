@@ -53,6 +53,7 @@ import {
   TableCell,
   TableRow,
 } from "@northware/ui/components/shadcn/table";
+import { toast } from "@northware/ui/components/shadcn/toast";
 import {
   Tooltip,
   TooltipContent,
@@ -67,7 +68,6 @@ import {
   TrashIcon,
   TriangleAlertIcon,
 } from "@northware/ui/icons/lucide";
-import { toast } from "@northware/ui/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -262,7 +262,10 @@ export function UpdateUserForm({ user }: { user?: TSingleUser }) {
     setErrors([]); // Fehler zurücksetzen
     try {
       await updateUser(data, user?.id);
-      toast.success("Die Daten des Benutzers wurden aktualisiert.");
+      toast.add({
+        description: "Die Daten des Benutzers wurden aktualisiert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -365,7 +368,10 @@ export function UserEmailList({
     setErrors([]); // Fehler zurücksetzen
     try {
       await updateEmailAddress(addressId, "primary");
-      toast.success("Die primäre E-Mail Adresse wurde aktualisiert.");
+      toast.add({
+        description: "Die primäre E-Mail Adresse wurde aktualisiert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -378,12 +384,13 @@ export function UserEmailList({
     setErrors([]); // Fehler zurücksetzen
     try {
       await updateEmailAddress(addressId, "verification", verification);
-      toast.success(
-        verification
+      toast.add({
+        description: verification
           ? "Die E-Mail Adresse wurde als verifiziert gekennzeichnet."
           : !verification &&
-              "Die E-Mail Adresse wurde als nicht verifiziert gekennzeichnet."
-      );
+            "Die E-Mail Adresse wurde als nicht verifiziert gekennzeichnet.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -393,14 +400,17 @@ export function UserEmailList({
     setErrors([]); // Fehler zurücksetzen
     try {
       await deleteEmailAddress(addressId);
-      toast.success("Die E-Mail Adresse wurde gelöscht.");
+      toast.add({
+        description: "Die E-Mail Adresse wurde gelöscht.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
   };
 
   if (errors.length > 0) {
-    toast.error(errors);
+    toast.add({ description: errors, type: "error" });
   }
 
   return (
@@ -522,7 +532,10 @@ function CreateEmailFormDialog({ userId }: { userId?: string }) {
       await createEmailAddress(values, userId);
       setOpen(false);
       form.reset();
-      toast.success("Die E-Mail Adresse wurde hinzugefügt.");
+      toast.add({
+        description: "Die E-Mail Adresse wurde hinzugefügt.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -650,7 +663,10 @@ export function UpdatePasswordFormDialog({ id }: { id?: string }) {
       await updatePassword(id, data);
       setOpen(false);
       form.reset();
-      toast.success("Das Passwort wurde gespeichert.");
+      toast.add({
+        description: "Das Passwort wurde gespeichert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -772,21 +788,26 @@ export function UserDeleteButton({
 }) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
   async function submitUserDeletion() {
     setErrors([]); // Fehler zurücksetzen
     try {
       await deleteUser(userId);
+      setOpen(false);
       router.push("/admin/user");
-      toast.success("Der Benutzer wurde gelöscht.");
+      toast.add({
+        description: "Der Benutzer wurde gelöscht.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
       if (errors.length > 0) {
-        toast.error(errors);
+        toast.add({ description: errors, type: "error" });
       }
     }
   }
   return (
-    <AlertDialog>
+    <AlertDialog onOpenChange={setOpen} open={open}>
       <AlertDialogTrigger
         render={
           <Button
@@ -855,7 +876,10 @@ export function UpdateUserRolesForm({
   async function onSubmit(data: TUpdateRoleSchema) {
     try {
       await updateUserRoles({ data, userId, userRolesResponse });
-      toast.success("Die Rollen des Benutzers wurden aktualisiert.");
+      toast.add({
+        description: "Die Rollen des Benutzers wurden aktualisiert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }
@@ -1161,7 +1185,10 @@ export function UpdateUserPermissionsForm({
   async function onSubmit(data: TUpdatePermissionSchema) {
     try {
       await updateUserPermissions({ data, extraPermissionsResponse, userId });
-      toast.success("Die Berechtigungen des Benutzers wurden aktualisiert.");
+      toast.add({
+        description: "Die Berechtigungen des Benutzers wurden aktualisiert.",
+        type: "success",
+      });
     } catch (err) {
       setErrors(parseErrorMessages(err));
     }

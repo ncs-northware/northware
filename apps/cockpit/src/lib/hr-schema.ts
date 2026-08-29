@@ -14,9 +14,7 @@ export const employeePersonalFormSchema = z.object({
     .max(200, {
       error: "Die E-Mail-Adresse darf maximal 200 Zeichen lang sein.",
     }),
-  meritalStatus: z
-    .string()
-    .min(1, { error: "Bitte wähle einen Familienstand." }),
+  meritalStatus: z.string({ error: "Bitte wähle einen Familienstand." }),
   phoneWork: z
     .string()
     .regex(/^0[1-9]\d{2,4} [1-9]\d{0,8}(-\d{1,4})?$/, {
@@ -25,10 +23,8 @@ export const employeePersonalFormSchema = z.object({
     })
     .min(1, { error: "Die Telefonnummer ist ein Pflichtfeld." })
     .max(50, { error: "Die Telefonnummer darf maximal 50 Zeichen lang sein." }),
-  religion: z
-    .string()
-    .min(1, { error: "Bitte wähle eine Religionszugehörigkeit." }),
-  sex: z.string().min(1, { error: "Bitte wähle ein Geschlecht." }),
+  religion: z.string({ error: "Bitte wähle eine Religionszugehörigkeit" }),
+  sex: z.string({ error: "Bitte wähle ein Geschlecht." }),
   sirName: z
     .string()
     .min(1, { error: "Der Nachname ist ein Pflichtfeld" })
@@ -37,8 +33,8 @@ export const employeePersonalFormSchema = z.object({
     .string()
     .max(100, { error: "Die Straße darf maximal 100 Zeichen lang sein." })
     .nullable(),
-  taxClass: z.string().min(1, { error: "Bitte wähle eine Steuerklasse." }),
-  taxKids: z.number(),
+  taxClass: z.string({ error: "Bitte wähle eine Steuerklasse." }),
+  taxKids: z.number({ error: "Bitte wähle einen Kinderfreibetrag." }),
   zipcode: z.string().nullable(),
 });
 
@@ -49,21 +45,15 @@ export type TEmployeePersonalFormSchema = z.infer<
 export const updateEmploymentFormSchema = z.object({
   contractEnd: z.date().nullable(),
   contractStart: z.date({ error: "Der Vertragsbeginn ist ein Pflichtfeld." }),
-  department: z
-    .string()
-    .min(1, { error: "Bitte wählen Sie eine Abteilung." })
-    .nullable(),
-  educationStage: z
-    .string()
-    .min(1, { error: "Bitte wählen Sie eine Vorbildungsstufe." }),
-  employer: z
-    .string()
-    .min(1, { error: "Bitte wählen Sie einen Arbeitgeber." })
-    .nullable(),
-  experienceLevel: z
-    .string()
-    .min(1, { error: "Bitte wählen Sie eine Erfahrungsstufe." }),
-  paygrade: z.string().min(1, { error: "Bitte wählen Sie eine Tarifgruppe." }),
+  department: z.number({ error: "Bitte wählen Sie eine Abteilung." }),
+  educationStage: z.number({
+    error: "Bitte wählen Sie eine Vorbildungsstufe.",
+  }),
+  employer: z.number({ error: "Bitte wählen Sie einen Arbeitgeber." }),
+  experienceLevel: z.string({
+    error: "Bitte wählen Sie eine Erfahrungsstufe.",
+  }),
+  paygrade: z.string({ error: "Bitte wählen Sie eine Tarifgruppe." }),
   position: z
     .string()
     .min(1, { error: "Die Position ist ein Pflichtfeld." })
