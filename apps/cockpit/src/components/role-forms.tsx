@@ -509,9 +509,12 @@ export function RoleDeleteButton({
 }) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+
   async function submitRoleDeletion() {
     try {
       await deleteRole(recordId);
+      setOpen(false);
       router.push("/admin/role");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -525,7 +528,7 @@ export function RoleDeleteButton({
   }, [errors]);
 
   return (
-    <AlertDialog>
+    <AlertDialog onOpenChange={setOpen} open={open}>
       {mode === "list" && (
         <AlertDialogTrigger
           render={
@@ -819,9 +822,12 @@ export function PermissionDeleteButton({
 }) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+
   async function submitPermDeletion() {
     try {
       await deletePermission(recordId);
+      setOpen(false);
       router.push("/admin/permission");
     } catch (err) {
       setErrors(parseErrorMessages(err));
@@ -835,7 +841,7 @@ export function PermissionDeleteButton({
   }, [errors]);
 
   return (
-    <AlertDialog>
+    <AlertDialog onOpenChange={setOpen} open={open}>
       {mode === "list" && (
         <AlertDialogTrigger
           render={
@@ -875,7 +881,7 @@ export function PermissionDeleteButton({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Abbrechen</AlertDialogCancel>
-          <AlertDialogAction onClick={() => submitPermDeletion()}>
+          <AlertDialogAction onClick={submitPermDeletion}>
             Berechtigungsschlüssel löschen
           </AlertDialogAction>
         </AlertDialogFooter>

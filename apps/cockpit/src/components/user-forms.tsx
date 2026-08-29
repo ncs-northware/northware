@@ -788,10 +788,12 @@ export function UserDeleteButton({
 }) {
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
   async function submitUserDeletion() {
     setErrors([]); // Fehler zurücksetzen
     try {
       await deleteUser(userId);
+      setOpen(false);
       router.push("/admin/user");
       toast.add({
         description: "Der Benutzer wurde gelöscht.",
@@ -805,7 +807,7 @@ export function UserDeleteButton({
     }
   }
   return (
-    <AlertDialog>
+    <AlertDialog onOpenChange={setOpen} open={open}>
       <AlertDialogTrigger
         render={
           <Button
