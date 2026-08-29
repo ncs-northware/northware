@@ -15,6 +15,7 @@ import { Input } from "@northware/ui/components/shadcn/input";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -37,6 +38,52 @@ import {
   updateEmploymentFormSchema,
 } from "@/lib/hr-schema";
 import { parseErrorMessages } from "@/lib/rbac-schema";
+
+/** Select Arrays for EmployeePersonal */
+
+const sexItems = [
+  { label: "Geschlecht wählen", value: null },
+  { label: "männlich", value: "male" },
+  { label: "weiblich", value: "female" },
+  { label: "divers", value: "diverse" },
+];
+
+const maritalStatusItems = [
+  { label: "Familienstand wählen", value: null },
+  { label: "ledig", value: "ledig" },
+  { label: "verheiratet", value: "verheiratet" },
+  { label: "geschieden", value: "geschieden" },
+  { label: "verwitwet", value: "verwitwet" },
+];
+
+const religionItems = [
+  { label: "Religion wählen", value: null },
+  { label: "evangelisch", value: "ev" },
+  { label: "katholisch", value: "kath" },
+  { label: "andere", value: "andere" },
+  { label: "keine", value: "keine" },
+];
+
+const taxClassItems = [
+  { label: "Steuerklasse wählen", value: null },
+  { label: "StK I / ledig oder verwitwet", value: "I" },
+  { label: "StK II / alleinerziehend", value: "II" },
+  { label: "StK III / verheiratet, höheres Einkommen", value: "III" },
+  { label: "StK IV / verheiratet, änhliche Einkommen", value: "IV" },
+  { label: "StK V / verheiratet, geringeres Einkommen", value: "V" },
+  { label: "StK VI / Nebenarbeitsverhältnis", value: "VI" },
+];
+
+const taxKidsItems = [
+  { label: "Kinderfreibetrag wählen", value: null },
+  { label: "keine Kinderfreibeträge (0)", value: 0 },
+  { label: "0,5 Kinderfreibeträge", value: 1 },
+  { label: "1,0 Kinderfreibeträge", value: 2 },
+  { label: "1,5 Kinderfreibeträge", value: 3 },
+  { label: "2,0 Kinderfreibeträge", value: 4 },
+  { label: "2,5 Kinderfreibeträge", value: 5 },
+  { label: "3,0 Kinderfreibeträge", value: 6 },
+];
 
 export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
   const [errors, setErrors] = useState<string[]>([]);
@@ -152,17 +199,22 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="sex">Geschlecht</FieldLabel>
               <Select
+                items={sexItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="sex">
-                  <SelectValue placeholder="Geschlecht wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="male">männlich</SelectItem>
-                  <SelectItem value="female">weiblich</SelectItem>
-                  <SelectItem value="diverse">divers</SelectItem>
+                  <SelectGroup>
+                    {sexItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -240,6 +292,7 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="meritalStatus">Familienstand</FieldLabel>
               <Select
+                items={maritalStatusItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value}
@@ -248,13 +301,16 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
                   aria-invalid={fieldState.invalid}
                   id="meritalStatus"
                 >
-                  <SelectValue placeholder="Familienstand wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ledig">ledig</SelectItem>
-                  <SelectItem value="verheiratet">verheiratet</SelectItem>
-                  <SelectItem value="geschieden">geschieden</SelectItem>
-                  <SelectItem value="verwitwet">verwitwet</SelectItem>
+                  <SelectGroup>
+                    {maritalStatusItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -270,18 +326,22 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="religion">Religionszugehörigkeit</FieldLabel>
               <Select
+                items={religionItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="religion">
-                  <SelectValue placeholder="Religion wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ev">evangelisch</SelectItem>
-                  <SelectItem value="kath">katholisch</SelectItem>
-                  <SelectItem value="andere">andere</SelectItem>
-                  <SelectItem value="keine">keine</SelectItem>
+                  <SelectGroup>
+                    {religionItems.map((item) => (
+                      <SelectItem key={item.value} value={item.label}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -299,30 +359,22 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="taxClass">Steuerklasse</FieldLabel>
               <Select
+                items={taxClassItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="taxClass">
-                  <SelectValue placeholder="Steuerklasse wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="I">
-                    StK I / ledig oder verwitwet
-                  </SelectItem>
-                  <SelectItem value="II">StK II / alleinerziehend</SelectItem>
-                  <SelectItem value="III">
-                    StK III / verheiratet, höheres Einkommen
-                  </SelectItem>
-                  <SelectItem value="IV">
-                    StK IV / verheiratet, änhliche Einkommen
-                  </SelectItem>
-                  <SelectItem value="V">
-                    StK V / verheiratet, geringeres Einkommen
-                  </SelectItem>
-                  <SelectItem value="VI">
-                    StK VI / Nebenarbeitsverhältnis
-                  </SelectItem>
+                  <SelectGroup>
+                    {taxClassItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -338,21 +390,22 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="taxKids">Kinderfreibetrag</FieldLabel>
               <Select
+                items={taxKidsItems}
                 name={field.name}
                 onValueChange={field.onChange}
-                value={field.value.toString() || "0"}
+                value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="taxKids">
-                  <SelectValue placeholder="Kinderfreibetrag wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="0">keine Kinderfreibeträge (0)</SelectItem>
-                  <SelectItem value="1">0,5 Kinderfreibeträge</SelectItem>
-                  <SelectItem value="2">1,0 Kinderfreibeträge</SelectItem>
-                  <SelectItem value="3">1,5 Kinderfreibeträge</SelectItem>
-                  <SelectItem value="4">2,0 Kinderfreibeträge</SelectItem>
-                  <SelectItem value="5">2,5 Kinderfreibeträge</SelectItem>
-                  <SelectItem value="6">3,0 Kinderfreibeträge</SelectItem>
+                  <SelectGroup>
+                    {taxKidsItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -421,6 +474,51 @@ export function EmployeePersonalForm({ data }: { data: EmployeePersonal }) {
   );
 }
 
+/** Select Items for Employment Forms (not fetched from Database) */
+
+export const paygradeItems = [
+  { label: "Tarifgruppe wählen", value: null },
+  { label: "A / Kundenservice", value: "A" },
+  { label: "B / Marketing und Vertriebsmarketing", value: "B" },
+  { label: "C / Buchhaltung, Personalabteilung", value: "C" },
+  { label: "D / IT-Abteilung", value: "D" },
+  { label: "E / Übrige Abteilungen", value: "E" },
+  { label: "Geschäftsführergestellung", value: "GF" },
+];
+
+export const educationStageItems = [
+  { label: "Vorbildungsstufe wählen", value: null },
+  { label: "1 / einfache oder fachliche Einarbeitung", value: "1" },
+  { label: "2 / tätigkeitsbezogene Ausbildung", value: "2" },
+  {
+    label: "3 / umfassende Fachkenntnisse (Studium, Zusatzausbildung)",
+    value: "3",
+  },
+  {
+    label: "4 / Stufe 3 mit schweren fachlichen Tätigkeiten",
+    value: "4",
+  },
+  {
+    label: "5 / Stufe 4 mit einfacher Personalverantwortung",
+    value: "5",
+  },
+  {
+    label: "6 / Stufe 4 mit erheblicher Personalverantwortung",
+    value: "6",
+  },
+  { label: "Nicht relevant", value: "0" },
+];
+
+export const experienceLevelItems = [
+  { label: "Erfahrungsstufe wählen", value: null },
+  { label: "Berufserfahrung unter 5 Jahren", value: "I" },
+  { label: "Berufserfahrung ab 5 Jahren", value: "II" },
+  { label: "Berufserfahrung ab 10 Jahren", value: "III" },
+  { label: "Berufserfahrung ab 15 Jahren", value: "IV" },
+  { label: "Berufserfahrung ab 20 Jahren", value: "V" },
+  { label: "Außertarifliche Eingruppierung", value: "AT" },
+];
+
 export function UpdateEmploymentForm({
   companies,
   data,
@@ -458,6 +556,21 @@ export function UpdateEmploymentForm({
     }
   }
 
+  const departmentItems = [
+    { label: "Abteilung wählen", value: null },
+    ...departments.map((department) => ({
+      label: department.departmentName,
+      value: department.recordId.toString(),
+    })),
+  ];
+  const employerItems = [
+    { label: "Arbeitgeber wählen", value: null },
+    ...companies.map((company) => ({
+      label: `${company.companyId} / ${company.companyName}`,
+      value: company.companyId.toString(),
+    })),
+  ];
+
   return (
     <form
       className="flex flex-col gap-6"
@@ -491,6 +604,7 @@ export function UpdateEmploymentForm({
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="department">Abteilung</FieldLabel>
               <Select
+                items={departmentItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value?.toString()}
@@ -499,17 +613,16 @@ export function UpdateEmploymentForm({
                   aria-invalid={fieldState.invalid}
                   id="department"
                 >
-                  <SelectValue placeholder="Abteilung wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {departments.map((dep) => (
-                    <SelectItem
-                      key={dep.recordId}
-                      value={dep.recordId.toString()}
-                    >
-                      {dep.departmentName}
-                    </SelectItem>
-                  ))}
+                  <SelectGroup>
+                    {departmentItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -525,22 +638,22 @@ export function UpdateEmploymentForm({
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="employer">Arbeitgeber</FieldLabel>
               <Select
+                items={employerItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value?.toString()}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="employer">
-                  <SelectValue placeholder="Arbeitgeber wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {companies.map((comp) => (
-                    <SelectItem
-                      key={comp.companyId}
-                      value={comp.companyId.toString()}
-                    >
-                      {comp.companyId} / {comp.companyName}
-                    </SelectItem>
-                  ))}
+                  <SelectGroup>
+                    {employerItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -587,29 +700,22 @@ export function UpdateEmploymentForm({
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="paygrade">Tarifgruppe</FieldLabel>
               <Select
+                items={paygradeItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value}
               >
                 <SelectTrigger aria-invalid={fieldState.invalid} id="paygrade">
-                  <SelectValue placeholder="Tarifgruppe wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="A">A / Kundenservice</SelectItem>
-                  <SelectItem value="B">
-                    B / Marketing und Vertriebsmarketing
-                  </SelectItem>
-                  <SelectItem value="C">
-                    C / Buchhaltung, Personalabteilung
-                  </SelectItem>
-                  <SelectItem value="D">D / IT-Abteilung</SelectItem>
-                  <SelectItem value="E">E / Übrige Abteilungen</SelectItem>
-                  <SelectItem value="AT GF">
-                    Geschäftsführer primäres Unternehmen
-                  </SelectItem>
-                  <SelectItem value="AT GF2">
-                    Geschäftsführer sekundäres Unternehmen
-                  </SelectItem>
+                  <SelectGroup>
+                    {paygradeItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -625,6 +731,7 @@ export function UpdateEmploymentForm({
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="educationStage">Vorbildungsstufe</FieldLabel>
               <Select
+                items={educationStageItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value.toString()}
@@ -633,28 +740,16 @@ export function UpdateEmploymentForm({
                   aria-invalid={fieldState.invalid}
                   id="educationStage"
                 >
-                  <SelectValue placeholder="Vorbildungsstufe wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="1">
-                    1 / einfache oder fachliche Einarbeitung
-                  </SelectItem>
-                  <SelectItem value="2">
-                    2 / tätigkeitsbezogene Ausbildung
-                  </SelectItem>
-                  <SelectItem value="3">
-                    3 / umfassende Fachkenntnisse (Studium, Zusatzausbildung)
-                  </SelectItem>
-                  <SelectItem value="4">
-                    4 / Stufe 3 mit schweren fachlichen Tätigkeiten
-                  </SelectItem>
-                  <SelectItem value="5">
-                    5 / Stufe 4 mit einfacher Personalverantwortung
-                  </SelectItem>
-                  <SelectItem value="6">
-                    6 / Stufe 4 mit erheblicher Personalverantwortung
-                  </SelectItem>
-                  <SelectItem value="0">Nicht relevant</SelectItem>
+                  <SelectGroup>
+                    {educationStageItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
@@ -670,6 +765,7 @@ export function UpdateEmploymentForm({
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="experienceLevel">Erfahrungsstufe</FieldLabel>
               <Select
+                items={experienceLevelItems}
                 name={field.name}
                 onValueChange={field.onChange}
                 value={field.value.toString()}
@@ -678,27 +774,16 @@ export function UpdateEmploymentForm({
                   aria-invalid={fieldState.invalid}
                   id="experienceLevel"
                 >
-                  <SelectValue placeholder="Erfahrungsstufe wählen" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="I">
-                    Berufserfahrung unter 5 Jahren
-                  </SelectItem>
-                  <SelectItem value="II">
-                    Berufserfahrung ab 5 Jahren
-                  </SelectItem>
-                  <SelectItem value="III">
-                    Berufserfahrung ab 10 Jahren
-                  </SelectItem>
-                  <SelectItem value="IV">
-                    Berufserfahrung ab 15 Jahren
-                  </SelectItem>
-                  <SelectItem value="V">
-                    Berufserfahrung ab 20 Jahren
-                  </SelectItem>
-                  <SelectItem value="AT">
-                    Außertarifliche Eingruppierung
-                  </SelectItem>
+                  <SelectGroup>
+                    {experienceLevelItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               {fieldState.invalid === true && (
