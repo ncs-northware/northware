@@ -1,5 +1,5 @@
 import { AuthProvider } from "@northware/auth/client";
-import { Toaster } from "@northware/ui/components/shadcn/sonner";
+import { Toaster } from "@northware/ui/components/shadcn/toast";
 import { ThemeProvider } from "@northware/ui/components/theme-provider";
 import type { ThemeProviderProps } from "next-themes";
 
@@ -11,6 +11,6 @@ export const GeneralProvider = ({
 }: GeneralProviderProperties) => (
   <ThemeProvider {...properties}>
     <AuthProvider>{children}</AuthProvider>
-    <Toaster richColors />
+    <Toaster />
   </ThemeProvider>
 );
