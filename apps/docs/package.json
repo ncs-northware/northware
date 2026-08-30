@@ -3,12 +3,12 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "bun --bun next build",
     "check": "ultracite check",
-    "dev": "next dev --turbo --port 40180",
+    "dev": "bun --bun next dev --port 40180",
     "fix": "ultracite fix",
     "postinstall": "fumadocs-mdx",
-    "start": "next start",
+    "start": "bun --bun next start",
     "tsc-check": "tsc --noEmit"
   },
   "dependencies": {

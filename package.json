@@ -2,18 +2,22 @@
   "name": "northware",
   "private": true,
   "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo build",
-    "bump-ui": "cd ./packages/ui && pnpm bump-ui",
+    "bump-ui": "cd ./packages/ui && bun bump-ui",
     "check": "turbo fix",
     "check:root": "ultracite check",
     "commit": "commit",
     "dev": "turbo dev",
-    "drizzle-generate": "cd ./packages/database && pnpm drizzle-kit generate",
-    "drizzle-migrate": "cd ./packages/database && pnpm drizzle-kit migrate",
+    "drizzle-generate": "cd ./packages/database && bunx drizzle-kit generate",
+    "drizzle-migrate": "cd ./packages/database && bunx drizzle-kit migrate",
     "fix": "turbo fix",
     "fix:root": "ultracite fix",
-    "generate-icons": "cd packages/ui && pnpm generate-icons",
+    "generate-icons": "cd packages/ui && bun generate-icons",
     "lint:clerk": "eslint . --config eslint.config.mjs",
     "localci": "turbo build check --affected",
     "tsc-check": "turbo tsc-check",
@@ -34,8 +38,8 @@
     "typescript-eslint": "^8.68.0",
     "ultracite": "7.10.7"
   },
+  "packageManager": "bun@1.4.0",
   "engines": {
     "node": ">=24"
-  },
-  "workspaces": ["apps/*", "packages/*"]
+  }
 }

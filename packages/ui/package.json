@@ -16,7 +16,7 @@
     "./postcss.config": "./postcss.config.mjs"
   },
   "scripts": {
-    "bump-ui": "pnpm dlx shadcn@latest add --all --overwrite && pnpm dlx shadcn@latest migrate radix -y",
+    "bump-ui": "bunx shadcn@latest add --all --overwrite",
     "check": "ultracite check",
     "fix": "ultracite fix",
     "generate-icons": "svgr --config-file svgr.config.js --ignore-existing -- ./icons/assets",
