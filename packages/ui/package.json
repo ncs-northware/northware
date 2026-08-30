@@ -13,7 +13,7 @@
     "./icons": "./icons/output/index.ts",
     "./icons/lucide": "./icons/lucide.ts",
     "./hooks/*": "./hooks/*.ts",
-    "./postcss.config": "./postcss.config.mjs"
+    "./postcss.config.mjs": "./postcss.config.mjs"
   },
   "scripts": {
     "bump-ui": "bunx shadcn@latest add --all --overwrite",
