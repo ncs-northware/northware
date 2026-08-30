@@ -1,4 +1,6 @@
-name: Changesets Auto Release
+# This workflow maintains a pull request that prepares a new release.
+
+name: Release Packages with Changesets
 
 on:
   push:

@@ -1,48 +1,54 @@
-name: Turborepo CI
+# This workflow checks the code quality and creates a build on every push to main.
 
-# This Action is building and linting on all changes coming from an PR to test if the code is going to work.
+name: Check and Build Main
 
 on:
   push:
     branches: ["main"]
-  pull_request:
-    types: [opened, synchronize]
+
+concurrency:
+  group: main-ci-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
-  ci:
-    name: Build and Lint
+  build:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     # To use Remote Caching, uncomment the next lines and follow the steps below.
     env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       DATABASE_URL: ${{secrets.DATABASE_URL}}
       CLERK_SECRET_KEY: ${{secrets.CLERK_SECRET_KEY}}
       NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}}
       
 
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v7
         with:
           fetch-depth: 2
+      
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
 
-      - uses: oven-sh/setup-bun@v2
-
-      - name: Setup Node.js
+      - name: Set up node
         uses: actions/setup-node@v7
         with:
           node-version: 24.20.0
 
+      - name: Set up Turborepo Remote Cache
+        uses: vercel/setup-turborepo-remote-cache-action@v1.0.0
+        with:
+          team: ${{ vars.TURBO_TEAM }}
+
       - name: Install dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
       - name: Build
-        run: bun turbo run build --affected
-
-      - name: Lint on Root with Biome and Ultracite
+        run: bun turbo run build
+      
+      - name: Root quality check
         run: bun turbo run check:root

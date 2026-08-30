@@ -1,24 +1,33 @@
-# This action is liniting the code coming from a new PR. If there is anythging to approve the autofix.ci Bot will then apply those fixes automaticcally with a new commit.
+# This workflow is formatting the code coming from a new PR.
+# If there is anythging to approve the autofix.ci Bot will then apply those fixes automaticcally with a new commit.
 
-# https://github.com/kentcdodds/kentcdodds.com/blob/main/.github/workflows/deployment.yml
 name: autofix.ci # needed to securely identify the workflow
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  group: autofix-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
+  pull_requests: write
 
 jobs:
   autofix:
-    name: autofix
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Set up bun
         uses: oven-sh/setup-bun@v2
@@ -28,13 +37,13 @@ jobs:
         with:
           node-version: 24.20.0
 
-      - name: Download deps
-        run: bun install
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
-      - name: Code fixing with Biome and Ultracite
-        run: bun turbo run fix:root
+      - name: Apply automated fixes
+        run: bun run fix:root
 
-      - name: Apply fixes
+      - name: Commit fixes
         uses: autofix-ci/action@7a166d7532b277f34e16238930461bf77f9d7ed8
         with:
-          commit-message: "chore(autofix): Apply format fixes"
+          commit-message: "chore(autofix): apply formatting fixes"

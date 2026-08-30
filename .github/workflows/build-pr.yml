@@ -1,0 +1,58 @@
+# This workflow checks the code quality and creates a build from a PR.
+
+name: Check and Build PR
+
+on:
+  workflow_run:
+    workflows: ["autofix.ci"]
+    types: [completed]
+
+concurrency:
+  group: pr-check-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  quality:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.20.0
+    
+      - name: Set up Turborepo Remote Cache
+        uses: vercel/setup-turborepo-remote-cache-action@v1.0.0
+        with:
+          team: ${{ vars.TURBO_TEAM }}
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: TypeScript root check
+        run: bun run tsc-check:root
+
+      - name: Build affected projects
+        run: bun turbo run build --affected
+
+      - name: Root quality check
+        run: bun turbo run check:root

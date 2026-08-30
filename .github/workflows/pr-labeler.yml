@@ -1,4 +1,4 @@
-# This file is enabling the Labeler Action to run. Labeler is configured in .github/labeler.yml
+# This workflow is enabling the Labeler Action to run. Labeler is configured in .github/labeler.yml
 
 name: "Pull Request Labeler"
 on:
