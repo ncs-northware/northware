@@ -20,20 +20,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v7
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Setup node
         uses: actions/setup-node@v7
         with:
           node-version: 24.20.0
-          cache: "pnpm"
 
       - name: Download deps
-        run: pnpm install
+        run: bun install
 
       - name: Code fixing with Biome and Ultracite
-        run: pnpm turbo run fix:root
+        run: bun turbo run fix:root
 
       - name: Apply fixes
         uses: autofix-ci/action@7a166d7532b277f34e16238930461bf77f9d7ed8

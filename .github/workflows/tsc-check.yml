@@ -22,19 +22,18 @@ jobs:
         with:
           fetch-depth: 2
 
-      - uses: pnpm/action-setup@v6
+      - uses: oven-sh/setup-bun@v2
 
-      - name: Setup Node.js environment
+      - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 24.20.0
-          cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
 
       - name: TypeScript Check at Root Level
-        run: pnpm tsc-check:root
+        run: bun tsc-check:root
 
       - name: TypeScript Check of Packages and Apps
-        run: pnpm turbo tsc-check
+        run: bun turbo tsc-check
