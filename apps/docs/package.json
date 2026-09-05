@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@northware/ui": "workspace:",
-    "fumadocs-core": "16.15.4",
+    "fumadocs-core": "16.15.7",
     "fumadocs-mdx": "15.4.0",
-    "fumadocs-ui": "16.15.4",
+    "fumadocs-ui": "16.15.7",
     "next": "16.3.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
@@ -25,7 +25,7 @@
     "@types/mdx": "^2.0.14",
     "@types/node": "24.13.3",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
+    "@types/react-dom": "^19.2.7",
     "typescript": "^6.0.3"
   }
 }
