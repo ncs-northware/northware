@@ -4,11 +4,7 @@
 name: autofix.ci # needed to securely identify the workflow
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: autofix-${{ github.event.pull_request.number || github.ref }}
