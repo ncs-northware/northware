@@ -2,13 +2,10 @@
 # If there is anythging to approve the autofix.ci Bot will then apply those fixes automaticcally with a new commit.
 
 name: autofix.ci # needed to securely identify the workflow
+
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: autofix-${{ github.event.pull_request.number || github.ref }}
@@ -16,10 +13,10 @@ concurrency:
 
 permissions:
   contents: write
-  pull_requests: write
 
 jobs:
   autofix:
+    name: autofix.ci
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
 
