@@ -12,24 +12,22 @@ concurrency:
 
 permissions:
   contents: read
-  # id-token: write
+  id-token: write
 
 jobs:
   quality:
     name: Check and Build PR
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    # env:
-    #   DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    #   CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
-    #   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
 
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@v7
         with:
-          # ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -41,10 +39,10 @@ jobs:
         with:
           node-version: 24.21.0
     
-      # - name: Set up Turborepo Remote Cache
-      #   uses: vercel/setup-turborepo-remote-cache-action@v1.0.0
-      #   with:
-      #     team: ${{ vars.TURBO_TEAM }}
+      - name: Set up Turborepo Remote Cache
+        uses: vercel/setup-turborepo-remote-cache-action@v1.1.0
+        with:
+          team: ${{ vars.TURBO_TEAM }}
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
