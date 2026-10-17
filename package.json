@@ -32,8 +32,8 @@
     "@commitlint/prompt-cli": "^21.2.3",
     "@commitlint/types": "^21.2.3",
     "@northware/tsconfig": "workspace:^",
-    "eslint": "^10.12.0",
-    "turbo": "^2.11.8",
+    "eslint": "^10.13.0",
+    "turbo": "^2.11.9",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.71.2",
     "ultracite": "8.0.1"
