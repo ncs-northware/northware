@@ -21,11 +21,11 @@
   },
   "dependencies": {
     "@clerk/localizations": "^4.23.0",
-    "@clerk/nextjs": "^7.9.14",
-    "@clerk/ui": "^1.40.0",
+    "@clerk/nextjs": "^7.9.16",
+    "@clerk/ui": "^1.40.2",
     "@northware/database": "workspace:*",
     "drizzle-orm": "^0.45.4",
-    "react": "^19.3.0",
+    "react": "^19.3.1",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
