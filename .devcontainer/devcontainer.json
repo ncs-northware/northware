@@ -1,6 +1,22 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:linux",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
   "features": {
     "ghcr.io/devcontainers-extra/features/bun:1": {}
-  }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "oven.bun-vscode",
+        "biomejs.biome",
+        "bradlc.vscode-tailwindcss",
+        "formulahendry.auto-rename-tag"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  // Automatische Installation der Dependencies im Monorepo via Bun nach dem Erstellen
+  "postCreateCommand": "bun install"
 }
