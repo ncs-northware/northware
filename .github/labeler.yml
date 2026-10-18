@@ -2,9 +2,12 @@
 
 # Labels for Github Health Files
 
-github-management:
+dev-experience:
   - changed-files:
+      - any-glob-to-any-file: ".changeset/**"
+      - any-glob-to-any-file: ".devcontainer/**"
       - any-glob-to-any-file: ".github/**"
+      - any-glob-to-any-file: ".vscode/**"
 
 # Labels for apps/* changes
 
