@@ -12,10 +12,7 @@
         "biomejs.biome",
         "bradlc.vscode-tailwindcss",
         "formulahendry.auto-rename-tag"
-      ],
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-      }
+      ]
     }
   },
   // Automatische Installation der Dependencies im Monorepo via Bun nach dem Erstellen
