@@ -13,7 +13,7 @@
   "vulnerabilityAlerts": {
     "labels": ["security", "dependencies"]
   },
-  "minimumReleaseAge": "1440 minutes",
+  "minimumReleaseAge": "1 day",
   "gitIgnoredAuthors": [
     "autofix-ci[bot] <114827586+autofix-ci[bot]@users.noreply.github.com>"
   ],
