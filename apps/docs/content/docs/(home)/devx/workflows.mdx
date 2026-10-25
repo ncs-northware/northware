@@ -1,0 +1,77 @@
+---
+title: Workflows
+description: Diese Prüfungen und Aufgaben werden in diesem Projekt automatisch ausgeführt.
+---
+
+
+## Pull Request Labeler
+
+Der Workflow "Pull Request Labeler" (`.github/workflows/pr-labeler.yml`) nutzt die GitHub Action [Labeler](https://github.com/marketplace/actions/labeler).
+Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit `apps/` und
+`packages/` Labels.
+Damit dieses Labeling korrekt funktioniert, müssen die einzelnen Labels in der Konfigurationsdatei `.github/labeler.yml` zu den zugehörigen Dateipfaden zugeordnet werden.
+
+## Workflows des Northware New Projekts
+
+Das Northware New Projekt nutzt einige Workflows, die die Arbeit mit dem Projket teilweise automatisieren und unterstützen. 
+Die Workflows sind nicht mit klassischen GitHub Actions sondern über das [integrierte Workflow-Modul](https://docs.github.com/de/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations) definiert.
+
+[Mehr zu Projekt-Workflows](https://docs.github.com/de/issues/planning-and-tracking-with-projects/automating-your-project)
+
+### Verwendete Projekt-Workflows
+
+- **Auto-add to project:** Issues und Pull Requests aus dem `ncs-northware/northware` Repository werden automatisch zu dem Northare New Projekt hinzugefügt.
+- **Item added to project:** Wenn ein Issue oder Pull Request zu dem Projekt hinzugefügt wird, wird dem Eintrag der Status Triage zugeordnet.
+- **Item reopened:** Wenn ein Issue oder Pull Request wieder geöffnet wird, wird dem Eintrag der Status In Progress zugeordnet.
+- **Pull Request merged:** Wenn ein Pull Request gemerged wurde, wird ihm der Status Done zugeordnet.
+- **Item closed:** Wenn ein Issue oder Pull Request geschlossen wird, wird dem Eintrag der Status Done zugeordnet.
+
+## autofix.ci
+
+Der Workflow **autofix.ci** (`.github/workflows/autofix.yml`) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.
+
+Innerhalb des Workflows wird das Projekt vollständig aufgesetzt und der vorhandene Code wird mit `bun run fix:root` formatiert.
+Wenn durch den Durchlauf des Workflows Änderungen am Code vorgenommen wurden, werden diese Code Fixes auf den vorhandenen Pull Request commitet.
+
+**Dieser Commit unterbricht nun alle laufenden Workflows.** Diese Workflows scheitern. Anschließend starten alle vorgesehenen Workflows wieder von neuem.
+
+## Check and Build PR
+
+Der Workflow **Check and Build PR** (`.github/workflows/build-pr.yml`) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.
+
+Innerhalb des Workflows wird das Projekt vollständig aufgesetzt. Der Workflow verwendet Turborepo Remote Caching, um den Workflow und den Build-Prozess zu beschleunigen.
+Der vorhandene Code wird mit `bun run tsc-check:root` überprüft, um Fehler im TypeScript Code abzufangen.
+Alle Codeteile die von der Änderung betroffen sind, werden anschließend mit Turborepo gebaut und so vorbereitet, dass sie veröffentlicht werden können.
+Abschließend wird die Code-Qualität noch einmal mit `bun turbo run check:root` überprüft.
+Die Code-Qualität müsste an diesem Punkt bereits von dem **autofix.ci** Workflow durchgesetzt worden sein.
+
+## Check and Build Main
+
+Der Workflow **Check and Build Main** (`.github/workflows/build-main.yml`) wird bei Pushes auf den `main` Branch ausgeführt.
+
+Innerhalb des Workflows wird das Projekt vollständig aufgesetzt. Der Workflow verwendet Turborepo Remote Caching, um den Workflow und den Build-Prozess zu beschleunigen.
+Das Projekt wird vollständig gebaut und so vorbereitet, dass es veröffentlicht werden kann.
+Abschließend wird die Code-Qualität noch einmal mit `bun turbo run check:root` überprüft.
+Die Checks innerhalb der Pull Requests sollten die Code-Qualität an diesem Punkt bereits durchgesetzt haben.
+
+## Release Packages with Changesets
+
+Der Workflow **Release Packages with Changesets** (.github/workflows/package-release.yml) wird ausgeführt, wenn Code auf den `main` Branch gepusht wird.
+
+Der Workflow nutzt [changesets/action](https://github.com/changesets/action), um einen Pull Request mit dem Titel `chore(release): New Package Versions` zu erstellen. Wird dieser Pull Request in `main` gemerged,
+werden alle Packages und Apps entsprechend der im Repository enthaltenen Changesets versioniert und die `CHANGELOG.md` wird entsprechend der Changesets aktualisiert.
+Alle vorhandenen Changesets werden gelöscht. [Weitere Infos zur Release Strategie](./release-strategy.mdx)
+
+Exisitiert bereits ein durch Changesets erstellter Pull Request, wird dieser bei jedem push auf den `main` Branch aktualisiert.
+Enthält der gepushte Code ein neues oder geändertes Changeset, wird dieses in das Changelog aufgenommen.
+Enthält der gepushte Code keine Veränderungen an Changesets, wird der Branch lediglich auf den Stand des `main` Branch gebracht.
+
+## Renovate Bot
+
+Mit dem [Renovate Bot](https://www.mend.io/renovate/) werden die Dependencies im GitHub Repository aktuell gehalten.
+Renovate prüft regelmäßig, ob es Dependencies (in NPM-Packages und GitHub Actions) mit neuen Versionen gibt. Findet Renovate eine neue Version, 
+erstellt der Bot einen Pull Request, der alle betroffenen Dateien (z.B. `bun.lock`, `package.json` und Workflow-Dateien) aktualisiert.
+Non-Major Updates an Dependencies werden in einem Pull Request zusammengefasst. Das Verhalten von Renovate wird in der Datei `.github/renovate.json` konfiguriert.
+
+Im Repository sind der "Dependency graph" und die "Dependabot alerts" aktivert. So wird das Repository auf Sicherheitsrisiken geprüft und darüber benachrichtigt. 
+Renovate greift auf diese Daten zu und löst die Risiken ggf. durch ein Update der betroffenen Dependency.

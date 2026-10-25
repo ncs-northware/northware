@@ -1,0 +1,84 @@
+---
+title: Code Formatierung und Linting
+description: Wie in dem Projekt Biome verwendet wird, um richtigen und schönen Code zu erhalten
+---
+
+[Biome](https://biomejs.dev/) übernimmt das Code Formatting und Linting in diesem Projekt.
+
+Biome ist in das Root-Package des Projektes integriert und wird in der `biome.json` konfiguriert. Als Startpunkt nutzt Biome das Pre-Config Package [Ultracite](https://www.ultracite.dev/). In der `biome.json` sind ebenfalls einige Ordner und Dateien definiert, die von Biome ignoriert werden. Insbesondere sind dies automatisch und ebenfalls von Git ignorierte automatisch generierte Ordner und Dateien und Ordner, die beim Build-Prozess automatisch erstellt werden.
+
+## CLI Commands
+
+### Ultracite CLI
+
+- **`bun ultracite check`** führt den Biome Linter aus, ohne das Formatierungen angewendet werden. Stattdessen wird gewarnt, dass Formatierungen falsch sind. Hinter diesem Command steckt die Anweisung `npx biome check ./`.
+- **`bun ultracite fix`** führt den Biome Linter aus und wendet empfohlene Formatierungen auf die Dateien an. Hinter diesem Command steckt die Anweisung `npx biome check --write ./`.
+
+### Biome CLI
+
+Die [Biome CLI](https://biomejs.dev/reference/cli/) bietet viele weitere Möglichkeiten Code zu testen und zu berichtigen.
+
+- [**`biome rage`**](https://biomejs.dev/reference/cli/#biome-rage) zeigt Informationen zum Debugging. `biome rage --formatter` zeigt die angewendeten Formatter Optionen, `biome rage --linter` zeigt die angewendeten Linter-Optionen.
+- [**`biome check`**](https://biomejs.dev/reference/cli/#biome-check) führt den Biome Formatter und Linter aus und prüft die Import-Sortierung. Es werden keine Änderungen an den Dateien vorgenommen.
+  - `--write` ändert die Dateien so, dass sichere Fixes, vorgeschlages Formatting und Import-Sortierungen angewendet werden. `--fix` ist ein Alias für `--write`
+  - `--unsafe` wendet in Kombination mit `--write` oder `--fix` auch unsichere Fixes an. Diese könnten dazu führen, dass der Code nicht mehr funktioniert.
+  - `--formatter-enabled=<true|false>` kontrolliert, ob der Formatter Check ausgeführt wird oder nicht.
+  - `--linter-enabled=<true|false>` kontrolliert, ob der Lint Check ausgeführt wird oder nicht.
+  - `--organize-imports-enabled=<true|false>` kontrolliert, ob Imports sortiert werden sollen, oder nicht.
+  - `--assists-enabled=<true|false>` aktiviert oder deaktiviert die Assists.
+  - `--changed` lintet nur die Dateien, die im Vergleich zum `defaultBranch` verändert wurden.
+- [**`biome ci`**](https://biomejs.dev/reference/cli/#biome-ci) führt Formatter Linter und Import-Sortierung aus. Dieser Command funktioniert wie der Command `biome check` ist aber speziell für die Verwendung im CI-Umfeld optimiert.
+  - `--formatter-enabled=<true|false>` kontrolliert, ob der Formatter Check ausgeführt wird oder nicht.
+  - `--linter-enabled=<true|false>` kontrolliert, ob der Lint Check ausgeführt wird oder nicht.
+  - `--organize-imports-enabled=<true|false>` kontrolliert, ob Imports sortiert werden sollen, oder nicht.
+  - `--assists-enabled=<true|false>` aktiviert oder deaktiviert die Assists.
+  - `--changed` lintet nur die Dateien, die im Vergleich zum `defaultBranch` verändert wurden.
+
+### Anwendung in diesem Projekt
+
+Im Root-Package des Projektes sind mehrere Commands definiert, um die Biome CLI.
+
+- **`bun check:root`** führt den Command `ultracite check` in allen Teilen des Projektes aus. Es werden das Root-Verzeichnis sowie alle Unterordner incl. `apps/` und `packages/` geprüft. Eine Formatierung wird nicht vorgenommen. Da dieser Command auch als Turbo Task definiert ist, ist `bun turbo check:root` gleichbedeutend.
+- **`bun check`** führt den Command `turbo check` aus. Dieser Command stößt den Tubo-Task `check` an. `bun turbo lint` ist gleichbedeutend.
+- **`bun fix:root`** führt den Command `ultracite fix` in allen Teilen des Projektes aus. Es werden das Root-Verzeichnis sowie alle Unterordner incl. `apps/` und `packages/` geprüft. Formatierungen werden ggf. angepasst. Da dieser Command auch als Turbo Task definiert ist, ist `bun turbo fix:root` gleichbedeutend.
+- **`bun fix`** führt den Command `turbo fix` aus. Dieser Command stößt den Tubo-Task `fix` an. `bun turbo fix` ist gleichbedeutend.
+- **`bun lint:clerk`** führt ESLint aus. ESLint ist so konfiguriert, dass nur spezielle Regeln zur Verwendung von Clerk kontrolliert werden. [Mehr Infos](#clerk--eslint)
+
+#### Turbo Tasks
+
+- **`bun turbo check`** führt das Script `check` in allen Apps und Packages aus, in denen ein solches Script definiert ist. In allen `package.json` sollte daher ein Script definiert sein, dass hinter dem Script `check` den Command `ultracite check` ausführt.
+- **`bun turbo fix`** führt das Script `fix` in allen Apps und Packages aus, in denen ein solches Script definiert ist. In allen `package.json` sollte daher ein Script definiert sein, dass hinter dem Script `fix` den Command `ultracite fix` ausführt.
+
+```json title="package.json"
+
+{
+    "name":"@northware/ui",
+    ...
+    "scripts": {
+        ...
+        "check": "ultracite check",
+        "fix": "ultracite fix"
+        ...
+    },
+}
+
+```
+<Callout type="info">
+Die Commands `bun check:root` und `bun fix:root` wenden den Biome Linter und Formatter auf alle Dateien des Packages an. 
+`bun check` und `bun fix` greifen auf die selbe Config-Datei zu und führen den selben Command in den Apps und Packages des Projektes aus.
+
+`bun check` und `bun fix` sind dafür gedacht, die Ausführung des Biome Linters und Formatters mit dem `--filter` Flag nur auf einzelne Apps und Packages anzuwenden. 
+Sollen alle Teile des Projektes geprüft werden, sollten `bun check:root` oder `bun fix:root` ausgeführt werden.
+
+Keinesfalls sollten `bun fix` und `bun fix:root` sowie `bun check` und `bun check:root` kombiniert werden, da dann beide Commands die selbe Arbeit erledigen.
+</Callout>
+
+### Clerk + ESLint
+
+Der Command `bun lint:clerk` durchläuft Linting-Prüfungen mit [ESLint](https://eslint.org/), um besondere Regeln in der Verwendung und Entwicklung mit [Clerk](https://clerk.com/) zu berücksichtigen.
+In der `eslint.config.mjs` ist definiert, dass das Package nur Regeln aus dem Plugin [`@clerk/eslint-plugin/next`](https://clerk.com/docs/reference/nextjs/eslint-plugin) prüft und anwendet.
+
+Dieses Plugin beinhaltet aktuell nur die Regel `@clerk/next/require-auth-protection`, die für Server-Side-Resourcen ohne einen Autentication Check eine Warnung ausgibt. 
+Außerdem beinhaltet das Plugin eine "Bulk Fixer CLI" um die Autentication an den nötigen Stellen einzufügen.
+
+Weitere Infos zur Verwendung von Clerk in den [@northware/auth](/packages/auth) Docs

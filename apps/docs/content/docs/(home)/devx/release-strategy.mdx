@@ -16,7 +16,7 @@ ob ein Changeset existiert und erinnert ggf. mit einem Kommentar im PR daran, ei
 
 Ein Changeset kann schon vor Eröffnung des Pull Requests oder per Link in dem Kommentar vom Changesets Bot direkt in GitHub
 oder als nachträglicher Commit hinzugefügt werden. 
-Es bietet sich an, zur Erstellung eines Changesets den CLI Command `pnpm changeset` oder `pnpm changeset add` zu verwenden, 
+Es bietet sich an, zur Erstellung eines Changesets den CLI Command `bun changeset` oder `bun changeset add` zu verwenden, 
 da dieser Command interaktiv durch die Erstellung eines Changesets führt.
 
 Innerhalb einer Changeset-Datei wird definiert, welche Packages durch den Merge dieses Changesets welche Art von Version Bump erhalten. 
@@ -36,7 +36,7 @@ An awesome release
 
 ### Changesets Release Workflow
 
-Der Workflow "Changesets Release" (changesets-release.yml) erstellt immer automatisch einen Pull Request, der den nächsten Release vorbereitet. 
+Der Workflow "Release Packages with Changesets" (`package-release.yml`) erstellt immer automatisch einen Pull Request, der den nächsten Release vorbereitet. 
 Der Pull Request wird immer mit dem `main` Branch abgeglichen. Ein Merge dieses Pull Requests führt zur Veröffentlichung neuer Versionen.
 
 ### Mehr über Changesets
