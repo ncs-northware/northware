@@ -4,77 +4,21 @@ description: Diese Prüfungen und Aufgaben werden in diesem Projekt automatisch 
 ---
 
 
-## GitHub Management
+## Pull Request Labeler
 
-### Pull Request Labeler
-
-Der Workflow "Pull Request Labeler" (`.github/workflows/pr_labeler.yml`) nutzt die GitHub Action [Labeler](https://github.com/marketplace/actions/labeler).
+Der Workflow "Pull Request Labeler" (`.github/workflows/pr-labeler.yml`) nutzt die GitHub Action [Labeler](https://github.com/marketplace/actions/labeler).
 Der Workflow labled neue Pull Requests automatisch basierend auf den geänderten Dateien mit `apps/` und
 `packages/` Labels.
-Damit dieses Labeling korrekt funktioniert müssen die einzelnen Labels in der Konfigurationsdatei `.github/labeler.yml` zu den zugehörigen Dateipfaden zugeordnet werden.
+Damit dieses Labeling korrekt funktioniert, müssen die einzelnen Labels in der Konfigurationsdatei `.github/labeler.yml` zu den zugehörigen Dateipfaden zugeordnet werden.
 
-```yaml title=".github/workflows/pr_labeler.yml"
-
-# This file is enabling the Labeler Action to run. Labeler is configured in .github/labeler.yml
-
-name: "Pull Request Labeler"
-on:
-  - pull_request_target
-
-jobs:
-  labeler:
-    permissions:
-      contents: read
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/labeler@v5
-
-```
-
-```yaml title=".github/labeler.yml"
-
-# This file serves as configuration file for the labeler Workflow (.github/workflows/pr_labeler.yml)
-
-# Labels for Github Health Files
-
-github-management:
-  - changed-files:
-      - any-glob-to-any-file: ".github/**"
-
-# Labels for apps/* changes
-
-apps/docs:
-  - changed-files:
-      - any-glob-to-any-file: apps/docs/**
-
-apps/northware-cockpit:
-  - changed-files:
-      - any-glob-to-any-file: apps/northware-cockpit/**
-
-# Labels for pakages/* changes
-
-packages/auth:
-  - changed-files:
-      - any-glob-to-any-file: packages/auth/**
-
-packages/database and api:
-  - changed-files:
-      - any-glob-to-any-file: packages/database/**
-
-...
-
-```
-
-
-### Workflows des Northware New Projekts
+## Workflows des Northware New Projekts
 
 Das Northware New Projekt nutzt einige Workflows, die die Arbeit mit dem Projket teilweise automatisieren und unterstützen. 
 Die Workflows sind nicht mit klassischen GitHub Actions sondern über das [integrierte Workflow-Modul](https://docs.github.com/de/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations) definiert.
 
 [Mehr zu Projekt-Workflows](https://docs.github.com/de/issues/planning-and-tracking-with-projects/automating-your-project)
 
-#### Verwendete Projekt-Workflows
+### Verwendete Projekt-Workflows
 
 - **Auto-add to project:** Issues und Pull Requests aus dem `ncs-northware/northware` Repository werden automatisch zu dem Northare New Projekt hinzugefügt.
 - **Item added to project:** Wenn ein Issue oder Pull Request zu dem Projekt hinzugefügt wird, wird dem Eintrag der Status Triage zugeordnet.
@@ -82,76 +26,52 @@ Die Workflows sind nicht mit klassischen GitHub Actions sondern über das [integ
 - **Pull Request merged:** Wenn ein Pull Request gemerged wurde, wird ihm der Status Done zugeordnet.
 - **Item closed:** Wenn ein Issue oder Pull Request geschlossen wird, wird dem Eintrag der Status Done zugeordnet.
 
-## CI/CD
+## autofix.ci
 
-### Turborepo CI
+Der Workflow **autofix.ci** (`.github/workflows/autofix.yml`) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.
 
-Der Workflow **Turborepo CI** (`.github/workflows/turborepo-ci.yml`) wird immer dann ausgelöst, 
-wenn Code auf den `main` Branch gepusht wird oder ein neuer Pull Request eröffnet oder aktualisiert wird.
-
-- Der Workflow nutzt den vorliegenden Code und installiert das Projekt in einer Node.js Umgebung mit `pnpm`.
-- Mit `pnpm build --affected` werden die von der Änderung betroffenen Code-Teile gebaut.
-- Mit `pnpm lint:ci` werden die von der Änderung betroffenen Code-Teile mit [Biome](/General/formatting) überprüft.
-
-Sollte es während dieses Workflows zu Problemen kommen, wird der Workflow abgebrochen.
-
-<Callout type="info">
-Der Turborepo CI-Workflow durchläuft bei jedem Pull Request und bei jedem Merge die Schritte `pnpm turbo build --affected` und `pnpm turbo run lint:ci`. 
-Damit diese Schritte nicht immer erst gemacht werden, wenn alles fertig ist lässt sich dieser Ablauf mit `pnpm localci` auch lokal abbilden, 
-damit Fehler schon vor dem CI-Durchlauf auffallen.
-</Callout>
-
-### autofix.ci
-
-Der Workflow **autofix.ci** (.github/workflows/autofix.yml) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.
-
-Innerhalb des Workflows wird das Projekt vollständig gebaut, der vorhandene Code wird mit `pnpm format:root` formatiert.
+Innerhalb des Workflows wird das Projekt vollständig aufgesetzt und der vorhandene Code wird mit `bun run fix:root` formatiert.
 Wenn durch den Durchlauf des Workflows Änderungen am Code vorgenommen wurden, werden diese Code Fixes auf den vorhandenen Pull Request commitet.
 
 **Dieser Commit unterbricht nun alle laufenden Workflows.** Diese Workflows scheitern. Anschließend starten alle vorgesehenen Workflows wieder von neuem.
 
-### Changesets Auto Release
+## Check and Build PR
 
-Der Workflow **Changesets Auto Release** (.github/workflows/changesets-release.yml) wird ausgeführt, wenn Code auf den `main` Branch gepusht wird.
+Der Workflow **Check and Build PR** (`.github/workflows/build-pr.yml`) wird immer dann ausgeführt, wenn ein neuer Pull Request hinzugefügt oder geändert wurde.
+
+Innerhalb des Workflows wird das Projekt vollständig aufgesetzt. Der Workflow verwendet Turborepo Remote Caching, um den Workflow und den Build-Prozess zu beschleunigen.
+Der vorhandene Code wird mit `bun run tsc-check:root` überprüft, um Fehler im TypeScript Code abzufangen.
+Alle Codeteile die von der Änderung betroffen sind, werden anschließend mit Turborepo gebaut und so vorbereitet, dass sie veröffentlicht werden können.
+Abschließend wird die Code-Qualität noch einmal mit `bun turbo run check:root` überprüft.
+Die Code-Qualität müsste an diesem Punkt bereits von dem **autofix.ci** Workflow durchgesetzt worden sein.
+
+## Check and Build Main
+
+Der Workflow **Check and Build Main** (`.github/workflows/build-main.yml`) wird bei Pushes auf den `main` Branch ausgeführt.
+
+Innerhalb des Workflows wird das Projekt vollständig aufgesetzt. Der Workflow verwendet Turborepo Remote Caching, um den Workflow und den Build-Prozess zu beschleunigen.
+Das Projekt wird vollständig gebaut und so vorbereitet, dass es veröffentlicht werden kann.
+Abschließend wird die Code-Qualität noch einmal mit `bun turbo run check:root` überprüft.
+Die Checks innerhalb der Pull Requests sollten die Code-Qualität an diesem Punkt bereits durchgesetzt haben.
+
+## Release Packages with Changesets
+
+Der Workflow **Release Packages with Changesets** (.github/workflows/package-release.yml) wird ausgeführt, wenn Code auf den `main` Branch gepusht wird.
 
 Der Workflow nutzt [changesets/action](https://github.com/changesets/action), um einen Pull Request mit dem Titel `chore(release): New Package Versions` zu erstellen. Wird dieser Pull Request in `main` gemerged,
 werden alle Packages und Apps entsprechend der im Repository enthaltenen Changesets versioniert und die `CHANGELOG.md` wird entsprechend der Changesets aktualisiert.
 Alle vorhandenen Changesets werden gelöscht. [Weitere Infos zur Release Strategie](./release-strategy.mdx)
 
 Exisitiert bereits ein durch Changesets erstellter Pull Request, wird dieser bei jedem push auf den `main` Branch aktualisiert.
-Enthält der gepushte Code ein neues oder geändertes Changeset, wird dieses in das `CHANGELOG` aufgenommen.
+Enthält der gepushte Code ein neues oder geändertes Changeset, wird dieses in das Changelog aufgenommen.
 Enthält der gepushte Code keine Veränderungen an Changesets, wird der Branch lediglich auf den Stand des `main` Branch gebracht.
-
-### Typescript Syntax Checks
-
-Der Workflow **Typescript Syntax Checks** (.github/workflows/tsc-check) wird bei jedem neu eröffneten oder aktualisierten Pull Request und bei Pushes auf den `main` Branch ausgeführt. 
-Das Projekt wird mit den Commands `pnpm tsc-check:root` (für Dateien im Root-Verzeichnis) und `pnpm turbo tsc-check` (für die einzelnen Apps und Packages) auf Typescript-Fehler untersucht.
-Die beschriebenen Commands führen dazu den Command `tsc --noEmit` aus. Werden Fehler im Typescript-Code festgestellt, scheitert der Durchlauf des Workflows. Die Fehler sollten behoben werden, 
-bevor der Pull Request gemerged wird.
 
 ## Renovate Bot
 
 Mit dem [Renovate Bot](https://www.mend.io/renovate/) werden die Dependencies im GitHub Repository aktuell gehalten.
-Renovate prüft samstags und sonntags, ob es Dependencies (in PNPM-Packages und GitHub Actions) mit neuen Versionen gibt. Findet Renovate eine neue Version, 
-erstellt der Bot einen Pull Request, alle betroffenen Dateien (z.B. `pnpm-lock.yaml`, `package.json` und Workflow-Dateien) aktualisiert.
+Renovate prüft regelmäßig, ob es Dependencies (in NPM-Packages und GitHub Actions) mit neuen Versionen gibt. Findet Renovate eine neue Version, 
+erstellt der Bot einen Pull Request, der alle betroffenen Dateien (z.B. `bun.lock`, `package.json` und Workflow-Dateien) aktualisiert.
+Non-Major Updates an Dependencies werden in einem Pull Request zusammengefasst. Das Verhalten von Renovate wird in der Datei `.github/renovate.json` konfiguriert.
 
 Im Repository sind der "Dependency graph" und die "Dependabot alerts" aktivert. So wird das Repository auf Sicherheitsrisiken geprüft und darüber benachrichtigt. 
 Renovate greift auf diese Daten zu und löst die Risiken ggf. durch ein Update der betroffenen Dependency.
-
-### Konfigurationen
-
-| Regel | Wert | Beschreibung |
-| ----- | ---- | ------------ |
-| [`extends`](https://docs.renovatebot.com/configuration-options/#extends) | | Config-Presets, die genutzt werden sollen
-| [`semanticCommits`](https://docs.renovatebot.com/configuration-options/#semanticcommits) | `enabled` |  |
-| [`labels`](https://docs.renovatebot.com/configuration-options/#labels) | `dependencies` | Vergebe das Label `dependencies` an alle Pull Requests, die von Renovate eröffnet werden. |
-| [`reviewers`](https://docs.renovatebot.com/configuration-options/#reviewers) | `onissen` | Fordere für jeden Pull Request ein Review von `onissen` an. |
-| [`rangeStrategy`](https://docs.renovatebot.com/configuration-options/#rangestrategy) | `bump` | Aktualisiere immer den Eintrag in der `package.json`, wenn eine neue Version verfügbar ist. Die `pnpm-lock.yaml` wird ebenfalls immer aktualisiert. Beispiel: `^1.0.0` wird zu `^1.1.0`, `^3.4.0` wird zu `^3.4.1` |
-| [`schedule`](https://docs.renovatebot.com/configuration-options/#schedule) | `* * * * 0,6` | Renovate führt Änderungen immer samstags und sonntags zu einer beliebigen Zeit durch. Außerhalb dieses Zeitplans wartet Renovate bis der Zeitplan wieder erreicht ist und führt erst dann die Änderung durch. |
-| [`timezone`](https://docs.renovatebot.com/configuration-options/#timezone) | `Europe/Amsterdam` | Zeitzone in der der `schedule` ausgeführt werden soll. |
-| [`vulnerabilityAlerts`](https://docs.renovatebot.com/configuration-options/#vulnerabilityalerts) |  | Konfiguration, wenn mit dem Pull Request eine Security Vulnerability behoben wird. Renovate liest die Vulnerability Alerts von Dependabot und löst diese wenn möglich. PRs die als `vulnerabilityAlerts` erstellt werden. Halten sich nicht an den `schedule`, sie werden also so schnell wie möglich eröffnet, damit der Fix möglichst schnell erfolgen kann. |
-| `vulnerabilityAlerts.labels` | `security`, `dependencies` |  |
-| `vulnerabilityAlerts.reviewers` | `onissen` |  |
-| [`dependencyDashboardTitle`](https://docs.renovatebot.com/configuration-options/#dependencydashboardtitle) | `[Renovate]: Dependency Dashboard` | Titel des Issues für das [Dependency Dashboard](https://docs.renovatebot.com/key-concepts/dashboard/) |
-| [`dependencyDashboardLabels`](https://docs.renovatebot.com/configuration-options/#dependencydashboardlabels) | "dependencies", "github-management" | Labels, die auf den Dependency Dashboard Issue angewendet werden. |
-| [`packageRules`](https://docs.renovatebot.com/configuration-options/#packagerules) | | Regeln, die nur auf bestimmte Packages angewendet werden. |
