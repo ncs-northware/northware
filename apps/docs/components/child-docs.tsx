@@ -2,6 +2,8 @@ import { Card, Cards } from "fumadocs-ui/components/card";
 import { source } from "@/lib/source";
 
 export function ChildDocs({ folder }: { folder: string }) {
+  /* ChildDocs funktioniert nur auf der obersten Ebene des PageTree.
+  Um die Komponente auch in Unterordnern nutzen zu können, müsste der Array auf weiter verschalteten Ebenen durchsucht werden. */
   const docs = source.pageTree.children.find((doc) => doc.$id === folder);
 
   if (docs?.type !== "folder") {
