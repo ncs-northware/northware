@@ -24,13 +24,13 @@ Die shadcn Komponenten werden regelmäßig aktualisiert. Um immer den aktuellen 
 Um die Komponenten zu aktualisieren, kann vom Package-Root aus folgender Command ausgeführt werden:
 
 ```bash
-pnpm bump-ui
+bun bump-ui
 ```
 
 Dieser Command führt die Aktualisierung der Komponenten mithilfe der shadcn CLI durch.
 
 ```bash
-pnpm dlx shadcn@latest add --all --overwrite -c packages/ui
+bun dlx shadcn@latest add --all --overwrite -c packages/ui
 ```
 
 Der Command nimmt Änderungen an den Dateien unter `/components/shadcn` vor, die vor der Übernahme reviewed werden sollten. 
