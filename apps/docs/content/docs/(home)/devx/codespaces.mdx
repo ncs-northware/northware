@@ -1,0 +1,12 @@
+---
+title: Entwicklung in GitHub Codespaces
+description: Das Northware Repository ist für die Entwicklung in GitHub Codespaces bereit.
+---
+
+Mit [GitHub Codespaces](https://docs.github.com/codespaces) ist es möglich, 
+mit [Visual Studio Code](https://code.visualstudio.com/) oder anderen IDEs in einer Remoteumgebung zu entwickeln.
+Die dafür nötigen Ressourcen werden von einer entferten VM bereitgestellt.
+
+Die Datei `.devcontainer/devcontainer.json` konfiguriert einen angepassten Container zur Remote-Entwicklung in GitHub Codespaces und anderen Services.
+Der Dev-Container verwendet ein Basis-Image zur Entwicklung von TypeScripit Apps. Erweitert wird das Image durch Features zur Verwendung von Git LFS und Bun.
+Außerdem enthält der Container einige vorinstallierte VS Code Extensions.

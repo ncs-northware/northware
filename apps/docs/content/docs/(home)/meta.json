@@ -4,6 +4,7 @@
   "pages": [
     "index",
     "---Development Experience---",
+    "devx/codespaces",
     "devx/formatting",
     "devx/branches-commits",
     "devx/project-management",
