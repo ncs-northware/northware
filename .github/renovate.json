@@ -17,7 +17,7 @@
   "gitIgnoredAuthors": [
     "autofix-ci[bot] <114827586+autofix-ci[bot]@users.noreply.github.com>"
   ],
-  "dependencyDashboardLabels": ["dependencies", "github-management"],
+  "dependencyDashboardLabels": ["dependencies", "dev-experience"],
   "dependencyDashboardTitle": "[Renovate]: Dependency Dashboard",
   "packageRules": [
     {
