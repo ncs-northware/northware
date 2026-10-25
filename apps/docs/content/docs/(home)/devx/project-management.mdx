@@ -6,7 +6,7 @@ description: So können die Aufgaben des Entwicklungs-Prozesses im Blick behalte
 ## Issues
 
 Issues sind dazu gedacht, die Arbeit zu planen und Ideen, Feedback, Aufgaben oder Bugs zu verfolgen.
- Hat man also eine Idee für ein neues Feature oder stellt fest, das etwas in der überhaupt nicht oder zumindest nicht wie erwartet funktioniert, 
+ Hat man also eine Idee für ein neues Feature oder stellt fest, das etwas überhaupt nicht oder zumindest nicht wie erwartet funktioniert, 
  sollte ein Issue erstellt werden.
 
 Im Northware Repository gibt es vordefinierte **Issue-Templates**, um den übersichtlichen Entwicklungsprozess zu unterstützen.
@@ -62,7 +62,7 @@ Mit Labels lassen sich Issues und Pull Requests kategorisieren. Labels sind bei 
 denn auf Basis dieser Kennzeichnungen werden teilweise Workflows abgearbeitet und Filter gesetzt.
 
 Es gibt bei der Entwicklung von Northware Labels, die den Typ eines Issues oder Pull Requests kennzeichnen (z.B. `enhancement`),
-Labels die betroffene Codeteile (`apps/` und `packages/` Labels) und
+Labels die betroffene Codeteile (`apps/` und `packages/` Labels) kennzeichnen und
 Labels die von Bots und Workflows verwendet werden (z.B. `dependencies` und `github-actions`).
 
 ### Type Labels
@@ -72,7 +72,7 @@ Labels die von Bots und Workflows verwendet werden (z.B. `dependencies` und `git
 | `bug` | Es geht um einen (schwerwiegenden) Bug, der einen Fehler verursacht und der möglichst bald behoben werden sollte. |
 | `invalid`| Etwas in der App funktioniert nicht so, wie es soll. Dieses Problem sollte behoben werden. Da durch dieses Problem kein (schwerwiegender) Fehler entsteht ist die Bearbeitung weniger dringend als bei den `bugs`.  |
 | `enhancement`| Neues Feature oder neue Idee |
-| `docs-wanted`| Das, was in diesem Issue beschrieben ist, sollte in die Dokumentation aufgenommen werden. Wenn die Dokumentation zu diesem Thema erweitert wurde, sollte dieses Label entfernt werden.  Die Dokumentation kann zusammen mit den Änderungen im Code verfolständigt werden, wenn für die Änderung der Dokumentation ein extra Issue erstellt werden, sollte dieser nach Vervollstädigung der Dokumentation mit `apss/docs` versehen werden. |
+| `docs-wanted`| Das, was in diesem Issue beschrieben ist, sollte in die Dokumentation aufgenommen werden. Wenn die Dokumentation zu diesem Thema erweitert wurde, sollte dieses Label entfernt werden.  Die Dokumentation kann zusammen mit den Änderungen im Code vervollständigt werden. Wenn für die Änderung der Dokumentation ein extra Issue erstellt wird, sollte dieser nach Vervollstädigung der Dokumentation mit `apps/docs` versehen werden. |
 | `security`| Dependabot hat eine Security Vulnerabilty festgestellt, die mit diesem Issue nachverfolgt wird. |
 | `duplicate`| Ein Issue oder Pull Request zu diesem Thema existiert bereits. |
 | `wontfix`| An diesem Issue/PR wird nicht mehr gearbeitet. |
@@ -90,15 +90,15 @@ Wenn ein neues Label für eine App, ein Package oder einen anderen Ordner angele
 
 | Label                                                                                | Beschreibung                                                                  |
 | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `apps/northware-cockpit` | Dieser Issue/PR ändert etwas an der App Northware Cockpit |
-| `apps/northware-finance` | Dieser Issue/PR ändert etwas an der App Northware Finance |
-| `apps/northware-trader` | Dieser Issue/PR ändert etwas an der App Northware Trader |
+| `apps/cockpit` | Dieser Issue/PR ändert etwas an der App Northware Cockpit |
+| `apps/finance` | Dieser Issue/PR ändert etwas an der App Northware Finance |
+| `apps/trader` | Dieser Issue/PR ändert etwas an der App Northware Trader |
 | `apps/docs` | Dieser Issue/PR ändert etwas an der Documentation. Dieses Label soll verwendet werden, wenn es tatsächlich um die Änderung von Code in der Dokumentation geht. Wenn es nur darum geht, die Änderung der Docs zu verlangen, soll das Label `docs-wanted` verwendet werden. |
 | `apps/storybook` | Dieser Issue/PR ändert etwas an der Dokumentation von `@northware/ui` im Storybook |
 
 ### Labels für Packages und die API
 
-Auch die einzelnen Packages (Dateipfad `packages/*`) sollen aus den gleichen Gründenn wie die Apps jeweils eigene Labels erhalten. 
+Auch die einzelnen Packages (Dateipfad `packages/*`) sollen aus den gleichen Gründen wie die Apps jeweils eigene Labels erhalten. 
 Sie alle erhalten die gleiche Farbgestaltung.
 
 | Label                                                                                | Beschreibung                                                                  |
@@ -113,8 +113,8 @@ Sie alle erhalten die gleiche Farbgestaltung.
 
 | Label                                                                                | Beschreibung                                                                  |
 | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `root` | Dieser Issue/PR ändert etwas an den Dateien im Root-Verzeichnis. **Dieses Label wird nicht automatisch an Pulll Requests vergeben.** Da es hier zu Komplikationen bei Änderungen der anderen Codeteile kommt. |
-| `github-management` | Dieser Issue/PR ändert etwas an der Konfiguration für GitHub. Das kann Dateien im `.github/` Ordner, das Northware New Projekt und Einstellungen des Repositories betreffen.  |
+| `root` | Dieser Issue/PR ändert etwas an den Dateien im Root-Verzeichnis. **Dieses Label wird nicht automatisch an Pulll Requests vergeben, da es hier zu Komplikationen bei Änderungen der anderen Codeteile kommt.** |
+| `dev-experience` | Dieser Issue/PR verändert die Development Experience, in dem z.B. Konfigurationen von VS Code, GitHub o.ä. angepasst werden. Das kann Dateien des Repositorys aber auch andere Einstellungen der verwendeten Services betreffen. |
 
 ### Labels für Bots und Workflows
 
@@ -126,7 +126,7 @@ Sie alle erhalten die gleiche Farbgestaltung.
 
 ## Das Northware New Projekt 
 
-Das Projekt **Northware New** wird genutzt um einen besseren Überblick über die Arbeit an am Northware Projekt zu geben. 
+Das Projekt **Northware New** wird genutzt, um einen besseren Überblick über die Arbeit an am Northware Projekt zu geben. 
 Es besteht aus mehereren Ansichten, um die offene und geschlossene Issues und Pull Requests so filtern, dass Entwickler den Überblick behalten und einfacher an dem 
 Repository arbeiten können.
 
