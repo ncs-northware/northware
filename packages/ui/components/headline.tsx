@@ -1,5 +1,5 @@
-import { cn } from "@northware/ui/lib/utils";
 import { cva } from "class-variance-authority";
+import { cn } from "cn";
 import { createElement, type HTMLAttributes, type ReactNode } from "react";
 
 interface HeadlineProps extends HTMLAttributes<HTMLHeadingElement> {

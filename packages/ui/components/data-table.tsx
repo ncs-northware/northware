@@ -18,7 +18,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@northware/ui/components/shadcn/select";
-import { cn } from "@northware/ui/lib/utils";
 import {
   type Column,
   columnFilteringFeature,
@@ -39,6 +38,7 @@ import {
   type Table,
   tableFeatures,
 } from "@tanstack/react-table";
+import { cn } from "cn";
 import {
   ArrowDownIcon,
   ArrowUpIcon,

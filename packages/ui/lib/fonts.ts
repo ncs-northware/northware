@@ -1,4 +1,4 @@
-import { cn } from "@northware/ui/lib/utils";
+import { cn } from "cn";
 import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 
 export const SourceSans = Source_Sans_3({
