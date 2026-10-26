@@ -21,8 +21,8 @@ import {
   ItemTitle,
 } from "@northware/ui/components/shadcn/item";
 import { ChevronRightIcon } from "@northware/ui/icons/lucide";
-import { cn } from "@northware/ui/lib/utils";
 import { type ColumnDef, type RowData, useTable } from "@tanstack/react-table";
+import { cn } from "cn";
 import { formatDate } from "date-fns";
 import { de } from "date-fns/locale";
 import Link from "next/link";

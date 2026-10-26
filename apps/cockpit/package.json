@@ -16,6 +16,7 @@
     "@northware/database": "workspace:*",
     "@northware/ui": "workspace:*",
     "@tanstack/react-table": "^9.3.1",
+    "cn": "^0.5.0",
     "date-fns": "^4.4.0",
     "drizzle-orm": "^0.45.4",
     "next": "16.4.3",

@@ -4,7 +4,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@northware/ui/components/shadcn/input-group";
-import { cn } from "@northware/ui/lib/utils";
+import { cn } from "cn";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";
 

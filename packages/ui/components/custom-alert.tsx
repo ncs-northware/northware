@@ -1,5 +1,5 @@
-import { cn } from "@northware/ui/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
 import {
   CircleAlertIcon,
   CircleCheckIcon,

@@ -6,7 +6,7 @@ import {
   TraderIcon,
 } from "@northware/ui/icons";
 
-import { cn } from "@northware/ui/lib/utils";
+import { cn } from "cn";
 
 export function Brand({
   className,
