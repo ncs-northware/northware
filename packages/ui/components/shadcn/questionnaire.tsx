@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionnaire"
+import { cn } from "cn"
 
-import { cn } from "@northware/ui/lib/utils"
 import { buttonVariants, type Button } from "@northware/ui/components/shadcn/button"
 import { CheckIcon } from "lucide-react"
 
